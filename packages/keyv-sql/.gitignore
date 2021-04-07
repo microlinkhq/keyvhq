@@ -2,9 +2,6 @@ test/testdb.sqlite
 
 ## Node
 
-#npm5
-package-lock.json
-
 # Logs
 logs
 *.log
