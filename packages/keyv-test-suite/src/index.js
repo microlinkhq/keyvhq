@@ -9,7 +9,7 @@ const keyvTestSuite = (test, Keyv, store) => {
 	keyvNamepsaceTests(test, Keyv, store);
 };
 
-Object.assign(keyvTestSuite,{
+Object.assign(keyvTestSuite, {
 	keyvApiTests,
 	keyvValueTests,
 	keyvNamepsaceTests,
