@@ -43,7 +43,7 @@
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
-    "@keyv/test-suite": "github:Jytesh/keyv-test-suite",
+    "@jytesh/keyv-test-suite": "^2.0.1",
     "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",

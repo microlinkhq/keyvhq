@@ -1,5 +1,5 @@
 const test = require('ava');
-const keyvTestSuite = require('@keyv/test-suite');
+const keyvTestSuite = require('@jytesh/keyv-test-suite');
 const { keyvOfficialTests } = keyvTestSuite;
 const Keyv = require('keyv');
 const KeyvSqlite = require('../src/index');
