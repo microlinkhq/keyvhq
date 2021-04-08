@@ -1,31 +1,31 @@
-import test from 'ava';
-import keyvTestSuite from '@keyv/test-suite';
-import Keyv from 'keyv';
-import KeyvSql from 'this';
+const test = require('ava');
+const keyvTestSuite = require('@jytesh/keyv-test-suite');
+const Keyv = require('keyv');
+const KeyvSql = require('this');
 
-import sqlite3 from 'sqlite3';
-import pify from 'pify';
+const sqlite3 = require('sqlite3');
+const pify = require('pify');
 
 class TestSqlite extends KeyvSql {
-	constructor(opts) {
-		opts = Object.assign({
+	constructor(options) {
+		options = Object.assign({
 			dialect: 'sqlite',
 			db: 'test/testdb.sqlite'
-		}, opts);
+		}, options);
 
-		opts.connect = () => new Promise((resolve, reject) => {
-			const db = new sqlite3.Database(opts.db, err => {
-				if (err) {
-					reject(err);
+		options.connect = () => new Promise((resolve, reject) => {
+			const db = new sqlite3.Database(options.db, error => {
+				if (error) {
+					reject(error);
 				} else {
 					db.configure('busyTimeout', 30000);
 					resolve(db);
 				}
 			});
 		})
-		.then(db => pify(db.all).bind(db));
+			.then(db => pify(db.all).bind(db));
 
-		super(opts);
+		super(options);
 	}
 }
 
