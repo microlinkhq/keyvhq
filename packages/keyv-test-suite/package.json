@@ -2,16 +2,10 @@
   "name": "@keyv/test-suite",
   "version": "1.6.11",
   "description": "Test suite for Keyv API compliancy",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
-    "prebuild": "rm -rf dist",
-    "build": "babel -d dist src",
-    "prebuild:map": "npm run prebuild",
-    "build:map": "babel --source-maps=true -d dist src",
-    "pretest": "npm run build:map",
     "test": "xo && nyc ava",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "prepublish": "npm run build"
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "xo": {
     "extends": "xo-lukechilds"
