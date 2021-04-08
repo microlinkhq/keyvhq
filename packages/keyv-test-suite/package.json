@@ -1,5 +1,5 @@
 {
-  "name": "@keyv/test-suite",
+  "name": "@jytesh/keyv-test-suite",
   "version": "1.6.11",
   "description": "Test suite for Keyv API compliancy",
   "main": "src/index.js",
