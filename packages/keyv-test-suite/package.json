@@ -10,11 +10,6 @@
   "xo": {
     "extends": "xo-lukechilds"
   },
-  "babel": {
-    "presets": [
-      "es2016-node4"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukechilds/keyv-test-suite.git"
@@ -41,8 +36,6 @@
   },
   "devDependencies": {
     "@keyv/sqlite": "*",
-    "babel-cli": "^6.18.0",
-    "babel-preset-es2016-node4": "^6.0.1",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
     "keyv": "*",
