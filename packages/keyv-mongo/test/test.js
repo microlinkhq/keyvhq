@@ -1,8 +1,9 @@
-import 'dotenv/config'; // eslint-disable-line import/no-unassigned-import
-import test from 'ava';
-import keyvTestSuite, { keyvOfficialTests } from '@keyv/test-suite';
-import Keyv from 'keyv';
-import KeyvMongo from 'this';
+require('dotenv').config();
+const test = require('ava');
+const keyvTestSuite = require('@keyv/test-suite');
+const { keyvOfficialTests } = keyvTestSuite;
+const Keyv = require('keyv');
+const KeyvMongo = require('this');
 
 const mongoURL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@keyv/mongo",
+  "name": "@jytesh/keyv-mongo",
   "version": "1.1.0",
   "description": "MongoDB storage adapter for Keyv",
   "main": "src/index.js",
@@ -38,19 +38,19 @@
   },
   "homepage": "https://github.com/lukechilds/keyv-mongo",
   "dependencies": {
-    "mongojs": "2.5.0",
-    "pify": "3.0.0"
+    "mongodb": "^3.6.5",
+    "pify": "^3.0.0"
   },
   "devDependencies": {
-    "@keyv/test-suite": "*",
-    "ava": "^0.25.0",
+    "@jytesh/keyv-test-suite": "*",
+    "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "dotenv": "^6.2.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
     "keyv": "*",
-    "nyc": "^11.0.3",
+    "nyc": "^15.1.0",
     "requirable": "^1.0.1",
     "this": "^1.0.2",
-    "xo": "^0.20.1"
+    "xo": "^0.38.2"
   }
 }
