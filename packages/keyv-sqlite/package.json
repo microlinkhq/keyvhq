@@ -1,5 +1,5 @@
 {
-  "name": "@keyv/sqlite",
+  "name": "@jytesh/keyv-sqlite",
   "version": "2.0.2",
   "description": "SQLite storage adapter for Keyv",
   "main": "src/index.js",
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/lukechilds/keyv-sqlite",
   "dependencies": {
-    "@keyv/sql": "https://github.com/Jytesh/keyv-sql.git",
+    "@keyv/sql": "git+https://github.com/Jytesh/keyv-sql.git",
     "pify": "5.0.0",
     "sqlite3": "^5.0.0"
   },
@@ -52,5 +52,8 @@
     "requirable": "^1.0.1",
     "this": "^1.0.2",
     "xo": "^0.38.2"
+  },
+  "directories": {
+    "test": "test"
   }
 }
