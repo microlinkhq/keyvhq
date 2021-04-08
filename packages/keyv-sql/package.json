@@ -1,5 +1,5 @@
 {
-  "name": "@keyv/sql",
+  "name": "@jytesh/keyv-sql",
   "version": "2.0.0",
   "description": "Parent class for SQL based Keyv storage adapters",
   "main": "src/index.js",
