@@ -1,13 +1,14 @@
-import test from 'ava';
-import keyvTestSuite, { keyvOfficialTests } from '@keyv/test-suite';
-import Keyv from 'keyv';
-import KeyvRedis from 'this';
-import Redis from 'ioredis';
+const test = require('ava');
+const keyvTestSuite = require('@jytesh/keyv-test-suite');
+const Keyv = require('keyv');
+const KeyvRedis = require('this');
+const Redis = require('ioredis');
 
+require('dotenv').config();
 const { REDIS_HOST = 'localhost' } = process.env;
 const redisURI = `redis://${REDIS_HOST}`;
 
-keyvOfficialTests(test, Keyv, redisURI, 'redis://foo');
+keyvTestSuite.keyvOfficialTests(test, Keyv, redisURI, 'redis://foo');
 
 const store = () => new KeyvRedis(redisURI);
 keyvTestSuite(test, Keyv, store);

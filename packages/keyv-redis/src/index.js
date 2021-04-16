@@ -4,17 +4,17 @@ const EventEmitter = require('events');
 const Redis = require('ioredis');
 
 class KeyvRedis extends EventEmitter {
-	constructor(uri, opts) {
+	constructor(uri, options) {
 		super();
 
 		if (uri instanceof Redis) {
 			this.redis = uri;
 		} else {
-			opts = Object.assign({}, typeof uri === 'string' ? { uri } : uri, opts);
-			this.redis = new Redis(opts.uri, opts);
+			options = Object.assign({}, typeof uri === 'string' ? { uri } : uri, options);
+			this.redis = new Redis(options.uri, options);
 		}
 
-		this.redis.on('error', err => this.emit('error', err));
+		this.redis.on('error', error => this.emit('error', error));
 	}
 
 	_getNamespace() {
