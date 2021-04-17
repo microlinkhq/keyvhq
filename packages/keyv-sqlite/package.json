@@ -58,5 +58,6 @@
   },
   "directories": {
     "test": "test"
-  }
+  },
+  "gitHead": "7c26a69478bee9b2df72492b184fbd770cac131a"
 }

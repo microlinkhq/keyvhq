@@ -1,5 +1,5 @@
 {
-  "name": "@keyv/postgres",
+  "name": "@keyvhq/postgres",
   "version": "0.0.1-alpha.0",
   "description": "PostgreSQL storage adapter for Keyv",
   "main": "src/index.js",
@@ -39,11 +39,11 @@
   },
   "homepage": "https://github.com/lukechilds/keyv-postgres",
   "dependencies": {
-    "@keyv/sql": "1.1.2",
+    "@keyvhq/keyv-sql": "1.1.2",
     "pg": "7.4.1"
   },
   "devDependencies": {
-    "@keyv/test-suite": "*",
+    "@keyvhq/keyv-test-suite": "*",
     "@keyvhq/keyv": "*",
     "ava": "^0.24.0",
     "coveralls": "^3.0.0",
@@ -52,5 +52,6 @@
     "requirable": "^1.0.4",
     "this": "^1.0.2",
     "xo": "^0.38.2"
-  }
+  },
+  "gitHead": "7c26a69478bee9b2df72492b184fbd770cac131a"
 }

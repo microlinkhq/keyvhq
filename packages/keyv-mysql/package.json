@@ -1,5 +1,5 @@
 {
-  "name": "@keyv/mysql",
+  "name": "@keyvhq/mysql",
   "version": "0.0.1-alpha.0",
   "description": "MySQL/MariaDB storage adapter for Keyv",
   "main": "src/index.js",
@@ -52,5 +52,6 @@
     "requirable": "^1.0.1",
     "this": "^1.0.2",
     "xo": "^0.38.2"
-  }
+  },
+  "gitHead": "7c26a69478bee9b2df72492b184fbd770cac131a"
 }

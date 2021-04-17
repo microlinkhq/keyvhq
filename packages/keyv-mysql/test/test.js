@@ -1,5 +1,5 @@
 import test from 'ava';
-import keyvTestSuite, { keyvOfficialTests } from '@keyv/test-suite';
+import keyvTestSuite, { keyvOfficialTests } from '@keyvhq/keyv-test-suite';
 import Keyv from 'keyv';
 import KeyvMysql from 'this';
 
