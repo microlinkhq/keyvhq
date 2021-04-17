@@ -28,7 +28,7 @@ const keyvApiTests = (test, Keyv, store) => {
 		const keyv = new Keyv({ store: store() });
 		await keyv.set('foo', 'bar', ttl);
 		t.is(await keyv.get('foo'), 'bar');
-		if (keyv.opts.store.ttlSupport === true) {
+		if (keyv.options.store.ttlSupport === true) {
 			await delay(ttl + 1);
 		} else {
 			tk.freeze(Date.now() + ttl + 1);

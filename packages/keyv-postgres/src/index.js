@@ -1,23 +1,23 @@
 'use strict';
 
-const KeyvSql = require('@keyv/sql');
+const KeyvSql = require('sql');
 const Pool = require('pg').Pool;
 
 class KeyvPostgres extends KeyvSql {
-	constructor(opts) {
-		opts = Object.assign({
+	constructor(options) {
+		options = Object.assign({
 			dialect: 'postgres',
 			uri: 'postgresql://localhost:5432'
-		}, opts);
+		}, options);
 
-		opts.connect = () => Promise.resolve()
+		options.connect = () => Promise.resolve()
 			.then(() => {
-				const pool = new Pool({ connectionString: opts.uri });
+				const pool = new Pool({ connectionString: options.uri });
 				return sql => pool.query(sql)
 					.then(data => data.rows);
 			});
 
-		super(opts);
+		super(options);
 	}
 }
 

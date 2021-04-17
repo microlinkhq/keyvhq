@@ -38,7 +38,7 @@ class KeyvMongo extends EventEmitter {
 
 		this.mongo = {};
 		let listeningEvents = false;
-		// Implementation from @keyv/sql by lukechilds,
+		// Implementation from sql by lukechilds,
 		// NOTE: Check for performance when using this promise each time an operation needs to be performed.
 		this.connect = new Promise((resolve, reject) => {
 			this.client.connect()

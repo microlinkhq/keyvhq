@@ -14,7 +14,7 @@ keyvTestSuite(test, Keyv, store);
 
 test('Collection option merges into default options', t => {
 	const store = new KeyvMongo({ collection: 'foo' });
-	t.deepEqual(store.opts, {
+	t.deepEqual(store.options, {
 		url: 'mongodb://127.0.0.1:27017',
 		collection: 'foo'
 	});
@@ -22,7 +22,7 @@ test('Collection option merges into default options', t => {
 
 test('Collection option merges into default options if URL is passed', t => {
 	const store = new KeyvMongo(mongoURL, { collection: 'foo' });
-	t.deepEqual(store.opts, {
+	t.deepEqual(store.options, {
 		url: mongoURL,
 		collection: 'foo'
 	});
