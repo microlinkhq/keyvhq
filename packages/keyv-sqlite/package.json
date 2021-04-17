@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/keyv-sqlite",
-  "version": "0.0.4-alpha.0",
+  "version": "0.0.5-alpha.0",
   "description": "SQLite storage adapter for Keyv",
   "main": "src/index.js",
   "scripts": {
@@ -41,13 +41,13 @@
   },
   "homepage": "https://github.com/lukechilds/keyv-sqlite",
   "dependencies": {
-    "@keyvhq/keyv-sql": "^0.0.4-alpha.0",
+    "@keyvhq/keyv-sql": "^0.0.5-alpha.0",
     "pify": "5.0.0",
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "@keyvhq/keyv": "*",
-    "@keyvhq/keyv-test-suite": "^0.0.4-alpha.0",
+    "@keyvhq/keyv-test-suite": "^0.0.5-alpha.0",
     "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
@@ -59,5 +59,5 @@
   "directories": {
     "test": "test"
   },
-  "gitHead": "cdbbafb5dd0d4c2cd7d3dc81745b927e7c8d73ca"
+  "gitHead": "a738c6dc8c311bc16beea4429f4ec945889c8fbf"
 }
