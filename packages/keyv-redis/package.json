@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/keyv-redis",
-  "version": "0.0.5-alpha.0",
+  "version": "0.0.6-alpha.0",
   "description": "Redis storage adapter for Keyv",
   "main": "src/index.js",
   "scripts": {
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@keyvhq/keyv": "*",
-    "@keyvhq/keyv-test-suite": "^0.0.5-alpha.0",
+    "@keyvhq/keyv-test-suite": "^0.0.6-alpha.0",
     "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "delay": "^4.3.0",
