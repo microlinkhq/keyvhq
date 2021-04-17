@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/keyv-mysql",
-  "version": "0.0.6-alpha.0",
+  "version": "0.0.7-alpha.0",
   "description": "MySQL/MariaDB storage adapter for Keyv",
   "main": "src/index.js",
   "scripts": {
@@ -39,12 +39,12 @@
   },
   "homepage": "https://github.com/lukechilds/keyv-mysql",
   "dependencies": {
-    "@keyvhq/keyv-sql": "1.1.2",
+    "@keyvhq/keyv-sql": "^0.0.7-alpha.0",
     "mysql2": "1.5.2"
   },
   "devDependencies": {
     "@keyvhq/keyv": "*",
-    "@keyvhq/keyv-test-suite": "^0.0.6-alpha.0",
+    "@keyvhq/keyv-test-suite": "^0.0.7-alpha.0",
     "ava": "^0.25.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",

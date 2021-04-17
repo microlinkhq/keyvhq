@@ -1,7 +1,8 @@
-import test from 'ava';
-import keyvTestSuite, { keyvOfficialTests } from 'test-suite';
-import Keyv from 'this';
-import KeyvRedis from 'redis';
+const test = require('ava');
+const keyvTestSuite = require('@keyvhq/keyv-test-suite');
+const { keyvOfficialTests } = keyvTestSuite;
+const Keyv = require('this');
+const KeyvRedis = require('redis');
 
 keyvOfficialTests(test, Keyv, 'redis://localhost', 'redis://foo');
 

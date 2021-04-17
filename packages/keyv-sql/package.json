@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/keyv-sql",
-  "version": "0.0.6-alpha.0",
+  "version": "0.0.7-alpha.0",
   "description": "Parent class for SQL based Keyv storage adapters",
   "main": "src/index.js",
   "scripts": {
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@keyvhq/keyv": "*",
-    "@keyvhq/keyv-test-suite": "^0.0.6-alpha.0",
+    "@keyvhq/keyv-test-suite": "^0.0.7-alpha.0",
     "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",

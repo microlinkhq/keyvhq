@@ -1,7 +1,8 @@
-import test from 'ava';
-import keyvTestSuite, { keyvOfficialTests } from 'test-suite';
-import Keyv from 'this';
-import KeyvSqlite from 'sqlite';
+const test = require('ava');
+const keyvTestSuite = require('@keyvhq/keyv-test-suite');
+const { keyvOfficialTests } = keyvTestSuite;
+const Keyv = require('this');
+const KeyvSqlite = require('sqlite');
 
 keyvOfficialTests(test, Keyv, 'sqlite://test/testdb.sqlite', 'sqlite://non/existent/database.sqlite');
 

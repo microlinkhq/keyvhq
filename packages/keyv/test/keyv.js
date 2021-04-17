@@ -1,7 +1,7 @@
-import test from 'ava';
-import tk from 'timekeeper';
-import keyvTestSuite from '@keyvhq/keyv-test-suite';
-import Keyv from 'this';
+const test = require('ava');
+const tk = require('timekeeper');
+const keyvTestSuite = require('@keyvhq/keyv-test-suite');
+const Keyv = require('this');
 
 test.serial('Keyv is a class', t => {
 	t.is(typeof Keyv, 'function');

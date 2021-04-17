@@ -1,7 +1,8 @@
-import test from 'ava';
-import keyvTestSuite, { keyvOfficialTests } from '@keyvhq/keyv-test-suite';
-import Keyv from 'this';
-import KeyvMysql from '@keyvhq/keyv-mysql';
+const test = require('ava');
+const keyvTestSuite = require('@keyvhq/keyv-test-suite');
+const { keyvOfficialTests } = keyvTestSuite;
+const Keyv = require('this');
+const KeyvMysql = require('@keyvhq/keyv-mysql');
 
 keyvOfficialTests(test, Keyv, 'mysql://mysql@localhost/keyv_test', 'mysql://foo');
 
