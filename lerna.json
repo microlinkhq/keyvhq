@@ -2,5 +2,5 @@
   "packages": [
     "packages/*"
   ],
-  "version": "0.0.7-alpha.0"
+  "version": "0.0.8-alpha.0"
 }

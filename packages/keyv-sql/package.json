@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/keyv-sql",
-  "version": "0.0.7-alpha.0",
+  "version": "0.0.8-alpha.0",
   "description": "Parent class for SQL based Keyv storage adapters",
   "main": "src/index.js",
   "scripts": {
@@ -43,17 +43,7 @@
     "sql-ts": "^5.2.0"
   },
   "devDependencies": {
-    "@keyvhq/keyv": "*",
-    "@keyvhq/keyv-test-suite": "^0.0.7-alpha.0",
-    "ava": "^3.15.0",
-    "coveralls": "^3.0.0",
-    "eslint-config-xo-lukechilds": "^1.0.0",
-    "nyc": "^15.1.0",
-    "pify": "^5.0.0",
-    "requirable": "^1.0.1",
-    "sqlite3": "^5.0.2",
-    "this": "^1.0.2",
-    "xo": "^0.38.2"
+    "@keyvhq/keyv-test-suite": "file:../keyv-test-suite"
   },
   "gitHead": "a4e2c1f285236a753de13eb8a42d9a98690526cc"
 }
