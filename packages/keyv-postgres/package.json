@@ -46,11 +46,11 @@
     "ava": "^0.24.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
-    "keyv": "*",
+    "@keyvhq/keyv": "*",
     "@keyv/test-suite": "*",
-    "nyc": "^11.0.3",
+    "nyc": "^15.1.0",
     "requirable": "^1.0.4",
     "this": "^1.0.2",
-    "xo": "^0.19.0"
+    "xo": "^0.38.2"
   }
 }

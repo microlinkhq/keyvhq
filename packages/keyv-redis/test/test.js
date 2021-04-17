@@ -1,5 +1,5 @@
 const test = require('ava');
-const keyvTestSuite = require('@jytesh/keyv-test-suite');
+const keyvTestSuite = require('@keyvhq/keyv-test-suite');
 const Keyv = require('keyv');
 const KeyvRedis = require('this');
 const Redis = require('ioredis');

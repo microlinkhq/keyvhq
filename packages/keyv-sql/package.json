@@ -1,5 +1,5 @@
 {
-  "name": "@jytesh/keyv-sql",
+  "name": "@keyvhq/keyv-sql",
   "version": "2.0.0",
   "description": "Parent class for SQL based Keyv storage adapters",
   "main": "src/index.js",
@@ -43,11 +43,11 @@
     "sql-ts": "^5.2.0"
   },
   "devDependencies": {
-    "@jytesh/keyv-test-suite": "*",
+    "@keyvhq/keyv-test-suite": "*",
     "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
-    "keyv": "*",
+    "@keyvhq/keyv": "*",
     "nyc": "^15.1.0",
     "pify": "^5.0.0",
     "requirable": "^1.0.1",

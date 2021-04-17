@@ -39,18 +39,18 @@
   },
   "homepage": "https://github.com/lukechilds/keyv-mysql",
   "dependencies": {
-    "@keyv/sql": "1.1.2",
+    "@keyvhq/keyv-sql": "1.1.2",
     "mysql2": "1.5.2"
   },
   "devDependencies": {
     "ava": "^0.25.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
-    "keyv": "*",
-    "@keyv/test-suite": "*",
-    "nyc": "^11.0.3",
+    "@keyvhq/keyv": "*",
+    "@keyvhq/keyv-test-suite": "*",
+    "nyc": "^15.1.0",
     "requirable": "^1.0.1",
     "this": "^1.0.2",
-    "xo": "^0.20.1"
+    "xo": "^0.38.2"
   }
 }
