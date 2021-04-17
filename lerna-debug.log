@@ -1,0 +1,20 @@
+0 silly argv {
+0 silly argv   _: [ 'import' ],
+0 silly argv   lernaVersion: '4.0.0',
+0 silly argv   '$0': 'lerna',
+0 silly argv   dir: '../keyv/'
+0 silly argv }
+1 notice cli v4.0.0
+2 verbose rootPath /home/jitesh/Documents/Javascript/Keyv/monorepo
+3 error Error: Command failed with exit code 128: git rev-parse HEAD
+3 error fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+3 error Use '--' to separate paths from revisions, like this:
+3 error 'git <command> [<revision>...] -- [<file>...]'
+3 error HEAD
+3 error     at makeError (/home/jitesh/.nvm/versions/node/v15.11.0/lib/node_modules/lerna/node_modules/execa/lib/error.js:59:11)
+3 error     at Function.module.exports.sync (/home/jitesh/.nvm/versions/node/v15.11.0/lib/node_modules/lerna/node_modules/execa/index.js:186:17)
+3 error     at Object.execSync (/home/jitesh/.nvm/versions/node/v15.11.0/lib/node_modules/lerna/node_modules/@lerna/child-process/index.js:39:16)
+3 error     at ImportCommand.execSync (/home/jitesh/.nvm/versions/node/v15.11.0/lib/node_modules/lerna/node_modules/@lerna/import/index.js:141:25)
+3 error     at ImportCommand.getCurrentSHA (/home/jitesh/.nvm/versions/node/v15.11.0/lib/node_modules/lerna/node_modules/@lerna/import/index.js:133:17)
+3 error     at ImportCommand.initialize (/home/jitesh/.nvm/versions/node/v15.11.0/lib/node_modules/lerna/node_modules/@lerna/import/index.js:102:31)
+3 error     at /home/jitesh/.nvm/versions/node/v15.11.0/lib/node_modules/lerna/node_modules/@lerna/command/index.js:274:24
