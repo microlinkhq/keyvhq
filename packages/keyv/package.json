@@ -1,6 +1,6 @@
 {
   "name": "keyv",
-  "version": "4.0.3",
+  "version": "0.0.1-alpha.0",
   "description": "Simple key-value storage with support for multiple backends",
   "main": "src/index.js",
   "scripts": {
@@ -32,15 +32,15 @@
     "json-buffer": "3.0.1"
   },
   "devDependencies": {
-    "ava": "^3.15.0",
-    "coveralls": "^3.0.0",
-    "eslint-config-xo-lukechilds": "^1.0.0",
-    "@keyvhq/keyv-mongo": "*",
+    "@keyvhq/keyv-mongo": "^0.0.1-alpha.0",
     "@keyvhq/keyv-mysql": "*",
     "@keyvhq/keyv-postgres": "*",
     "@keyvhq/keyv-redis": "*",
-    "@keyvhq/keyv-sqlite": "*",
-    "@keyvhq/keyv-test-suite": "*",
+    "@keyvhq/keyv-sqlite": "^0.0.1-alpha.0",
+    "@keyvhq/keyv-test-suite": "^0.0.1-alpha.0",
+    "ava": "^3.15.0",
+    "coveralls": "^3.0.0",
+    "eslint-config-xo-lukechilds": "^1.0.0",
     "nyc": "^15.1.0",
     "this": "^1.0.2",
     "timekeeper": "^2.0.0",
