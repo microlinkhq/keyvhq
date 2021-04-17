@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/keyv-test-suite",
-  "version": "0.0.3-alpha.0",
+  "version": "0.0.4-alpha.0",
   "description": "Test suite for Keyv API compliancy",
   "main": "src/index.js",
   "scripts": {
@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@keyvhq/keyv": "*",
-    "@keyvhq/keyv-sqlite": "^0.0.3-alpha.0",
+    "@keyvhq/keyv-sqlite": "^0.0.4-alpha.0",
     "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
@@ -47,5 +47,5 @@
     "this": "^1.0.2",
     "xo": "^0.38.2"
   },
-  "gitHead": "23b121bb30a037609e5b25eb064d71c469d7aaea"
+  "gitHead": "cdbbafb5dd0d4c2cd7d3dc81745b927e7c8d73ca"
 }
