@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/postgres",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.2-alpha.0",
   "description": "PostgreSQL storage adapter for Keyv",
   "main": "src/index.js",
   "scripts": {
@@ -43,8 +43,8 @@
     "pg": "7.4.1"
   },
   "devDependencies": {
-    "@keyvhq/keyv-test-suite": "*",
     "@keyvhq/keyv": "*",
+    "@keyvhq/keyv-test-suite": "*",
     "ava": "^0.24.0",
     "coveralls": "^3.0.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
