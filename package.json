@@ -27,8 +27,17 @@
   "scripts": {
     "test": "lerna run test"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
-    "yarn": "^1.22.10"
-  },
-  "workspaces": ["packages/*"]
+    "@keyvhq/keyv": "./packages/keyv",
+    "@keyvhq/keyv-mongo": "./packages/keyv-mongo",
+    "@keyvhq/keyv-mysql": "./packages/keyv-mysql",
+    "@keyvhq/keyv-postgres": "./packages/keyv-postgres",
+    "@keyvhq/keyv-redis": "./packages/keyv-redis",
+    "@keyvhq/keyv-sql": "./packages/keyv-sql",
+    "@keyvhq/keyv-sqlite": "./packages/keyv-sqlite",
+    "@keyvhq/keyv-test-suite": "./packages/keyv-test-suite"
+  }
 }
