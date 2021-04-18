@@ -1,6 +1,6 @@
 'use strict';
 
-const KeyvSql = require('sql');
+const KeyvSql = require('@keyvhq/keyv-sql');
 const mysql = require('mysql2/promise');
 
 class KeyvMysql extends KeyvSql {
@@ -8,6 +8,7 @@ class KeyvMysql extends KeyvSql {
 		if (typeof options === 'string') {
 			options = { uri: options };
 		}
+
 		options = Object.assign({
 			dialect: 'mysql',
 			uri: 'mysql://localhost'

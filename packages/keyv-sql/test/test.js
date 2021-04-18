@@ -1,6 +1,6 @@
 const test = require('ava');
 const keyvTestSuite = require('@keyvhq/keyv-test-suite');
-const Keyv = require('keyv');
+const Keyv = require('@keyvhq/keyv');
 const KeyvSql = require('this');
 
 const sqlite3 = require('sqlite3');

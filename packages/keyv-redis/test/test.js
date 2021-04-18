@@ -1,14 +1,12 @@
 const test = require('ava');
 const keyvTestSuite = require('@keyvhq/keyv-test-suite');
-const Keyv = require('keyv');
+const Keyv = require('@keyvhq/keyv');
 const KeyvRedis = require('this');
 const Redis = require('ioredis');
 
 require('dotenv').config();
 const { REDIS_HOST = 'localhost' } = process.env;
 const redisURI = `redis://${REDIS_HOST}`;
-
-keyvTestSuite.keyvOfficialTests(test, Keyv, redisURI, 'redis://foo');
 
 const store = () => new KeyvRedis(redisURI);
 keyvTestSuite(test, Keyv, store);

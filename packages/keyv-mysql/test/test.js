@@ -1,9 +1,9 @@
 const test = require('ava');
-const keyvTestSuite, { keyvOfficialTests } = require('@keyvhq/keyv-test-suite');
-const Keyv = require('keyv');
+const keyvTestSuite = require('@keyvhq/keyv-test-suite');
+const Keyv = require('@keyvhq/keyv');
 const KeyvMysql = require('this');
 
-keyvOfficialTests(test, Keyv, 'mysql://mysql@localhost/keyv_test', 'mysql://foo');
-
-const store = () => new KeyvMysql('mysql://mysql@localhost/keyv_test');
+require('dotenv').config();
+const dbUrl = process.env.MYSQL_URL || 'mysql://root:root@localhost/keyv_test';
+const store = () => new KeyvMysql(dbUrl);
 keyvTestSuite(test, Keyv, store);

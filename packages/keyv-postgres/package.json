@@ -4,7 +4,7 @@
   "description": "PostgreSQL storage adapter for Keyv",
   "main": "src/index.js",
   "scripts": {
-    "test": "xo && nyc ava",
+    "test": "xo && nyc ava --serial",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "xo": {
@@ -40,7 +40,7 @@
   "homepage": "https://github.com/lukechilds/keyv-postgres",
   "dependencies": {
     "@keyvhq/keyv-sql": "file:../keyv-sql",
-    "pg": "7.4.1"
+    "pg": "8.6.0"
   },
   "gitHead": "a4e2c1f285236a753de13eb8a42d9a98690526cc"
 }

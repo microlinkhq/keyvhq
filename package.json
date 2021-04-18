@@ -1,11 +1,13 @@
 {
   "name": "@keyvhq/mono",
+  "private": "true",
   "devDependencies": {
     "@keyvhq/keyv": "file:packages/keyv",
     "@keyvhq/keyv-mongo": "file:packages/keyv-mongo",
     "@keyvhq/keyv-mysql": "file:packages/keyv-mysql",
     "@keyvhq/keyv-postgres": "file:packages/keyv-postgres",
     "@keyvhq/keyv-redis": "file:packages/keyv-redis",
+    "@keyvhq/keyv-sql": "file:packages/keyv-sql",
     "@keyvhq/keyv-sqlite": "file:packages/keyv-sqlite",
     "@keyvhq/keyv-test-suite": "file:packages/keyv-test-suite",
     "ava": "^3.15.0",
@@ -22,7 +24,11 @@
     "timekeeper": "^2.0.0",
     "xo": "^0.38.2"
   },
+  "scripts": {
+    "test": "lerna run test"
+  },
   "dependencies": {
-    "@keyvhq/keyv-sql": "file:packages/keyv-sql"
-  }
+    "yarn": "^1.22.10"
+  },
+  "workspaces": ["packages/*"]
 }

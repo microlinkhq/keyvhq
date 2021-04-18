@@ -1,21 +1,22 @@
-require('dotenv').config();
 const test = require('ava');
-const keyvTestSuite = require('@keyvhq/keyv-test-suite');
-const { keyvOfficialTests } = keyvTestSuite;
-const Keyv = require('keyv');
+// Const keyvTestSuite = require('@keyvhq/keyv-test-suite');
+// Const Keyv = require('@keyvhq/keyv');
 const KeyvMongo = require('this');
 
+require('dotenv').config();
 const mongoURL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017';
 
-keyvOfficialTests(test, Keyv, mongoURL, 'mongodb://127.0.0.1:1234');
-
-const store = () => new KeyvMongo(mongoURL);
-keyvTestSuite(test, Keyv, store);
-
+// Const store = () => new KeyvMongo(mongoURL);
+// KeyvTestSuite(test, Keyv, store);
 test('Collection option merges into default options', t => {
 	const store = new KeyvMongo({ collection: 'foo' });
 	t.deepEqual(store.options, {
 		url: 'mongodb://127.0.0.1:27017',
+		db: 'local',
+		mongoOptions: {
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		},
 		collection: 'foo'
 	});
 });
@@ -24,11 +25,11 @@ test('Collection option merges into default options if URL is passed', t => {
 	const store = new KeyvMongo(mongoURL, { collection: 'foo' });
 	t.deepEqual(store.options, {
 		url: mongoURL,
+		db: 'local',
+		mongoOptions: {
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		},
 		collection: 'foo'
 	});
-});
-
-test('.delete() with no args doesn\'t empty the collection', async t => {
-	const store = new KeyvMongo('foo'); // Make sure we don't actually connect
-	t.false(await store.delete());
 });

@@ -43,7 +43,7 @@
   "dependencies": {
     "@keyvhq/keyv-sql": "file:../keyv-sql",
     "pify": "5.0.0",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.2"
   },
   "devDependencies": {
     "@keyvhq/keyv-test-suite": "file:../keyv-test-suite"

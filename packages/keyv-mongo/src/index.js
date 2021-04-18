@@ -32,15 +32,13 @@ class KeyvMongo extends EventEmitter {
 		try {
 			this.client = new mongodb.MongoClient(this.options.url, this.options.mongoOptions);
 		} catch (error) {
-			console.error(error);
 			this.emit('error', error);
 		}
 
 		this.mongo = {};
 		let listeningEvents = false;
 		// Implementation from sql by lukechilds,
-		// NOTE: Check for performance when using this promise each time an operation needs to be performed.
-		this.connect = new Promise((resolve, reject) => {
+		this.connect = new Promise(resolve => {
 			this.client.connect()
 				.then(client => {
 					this.db = client.db(this.options.db);
@@ -64,7 +62,7 @@ class KeyvMongo extends EventEmitter {
 
 					resolve(this.store);
 				})
-				.catch(reject);
+				.catch(error => this.emit('error', error));
 		});
 	}
 
