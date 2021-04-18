@@ -24,9 +24,32 @@
     "timekeeper": "^2.0.0",
     "xo": "^0.38.2"
   },
+  "author": "Jytesh & Kikobeats",
   "scripts": {
     "test": "lerna run test"
   },
+  "repository": {
+    "type": "git",
+    "url" : "git+https://github.com/keyvhq/keyv.git"
+  },
+  "keywords": [
+    "keyv",
+    "cache",
+    "storage",
+    "adapter",
+    "key",
+    "value",
+    "store",
+    "ttl",
+    "mongo",
+    "mongodb",
+    "redis",
+    "sql",
+    "sqlite",
+    "sqlite3",
+    "mysql",
+    "pgsql"
+  ],
   "workspaces": [
     "packages/*"
   ],
