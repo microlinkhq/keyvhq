@@ -22,8 +22,6 @@ class KeyvMongo extends EventEmitter {
 			collection: 'keyv'
 		}, url, options);
 
-		this.options.db = this.options.db || resolveDB(this.options.url);
-
 		this.options.mongoOptions = Object.assign({
 			useNewUrlParser: true,
 			useUnifiedTopology: true
@@ -103,13 +101,4 @@ class KeyvMongo extends EventEmitter {
 				.then(() => undefined));
 	}
 }
-
-function resolveDB(url) {
-	if (url.includes('mongodb+srv://')) {
-		return url.replace('mongodb+srv://').match(/\/(.*)\?/)?.[1] || 'local';
-	}
-
-	return 'local';
-}
-
 module.exports = KeyvMongo;
