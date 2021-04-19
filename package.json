@@ -26,7 +26,8 @@
   },
   "author": "Jytesh & Kikobeats",
   "scripts": {
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "coverage": "nyc report --reporter=text-lcov | npx coveralls"
   },
   "repository": {
     "type": "git",

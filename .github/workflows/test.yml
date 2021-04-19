@@ -58,3 +58,9 @@ jobs:
         pg_isready
     - run: yarn install
     - run: yarn test
+    - name: Report
+      run: mkdir -p coverage && yarn run nyc report --reporter=text-lcov > coverage/lcov.info
+    - name: Coverage
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}

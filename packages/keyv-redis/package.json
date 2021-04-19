@@ -4,10 +4,9 @@
   "description": "Redis storage adapter for Keyv",
   "main": "src/index.js",
   "scripts": {
-    "test": "ava",
+    "test": "xo && nyc --no-clean --temp-dir ../../.nyc_output ava",
     "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test",
-    "posttest:docker": "docker-compose down --rmi local",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "posttest:docker": "docker-compose down --rmi local"
   },
   "xo": {
     "extends": "xo-lukechilds"

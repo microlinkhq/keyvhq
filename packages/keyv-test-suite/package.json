@@ -4,7 +4,7 @@
   "description": "Test suite for Keyv API compliancy",
   "main": "src/index.js",
   "scripts": {
-    "test": "xo && nyc ava",
+    "test": "xo && nyc --no-clean --temp-dir ../../.nyc_output ava",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "release:major": "npm test && npm version major -m \"chore: release\" && git push origin master --tags && npm publish --access public",
     "release:minor": "npm test && npm version minor -m \"chore: release\" && git push origin master --tags && npm publish --access public",
