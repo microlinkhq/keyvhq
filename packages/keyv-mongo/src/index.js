@@ -65,7 +65,6 @@ class KeyvMongo extends EventEmitter {
 	}
 
 	get(key) {
-		this.connect.then(console.log);
 		return this.connect
 			.then(store => store.findOne({ key: { $eq: key } })
 				.then(doc => {
@@ -91,7 +90,7 @@ class KeyvMongo extends EventEmitter {
 
 		return this.connect
 			.then(store => store.deleteOne({ key: { $eq: key } })
-				.then(object => object.n > 0)
+				.then(object => object.deletedCount > 0)
 			);
 	}
 

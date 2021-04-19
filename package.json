@@ -2,6 +2,14 @@
   "name": "@keyvhq/mono",
   "private": "true",
   "devDependencies": {
+    "@keyvhq/keyv": "./packages/keyv",
+    "@keyvhq/keyv-mongo": "./packages/keyv-mongo",
+    "@keyvhq/keyv-mysql": "./packages/keyv-mysql",
+    "@keyvhq/keyv-postgres": "./packages/keyv-postgres",
+    "@keyvhq/keyv-redis": "./packages/keyv-redis",
+    "@keyvhq/keyv-sql": "./packages/keyv-sql",
+    "@keyvhq/keyv-sqlite": "./packages/keyv-sqlite",
+    "@keyvhq/keyv-test-suite": "./packages/keyv-test-suite",
     "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "delay": "^4.3.0",
@@ -44,15 +52,5 @@
   ],
   "workspaces": [
     "packages/*"
-  ],
-  "dependencies": {
-    "@keyvhq/keyv": "./packages/keyv",
-    "@keyvhq/keyv-mongo": "./packages/keyv-mongo",
-    "@keyvhq/keyv-mysql": "./packages/keyv-mysql",
-    "@keyvhq/keyv-postgres": "./packages/keyv-postgres",
-    "@keyvhq/keyv-redis": "./packages/keyv-redis",
-    "@keyvhq/keyv-sql": "./packages/keyv-sql",
-    "@keyvhq/keyv-sqlite": "./packages/keyv-sqlite",
-    "@keyvhq/keyv-test-suite": "./packages/keyv-test-suite"
-  }
+  ]
 }
