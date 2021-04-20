@@ -2,19 +2,20 @@
   "name": "@keyvhq/mono",
   "private": "true",
   "devDependencies": {
-    "@keyvhq/keyv": "./packages/keyv",
-    "@keyvhq/keyv-mongo": "./packages/keyv-mongo",
-    "@keyvhq/keyv-mysql": "./packages/keyv-mysql",
-    "@keyvhq/keyv-postgres": "./packages/keyv-postgres",
-    "@keyvhq/keyv-redis": "./packages/keyv-redis",
-    "@keyvhq/keyv-sql": "./packages/keyv-sql",
-    "@keyvhq/keyv-sqlite": "./packages/keyv-sqlite",
-    "@keyvhq/keyv-test-suite": "./packages/keyv-test-suite",
+    "@keyvhq/keyv": "file:./packages/keyv",
+    "@keyvhq/keyv-mongo": "file:packages/keyv-mongo",
+    "@keyvhq/keyv-mysql": "file:packages/keyv-mysql",
+    "@keyvhq/keyv-postgres": "file:packages/keyv-postgres",
+    "@keyvhq/keyv-redis": "file:packages/keyv-redis",
+    "@keyvhq/keyv-sql": "file:packages/keyv-sql",
+    "@keyvhq/keyv-sqlite": "file:packages/keyv-sqlite",
+    "@keyvhq/keyv-test-suite": "file:packages/keyv-test-suite",
     "ava": "^3.15.0",
     "coveralls": "^3.0.0",
     "delay": "^4.3.0",
     "dotenv": "^8.2.0",
     "eslint-config-xo-lukechilds": "^1.0.0",
+    "knex": "^0.95.4",
     "lerna": "^4.0.0",
     "nyc": "^15.1.0",
     "pify": "^5.0.0",
@@ -31,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url" : "git+https://github.com/keyvhq/keyv.git"
+    "url": "git+https://github.com/keyvhq/keyv.git"
   },
   "keywords": [
     "keyv",
