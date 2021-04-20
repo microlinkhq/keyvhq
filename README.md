@@ -7,9 +7,9 @@
 > Simple key-value storage with support for multiple backends
 
 [![Tests](https://github.com/keyvhq/keyv/actions/workflows/test.yml/badge.svg)](https://github.com/keyvhq/keyv/actions/workflows/test.yml)
-
 [![npm](https://img.shields.io/npm/dm/@keyvhq/keyv.svg)](https://www.npmjs.com/package/@keyvhq/keyv)
 [![npm](https://img.shields.io/npm/v/@keyvhq/keyv.svg)](https://www.npmjs.com/package/@keyvhq/keyv)
+[![Coverage Status](https://coveralls.io/repos/github/keyvhq/keyv/badge.svg?branch=master)](https://coveralls.io/github/keyvhq/keyv?branch=master)
 
 Keyv provides a consistent interface for key-value storage across multiple backends via storage adapters. It supports TTL based expiry, making it suitable as a cache or a persistent key-value store.
 
