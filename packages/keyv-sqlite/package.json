@@ -37,11 +37,5 @@
     "pify": "5.0.0",
     "sqlite3": "^5.0.2"
   },
-  "devDependencies": {
-    "@keyvhq/keyv-test-suite": "file:../keyv-test-suite"
-  },
-  "directories": {
-    "test": "test"
-  },
   "gitHead": "a4e2c1f285236a753de13eb8a42d9a98690526cc"
 }

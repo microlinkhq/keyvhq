@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [15.x]
+        node-version: [12.x, 14.x, 15.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     env:
       MYSQL_DB_DATABASE: keyv_test
@@ -56,6 +56,7 @@ jobs:
         sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
         sudo systemctl restart postgresql.service
         pg_isready
+
     - run: yarn install
     - run: yarn test
     - name: Report

@@ -31,13 +31,9 @@ class TestSqlite extends KeyvSql {
 
 const store = () => new TestSqlite();
 keyvTestSuite(test, Keyv, store);
-
-test('Default key data type is VARCHAR(255)', t => {
-	const store = new TestSqlite();
-	t.is(store.entry.key.dataType, 'VARCHAR(255)');
-});
-
-test('keySize option overrides default', t => {
-	const store = new TestSqlite({ keySize: 100 });
-	t.is(store.entry.key.dataType, 'VARCHAR(100)');
-});
+const keyv = store();
+test.serial(`basic`, async(t) => {
+	const keyv = new Keyv({ store: store() });
+	await keyv.set('foo', 0);
+	t.is(await keyv.get('foo'), 0)
+})

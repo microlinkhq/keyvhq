@@ -37,8 +37,5 @@
     "@keyvhq/keyv-sql": "file:../keyv-sql",
     "mysql2": "2.2.5"
   },
-  "devDependencies": {
-    "@keyvhq/keyv-test-suite": "file:../keyv-test-suite"
-  },
   "gitHead": "a4e2c1f285236a753de13eb8a42d9a98690526cc"
 }
