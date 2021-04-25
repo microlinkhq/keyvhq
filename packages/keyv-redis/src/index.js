@@ -2,6 +2,7 @@
 
 const EventEmitter = require('events');
 const Redis = require('ioredis');
+const pify = require('pify');
 
 class KeyvRedis extends EventEmitter {
 	constructor(uri, options) {
@@ -60,6 +61,23 @@ class KeyvRedis extends EventEmitter {
 		return this.redis.smembers(this._getNamespace())
 			.then(keys => this.redis.del(keys.concat(this._getNamespace())))
 			.then(() => undefined);
+	}
+
+	async * iterator() {
+		const scan = pify(this.keyv.options.store.redis.scan).bind(this.keyv.options.store.redis);
+
+		async function * iterate(curs, pattern) {
+			const [cursor, keys] = await scan(curs, 'MATCH', pattern);
+			for (const key of keys) {
+				yield key;
+			}
+
+			if (cursor !== '0') {
+				yield * iterate(cursor, pattern);
+			}
+		}
+
+		yield * iterate(0, `${this.keyv.options.namespace}:*`);
 	}
 }
 
