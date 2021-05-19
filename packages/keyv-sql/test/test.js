@@ -31,9 +31,13 @@ class TestSqlite extends KeyvSql {
 
 const store = () => new TestSqlite();
 keyvTestSuite(test, Keyv, store);
-const keyv = store();
-test.serial(`basic`, async(t) => {
+
+test('Async Iterator', async t => {
 	const keyv = new Keyv({ store: store() });
-	await keyv.set('foo', 0);
-	t.is(await keyv.get('foo'), 0)
-})
+	await keyv.set('foo', 'bar');
+	const iterator = keyv.options.store.iterator();
+	for await (const key of iterator) {
+		console.log(key);
+		t.assert(key, 'foo');
+	}
+});
