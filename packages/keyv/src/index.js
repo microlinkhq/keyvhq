@@ -3,24 +3,6 @@
 const EventEmitter = require('events');
 const JSONB = require('json-buffer');
 
-const loadStore = options => {
-	const adapters = {
-		redis: '@keyvhq/keyv-redis',
-		mongodb: '@keyvhq/keyv-mongo',
-		mongo: '@keyvhq/keyv-mongo',
-		sqlite: '@keyvhq/keyv-sqlite',
-		postgresql: '@keyvhq/keyv-postgres',
-		postgres: '@keyvhq/keyv-postgres',
-		mysql: '@keyvhq/keyv-mysql'
-	};
-	if (options.adapter || options.uri) {
-		const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
-		return new (require(adapters[adapter]))(options);
-	}
-
-	return new Map();
-};
-
 class Keyv extends EventEmitter {
 	constructor(uri, options) {
 		super();
@@ -34,16 +16,13 @@ class Keyv extends EventEmitter {
 			options
 		);
 
-		if (!this.options.store) {
-			const adapteroptions = Object.assign({}, this.options);
-			this.options.store = loadStore(adapteroptions);
+		this.store = this.options.store || new Map();
+
+		if (typeof this.store.on === 'function') {
+			this.store.on('error', error => this.emit('error', error));
 		}
 
-		if (typeof this.options.store.on === 'function') {
-			this.options.store.on('error', error => this.emit('error', error));
-		}
-
-		this.options.store.namespace = this.options.namespace;
+		this.store.namespace = this.options.namespace;
 	}
 
 	_getKeyPrefix(key) {
@@ -52,7 +31,7 @@ class Keyv extends EventEmitter {
 
 	get(key, options) {
 		const keyPrefixed = this._getKeyPrefix(key);
-		const { store } = this.options;
+		const store = this.store;
 		return Promise.resolve()
 			.then(() => store.get(keyPrefixed))
 			.then(data => {
@@ -72,6 +51,19 @@ class Keyv extends EventEmitter {
 			});
 	}
 
+	has(key) {
+		const keyPrefixed = this._getKeyPrefix(key);
+		const store = this.store;
+		if (typeof store.has === 'function') {
+			return Promise.resolve()
+				.then(() => store.has(keyPrefixed));
+		}
+
+		return Promise.resolve()
+			.then(() => store.get(keyPrefixed))
+			.then(data => data !== undefined);
+	}
+
 	set(key, value, ttl) {
 		const keyPrefixed = this._getKeyPrefix(key);
 		if (typeof ttl === 'undefined') {
@@ -82,7 +74,7 @@ class Keyv extends EventEmitter {
 			ttl = undefined;
 		}
 
-		const { store } = this.options;
+		const store = this.store;
 
 		return Promise.resolve()
 			.then(() => {
@@ -96,13 +88,13 @@ class Keyv extends EventEmitter {
 
 	delete(key) {
 		const keyPrefixed = this._getKeyPrefix(key);
-		const { store } = this.options;
+		const store = this.store;
 		return Promise.resolve()
 			.then(() => store.delete(keyPrefixed));
 	}
 
 	clear() {
-		const { store } = this.options;
+		const store = this.store;
 		return Promise.resolve()
 			.then(() => store.clear());
 	}
