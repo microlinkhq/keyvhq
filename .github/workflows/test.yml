@@ -44,6 +44,8 @@ jobs:
       run: |
         sudo /etc/init.d/mysql start
         mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+        mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+
     - name: Start PostgreSQL on Ubuntu
       run: |
         sudo systemctl start postgresql.service
