@@ -64,12 +64,17 @@ class KeyvRedis extends EventEmitter {
 	}
 
 	async * iterator() {
-		const scan = pify(this.keyv.options.store.redis.scan).bind(this.keyv.options.store.redis);
+		const scan = pify(this.redis.scan).bind(this.keyv.options.store.redis);
 
 		async function * iterate(curs, pattern) {
 			const [cursor, keys] = await scan(curs, 'MATCH', pattern);
-			for (const key of keys) {
-				yield key;
+			const values = this.redis.mget(keys);
+			for (const i in keys) {
+				if (Object.prototype.hasOwnProperty.call(keys, i)) {
+					const key = keys[i];
+					const value = values[i];
+					yield [key, value];
+				}
 			}
 
 			if (cursor !== '0') {

@@ -5,7 +5,6 @@ class KeyvSql extends EventEmitter {
 	constructor(options) {
 		super();
 		this.ttlSupport = false;
-		this.asyncIteratorSupport = false;
 
 		this.options = Object.assign({
 			table: 'keyv',
@@ -83,7 +82,7 @@ class KeyvSql extends EventEmitter {
 
 			for (const entry of entries) {
 				offset += 1;
-				yield entry.key;
+				yield [entry.key, entry.value];
 			}
 
 			if (offset !== '0') {

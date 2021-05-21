@@ -30,3 +30,4 @@ test('Collection option merges into default options if URL is passed', t => {
 		collection: 'foo'
 	});
 });
+
