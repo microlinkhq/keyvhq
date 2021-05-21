@@ -26,12 +26,18 @@ class Keyv extends EventEmitter {
 		this.store.namespace = this.options.namespace;
 
 		const generateIterator = iterator => async function * () {
-			for await (const [key, value] of iterator) {
-				if (!key.includes(this.options.namespace) || typeof value !== 'object') {
+			for await (const [key, raw] of iterator) {
+				const data = (typeof raw === 'string') ? this.options.deserialize(raw) : raw;
+				if (!key.includes(this.options.namespace) || typeof data !== 'object') {
 					continue;
 				}
 
-				yield [this._getKeyUnprefix(key), value.value];
+				if (typeof data.expires === 'number' && Date.now() > data.expires) {
+					this.delete(key);
+					continue;
+				}
+
+				yield [this._getKeyUnprefix(key), data.value];
 			}
 		};
 
