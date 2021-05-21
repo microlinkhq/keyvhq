@@ -15,6 +15,8 @@ class Keyv extends EventEmitter {
 			options
 		);
 
+		this.store = this.options.store;
+
 		if (!this.store) {
 			this.store = new Map();
 		}
@@ -92,7 +94,6 @@ class Keyv extends EventEmitter {
 		}
 
 		const store = this.store;
-
 		return Promise.resolve()
 			.then(() => {
 				const expires = (typeof ttl === 'number') ? (Date.now() + ttl) : null;
