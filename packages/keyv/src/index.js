@@ -28,7 +28,7 @@ class Keyv extends EventEmitter {
 		this.store.namespace = this.options.namespace;
 
 		const generateIterator = iterator => async function * () {
-			for await (const [key, raw] of iterator()) {
+			for await (const [key, raw] of (typeof iterator === 'function' ? iterator() : iterator)) {
 				const data = (typeof raw === 'string') ? this.options.deserialize(raw) : raw;
 				if (!key.includes(this.options.namespace) || typeof data !== 'object') {
 					continue;
