@@ -47,7 +47,7 @@ class Keyv extends EventEmitter {
 		if (typeof this.store[Symbol.iterator] === 'function' && this.store instanceof Map) {
 			this.iterator = generateIterator(this.store);
 		} else if (typeof this.store.iterator === 'function') {
-			this.iterator = generateIterator(this.store.iterator);
+			this.iterator = generateIterator(this.store.iterator.bind(this.store));
 		} else {
 			this.iteratorSupport = false;
 		}
