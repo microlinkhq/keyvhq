@@ -3,26 +3,8 @@
 const EventEmitter = require('events');
 const JSONB = require('json-buffer');
 
-const loadStore = options => {
-	const adapters = {
-		redis: '@keyvhq/keyv-redis',
-		mongodb: '@keyvhq/keyv-mongo',
-		mongo: '@keyvhq/keyv-mongo',
-		sqlite: '@keyvhq/keyv-sqlite',
-		postgresql: '@keyvhq/keyv-postgres',
-		postgres: '@keyvhq/keyv-postgres',
-		mysql: '@keyvhq/keyv-mysql'
-	};
-	if (options.adapter || options.uri) {
-		const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
-		return new (require(adapters[adapter]))(options);
-	}
-
-	return new Map();
-};
-
 class Keyv extends EventEmitter {
-	constructor(uri, options) {
+	constructor(options) {
 		super();
 		this.options = Object.assign(
 			{
@@ -30,29 +12,58 @@ class Keyv extends EventEmitter {
 				serialize: JSONB.stringify,
 				deserialize: JSONB.parse
 			},
-			(typeof uri === 'string') ? { uri } : uri,
 			options
 		);
 
-		if (!this.options.store) {
-			const adapteroptions = Object.assign({}, this.options);
-			this.options.store = loadStore(adapteroptions);
+		this.store = this.options.store;
+
+		if (!this.store) {
+			this.store = new Map();
 		}
 
-		if (typeof this.options.store.on === 'function') {
-			this.options.store.on('error', error => this.emit('error', error));
+		if (typeof this.store.on === 'function') {
+			this.store.on('error', error => this.emit('error', error));
 		}
 
-		this.options.store.namespace = this.options.namespace;
+		this.store.namespace = this.options.namespace;
+
+		const generateIterator = iterator => async function * () {
+			for await (const [key, raw] of iterator) {
+				const data = (typeof raw === 'string') ? this.options.deserialize(raw) : raw;
+				if (!key.includes(this.options.namespace) || typeof data !== 'object') {
+					continue;
+				}
+
+				if (typeof data.expires === 'number' && Date.now() > data.expires) {
+					this.delete(key);
+					continue;
+				}
+
+				yield [this._getKeyUnprefix(key), data.value];
+			}
+		};
+
+		// Attach iterators
+		if (typeof this.store[Symbol.iterator] === 'function' && this.store instanceof Map) {
+			this.iterator = generateIterator(this.store);
+		} else if (typeof this.store.iterator === 'function') {
+			this.iterator = generateIterator(this.store.iterator());
+		} else {
+			this.iteratorSupport = false;
+		}
 	}
 
 	_getKeyPrefix(key) {
 		return `${this.options.namespace}:${key}`;
 	}
 
+	_getKeyUnprefix(key) {
+		return key.split(':').splice(1).join(':');
+	}
+
 	get(key, options) {
 		const keyPrefixed = this._getKeyPrefix(key);
-		const { store } = this.options;
+		const store = this.store;
 		return Promise.resolve()
 			.then(() => store.get(keyPrefixed))
 			.then(data => {
@@ -82,8 +93,7 @@ class Keyv extends EventEmitter {
 			ttl = undefined;
 		}
 
-		const { store } = this.options;
-
+		const store = this.store;
 		return Promise.resolve()
 			.then(() => {
 				const expires = (typeof ttl === 'number') ? (Date.now() + ttl) : null;
@@ -96,16 +106,15 @@ class Keyv extends EventEmitter {
 
 	delete(key) {
 		const keyPrefixed = this._getKeyPrefix(key);
-		const { store } = this.options;
+		const store = this.store;
 		return Promise.resolve()
 			.then(() => store.delete(keyPrefixed));
 	}
 
 	clear() {
-		const { store } = this.options;
+		const store = this.store;
 		return Promise.resolve()
 			.then(() => store.clear());
 	}
 }
-
 module.exports = Keyv;

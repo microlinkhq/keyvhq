@@ -100,9 +100,12 @@ class KeyvMongo extends EventEmitter {
 				.then(() => undefined));
 	}
 
-	iterator() {
-		return this.connect
-			.then(store => store.find({ key: new RegExp(`^${this.namespace}:`) }));
+	async * iterator() {
+		const iterator = await this.connect
+			.then(store => store.find({ key: new RegExp(`^${this.namespace}:`) }).map(x => {
+				return [x.key, x.value];
+			}));
+		yield * iterator;
 	}
 }
 module.exports = KeyvMongo;
