@@ -28,7 +28,7 @@ class Keyv extends EventEmitter {
 		this.store.namespace = this.options.namespace;
 
 		const generateIterator = iterator => async function * () {
-			for await (const [key, raw] of iterator) {
+			for await (const [key, raw] of iterator()) {
 				const data = (typeof raw === 'string') ? this.options.deserialize(raw) : raw;
 				if (!key.includes(this.options.namespace) || typeof data !== 'object') {
 					continue;
@@ -47,7 +47,7 @@ class Keyv extends EventEmitter {
 		if (typeof this.store[Symbol.iterator] === 'function' && this.store instanceof Map) {
 			this.iterator = generateIterator(this.store);
 		} else if (typeof this.store.iterator === 'function') {
-			this.iterator = generateIterator(this.store.iterator());
+			this.iterator = generateIterator(this.store.iterator);
 		} else {
 			this.iteratorSupport = false;
 		}
