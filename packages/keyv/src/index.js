@@ -25,7 +25,7 @@ class Keyv extends EventEmitter {
 			this.store.on('error', error => this.emit('error', error));
 		}
 
-		this.store.namespace = this.options.namespace;
+		this.store.namespace = this.options.namespace ? this.options.namespace + ':' : '';
 
 		const generateIterator = iterator => async function * () {
 			for await (const [key, raw] of (typeof iterator === 'function' ? iterator() : iterator)) {
