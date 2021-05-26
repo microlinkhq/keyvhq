@@ -4,7 +4,7 @@ const EventEmitter = require('events');
 const JSONB = require('json-buffer');
 
 class Keyv extends EventEmitter {
-	constructor(uri, options) {
+	constructor(options) {
 		super();
 		this.options = Object.assign(
 			{
@@ -12,7 +12,6 @@ class Keyv extends EventEmitter {
 				serialize: JSONB.stringify,
 				deserialize: JSONB.parse
 			},
-			(typeof uri === 'string') ? { uri } : uri,
 			options
 		);
 
@@ -22,11 +21,40 @@ class Keyv extends EventEmitter {
 			this.store.on('error', error => this.emit('error', error));
 		}
 
-		this.store.namespace = this.options.namespace;
+		this.store.namespace = this.options.namespace ? this.options.namespace + ':' : '';
+
+		const generateIterator = iterator => async function * () {
+			for await (const [key, raw] of (typeof iterator === 'function' ? iterator() : iterator)) {
+				const data = (typeof raw === 'string') ? this.options.deserialize(raw) : raw;
+				if (!key.includes(this.options.namespace) || typeof data !== 'object') {
+					continue;
+				}
+
+				if (typeof data.expires === 'number' && Date.now() > data.expires) {
+					this.delete(key);
+					continue;
+				}
+
+				yield [this._getKeyUnprefix(key), data.value];
+			}
+		};
+
+		// Attach iterators
+		if (typeof this.store[Symbol.iterator] === 'function' && this.store instanceof Map) {
+			this.iterator = generateIterator(this.store);
+		} else if (typeof this.store.iterator === 'function') {
+			this.iterator = generateIterator(this.store.iterator.bind(this.store));
+		} else {
+			this.iteratorSupport = false;
+		}
 	}
 
 	_getKeyPrefix(key) {
-		return `${this.options.namespace}:${key}`;
+		return this.options.namespace ? `${this.options.namespace}:${key}` : key;
+	}
+
+	_getKeyUnprefix(key) {
+		return key.split(':').splice(1).join(':');
 	}
 
 	get(key, options) {
@@ -75,7 +103,6 @@ class Keyv extends EventEmitter {
 		}
 
 		const store = this.store;
-
 		return Promise.resolve()
 			.then(() => {
 				const expires = (typeof ttl === 'number') ? (Date.now() + ttl) : null;
@@ -99,5 +126,4 @@ class Keyv extends EventEmitter {
 			.then(() => store.clear());
 	}
 }
-
 module.exports = Keyv;

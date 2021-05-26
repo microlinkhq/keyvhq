@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/keyv-sql",
-  "version": "0.1.1-alpha.0",
+  "version": "0.2.0",
   "description": "Parent class for SQL based Keyv storage adapters",
   "main": "src/index.js",
   "scripts": {

@@ -5,7 +5,6 @@ class KeyvSql extends EventEmitter {
 	constructor(options) {
 		super();
 		this.ttlSupport = false;
-		this.asyncIteratorSupport = false;
 
 		this.options = Object.assign({
 			table: 'keyv',
@@ -66,14 +65,14 @@ class KeyvSql extends EventEmitter {
 	}
 
 	clear() {
-		const del = this.options.dialect === 'mysql' ? `DELETE FROM \`${this.options.table}\` WHERE (\`${this.options.table}\`.\`key\` LIKE '${this.namespace}:%')` : `DELETE FROM "${this.options.table}" WHERE ("${this.options.table}"."key" LIKE '${this.namespace}:%')`;
+		const del = this.options.dialect === 'mysql' ? `DELETE FROM \`${this.options.table}\` WHERE (\`${this.options.table}\`.\`key\` LIKE '${this.namespace}%')` : `DELETE FROM "${this.options.table}" WHERE ("${this.options.table}"."key" LIKE '${this.namespace}%')`;
 		return this.query(del)
 			.then(() => undefined);
 	}
 
 	async * iterator() {
 		const limit = Number.parseInt(this.options.iterationLimit, 10);
-		const selectChunk = this.options.dialect === 'mysql' ? `SELECT * FROM \`${this.options.table}\` WHERE (\`${this.options.table}\`.\`key\` LIKE '${this.namespace}:%') LIMIT ${limit} OFFSET ` : `SELECT * FROM "${this.options.table}" WHERE ("${this.options.table}"."key" LIKE '${this.namespace}:%') LIMIT ${limit} OFFSET `;
+		const selectChunk = this.options.dialect === 'mysql' ? `SELECT * FROM \`${this.options.table}\` WHERE (\`${this.options.table}\`.\`key\` LIKE '${this.namespace}%') LIMIT ${limit} OFFSET ` : `SELECT * FROM "${this.options.table}" WHERE ("${this.options.table}"."key" LIKE '${this.namespace}%') LIMIT ${limit} OFFSET `;
 
 		async function * iterate(offset, query) {
 			const entries = await query(selectChunk + offset);
@@ -83,7 +82,7 @@ class KeyvSql extends EventEmitter {
 
 			for (const entry of entries) {
 				offset += 1;
-				yield entry.key;
+				yield [entry.key, entry.value];
 			}
 
 			if (offset !== '0') {
