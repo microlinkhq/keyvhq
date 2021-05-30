@@ -1,8 +1,8 @@
 'use strict';
 
 const EventEmitter = require('events');
+const pEvent = require('p-event');
 const Redis = require('ioredis');
-const pify = require('pify');
 
 class KeyvRedis extends EventEmitter {
 	constructor(uri, options) {
@@ -11,60 +11,55 @@ class KeyvRedis extends EventEmitter {
 		if (uri instanceof Redis) {
 			this.redis = uri;
 		} else {
-			options = Object.assign({}, typeof uri === 'string' ? { uri } : uri, options);
+			options = Object.assign(
+				{},
+				typeof uri === 'string' ? { uri } : uri,
+				options
+			);
 			this.redis = new Redis(options.uri, options);
 		}
 
 		this.redis.on('error', error => this.emit('error', error));
 	}
 
-	_getNamespace() {
-		return `namespace:${this.namespace}`;
+	async get(key) {
+		const value = await this.redis.get(key);
+		return value === null ? undefined : value;
 	}
 
-	get(key) {
-		return this.redis.get(key)
-			.then(value => {
-				if (value === null) {
-					return undefined;
-				}
-
-				return value;
-			});
-	}
-
-	set(key, value, ttl) {
+	async set(key, value, ttl) {
 		if (typeof value === 'undefined') {
-			return Promise.resolve(undefined);
+			return undefined;
 		}
 
-		return Promise.resolve()
-			.then(() => {
-				if (typeof ttl === 'number') {
-					return this.redis.set(key, value, 'PX', ttl);
-				}
-
-				return this.redis.set(key, value);
-			})
-			.then(() => this.redis.sadd(this._getNamespace(), key));
+		return typeof ttl === 'number' ?
+			this.redis.set(key, value, 'PX', ttl) :
+			this.redis.set(key, value);
 	}
 
-	delete(key) {
-		return this.redis.del(key)
-			.then(items => {
-				return this.redis.srem(this._getNamespace(), key)
-					.then(() => items > 0);
-			});
+	async delete(key) {
+		const result = await this.redis.unlink(key);
+		return result > 0;
 	}
 
-	clear() {
-		return this.redis.smembers(this._getNamespace())
-			.then(keys => this.redis.del(keys.concat(this._getNamespace())))
-			.then(() => undefined);
+	async clear() {
+		if (this.namespace === undefined) {
+			await this.redis.flushall();
+			return undefined;
+		}
+
+		const stream = this.redis.scanStream({ match: `${this.namespace}*` });
+
+		const keys = [];
+		stream.on('data', matchedKeys => keys.push(...matchedKeys));
+		await pEvent(stream, 'end');
+		if (keys.length > 0) {
+			await this.redis.unlink(keys);
+		}
 	}
 
 	async * iterator() {
-		const scan = pify(this.redis.scan).bind(this.redis);
+		const scan = this.redis.scan.bind(this.redis);
 		const get = this.redis.mget.bind(this.redis);
 		async function * iterate(curs, pattern) {
 			const [cursor, keys] = await scan(curs, 'MATCH', pattern);
@@ -82,7 +77,7 @@ class KeyvRedis extends EventEmitter {
 			}
 		}
 
-		yield * iterate(0, `${this.namespace}:*`);
+		yield * iterate(0, `${this.namespace}*`);
 	}
 }
 
