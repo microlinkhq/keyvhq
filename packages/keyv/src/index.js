@@ -25,8 +25,6 @@ class Keyv extends EventEmitter {
 			this.store.on('error', error => this.emit('error', error));
 		}
 
-		this.store.namespace = this.options.namespace ? this.options.namespace + ':' : '';
-
 		const generateIterator = iterator => async function * () {
 			for await (const [key, raw] of (typeof iterator === 'function' ? iterator() : iterator)) {
 				const data = (typeof raw === 'string') ? this.options.deserialize(raw) : raw;
@@ -58,7 +56,7 @@ class Keyv extends EventEmitter {
 	}
 
 	_getKeyUnprefix(key) {
-		return key.split(':').splice(1).join(':');
+		return this.options.namespace ? key.split(':').splice(1).join(':') : key;
 	}
 
 	get(key, options) {

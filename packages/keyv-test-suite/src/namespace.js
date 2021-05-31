@@ -39,7 +39,7 @@ const keyvNamepsaceTests = (test, Keyv, store) => {
 		t.is(await keyv2.get('bar'), 'keyv2');
 	});
 
-	test.serial('no namespaced clear only clears current namespace', async t => {
+	test.serial('no namespaced clear clears all stores', async t => {
 		const keyv1 = new Keyv({ store: store(), namespace: false });
 		const keyv2 = new Keyv({ store: store(), namespace: 'keyv2' });
 		await keyv1.set('foo', 'keyv1');
@@ -49,8 +49,8 @@ const keyvNamepsaceTests = (test, Keyv, store) => {
 		await keyv1.clear();
 		t.is(await keyv1.get('foo'), undefined);
 		t.is(await keyv1.get('bar'), undefined);
-		t.is(await keyv2.get('foo'), 'keyv2');
-		t.is(await keyv2.get('bar'), 'keyv2');
+		t.is(await keyv2.get('foo'), undefined);
+		t.is(await keyv2.get('bar'), undefined);
 	});
 
 	test.after.always(async () => {

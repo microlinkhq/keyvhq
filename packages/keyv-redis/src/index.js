@@ -77,7 +77,7 @@ class KeyvRedis extends EventEmitter {
 			}
 		}
 
-		yield * iterate(0, `${this.namespace}:*`);
+		yield * iterate(0, `${this.namespace ? this.namespace + ':' : ''}*`);
 	}
 }
 

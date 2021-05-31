@@ -96,13 +96,13 @@ class KeyvMongo extends EventEmitter {
 
 	clear() {
 		return this.connect
-			.then(store => store.deleteMany({ key: new RegExp(`^${this.namespace}`) })
+			.then(store => store.deleteMany({ key: new RegExp(`^${this.namespace ? this.namespace + ':' : '.*'}`) })
 				.then(() => undefined));
 	}
 
 	async * iterator() {
 		const iterator = await this.connect
-			.then(store => store.find({ key: new RegExp(`^${this.namespace}`) }).map(x => {
+			.then(store => store.find({ key: new RegExp(`^${this.namespace ? this.namespace + ':' : '.*'}`) }).map(x => {
 				return [x.key, x.value];
 			}));
 		yield * iterator;
