@@ -14,8 +14,12 @@ class Keyv extends EventEmitter {
 			},
 			options
 		);
+		if (options.namespace === false || options.namespace === null || options.namespace === '') {
+			this.options.namespace = undefined;
+		}
 
 		this.store = this.options.store;
+		this.store.namespace = this.options.namespace;
 
 		if (!this.store) {
 			this.store = new Map();
