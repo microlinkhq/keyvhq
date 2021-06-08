@@ -1,3 +1,5 @@
+'use strict';
+
 const EventEmitter = require('events');
 const pEvent = require('p-event');
 const Redis = require('ioredis');
@@ -18,24 +20,6 @@ class KeyvRedis extends EventEmitter {
 		}
 
 		this.redis.on('error', error => this.emit('error', error));
-	}
-
-	async _getAll({ onlyKeys = false } = {}) {
-		const stream = this.redis.scanStream({ match: `${this.namespace}*` });
-		const mget = this.redis.mget.bind(this.redis);
-		const data = [];
-
-		stream.on('data', async matchedKeys => {
-			if (onlyKeys) {
-				data.push(...matchedKeys);
-			} else {
-				const values = await mget(matchedKeys);
-				data.push(...matchedKeys.map((key, index) => ([key, values[index]])));
-			}
-		});
-
-		await pEvent(stream, 'end');
-		return data;
 	}
 
 	async get(key) {
@@ -64,85 +48,36 @@ class KeyvRedis extends EventEmitter {
 			return undefined;
 		}
 
-		const keys = await this._getAll({ onlyKeys: true });
+		const stream = this.redis.scanStream({ match: `${this.namespace}:*` });
+
+		const keys = [];
+		stream.on('data', matchedKeys => keys.push(...matchedKeys));
+		await pEvent(stream, 'end');
 		if (keys.length > 0) {
 			await this.redis.unlink(keys);
 		}
 	}
 
-	iterator() {
-		const stream = this.redis.scanStream({ match: `${this.namespace}*` });
-		const mget = this.redis.mget.bind(this.redis);
-		const pullQueue = [];
-		const pushQueue = [];
-		let done = false;
-
-		// From https://github.com/mattkrick/asynciterify/blob/master/src/index.js
-		const pushValue = async args => {
-			if (pullQueue.length > 0) {
-				const resolver = pullQueue.shift();
-				resolver(args);
-			} else {
-				pushQueue.push(args);
-			}
-		};
-
-		const pullValue = () => {
-			return new Promise(resolve => {
-				if (pushQueue.length > 0) {
-					const args = pushQueue.shift();
-					resolve(args);
-				} else {
-					pullQueue.push(resolve);
+	async * iterator() {
+		const scan = this.redis.scan.bind(this.redis);
+		const get = this.redis.mget.bind(this.redis);
+		async function * iterate(curs, pattern) {
+			const [cursor, keys] = await scan(curs, 'MATCH', pattern);
+			const values = await get(keys);
+			for (const i in keys) {
+				if (Object.prototype.hasOwnProperty.call(keys, i)) {
+					const key = keys[i];
+					const value = values[i];
+					yield [key, value];
 				}
-			});
-		};
-
-		const handler = async matchedKeys => {
-			console.log(matchedKeys);
-			if (matchedKeys.length === 0) {
-				return;
 			}
 
-			const values = await mget(matchedKeys);
-			const entries = [...matchedKeys.map((key, index) => [key, values[index]])];
-			for (const entry of entries) {
-				pushValue(entry);
+			if (cursor !== '0') {
+				yield * iterate(cursor, pattern);
 			}
-		};
+		}
 
-		stream.on('data', handler);
-		stream.on('end', () => {
-			console.log('end');
-			asyncIterator.return();
-		});
-		const asyncIterator = {
-			[Symbol.asyncIterator]() {
-				return this;
-			},
-			next: () => {
-				const value = pullValue();
-				value.then(x => console.log('m', x));
-				return {
-					done,
-					value: done ? undefined : value
-				};
-			},
-			return: () => {
-				console.log('stopping');
-				done = true;
-				stream.off('on', handler);
-				return { done };
-			},
-			throw: error => {
-				done = true;
-				return {
-					done,
-					value: Promise.reject(error)
-				};
-			}
-		};
-		return asyncIterator;
+		yield * iterate(0, `${this.namespace ? this.namespace + ':' : ''}*`);
 	}
 }
 
