@@ -96,7 +96,7 @@ class KeyvMongo extends EventEmitter {
 
 	clear() {
 		return this.connect
-			.then(store => store.deleteMany({ key: new RegExp(`^${this.namespace ? this.namespace + ':' : '.*'}`) })
+			.then(store => store.deleteMany({ key: new RegExp(`^${this.namespace + ':'}`) })
 				.then(() => undefined));
 	}
 

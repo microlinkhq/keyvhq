@@ -16,11 +16,12 @@ class Keyv extends EventEmitter {
 		);
 
 		this.store = this.options.store;
-		this.store.namespace = this.options.namespace;
 
 		if (!this.store) {
 			this.store = new Map();
 		}
+
+		this.store.namespace = this.options.namespace;
 
 		if (typeof this.store.on === 'function') {
 			this.store.on('error', error => this.emit('error', error));
@@ -111,6 +112,10 @@ class Keyv extends EventEmitter {
 	}
 
 	clear() {
+		if (!this.options.namespace) {
+			return Promise.resolve().then(() => undefined);
+		}
+
 		const store = this.store;
 		return Promise.resolve()
 			.then(() => store.clear());
