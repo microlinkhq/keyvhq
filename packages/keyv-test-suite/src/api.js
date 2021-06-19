@@ -101,6 +101,22 @@ const keyvApiTests = (test, Keyv, store) => {
 		t.is(await keyv.get('fizz'), undefined);
 	});
 
+	test.serial('.has(key) returns a Promise', t => {
+		const keyv = new Keyv({ store: store() });
+		t.true(keyv.has('foo') instanceof Promise);
+	});
+
+	test.serial('.has(key) resolves to true', async t => {
+		const keyv = new Keyv({ store: store() });
+		await keyv.set('foo', 'bar');
+		t.is(await keyv.has('foo'), true);
+	});
+
+	test.serial('.has(key) with nonexistent key resolves to false', async t => {
+		const keyv = new Keyv({ store: store() });
+		t.is(await keyv.has('foo'), false);
+	});
+
 	test.after.always(async () => {
 		const keyv = new Keyv({ store: store() });
 		await keyv.clear();

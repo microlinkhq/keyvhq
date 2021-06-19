@@ -15,11 +15,7 @@ class Keyv extends EventEmitter {
 			options
 		);
 
-		this.store = this.options.store;
-
-		if (!this.store) {
-			this.store = new Map();
-		}
+		this.store = this.options.store || new Map();
 
 		this.store.namespace = this.options.namespace;
 
@@ -81,6 +77,19 @@ class Keyv extends EventEmitter {
 
 				return (options && options.raw) ? data : data.value;
 			});
+	}
+
+	has(key) {
+		const keyPrefixed = this._getKeyPrefix(key);
+		const store = this.store;
+		if (typeof store.has === 'function') {
+			return Promise.resolve()
+				.then(() => store.has(keyPrefixed));
+		}
+
+		return Promise.resolve()
+			.then(() => store.get(keyPrefixed))
+			.then(data => data !== undefined);
 	}
 
 	set(key, value, ttl) {
