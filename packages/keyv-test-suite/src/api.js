@@ -114,7 +114,7 @@ const keyvApiTests = (test, Keyv, store) => {
 
 	test.serial('.has(key) with nonexistent key resolves to false', async t => {
 		const keyv = new Keyv({ store: store() });
-		t.is(await keyv.get('foo'), false);
+		t.is(await keyv.has('foo'), false);
 	});
 
 	test.after.always(async () => {
