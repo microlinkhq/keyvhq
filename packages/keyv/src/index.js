@@ -17,11 +17,11 @@ class Keyv extends EventEmitter {
 
 		this.store = this.options.store || new Map();
 
+		this.store.namespace = this.options.namespace;
+
 		if (typeof this.store.on === 'function') {
 			this.store.on('error', error => this.emit('error', error));
 		}
-
-		this.store.namespace = this.options.namespace ? this.options.namespace + ':' : '';
 
 		const generateIterator = iterator => async function * () {
 			for await (const [key, raw] of (typeof iterator === 'function' ? iterator() : iterator)) {
@@ -54,7 +54,7 @@ class Keyv extends EventEmitter {
 	}
 
 	_getKeyUnprefix(key) {
-		return key.split(':').splice(1).join(':');
+		return this.options.namespace ? key.split(':').splice(1).join(':') : key;
 	}
 
 	get(key, options) {
@@ -121,6 +121,10 @@ class Keyv extends EventEmitter {
 	}
 
 	clear() {
+		if (!this.options.namespace) {
+			return Promise.resolve().then(() => undefined);
+		}
+
 		const store = this.store;
 		return Promise.resolve()
 			.then(() => store.clear());

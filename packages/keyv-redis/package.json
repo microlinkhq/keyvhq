@@ -34,7 +34,8 @@
   },
   "homepage": "https://github.com/keyvhq/keyv",
   "dependencies": {
-    "ioredis": "~4.17.1"
+    "ioredis": "~4.17.1",
+    "p-event": "~4.2.0"
   },
   "gitHead": "a4e2c1f285236a753de13eb8a42d9a98690526cc"
 }
