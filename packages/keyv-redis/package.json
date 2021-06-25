@@ -32,7 +32,7 @@
   ],
   "scripts": {
     "posttest:docker": "docker-compose down --rmi local",
-    "test": "xo && nyc --no-clean --temp-dir ../../.nyc_output ava",
+    "test": "standard && nyc --no-clean --temp-dir ../../.nyc_output ava",
     "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
   },
   "license": "MIT",
@@ -40,8 +40,5 @@
     "require": [
       "requirable"
     ]
-  },
-  "xo": {
-    "extends": "xo-lukechilds"
   }
 }

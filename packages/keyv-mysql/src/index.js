@@ -1,28 +1,28 @@
-'use strict';
+'use strict'
 
-const KeyvSql = require('@keyvhq/keyv-sql');
-const mysql = require('mysql2/promise');
+const KeyvSql = require('@keyvhq/keyv-sql')
+const mysql = require('mysql2/promise')
 
 class KeyvMysql extends KeyvSql {
-	constructor(options) {
-		if (typeof options === 'string') {
-			options = { uri: options };
-		}
+  constructor (options) {
+    if (typeof options === 'string') {
+      options = { uri: options }
+    }
 
-		options = Object.assign({
-			dialect: 'mysql',
-			uri: 'mysql://localhost'
-		}, options);
+    options = Object.assign({
+      dialect: 'mysql',
+      uri: 'mysql://localhost'
+    }, options)
 
-		options.connect = () => Promise.resolve()
-			.then(() => mysql.createConnection(options.uri))
-			.then(connection => {
-				return sql => connection.execute(sql)
-					.then(data => data[0]);
-			});
+    options.connect = () => Promise.resolve()
+      .then(() => mysql.createConnection(options.uri))
+      .then(connection => {
+        return sql => connection.execute(sql)
+          .then(data => data[0])
+      })
 
-		super(options);
-	}
+    super(options)
+  }
 }
 
-module.exports = KeyvMysql;
+module.exports = KeyvMysql

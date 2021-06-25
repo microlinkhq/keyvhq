@@ -26,11 +26,8 @@
     "src"
   ],
   "scripts": {
-    "test": "xo && nyc --no-clean --temp-dir ../../.nyc_output ava test/keyv.js",
-    "test:full": "xo && nyc --no-clean --temp-dir ../../.nyc_output ava --serial"
+    "test": "standard && nyc --no-clean --temp-dir ../../.nyc_output ava test/keyv.js",
+    "test:full": "standard && nyc --no-clean --temp-dir ../../.nyc_output ava --serial"
   },
-  "license": "MIT",
-  "xo": {
-    "extends": "xo-lukechilds"
-  }
+  "license": "MIT"
 }

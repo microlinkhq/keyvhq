@@ -33,15 +33,12 @@
     "src"
   ],
   "scripts": {
-    "test": "xo && nyc --no-clean --temp-dir ../../.nyc_output ava --serial"
+    "test": "standard && nyc --no-clean --temp-dir ../../.nyc_output ava --serial"
   },
   "license": "MIT",
   "ava": {
     "require": [
       "requirable"
     ]
-  },
-  "xo": {
-    "extends": "xo-lukechilds"
   }
 }

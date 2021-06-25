@@ -34,10 +34,6 @@
     "release:major": "npm test && npm version major -m \"chore: release\" && git push origin master --tags && npm publish --access public",
     "release:minor": "npm test && npm version minor -m \"chore: release\" && git push origin master --tags && npm publish --access public",
     "release:patch": "npm test && npm version patch -m \"chore: release\" && git push origin master --tags && npm publish --access public",
-    "test": "xo && nyc --no-clean --temp-dir ../../.nyc_output ava"
-  },
-  "license": "MIT",
-  "xo": {
-    "extends": "xo-lukechilds"
+    "test": "standard && nyc --no-clean --temp-dir ../../.nyc_output ava"
   }
 }

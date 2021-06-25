@@ -1,7 +1,7 @@
-const test = require('ava');
-const keyvTestSuite = require('@keyvhq/keyv-test-suite');
-const Keyv = require('@keyvhq/keyv');
-const KeyvSqlite = require('../src/index.js');
+const test = require('ava')
+const keyvTestSuite = require('@keyvhq/keyv-test-suite')
+const Keyv = require('@keyvhq/keyv')
+const KeyvSqlite = require('../src/index.js')
 
-const store = () => new KeyvSqlite({ uri: 'sqlite://test/testdb.sqlite', busyTimeout: 30000 });
-keyvTestSuite(test, Keyv, store);
+const store = () => new KeyvSqlite({ uri: 'sqlite://test/testdb.sqlite', busyTimeout: 30000 })
+keyvTestSuite(test, Keyv, store)
