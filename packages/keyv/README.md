@@ -93,7 +93,7 @@ Keyv uses [`json-buffer`](https://github.com/dominictarr/json-buffer) for data s
 You can optionally provide your own serialization functions to support extra data types or to serialize to something other than JSON.
 
 ```js
-const keyv = new Keyv({ serialize: JSON.stringify, deserialize: JSON.parse });
+const keyv = new Keyv({ serialize: JSON.stringify, deserialize: JSON.parse })
 ```
 
 **Warning:** Using custom serializers means you lose any guarantee of data consistency. You should do extensive testing with your serialisation functions and chosen storage engine.
@@ -115,26 +115,26 @@ MySQL | [@keyv/mysql](https://github.com/lukechilds/keyv-mysql) | No | [![Build 
 You can also use third-party storage adapters or build your own. Keyv will wrap these storage adapters in TTL functionality and handle complex types internally.
 
 ```js
-const Keyv = require('keyv');
-const myAdapter = require('./my-storage-adapter');
+const Keyv = require('keyv')
+const myAdapter = require('./my-storage-adapter')
 
-const keyv = new Keyv({ store: myAdapter });
+const keyv = new Keyv({ store: myAdapter })
 ```
 
 Any store that follows the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) api will work.
 
 ```js
-new Keyv({ store: new Map() });
+new Keyv({ store: new Map() })
 ```
 
 For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is a completely unrelated module that implements the Map API.
 
 ```js
-const Keyv = require('keyv');
-const QuickLRU = require('quick-lru');
+const Keyv = require('keyv')
+const QuickLRU = require('quick-lru')
 
-const lru = new QuickLRU({ maxSize: 1000 });
-const keyv = new Keyv({ store: lru });
+const lru = new QuickLRU({ maxSize: 1000 })
+const keyv = new Keyv({ store: lru })
 ```
 
 The following are third-party storage adapters compatible with Keyv:
@@ -156,13 +156,13 @@ Inside your module:
 
 ```js
 class AwesomeModule {
-	constructor(opts) {
-		this.cache = new Keyv({
-			uri: typeof opts.cache === 'string' && opts.cache,
-			store: typeof opts.cache !== 'string' && opts.cache,
-			namespace: 'awesome-module'
-		});
-	}
+  constructor (opts) {
+    this.cache = new Keyv({
+      uri: typeof opts.cache === 'string' && opts.cache,
+      store: typeof opts.cache !== 'string' && opts.cache,
+      namespace: 'awesome-module'
+    })
+  }
 }
 ```
 
@@ -285,4 +285,5 @@ Returns a promise which is resolved when the entries have been cleared.
 
 ## License
 
-MIT © Luke Childs
+**keyv** © [Luke Childs](https://github.com/lukechilds), Released under the [MIT](/LICENSE.md) License.<br>
+Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/keyvhq/keyv/contributors).

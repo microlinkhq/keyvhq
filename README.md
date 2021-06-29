@@ -156,13 +156,13 @@ Inside your module:
 
 ```js
 class AwesomeModule {
-	constructor(opts) {
-		this.cache = new Keyv({
-			uri: typeof opts.cache === 'string' && opts.cache,
-			store: typeof opts.cache !== 'string' && opts.cache,
-			namespace: 'awesome-module'
-		});
-	}
+  constructor (opts) {
+    this.cache = new Keyv({
+      uri: typeof opts.cache === 'string' && opts.cache,
+      store: typeof opts.cache !== 'string' && opts.cache,
+      namespace: 'awesome-module'
+    })
+  }
 }
 ```
 
@@ -285,4 +285,5 @@ Returns a promise which is resolved when the entries have been cleared.
 
 ## License
 
-MIT © Luke Childs
+**keyv** © [Luke Childs](https://github.com/lukechilds), Released under the [MIT](/LICENSE.md) License.<br>
+Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/keyvhq/keyv/contributors).
