@@ -4,10 +4,10 @@
   "homepage": "https://github.com/keyvhq/keyv",
   "version": "0.2.0",
   "main": "src/index.js",
-  "author": {
-    "email": "lukechilds123@gmail.com",
-    "name": "Luke Childs",
-    "url": "http://lukechilds.co.uk"
+  "repository": {
+    "directory": "packages/keyv-sql",
+    "type": "git",
+    "url": "git+https://github.com/keyvhq/keyv.git"
   },
   "bugs": {
     "url": "https://github.com/keyvhq/keyv/issues"
@@ -23,6 +23,9 @@
     "ttl",
     "value"
   ],
+  "engines": {
+    "node": ">= 12"
+  },
   "files": [
     "src"
   ],

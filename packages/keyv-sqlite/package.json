@@ -4,10 +4,10 @@
   "homepage": "https://github.com/keyvhq/keyv",
   "version": "0.2.0",
   "main": "src/index.js",
-  "author": {
-    "email": "lukechilds123@gmail.com",
-    "name": "Luke Childs",
-    "url": "http://lukechilds.co.uk"
+  "repository": {
+    "directory": "packages/keyv-sqlite",
+    "type": "git",
+    "url": "git+https://github.com/keyvhq/keyv.git"
   },
   "bugs": {
     "url": "https://github.com/keyvhq/keyv/issues"
@@ -28,6 +28,9 @@
     "@keyvhq/keyv-sql": "~0.2.0",
     "pify": "5.0.0",
     "sqlite3": "^5.0.2"
+  },
+  "engines": {
+    "node": ">= 12"
   },
   "files": [
     "src"

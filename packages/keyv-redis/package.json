@@ -4,10 +4,10 @@
   "homepage": "https://github.com/keyvhq/keyv",
   "version": "0.2.0",
   "main": "src/index.js",
-  "author": {
-    "email": "lukechilds123@gmail.com",
-    "name": "Luke Childs",
-    "url": "http://lukechilds.co.uk"
+  "repository": {
+    "directory": "packages/keyv-redis",
+    "type": "git",
+    "url": "git+https://github.com/keyvhq/keyv.git"
   },
   "bugs": {
     "url": "https://github.com/keyvhq/keyv/issues"
@@ -26,6 +26,9 @@
   "dependencies": {
     "ioredis": "~4.17.1",
     "p-event": "~4.2.0"
+  },
+  "engines": {
+    "node": ">= 12"
   },
   "files": [
     "src"

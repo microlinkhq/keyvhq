@@ -1,6 +1,54 @@
 {
   "name": "@keyvhq/monorepo",
-  "private": "true",
+  "description": "",
+  "homepage": "https://github.com/keyvhq/keyv#readme",
+  "version": "Simple key-value storage with support for multiple backends",
+  "author": {
+    "email": "lukechilds123@gmail.com",
+    "name": "Luke Childs",
+    "url": "http://lukechilds.co.uk"
+  },
+  "contributors": [
+    "Casey Webb <notcaseywebb@gmail.com>",
+    "Dan Dascalescu <ddascalescu+github@gmail.com>",
+    "Dušan Simić <dusan.simic1810@gmail.com>",
+    "Jared Wray <jaredwray@gmail.com>",
+    "Jitendra Adhikari <jiten.adhikary@gmail.com>",
+    "Jérôme Desboeufs <jerome.desboeufs@gmail.com>",
+    "Kent C. Dodds <me+github@kentcdodds.com>",
+    "Kiko Beats <josefrancisco.verdu@gmail.com>",
+    "Mateu Aguiló Bosch <mateu@lullabot.com>",
+    "MySidesTheyAreGone <mysidestheyaregone@protonmail.com>",
+    "Paul Morgan III <pmorgan3@gmail.com>",
+    "Romuald Quantin <romu@soundstep.com>",
+    "Roney Rao <roneyrao@hotmail.com>",
+    "chocolateboy <chocolate@cpan.org>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keyvhq/keyv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/keyvhq/keyv/issues"
+  },
+  "keywords": [
+    "adapter",
+    "cache",
+    "key",
+    "keyv",
+    "mongo",
+    "mongodb",
+    "mysql",
+    "pgsql",
+    "redis",
+    "sql",
+    "sqlite",
+    "sqlite3",
+    "storage",
+    "store",
+    "ttl",
+    "value"
+  ],
   "devDependencies": {
     "ava": "^3.15.0",
     "delay": "^4.3.0",
@@ -15,7 +63,12 @@
     "this": "^1.0.2",
     "timekeeper": "^2.0.0"
   },
-  "author": "Jytesh & Kikobeats",
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "packages/**"
+  ],
   "scripts": {
     "clean": "lerna clean --yes && rm -rf node_modules",
     "contributors": "(lerna exec finepack --parallel && git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
@@ -28,28 +81,7 @@
     "update": "lerna exec ncu -- --upgrade && ncu -- --upgrade",
     "update:check": "lerna exec ncu -- --errorLevel 2 && ncu -- --errorLevel 2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/keyvhq/keyv.git"
-  },
-  "keywords": [
-    "keyv",
-    "cache",
-    "storage",
-    "adapter",
-    "key",
-    "value",
-    "store",
-    "ttl",
-    "mongo",
-    "mongodb",
-    "redis",
-    "sql",
-    "sqlite",
-    "sqlite3",
-    "mysql",
-    "pgsql"
-  ],
+  "private": "true",
   "workspaces": [
     "packages/*"
   ]
