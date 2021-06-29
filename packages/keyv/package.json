@@ -26,8 +26,8 @@
     "src"
   ],
   "scripts": {
-    "test": "standard && nyc --no-clean --temp-dir ../../.nyc_output ava test/keyv.js",
-    "test:full": "standard && nyc --no-clean --temp-dir ../../.nyc_output ava --serial"
+    "test": "nyc --temp-dir ../../.nyc_output ava test/keyv.js",
+    "test:full": "nyc --temp-dir ../../.nyc_output ava --serial"
   },
   "license": "MIT"
 }

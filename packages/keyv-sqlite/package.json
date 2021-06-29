@@ -33,7 +33,7 @@
     "src"
   ],
   "scripts": {
-    "test": "standard && nyc --no-clean --temp-dir ../../.nyc_output ava"
+    "test": "nyc --temp-dir ../../.nyc_output ava"
   },
   "license": "MIT",
   "ava": {
