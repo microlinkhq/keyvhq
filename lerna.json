@@ -3,10 +3,11 @@
     "packages/*"
   ],
   "version": "0.2.0",
-  "npmClient": "yarn",
-  "useWorkspaces": "true",
-  "stream": "true",
-  "publishConfig": {
-    "access": "public"
+  "command": {
+    "bootstrap": {
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
+    }
   }
 }

@@ -59,8 +59,8 @@ jobs:
         sudo systemctl restart postgresql.service
         pg_isready
 
-    - run: yarn install
-    - run: yarn test
+    - run: npm install --no-package-lock
+    - run: npm test
     - name: Report
       run: mkdir -p coverage && yarn run nyc report --reporter=text-lcov > coverage/lcov.info
     - name: Coverage

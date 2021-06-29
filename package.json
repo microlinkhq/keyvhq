@@ -1,28 +1,70 @@
 {
   "name": "@keyvhq/monorepo",
-  "description": "",
+  "description": "Simple key-value storage with support for multiple backends",
   "homepage": "https://github.com/keyvhq/keyv#readme",
-  "version": "Simple key-value storage with support for multiple backends",
+  "version": "",
   "author": {
     "email": "lukechilds123@gmail.com",
     "name": "Luke Childs",
     "url": "http://lukechilds.co.uk"
   },
   "contributors": [
-    "Casey Webb <notcaseywebb@gmail.com>",
-    "Dan Dascalescu <ddascalescu+github@gmail.com>",
-    "Dušan Simić <dusan.simic1810@gmail.com>",
-    "Jared Wray <jaredwray@gmail.com>",
-    "Jitendra Adhikari <jiten.adhikary@gmail.com>",
-    "Jérôme Desboeufs <jerome.desboeufs@gmail.com>",
-    "Kent C. Dodds <me+github@kentcdodds.com>",
-    "Kiko Beats <josefrancisco.verdu@gmail.com>",
-    "Mateu Aguiló Bosch <mateu@lullabot.com>",
-    "MySidesTheyAreGone <mysidestheyaregone@protonmail.com>",
-    "Paul Morgan III <pmorgan3@gmail.com>",
-    "Romuald Quantin <romu@soundstep.com>",
-    "Roney Rao <roneyrao@hotmail.com>",
-    "chocolateboy <chocolate@cpan.org>"
+    {
+      "name": "Casey Webb",
+      "email": "notcaseywebb@gmail.com"
+    },
+    {
+      "name": "Dan Dascalescu",
+      "email": "ddascalescu+github@gmail.com"
+    },
+    {
+      "name": "Dušan Simić",
+      "email": "dusan.simic1810@gmail.com"
+    },
+    {
+      "name": "Jared Wray",
+      "email": "jaredwray@gmail.com"
+    },
+    {
+      "name": "Jitendra Adhikari",
+      "email": "jiten.adhikary@gmail.com"
+    },
+    {
+      "name": "Jérôme Desboeufs",
+      "email": "jerome.desboeufs@gmail.com"
+    },
+    {
+      "name": "Kent C. Dodds",
+      "email": "me+github@kentcdodds.com"
+    },
+    {
+      "name": "Kiko Beats",
+      "email": "josefrancisco.verdu@gmail.com"
+    },
+    {
+      "name": "Mateu Aguiló Bosch",
+      "email": "mateu@lullabot.com"
+    },
+    {
+      "name": "MySidesTheyAreGone",
+      "email": "mysidestheyaregone@protonmail.com"
+    },
+    {
+      "name": "Paul Morgan III",
+      "email": "pmorgan3@gmail.com"
+    },
+    {
+      "name": "Romuald Quantin",
+      "email": "romu@soundstep.com"
+    },
+    {
+      "name": "Roney Rao",
+      "email": "roneyrao@hotmail.com"
+    },
+    {
+      "name": "chocolateboy",
+      "email": "chocolate@cpan.org"
+    }
   ],
   "repository": {
     "type": "git",
@@ -60,6 +102,7 @@
     "requirable": "latest",
     "sqlite3": "latest",
     "standard": "latest",
+    "standard-markdown": "latest",
     "this": "latest",
     "timekeeper": "latest"
   },
