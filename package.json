@@ -50,18 +50,18 @@
     "value"
   ],
   "devDependencies": {
-    "ava": "^3.15.0",
-    "delay": "^4.3.0",
-    "dotenv": "^8.2.0",
-    "knex": "^0.95.4",
-    "lerna": "^4.0.0",
-    "nyc": "^15.1.0",
-    "pify": "^5.0.0",
-    "requirable": "^1.0.1",
-    "sqlite3": "^5.0.2",
-    "standard": "^16.0.3",
-    "this": "^1.0.2",
-    "timekeeper": "^2.0.0"
+    "ava": "latest",
+    "delay": "latest",
+    "dotenv": "latest",
+    "knex": "latest",
+    "lerna": "latest",
+    "nyc": "latest",
+    "pify": "latest",
+    "requirable": "latest",
+    "sqlite3": "latest",
+    "standard": "latest",
+    "this": "latest",
+    "timekeeper": "latest"
   },
   "engines": {
     "node": ">= 12"
