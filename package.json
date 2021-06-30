@@ -92,7 +92,11 @@
     "value"
   ],
   "devDependencies": {
+    "@commitlint/cli": "latest",
+    "@commitlint/config-conventional": "latest",
     "lerna": "latest",
+    "lint-staged": "latest",
+    "simple-git-hooks": "latest",
     "standard": "latest"
   },
   "engines": {
@@ -114,6 +118,26 @@
     "update:check": "lerna exec ncu -- --errorLevel 2 && ncu -- --errorLevel 2"
   },
   "private": "true",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier-standard"
+    ],
+    "*.md": [
+      "standard-markdown"
+    ],
+    "package.json": [
+      "finepack"
+    ]
+  },
+  "simple-git-hooks": {
+    "commit-msg": "npx commitlint --edit",
+    "pre-commit": "npx lint-staged"
+  },
   "workspaces": [
     "packages/*"
   ]
