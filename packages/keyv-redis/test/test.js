@@ -4,7 +4,6 @@ const Keyv = require('@keyvhq/keyv')
 const KeyvRedis = require('../')
 const Redis = require('ioredis')
 
-require('dotenv').config()
 const { REDIS_HOST = 'localhost' } = process.env
 const redisURI = `redis://${REDIS_HOST}`
 
@@ -20,5 +19,5 @@ test('reuse a redis instance', async t => {
   await keyv.set('foo', 'bar')
   const value = await redis.get('foo')
   t.true(value === 'bar')
-  t.true(await keyv.get('foo') === value)
+  t.true((await keyv.get('foo')) === value)
 })

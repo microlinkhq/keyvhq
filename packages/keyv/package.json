@@ -20,7 +20,13 @@
     "value"
   ],
   "dependencies": {
-    "json-buffer": "3.0.1"
+    "json-buffer": "~3.0.1"
+  },
+  "devDependencies": {
+    "@keyvhq/keyv-test-suite": "latest",
+    "ava": "latest",
+    "nyc": "latest",
+    "timekeeper": "latest"
   },
   "engines": {
     "node": ">= 12"

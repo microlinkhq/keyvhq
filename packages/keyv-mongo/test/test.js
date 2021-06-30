@@ -3,7 +3,6 @@ const keyvTestSuite = require('@keyvhq/keyv-test-suite')
 const Keyv = require('@keyvhq/keyv')
 const KeyvMongo = require('../')
 
-require('dotenv').config()
 const mongoURL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017'
 const store = () => new KeyvMongo(mongoURL)
 keyvTestSuite(test, Keyv, store)

@@ -23,6 +23,16 @@
     "ttl",
     "value"
   ],
+  "dependencies": {
+    "pify": "^5.0.0",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "@keyvhq/keyv": "latest",
+    "@keyvhq/keyv-test-suite": "latest",
+    "ava": "latest",
+    "nyc": "latest"
+  },
   "engines": {
     "node": ">= 12"
   },

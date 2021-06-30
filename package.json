@@ -92,18 +92,8 @@
     "value"
   ],
   "devDependencies": {
-    "@keyvhq/keyv": "file:./packages/keyv",
-    "@keyvhq/keyv-test-suite": "file:packages/keyv-test-suite",
-    "ava": "latest",
-    "delay": "latest",
-    "dotenv": "latest",
     "lerna": "latest",
-    "nyc": "latest",
-    "pify": "latest",
-    "sqlite3": "latest",
-    "standard": "latest",
-    "this": "latest",
-    "timekeeper": "latest"
+    "standard": "latest"
   },
   "engines": {
     "node": ">= 12"

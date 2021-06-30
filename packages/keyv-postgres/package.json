@@ -29,6 +29,10 @@
     "@keyvhq/keyv-sql": "~0.2.0",
     "pg": "8.6.0"
   },
+  "devDependencies": {
+    "ava": "latest",
+    "nyc": "latest"
+  },
   "engines": {
     "node": ">= 12"
   },

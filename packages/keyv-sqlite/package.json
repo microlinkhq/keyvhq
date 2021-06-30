@@ -29,6 +29,10 @@
     "pify": "5.0.0",
     "sqlite3": "^5.0.2"
   },
+  "devDependencies": {
+    "ava": "latest",
+    "nyc": "latest"
+  },
   "engines": {
     "node": ">= 12"
   },

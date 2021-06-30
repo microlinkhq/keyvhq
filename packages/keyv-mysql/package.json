@@ -29,6 +29,10 @@
     "@keyvhq/keyv-sql": "~0.2.0",
     "mysql2": "2.2.5"
   },
+  "devDependencies": {
+    "ava": "latest",
+    "nyc": "latest"
+  },
   "engines": {
     "node": ">= 12"
   },
