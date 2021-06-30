@@ -92,6 +92,8 @@
     "value"
   ],
   "devDependencies": {
+    "@keyvhq/keyv": "file:./packages/keyv",
+    "@keyvhq/keyv-test-suite": "file:packages/keyv-test-suite",
     "ava": "latest",
     "delay": "latest",
     "dotenv": "latest",
