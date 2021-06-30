@@ -1,7 +1,7 @@
 const test = require('ava')
 const keyvTestSuite = require('@keyvhq/keyv-test-suite')
 const Keyv = require('@keyvhq/keyv')
-const KeyvSql = require('this')
+const KeyvSql = require('../')
 
 const sqlite3 = require('sqlite3')
 const pify = require('pify')

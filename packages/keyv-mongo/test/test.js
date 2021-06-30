@@ -1,7 +1,7 @@
 const test = require('ava')
 const keyvTestSuite = require('@keyvhq/keyv-test-suite')
 const Keyv = require('@keyvhq/keyv')
-const KeyvMongo = require('this')
+const KeyvMongo = require('../')
 
 require('dotenv').config()
 const mongoURL = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017'

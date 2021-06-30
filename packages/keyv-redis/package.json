@@ -38,10 +38,5 @@
     "test": "nyc --temp-dir ../../.nyc_output ava",
     "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
   },
-  "license": "MIT",
-  "ava": {
-    "require": [
-      "requirable"
-    ]
-  }
+  "license": "MIT"
 }

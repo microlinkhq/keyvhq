@@ -37,10 +37,5 @@
   "scripts": {
     "test": "nyc --temp-dir ../../.nyc_output ava"
   },
-  "license": "MIT",
-  "ava": {
-    "require": [
-      "requirable"
-    ]
-  }
+  "license": "MIT"
 }

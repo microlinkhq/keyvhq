@@ -1,7 +1,7 @@
 const test = require('ava')
 const keyvTestSuite = require('@keyvhq/keyv-test-suite')
 const Keyv = require('@keyvhq/keyv')
-const KeyvRedis = require('this')
+const KeyvRedis = require('../')
 const Redis = require('ioredis')
 
 require('dotenv').config()

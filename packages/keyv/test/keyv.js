@@ -1,7 +1,7 @@
 const test = require('ava')
 const tk = require('timekeeper')
 const keyvTestSuite = require('@keyvhq/keyv-test-suite')
-const Keyv = require('this')
+const Keyv = require('../')
 
 test.serial('Keyv is a class', t => {
   t.is(typeof Keyv, 'function')
