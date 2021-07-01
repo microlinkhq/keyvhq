@@ -1,3 +1,5 @@
+'use strict'
+
 const keyvIteratorTests = (test, Keyv, store) => {
   test.beforeEach(async () => {
     const keyv = new Keyv({ store: store() })
@@ -11,7 +13,11 @@ const keyvIteratorTests = (test, Keyv, store) => {
 
   test.serial('iterator() iterates over all values', async t => {
     const keyv = new Keyv({ store: store() })
-    const map = new Map(Array.from({ length: 5 }).fill(0).map((x, i) => [String(i), String(i + 10)]))
+    const map = new Map(
+      Array.from({ length: 5 })
+        .fill(0)
+        .map((x, i) => [String(i), String(i + 10)])
+    )
     const toResolve = []
     for (const [key, value] of map) {
       toResolve.push(keyv.set(key, value))

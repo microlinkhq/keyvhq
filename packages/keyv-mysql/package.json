@@ -30,6 +30,8 @@
     "mysql2": "2.2.5"
   },
   "devDependencies": {
+    "@keyvhq/keyv-test-suite": "latest",
+    "@keyvhq/keyv": "latest",
     "ava": "latest",
     "nyc": "latest"
   },

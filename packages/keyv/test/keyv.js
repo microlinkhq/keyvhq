@@ -1,7 +1,10 @@
-const test = require('ava')
-const tk = require('timekeeper')
+'use strict'
+
 const keyvTestSuite = require('@keyvhq/keyv-test-suite')
-const Keyv = require('../')
+const tk = require('timekeeper')
+const test = require('ava')
+
+const Keyv = require('..')
 
 test.serial('Keyv is a class', t => {
   t.is(typeof Keyv, 'function')
@@ -65,45 +68,54 @@ test.serial('.set(key, value, ttl) overwrites default tll option', async t => {
   tk.reset()
 })
 
-test.serial('.set(key, value, ttl) where ttl is "0" overwrites default tll option and sets key to never expire', async t => {
-  const startTime = Date.now()
-  tk.freeze(startTime)
-  const store = new Map()
-  const keyv = new Keyv({ store, ttl: 200 })
-  await keyv.set('foo', 'bar', 0)
-  t.is(await keyv.get('foo'), 'bar')
-  tk.freeze(startTime + 250)
-  t.is(await keyv.get('foo'), 'bar')
-  tk.reset()
-})
-
-test.serial('.get(key, {raw: true}) returns the raw object instead of the value', async t => {
-  const store = new Map()
-  const keyv = new Keyv({ store })
-  await keyv.set('foo', 'bar')
-  const value = await keyv.get('foo')
-  const rawObject = await keyv.get('foo', { raw: true })
-  t.is(value, 'bar')
-  t.is(rawObject.value, 'bar')
-})
-
-test.serial('Keyv uses custom serializer when provided instead of json-buffer', async t => {
-  t.plan(3)
-  const store = new Map()
-  const serialize = data => {
-    t.pass()
-    return JSON.stringify(data)
+test.serial(
+  '.set(key, value, ttl) where ttl is "0" overwrites default tll option and sets key to never expire',
+  async t => {
+    const startTime = Date.now()
+    tk.freeze(startTime)
+    const store = new Map()
+    const keyv = new Keyv({ store, ttl: 200 })
+    await keyv.set('foo', 'bar', 0)
+    t.is(await keyv.get('foo'), 'bar')
+    tk.freeze(startTime + 250)
+    t.is(await keyv.get('foo'), 'bar')
+    tk.reset()
   }
+)
 
-  const deserialize = data => {
-    t.pass()
-    return JSON.parse(data)
+test.serial(
+  '.get(key, {raw: true}) returns the raw object instead of the value',
+  async t => {
+    const store = new Map()
+    const keyv = new Keyv({ store })
+    await keyv.set('foo', 'bar')
+    const value = await keyv.get('foo')
+    const rawObject = await keyv.get('foo', { raw: true })
+    t.is(value, 'bar')
+    t.is(rawObject.value, 'bar')
   }
+)
 
-  const keyv = new Keyv({ store, serialize, deserialize })
-  await keyv.set('foo', 'bar')
-  t.is(await keyv.get('foo'), 'bar')
-})
+test.serial(
+  'Keyv uses custom serializer when provided instead of json-buffer',
+  async t => {
+    t.plan(3)
+    const store = new Map()
+    const serialize = data => {
+      t.pass()
+      return JSON.stringify(data)
+    }
+
+    const deserialize = data => {
+      t.pass()
+      return JSON.parse(data)
+    }
+
+    const keyv = new Keyv({ store, serialize, deserialize })
+    await keyv.set('foo', 'bar')
+    t.is(await keyv.get('foo'), 'bar')
+  }
+)
 
 test.serial('Keyv supports async serializer/deserializer', async t => {
   t.plan(3)

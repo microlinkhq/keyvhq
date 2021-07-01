@@ -1,7 +1,9 @@
-const keyvApiTests = require('./api.js')
-const keyvValueTests = require('./values.js')
-const keyvNamespaceTests = require('./namespace.js')
-const keyvIteratorTests = require('./iteration.js')
+'use strict'
+
+const keyvNamespaceTests = require('./namespace')
+const keyvIteratorTests = require('./iteration')
+const keyvValueTests = require('./values')
+const keyvApiTests = require('./api')
 
 const keyvTestSuite = (test, Keyv, store) => {
   keyvIteratorTests(test, Keyv, store)

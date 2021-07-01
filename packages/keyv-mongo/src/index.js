@@ -17,18 +17,28 @@ class KeyvMongo extends EventEmitter {
       url = Object.assign({ url: url.uri }, url)
     }
 
-    this.options = Object.assign({
-      url: 'mongodb://127.0.0.1:27017',
-      collection: 'keyv'
-    }, url, options)
+    this.options = Object.assign(
+      {
+        url: 'mongodb://127.0.0.1:27017',
+        collection: 'keyv'
+      },
+      url,
+      options
+    )
 
-    this.options.mongoOptions = Object.assign({
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }, this.options.mongoOptions)
+    this.options.mongoOptions = Object.assign(
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      },
+      this.options.mongoOptions
+    )
 
     try {
-      this.client = new mongodb.MongoClient(this.options.url, this.options.mongoOptions)
+      this.client = new mongodb.MongoClient(
+        this.options.url,
+        this.options.mongoOptions
+      )
     } catch (error) {
       this.emit('error', error)
     }
@@ -37,19 +47,31 @@ class KeyvMongo extends EventEmitter {
     let listeningEvents = false
     // Implementation from sql by lukechilds,
     this.connect = new Promise(resolve => {
-      this.client.connect()
+      this.client
+        .connect()
         .then(client => {
           this.db = client.db(this.options.db)
           this.store = this.db.collection(this.options.collection)
-          this.store.createIndex({ key: 1 }, {
-            unique: true,
-            background: true
-          })
-          this.store.createIndex({ expiresAt: 1 }, {
-            expireAfterSeconds: 0,
-            background: true
-          })
-          for (const method of ['updateOne', 'findOne', 'deleteOne', 'deleteMany']) {
+          this.store.createIndex(
+            { key: 1 },
+            {
+              unique: true,
+              background: true
+            }
+          )
+          this.store.createIndex(
+            { expiresAt: 1 },
+            {
+              expireAfterSeconds: 0,
+              background: true
+            }
+          )
+          for (const method of [
+            'updateOne',
+            'findOne',
+            'deleteOne',
+            'deleteMany'
+          ]) {
             this.store[method] = pify(this.store[method].bind(this.store))
           }
 
@@ -65,22 +87,27 @@ class KeyvMongo extends EventEmitter {
   }
 
   get (key) {
-    return this.connect
-      .then(store => store.findOne({ key: { $eq: key } })
-        .then(doc => {
-          if (doc === null) {
-            return undefined
-          }
+    return this.connect.then(store =>
+      store.findOne({ key: { $eq: key } }).then(doc => {
+        if (doc === null) {
+          return undefined
+        }
 
-          return doc.value
-        })
-      )
+        return doc.value
+      })
+    )
   }
 
   set (key, value, ttl) {
-    const expiresAt = (typeof ttl === 'number') ? new Date(Date.now() + ttl) : null
-    return this.connect
-      .then(store => store.updateOne({ key: { $eq: key } }, { $set: { key, value, expiresAt } }, { upsert: true }))
+    const expiresAt =
+      typeof ttl === 'number' ? new Date(Date.now() + ttl) : null
+    return this.connect.then(store =>
+      store.updateOne(
+        { key: { $eq: key } },
+        { $set: { key, value, expiresAt } },
+        { upsert: true }
+      )
+    )
   }
 
   delete (key) {
@@ -88,23 +115,31 @@ class KeyvMongo extends EventEmitter {
       return Promise.resolve(false)
     }
 
-    return this.connect
-      .then(store => store.deleteOne({ key: { $eq: key } })
+    return this.connect.then(store =>
+      store
+        .deleteOne({ key: { $eq: key } })
         .then(object => object.deletedCount > 0)
-      )
+    )
   }
 
   clear () {
-    return this.connect
-      .then(store => store.deleteMany({ key: new RegExp(`^${this.namespace + ':'}`) })
-        .then(() => undefined))
+    return this.connect.then(store =>
+      store
+        .deleteMany({ key: new RegExp(`^${this.namespace + ':'}`) })
+        .then(() => undefined)
+    )
   }
 
   async * iterator () {
-    const iterator = await this.connect
-      .then(store => store.find({ key: new RegExp(`^${this.namespace ? this.namespace + ':' : '.*'}`) }).map(x => {
-        return [x.key, x.value]
-      }))
+    const iterator = await this.connect.then(store =>
+      store
+        .find({
+          key: new RegExp(`^${this.namespace ? this.namespace + ':' : '.*'}`)
+        })
+        .map(x => {
+          return [x.key, x.value]
+        })
+    )
     yield * iterator
   }
 }

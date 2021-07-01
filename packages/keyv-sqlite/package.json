@@ -30,6 +30,8 @@
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
+    "@keyvhq/keyv-test-suite": "latest",
+    "@keyvhq/keyv": "latest",
     "ava": "latest",
     "nyc": "latest"
   },

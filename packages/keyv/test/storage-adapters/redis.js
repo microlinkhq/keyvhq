@@ -1,7 +1,10 @@
-const test = require('ava')
+'use strict'
+
 const keyvTestSuite = require('@keyvhq/keyv-test-suite')
-const Keyv = require('../../')
 const KeyvRedis = require('redis')
+const test = require('ava')
+
+const Keyv = require('../..')
 
 const store = () => new KeyvRedis('redis://localhost')
 keyvTestSuite(test, Keyv, store)

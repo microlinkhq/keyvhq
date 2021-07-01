@@ -1,7 +1,11 @@
-const test = require('ava')
-const keyvTestSuite = require('@keyvhq/keyv-test-suite')
-const Keyv = require('../../')
-const KeyvPostgres = require('postgres')
+'use strict'
 
-const store = () => new KeyvPostgres('postgresql://postgres@localhost:5432/keyv_test')
+const keyvTestSuite = require('@keyvhq/keyv-test-suite')
+const KeyvPostgres = require('postgres')
+const test = require('ava')
+
+const Keyv = require('../..')
+
+const store = () =>
+  new KeyvPostgres('postgresql://postgres@localhost:5432/keyv_test')
 keyvTestSuite(test, Keyv, store)

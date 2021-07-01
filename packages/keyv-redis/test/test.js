@@ -1,8 +1,11 @@
-const test = require('ava')
+'use strict'
+
 const keyvTestSuite = require('@keyvhq/keyv-test-suite')
 const Keyv = require('@keyvhq/keyv')
-const KeyvRedis = require('../')
 const Redis = require('ioredis')
+const test = require('ava')
+
+const KeyvRedis = require('..')
 
 const { REDIS_HOST = 'localhost' } = process.env
 const redisURI = `redis://${REDIS_HOST}`

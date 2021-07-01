@@ -23,24 +23,34 @@ class Keyv extends EventEmitter {
       this.store.on('error', error => this.emit('error', error))
     }
 
-    const generateIterator = iterator => async function * () {
-      for await (const [key, raw] of (typeof iterator === 'function' ? iterator() : iterator)) {
-        const data = (typeof raw === 'string') ? this.options.deserialize(raw) : raw
-        if (!key.includes(this.options.namespace) || typeof data !== 'object') {
-          continue
-        }
+    const generateIterator = iterator =>
+      async function * () {
+        for await (const [key, raw] of typeof iterator === 'function'
+          ? iterator()
+          : iterator) {
+          const data =
+            typeof raw === 'string' ? this.options.deserialize(raw) : raw
+          if (
+            !key.includes(this.options.namespace) ||
+            typeof data !== 'object'
+          ) {
+            continue
+          }
 
-        if (typeof data.expires === 'number' && Date.now() > data.expires) {
-          this.delete(key)
-          continue
-        }
+          if (typeof data.expires === 'number' && Date.now() > data.expires) {
+            this.delete(key)
+            continue
+          }
 
-        yield [this._getKeyUnprefix(key), data.value]
+          yield [this._getKeyUnprefix(key), data.value]
+        }
       }
-    }
 
     // Attach iterators
-    if (typeof this.store[Symbol.iterator] === 'function' && this.store instanceof Map) {
+    if (
+      typeof this.store[Symbol.iterator] === 'function' &&
+      this.store instanceof Map
+    ) {
       this.iterator = generateIterator(this.store)
     } else if (typeof this.store.iterator === 'function') {
       this.iterator = generateIterator(this.store.iterator.bind(this.store))
@@ -54,7 +64,12 @@ class Keyv extends EventEmitter {
   }
 
   _getKeyUnprefix (key) {
-    return this.options.namespace ? key.split(':').splice(1).join(':') : key
+    return this.options.namespace
+      ? key
+          .split(':')
+          .splice(1)
+          .join(':')
+      : key
   }
 
   get (key, options) {
@@ -63,7 +78,7 @@ class Keyv extends EventEmitter {
     return Promise.resolve()
       .then(() => store.get(keyPrefixed))
       .then(data => {
-        return (typeof data === 'string') ? this.options.deserialize(data) : data
+        return typeof data === 'string' ? this.options.deserialize(data) : data
       })
       .then(data => {
         if (data === undefined) {
@@ -75,7 +90,7 @@ class Keyv extends EventEmitter {
           return undefined
         }
 
-        return (options && options.raw) ? data : data.value
+        return options && options.raw ? data : data.value
       })
   }
 
@@ -83,8 +98,7 @@ class Keyv extends EventEmitter {
     const keyPrefixed = this._getKeyPrefix(key)
     const store = this.store
     if (typeof store.has === 'function') {
-      return Promise.resolve()
-        .then(() => store.has(keyPrefixed))
+      return Promise.resolve().then(() => store.has(keyPrefixed))
     }
 
     return Promise.resolve()
@@ -105,7 +119,7 @@ class Keyv extends EventEmitter {
     const store = this.store
     return Promise.resolve()
       .then(() => {
-        const expires = (typeof ttl === 'number') ? (Date.now() + ttl) : null
+        const expires = typeof ttl === 'number' ? Date.now() + ttl : null
         value = { value, expires }
         return this.options.serialize(value)
       })
@@ -116,8 +130,7 @@ class Keyv extends EventEmitter {
   delete (key) {
     const keyPrefixed = this._getKeyPrefix(key)
     const store = this.store
-    return Promise.resolve()
-      .then(() => store.delete(keyPrefixed))
+    return Promise.resolve().then(() => store.delete(keyPrefixed))
   }
 
   clear () {
@@ -126,8 +139,7 @@ class Keyv extends EventEmitter {
     }
 
     const store = this.store
-    return Promise.resolve()
-      .then(() => store.clear())
+    return Promise.resolve().then(() => store.clear())
   }
 }
 module.exports = Keyv

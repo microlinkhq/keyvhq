@@ -1,3 +1,5 @@
+'use strict'
+
 const keyvValueTests = (test, Keyv, store) => {
   test.beforeEach(async () => {
     const keyv = new Keyv({ store: store() })

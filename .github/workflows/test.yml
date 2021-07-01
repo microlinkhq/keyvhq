@@ -62,7 +62,7 @@ jobs:
     - run: npm install --no-package-lock
     - run: npm test
     - name: Report
-      run: mkdir -p coverage && yarn run nyc report --reporter=text-lcov > coverage/lcov.info
+      run: mkdir -p coverage && npx nyc report --reporter=text-lcov > coverage/lcov.info
     - name: Coverage
       uses: coverallsapp/github-action@master
       with:

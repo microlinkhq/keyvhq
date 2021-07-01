@@ -1,3 +1,5 @@
+'use strict'
+
 const tk = require('timekeeper')
 const delay = require('delay')
 
@@ -49,10 +51,13 @@ const keyvApiTests = (test, Keyv, store) => {
     t.is(await keyv.get('foo'), 'bar')
   })
 
-  test.serial('.get(key) with nonexistent key resolves to undefined', async t => {
-    const keyv = new Keyv({ store: store() })
-    t.is(await keyv.get('foo'), undefined)
-  })
+  test.serial(
+    '.get(key) with nonexistent key resolves to undefined',
+    async t => {
+      const keyv = new Keyv({ store: store() })
+      t.is(await keyv.get('foo'), undefined)
+    }
+  )
 
   test.serial('.delete(key) returns a Promise', t => {
     const keyv = new Keyv({ store: store() })
@@ -65,11 +70,14 @@ const keyvApiTests = (test, Keyv, store) => {
     t.is(await keyv.delete('foo'), true)
   })
 
-  test.serial('.delete(key) with nonexistent key resolves to false', async t => {
-    const keyv = new Keyv({ store: store() })
-    t.is(await keyv.delete(), false)
-    t.is(await keyv.delete('foo'), false)
-  })
+  test.serial(
+    '.delete(key) with nonexistent key resolves to false',
+    async t => {
+      const keyv = new Keyv({ store: store() })
+      t.is(await keyv.delete(), false)
+      t.is(await keyv.delete('foo'), false)
+    }
+  )
 
   test.serial('.delete(key) deletes a key', async t => {
     const keyv = new Keyv({ store: store() })
