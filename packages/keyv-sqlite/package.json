@@ -2,7 +2,7 @@
   "name": "@keyvhq/keyv-sqlite",
   "description": "SQLite storage adapter for Keyv",
   "homepage": "https://github.com/microlinkhq/keyv",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -30,7 +30,7 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/keyv-sql": "~0.2.0",
+    "@keyvhq/keyv-sql": "^0.2.4",
     "pify": "5.0.0",
     "sqlite3": "^5.0.2"
   },
