@@ -286,4 +286,4 @@ Returns a promise which is resolved when the entries have been cleared.
 ## License
 
 **keyv** © [Luke Childs](https://github.com/lukechilds), Released under the [MIT](/LICENSE.md) License.<br>
-Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/keyvhq/keyv/contributors).
+Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/microlinkhq/keyv/contributors).

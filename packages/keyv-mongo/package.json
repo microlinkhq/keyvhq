@@ -1,16 +1,21 @@
 {
   "name": "@keyvhq/keyv-mongo",
   "description": "MongoDB storage adapter for Keyv",
-  "homepage": "https://github.com/keyvhq/keyv",
+  "homepage": "https://github.com/microlinkhq/keyv",
   "version": "0.2.0",
   "main": "src/index.js",
+  "author": {
+    "email": "hello@microlink.io",
+    "name": "microlink.io",
+    "url": "https://microlink.io"
+  },
   "repository": {
     "directory": "packages/keyv-mongo",
     "type": "git",
-    "url": "git+https://github.com/keyvhq/keyv.git"
+    "url": "git+https://github.com/microlinkhq/keyv.git"
   },
   "bugs": {
-    "url": "https://github.com/keyvhq/keyv/issues"
+    "url": "https://github.com/microlinkhq/keyv/issues"
   },
   "keywords": [
     "adapter",

@@ -4,7 +4,7 @@
 	<br>
 </h1>
 
-> Simple key-value storage with support for multiple backends
+> Simple key-value storage with support for multiple backends.
 
 ![Last version](https://img.shields.io/github/tag/keyvhq/keyv.svg?style=flat-square)
 [![Coverage Status](https://img.shields.io/coveralls/keyvhq/keyv.svg?style=flat-square)](https://coveralls.io/github/keyvhq/keyv)
@@ -16,55 +16,46 @@ Keyv provides a consistent interface for key-value storage across multiple backe
 
 There are a few existing modules similar to Keyv, however Keyv is different because it:
 
-- Isn't bloated
-- Has a simple Promise based API
-- Suitable as a TTL based cache or persistent key-value store
-- [Easily embeddable](#add-cache-support-to-your-module) inside another module
-- Works with any storage that implements the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API
-- Handles all JSON types plus `Buffer`
-- Supports namespaces
-- Wide range of [**efficient, well tested**](#official-storage-adapters) storage adapters
-- Connection errors are passed through (db failures won't kill your app)
-- Supports the current active LTS version of Node.js or higher
+- Isn't bloated.
+- Has a simple Promise based API.
+- Suitable as a TTL based cache or persistent key-value store.
+- [Easily embeddable](#add-cache-support-to-your-module) inside another module.
+- Works with any storage that implements the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
+- Handles all JSON types plus `Buffer`.
+- Supports namespaces.
+- Wide range of [**efficient, well tested**](#official-storage-adapters) storage adapters.
+- Connection errors are passed through (db failures won't kill your app).
+- Supports the current active LTS version of Node.js or higher.
+
+## Installation
+
+```bash
+npm install @keyvhq/keyv --save 
+```
+
+You can optionally install the storage adapter you want to use:
+
+```bash
+npm install @keyvhq/keyv-redis --save
+npm install @keyvhq/keyv-mongo --save
+npm install @keyvhq/keyv-sqlite --save
+npm install @keyvhq/keyv-postgres --save
+npm install @keyvhq/keyv-mysql --save
+```
+
+If you don't provide a specific storage adapter, a in-memory storage adapter is used by default.
 
 ## Usage
 
-Install Keyv.
-
-```
-npm install --save keyv
-```
-
-By default everything is stored in memory, you can optionally also install a storage adapter.
-
-```
-npm install --save @keyvhq/keyv-redis
-npm install --save @keyvhq/keyv-mongo
-npm install --save @keyvhq/keyv-sqlite
-npm install --save @keyvhq/keyv-postgres
-npm install --save @keyvhq/keyv-mysql
-```
-
-Create a new Keyv instance, passing your connection string if applicable. Keyv will automatically load the correct storage adapter.
+Just create a new Keyv instance, passing your storage adapter:
 
 ```js
-const Keyv = require('@keyvhq/keyv');
-const KeyvRedis = require('@keyvhq/keyv-redis');
-const KeyvMongo = require('@keyvhq/keyv-mongo');
-const KeyvMySQL = require('@keyvhq/keyv-mysql');
-const KeyvSQLite = require('@keyvhq/keyv-sqlite');
-const KeyvPostgreSQL = require('@keyvhq/keyv-postgres');
-
-
-// One of the following
-const keyv = new Keyv();
-
+const keyv = new Keyv(); // in-memory, by default
 const keyvRedis = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379')})
-const keyv = new Keyv();
-const keyv = new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')});
-const keyv = new Keyv({ store: new KeyvSQLite('sqlite://path/to/database.sqlite')});
-const keyv = new Keyv({ store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')});
-const keyv = new Keyv({ store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')});
+const keyvMongo = new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')});
+const keyvSQLite = new Keyv({ store: new KeyvSQLite('sqlite://path/to/database.sqlite')});
+const keyvPostgreSQL = new Keyv({ store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')});
+const keyvMySQL = new Keyv({ store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')});
 
 // Handle DB connection errors
 keyv.on('error', err => console.log('Connection Error', err));
@@ -107,7 +98,7 @@ const keyv = new Keyv({ serialize: JSON.stringify, deserialize: JSON.parse });
 
 ## Official Storage Adapters
 
-The official storage adapters are covered by [over 150 integration tests](https://github.com/keyvhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
+The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
 ## Third-party Storage Adapters
 
@@ -284,5 +275,7 @@ Returns a promise which is resolved when the entries have been cleared.
 
 ## License
 
-**keyv** © [Luke Childs](https://github.com/lukechilds), Released under the [MIT](/LICENSE.md) License.<br>
-Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/keyvhq/keyv/contributors).
+**keyv** © [Microlink](https://microlink.io), Released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br>
+Authored and maintained by [Microlink](https://microlink.io) with help from [contributors](https://github.com/microlinkhq/keyv/contributors).
+
+> [microlink.io](https://microlink.io) · GitHub [@MicrolinkHQ](https://github.com/microlinkhq) · Twitter [@microlinkhq](https://twitter.com/microlinkhq)

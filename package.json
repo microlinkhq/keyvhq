@@ -1,49 +1,37 @@
 {
   "name": "@keyvhq/monorepo",
   "description": "Simple key-value storage with support for multiple backends",
-  "homepage": "https://github.com/keyvhq/keyv#readme",
+  "homepage": "https://github.com/microlinkhq/keyv#readme",
   "version": "",
   "author": {
-    "email": "lukechilds123@gmail.com",
-    "name": "Luke Childs",
-    "url": "http://lukechilds.co.uk"
+    "email": "hello@microlink.io",
+    "name": "microlink.io",
+    "url": "https://microlink.io"
   },
   "contributors": [
     {
-      "name": "Casey Webb",
-      "email": "notcaseywebb@gmail.com"
+      "name": "Luke Childs",
+      "email": "lukechilds123@gmail.com"
     },
     {
-      "name": "Dan Dascalescu",
-      "email": "ddascalescu+github@gmail.com"
-    },
-    {
-      "name": "Dušan Simić",
-      "email": "dusan.simic1810@gmail.com"
-    },
-    {
-      "name": "Jared Wray",
-      "email": "jaredwray@gmail.com"
-    },
-    {
-      "name": "Jitendra Adhikari",
-      "email": "jiten.adhikary@gmail.com"
-    },
-    {
-      "name": "Jérôme Desboeufs",
-      "email": "jerome.desboeufs@gmail.com"
-    },
-    {
-      "name": "Kent C. Dodds",
-      "email": "me+github@kentcdodds.com"
+      "name": "Jytesh",
+      "email": "44925963+Jytesh@users.noreply.github.com"
     },
     {
       "name": "Kiko Beats",
       "email": "josefrancisco.verdu@gmail.com"
     },
     {
-      "name": "Mateu Aguiló Bosch",
-      "email": "mateu@lullabot.com"
+      "name": "Aditya Patadia",
+      "email": "adityapatadia@users.noreply.github.com"
+    },
+    {
+      "name": "Dan Dascalescu",
+      "email": "ddascalescu+github@gmail.com"
+    },
+    {
+      "name": "Jérôme Desboeufs",
+      "email": "jerome.desboeufs@gmail.com"
     },
     {
       "name": "MySidesTheyAreGone",
@@ -64,14 +52,38 @@
     {
       "name": "chocolateboy",
       "email": "chocolate@cpan.org"
+    },
+    {
+      "name": "Mateu Aguiló Bosch",
+      "email": "mateu@lullabot.com"
+    },
+    {
+      "name": "Jared Wray",
+      "email": "jaredwray@gmail.com"
+    },
+    {
+      "name": "Jitendra Adhikari",
+      "email": "jiten.adhikary@gmail.com"
+    },
+    {
+      "name": "Kent C. Dodds",
+      "email": "me+github@kentcdodds.com"
+    },
+    {
+      "name": "Casey Webb",
+      "email": "notcaseywebb@gmail.com"
+    },
+    {
+      "name": "Dušan Simić",
+      "email": "dusan.simic1810@gmail.com"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keyvhq/keyv.git"
+    "url": "git+https://github.com/microlinkhq/keyv.git"
   },
   "bugs": {
-    "url": "https://github.com/keyvhq/keyv/issues"
+    "url": "https://github.com/microlinkhq/keyv/issues"
   },
   "keywords": [
     "adapter",
@@ -118,6 +130,7 @@
     "update:check": "lerna exec ncu -- --errorLevel 2 && ncu -- --errorLevel 2"
   },
   "private": "true",
+  "license": "MIT",
   "commitlint": {
     "extends": [
       "@commitlint/config-conventional"
@@ -127,9 +140,6 @@
     "*.js": [
       "prettier-standard"
     ],
-    "*.md": [
-      "standard-markdown"
-    ],
     "package.json": [
       "finepack"
     ]
@@ -137,8 +147,5 @@
   "simple-git-hooks": {
     "commit-msg": "npx commitlint --edit",
     "pre-commit": "npx lint-staged"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }
