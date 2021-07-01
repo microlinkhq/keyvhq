@@ -25,13 +25,13 @@ Then update `keyv` and `@keyv/test-suite` versions to `*` in `package.json` to e
 `test.js`
 
 ```js
-import test from 'ava';
-import keyvTestSuite from '@keyv/test-suite';
-import Keyv from 'keyv';
-import KeyvStore from './';
+import test from 'ava'
+import keyvTestSuite from '@keyv/test-suite'
+import Keyv from 'keyv'
+import KeyvStore from './'
 
-const store = () => new KeyvStore();
-keyvTestSuite(test, Keyv, store);
+const store = () => new KeyvStore()
+keyvTestSuite(test, Keyv, store)
 ```
 
 Where `KeyvStore` is your storage adapter.
@@ -64,4 +64,5 @@ Take a look at [keyv-redis](https://github.com/lukechilds/keyv-redis) for an exa
 
 ## License
 
-MIT © Luke Childs
+**keyv** © [Luke Childs](https://github.com/lukechilds), Released under the [MIT](/LICENSE.md) License.<br>
+Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/keyvhq/keyv/contributors).

@@ -1,7 +1,10 @@
-const test = require('ava');
-const keyvTestSuite = require('@keyvhq/keyv-test-suite');
-const Keyv = require('this');
-const KeyvMysql = require('@keyvhq/keyv-mysql');
+'use strict'
 
-const store = () => new KeyvMysql('mysql://mysql@localhost/keyv_test');
-keyvTestSuite(test, Keyv, store);
+const keyvTestSuite = require('@keyvhq/keyv-test-suite')
+const KeyvMysql = require('@keyvhq/keyv-mysql')
+const test = require('ava')
+
+const Keyv = require('../..')
+
+const store = () => new KeyvMysql('mysql://mysql@localhost/keyv_test')
+keyvTestSuite(test, Keyv, store)

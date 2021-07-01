@@ -17,10 +17,10 @@ npm install --save keyv @keyv/mysql
 ## Usage
 
 ```js
-const Keyv = require('keyv');
+const Keyv = require('keyv')
 
-const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname');
-keyv.on('error', handleConnectionError);
+const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname')
+keyv.on('error', handleConnectionError)
 ```
 
 You can specify a custom table with the `table` option and the primary key size with `keySize`.
@@ -31,11 +31,12 @@ e.g:
 const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname', {
   table: 'cache',
   keySize: 255
-});
+})
 ```
 
 **Note:** Some MySQL/MariaDB installations won't allow a key size longer than 767 bytes. If you get an error on table creation try reducing `keySize` to 191 or lower. [#5](https://github.com/lukechilds/keyv-sql/issues/5)
 
 ## License
 
-MIT © Luke Childs
+**keyv** © [Luke Childs](https://github.com/lukechilds), Released under the [MIT](/LICENSE.md) License.<br>
+Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/keyvhq/keyv/contributors).

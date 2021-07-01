@@ -19,10 +19,10 @@ npm install --save keyv @keyv/mongo
 ## Usage
 
 ```js
-const Keyv = require('keyv');
+const Keyv = require('keyv')
 
-const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname');
-keyv.on('error', handleConnectionError);
+const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname')
+keyv.on('error', handleConnectionError)
 ```
 
 You can specify the collection name, by default `'keyv'` is used.
@@ -30,9 +30,10 @@ You can specify the collection name, by default `'keyv'` is used.
 e.g:
 
 ```js
-const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname', { collection: 'cache' });
+const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname', { collection: 'cache' })
 ```
 
 ## License
 
-MIT © Luke Childs
+**keyv** © [Luke Childs](https://github.com/lukechilds), Released under the [MIT](/LICENSE.md) License.<br>
+Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/keyvhq/keyv/contributors).

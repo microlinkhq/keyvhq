@@ -1,57 +1,143 @@
 {
-  "name": "@keyvhq/mono",
-  "private": "true",
-  "devDependencies": {
-    "@keyvhq/keyv": "file:./packages/keyv",
-    "@keyvhq/keyv-mongo": "file:packages/keyv-mongo",
-    "@keyvhq/keyv-mysql": "file:packages/keyv-mysql",
-    "@keyvhq/keyv-postgres": "file:packages/keyv-postgres",
-    "@keyvhq/keyv-redis": "file:packages/keyv-redis",
-    "@keyvhq/keyv-sql": "file:packages/keyv-sql",
-    "@keyvhq/keyv-sqlite": "file:packages/keyv-sqlite",
-    "@keyvhq/keyv-test-suite": "file:packages/keyv-test-suite",
-    "ava": "^3.15.0",
-    "coveralls": "^3.0.0",
-    "delay": "^4.3.0",
-    "dotenv": "^8.2.0",
-    "eslint-config-xo-lukechilds": "^1.0.0",
-    "knex": "^0.95.4",
-    "lerna": "^4.0.0",
-    "nyc": "^15.1.0",
-    "pify": "^5.0.0",
-    "requirable": "^1.0.1",
-    "sqlite3": "^5.0.2",
-    "this": "^1.0.2",
-    "timekeeper": "^2.0.0",
-    "xo": "^0.38.2"
+  "name": "@keyvhq/monorepo",
+  "description": "Simple key-value storage with support for multiple backends",
+  "homepage": "https://github.com/keyvhq/keyv#readme",
+  "version": "",
+  "author": {
+    "email": "lukechilds123@gmail.com",
+    "name": "Luke Childs",
+    "url": "http://lukechilds.co.uk"
   },
-  "author": "Jytesh & Kikobeats",
-  "scripts": {
-    "test": "lerna run test",
-    "coverage": "nyc report --reporter=text-lcov | npx coveralls"
-  },
+  "contributors": [
+    {
+      "name": "Casey Webb",
+      "email": "notcaseywebb@gmail.com"
+    },
+    {
+      "name": "Dan Dascalescu",
+      "email": "ddascalescu+github@gmail.com"
+    },
+    {
+      "name": "Dušan Simić",
+      "email": "dusan.simic1810@gmail.com"
+    },
+    {
+      "name": "Jared Wray",
+      "email": "jaredwray@gmail.com"
+    },
+    {
+      "name": "Jitendra Adhikari",
+      "email": "jiten.adhikary@gmail.com"
+    },
+    {
+      "name": "Jérôme Desboeufs",
+      "email": "jerome.desboeufs@gmail.com"
+    },
+    {
+      "name": "Kent C. Dodds",
+      "email": "me+github@kentcdodds.com"
+    },
+    {
+      "name": "Kiko Beats",
+      "email": "josefrancisco.verdu@gmail.com"
+    },
+    {
+      "name": "Mateu Aguiló Bosch",
+      "email": "mateu@lullabot.com"
+    },
+    {
+      "name": "MySidesTheyAreGone",
+      "email": "mysidestheyaregone@protonmail.com"
+    },
+    {
+      "name": "Paul Morgan III",
+      "email": "pmorgan3@gmail.com"
+    },
+    {
+      "name": "Romuald Quantin",
+      "email": "romu@soundstep.com"
+    },
+    {
+      "name": "Roney Rao",
+      "email": "roneyrao@hotmail.com"
+    },
+    {
+      "name": "chocolateboy",
+      "email": "chocolate@cpan.org"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/keyvhq/keyv.git"
   },
+  "bugs": {
+    "url": "https://github.com/keyvhq/keyv/issues"
+  },
   "keywords": [
-    "keyv",
-    "cache",
-    "storage",
     "adapter",
+    "cache",
     "key",
-    "value",
-    "store",
-    "ttl",
+    "keyv",
     "mongo",
     "mongodb",
+    "mysql",
+    "pgsql",
     "redis",
     "sql",
     "sqlite",
     "sqlite3",
-    "mysql",
-    "pgsql"
+    "storage",
+    "store",
+    "ttl",
+    "value"
   ],
+  "devDependencies": {
+    "@commitlint/cli": "latest",
+    "@commitlint/config-conventional": "latest",
+    "lerna": "latest",
+    "lint-staged": "latest",
+    "simple-git-hooks": "latest",
+    "standard": "latest"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "packages/**"
+  ],
+  "scripts": {
+    "clean": "lerna clean --yes && rm -rf node_modules",
+    "contributors": "(lerna exec finepack --parallel && git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
+    "install": "lerna bootstrap --no-ci --force-local",
+    "lint": "standard",
+    "prerelease": "npm run contributors",
+    "pretest": "npm run lint",
+    "release": "lerna publish --yes --sort --conventional-commits -m \"chore(release): %s\" --create-release github",
+    "test": "lerna exec npm run test",
+    "update": "lerna exec ncu -- --upgrade && ncu -- --upgrade",
+    "update:check": "lerna exec ncu -- --errorLevel 2 && ncu -- --errorLevel 2"
+  },
+  "private": "true",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier-standard"
+    ],
+    "*.md": [
+      "standard-markdown"
+    ],
+    "package.json": [
+      "finepack"
+    ]
+  },
+  "simple-git-hooks": {
+    "commit-msg": "npx commitlint --edit",
+    "pre-commit": "npx lint-staged"
+  },
   "workspaces": [
     "packages/*"
   ]

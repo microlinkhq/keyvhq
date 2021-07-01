@@ -19,10 +19,10 @@ npm install --save keyv @keyv/redis
 ## Usage
 
 ```js
-const Keyv = require('keyv');
+const Keyv = require('keyv')
 
-const keyv = new Keyv('redis://user:pass@localhost:6379');
-keyv.on('error', handleConnectionError);
+const keyv = new Keyv('redis://user:pass@localhost:6379')
+keyv.on('error', handleConnectionError)
 ```
 
 Any valid [`Redis`](https://github.com/luin/ioredis#connect-to-redis) options will be passed directly through.
@@ -30,31 +30,32 @@ Any valid [`Redis`](https://github.com/luin/ioredis#connect-to-redis) options wi
 e.g:
 
 ```js
-const keyv = new Keyv('redis://user:pass@localhost:6379', { disable_resubscribing: true });
+const keyv = new Keyv('redis://user:pass@localhost:6379', { disable_resubscribing: true })
 ```
 
 Or you can manually create a storage adapter instance and pass it to Keyv:
 
 ```js
-const KeyvRedis = require('@keyv/redis');
-const Keyv = require('keyv');
+const KeyvRedis = require('@keyv/redis')
+const Keyv = require('keyv')
 
-const keyvRedis = new KeyvRedis('redis://user:pass@localhost:6379');
-const keyv = new Keyv({ store: keyvRedis });
+const keyvRedis = new KeyvRedis('redis://user:pass@localhost:6379')
+const keyv = new Keyv({ store: keyvRedis })
 ```
 
 Or reuse a previous Redis instance:
 
 ```js
-const KeyvRedis = require('@keyv/redis');
-const Redis = require('ioredis');
-const Keyv = require('keyv');
+const KeyvRedis = require('@keyv/redis')
+const Redis = require('ioredis')
+const Keyv = require('keyv')
 
-const redis = new Redis('redis://user:pass@localhost:6379');
-const keyvRedis = new KeyvRedis(redis);
-const keyv = new Keyv({ store: keyvRedis });
+const redis = new Redis('redis://user:pass@localhost:6379')
+const keyvRedis = new KeyvRedis(redis)
+const keyv = new Keyv({ store: keyvRedis })
 ```
 
 ## License
 
-MIT © Luke Childs
+**keyv** © [Luke Childs](https://github.com/lukechilds), Released under the [MIT](/LICENSE.md) License.<br>
+Maintained by [Kiko Beats](https://kikobeats.com) and [Jytesh](https://github.com/Jytesh), with help from [contributors](https://github.com/keyvhq/keyv/contributors).
