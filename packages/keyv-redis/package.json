@@ -24,7 +24,7 @@
     "value"
   ],
   "dependencies": {
-    "ioredis": "~4.17.1",
+    "ioredis": "~4.27.6",
     "p-event": "~4.2.0"
   },
   "devDependencies": {
