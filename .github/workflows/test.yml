@@ -37,7 +37,7 @@ jobs:
 #        postgresql user: postgres
 #        postgresql db: keyv_test
     - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.3.0
+      uses: supercharge/mongodb-github-action@1.6.0
       with:
         mongodb-version: 4.4
     - name: Start MySQL
