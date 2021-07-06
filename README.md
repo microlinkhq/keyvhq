@@ -173,20 +173,11 @@ const awesomeModule = new AwesomeModule({ cache: some3rdPartyStore });
 
 ## API
 
-### new Keyv([uri], [options])
+### new Keyv([options])
 
 Returns a new Keyv instance.
 
 The Keyv instance is also an `EventEmitter` that will emit an `'error'` event if the storage adapter connection fails.
-
-### uri
-
-Type: `String`<br>
-Default: `undefined`
-
-The connection string URI.
-
-Merged into the options object as options.uri.
 
 ### options
 
@@ -261,6 +252,10 @@ If set to true the raw DB object Keyv stores internally will be returned instead
 
 This contains the TTL timestamp.
 
+#### .has(key)
+
+Returns a promise which resolves to a boolean, indicating existence of a key.
+
 #### .delete(key)
 
 Deletes an entry.
@@ -272,6 +267,14 @@ Returns a promise which resolves to `true` if the key existed, `false` if not.
 Delete all entries in the current namespace.
 
 Returns a promise which is resolved when the entries have been cleared.
+
+```
+When calling clear(), on a keyv instance with no namespace, nothing is done.
+```
+
+#### .iterator()
+
+Returns an [Async Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator), which iterates over all the keys in the namespace.
 
 ## License
 
