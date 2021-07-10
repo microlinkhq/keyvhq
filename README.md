@@ -1,31 +1,28 @@
 <h1 align="center">
-	<img width="250" src="media/logo.svg" alt="keyv">
-	<br>
-	<br>
+	<img width="250" src="/media/logo-sunset.svg" alt="keyv logo">
+	<br/>
+	<br/>
 </h1>
-
-> Simple key-value storage with support for multiple backends.
 
 ![Last version](https://img.shields.io/github/tag/keyvhq/keyv.svg?style=flat-square)
 [![Coverage Status](https://img.shields.io/coveralls/keyvhq/keyv.svg?style=flat-square)](https://coveralls.io/github/keyvhq/keyv)
 [![NPM Status](https://img.shields.io/npm/dm/@keyvhq/keyv.svg?style=flat-square)](https://www.npmjs.org/package/@keyvhq/keyv)
 
-Keyv provides a consistent interface for key-value storage across multiple backends via storage adapters. It supports TTL based expiry, making it suitable as a cache or a persistent key-value store.
+> **Keyv** is a simple key-value storage with support for multiple backend adapters (MySQL, PostgreSQL, SQLite, Redis, Mongo, DynamoDB, Firestore, Memcached, and more).
 
 ## Features
 
-There are a few existing modules similar to Keyv, however Keyv is different because it:
-
-- Isn't bloated.
-- Has a simple Promise based API.
-- Suitable as a TTL based cache or persistent key-value store.
-- [Easily embeddable](#add-cache-support-to-your-module) inside another module.
-- Works with any storage that implements the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
-- Handles all JSON types plus `Buffer`.
-- Supports namespaces.
-- Wide range of [**efficient, well tested**](#official-storage-adapters) storage adapters.
-- Connection errors are passed through (db failures won't kill your app).
-- Supports the current active LTS version of Node.js or higher.
+- It isn't bloated.
+- It supports namespaces.
+- It supports TTL based expiry.
+- It has a simple Promise based API.
+- It handles all JSON types plus `Buffer`.
+- It's support a [vary of storages](#official-storage-adapters) adapters.
+- It can be [easily embed](#add-cache-support-to-your-module) inside another module.
+- It works with any storage that implements the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
+- it handles database errors (db failures won't kill your app).
+- It supports the current active LTS version of Node.js or higher.
+- It's suitable as a TTL based cache or persistent key-value store.
 
 ## Installation
 
@@ -45,7 +42,7 @@ npm install @keyvhq/keyv-mysql --save
 
 If you don't provide a specific storage adapter, a in-memory storage adapter is used by default.
 
-## Usage
+## Getting Started
 
 Just create a new Keyv instance, passing your storage adapter:
 
@@ -94,13 +91,15 @@ You can optionally provide your own serialization functions to support extra dat
 const keyv = new Keyv({ serialize: JSON.stringify, deserialize: JSON.parse });
 ```
 
-**Warning:** Using custom serializers means you lose any guarantee of data consistency. You should do extensive testing with your serialisation functions and chosen storage engine.
+!> Using custom serializers means you lose any guarantee of data consistency. You should do extensive testing with your serialisation functions and chosen storage engine.
 
-## Official Storage Adapters
+## Storage Adapters
+
+### Official
 
 The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
-## Third-party Storage Adapters
+### Community
 
 You can also use third-party storage adapters or build your own. Keyv will wrap these storage adapters in TTL functionality and handle complex types internally.
 
@@ -187,42 +186,42 @@ The options object is also passed through to the storage adapter. Check your sto
 
 #### options.namespace
 
-Type: `String`<br>
+Type: `String`<br/>
 Default: `'keyv'`
 
 Namespace for the current instance.
 
 #### options.ttl
 
-Type: `Number`<br>
+Type: `Number`<br/>
 Default: `undefined`
 
 Default TTL. Can be overridden by specififying a TTL on `.set()`.
 
 #### options.serialize
 
-Type: `Function`<br>
+Type: `Function`<br/>
 Default: `JSONB.stringify`
 
 A custom serialization function.
 
 #### options.deserialize
 
-Type: `Function`<br>
+Type: `Function`<br/>
 Default: `JSONB.parse`
 
 A custom deserialization function.
 
 #### options.store
 
-Type: `Storage adapter instance`<br>
+Type: `Storage adapter instance`<br/>
 Default: `new Map()`
 
 The storage adapter instance to be used by Keyv.
 
 #### options.adapter
 
-Type: `String`<br>
+Type: `String`<br/>
 Default: `undefined`
 
 Specify an adapter to use. e.g `'redis'` or `'mongodb'`.
@@ -245,7 +244,7 @@ Returns a promise which resolves to the retrieved value.
 
 ##### options.raw
 
-Type: `Boolean`<br>
+Type: `Boolean`<br/>
 Default: `false`
 
 If set to true the raw DB object Keyv stores internally will be returned instead of just the value.
@@ -278,7 +277,7 @@ Returns an [Async Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScr
 
 ## License
 
-**keyv** © [Microlink](https://microlink.io), Released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br>
+**keyv** © [Microlink](https://microlink.io), Released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br/>
 Authored and maintained by [Microlink](https://microlink.io) with help from [contributors](https://github.com/microlinkhq/keyv/contributors).
 
 > [microlink.io](https://microlink.io) · GitHub [@MicrolinkHQ](https://github.com/microlinkhq) · Twitter [@microlinkhq](https://twitter.com/microlinkhq)
