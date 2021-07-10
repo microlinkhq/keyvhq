@@ -42,207 +42,174 @@ npm install @keyvhq/keyv-mysql --save
 
 If you don't provide a specific storage adapter, a in-memory storage adapter is used by default.
 
-## Getting Started
+## Usage
 
-Just create a new Keyv instance, passing your storage adapter:
+Just create a new **Keyv** instance, using an specific storage adapter:
 
 ```js
-const keyv = new Keyv(); // in-memory, by default
+const keyv = new Keyv() // in-memory, by default
 const keyvRedis = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379')})
-const keyvMongo = new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')});
-const keyvSQLite = new Keyv({ store: new KeyvSQLite('sqlite://path/to/database.sqlite')});
-const keyvPostgreSQL = new Keyv({ store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')});
-const keyvMySQL = new Keyv({ store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')});
+const keyvMongo = new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')})
+const keyvSQLite = new Keyv({ store: new KeyvSQLite('sqlite://path/to/database.sqlite')})
+const keyvPostgreSQL = new Keyv({ store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')})
+const keyvMySQL = new Keyv({ store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')})
 
-// Handle DB connection errors
-keyv.on('error', err => console.log('Connection Error', err));
+// Handle database connection errors
+keyv.on('error', err => console.log('Connection Error', err))
 
-await keyv.set('foo', 'expires in 1 second', 1000); // true
-await keyv.set('foo', 'never expires'); // true
-await keyv.get('foo'); // 'never expires'
-await keyv.delete('foo'); // true
-await keyv.clear(); // undefined
+await keyv.set('foo', 'expires in 1 second', 1000) // true
+await keyv.set('foo', 'never expires') // true
+await keyv.get('foo') // 'never expires'
+await keyv.has('foo') // true
+await keyv.delete('foo') // true
+await keyv.has('foo') // false
+await keyv.clear() // undefined
 ```
 
 ### Namespaces
 
-You can namespace your Keyv instance to avoid key collisions and allow you to clear only a certain namespace while using the same database.
+You can namespace your **Keyv** instance to avoid key collisions and allow you to clear only a certain namespace while using the same database.
 
 ```js
-const users = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379'), namespace: 'users' });
-const cache = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379'), namespace: 'cache' });
+const users = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379'), namespace: 'users' })
+const cache = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379'), namespace: 'cache' })
 
-await users.set('foo', 'users'); // true
-await cache.set('foo', 'cache'); // true
-await users.get('foo'); // 'users'
-await cache.get('foo'); // 'cache'
-await users.clear(); // undefined
-await users.get('foo'); // undefined
-await cache.get('foo'); // 'cache'
+await users.set('foo', 'users') // true
+await cache.set('foo', 'cache') // true
+await users.get('foo') // 'users'
+await cache.get('foo') // 'cache'
+await users.clear() // undefined
+await users.get('foo') // undefined
+await cache.get('foo') // 'cache'
 ```
 
-### Custom Serializers
+### Serialization
 
-Keyv uses [`json-buffer`](https://github.com/dominictarr/json-buffer) for data serialization to ensure consistency across different backends.
+**Keyv** uses [json-buffer](https://github.com/dominictarr/json-buffer) for data serialization to ensure consistency across different backends.
 
 You can optionally provide your own serialization functions to support extra data types or to serialize to something other than JSON.
 
-```js
-const keyv = new Keyv({ serialize: JSON.stringify, deserialize: JSON.parse });
-```
+The following example is using [compress-brotli](https://github.com/Kikobeats/compress-brotli) as serializer:
 
-!> Using custom serializers means you lose any guarantee of data consistency. You should do extensive testing with your serialisation functions and chosen storage engine.
+```js
+const brotli = require('compress-brotli')()
+const Keyv = require('keyv')
+
+const serialize = async ({ value, expires }) => {
+  return brotli.serialize({ value: await brotli.compress(value), expires })
+}
+
+const deserialize = async data => {
+  const { value, expires } = brotli.deserialize(data)
+  return { value: await brotli.decompress(value), expires }
+}
+
+const keyv = new Keyv({  serialize deserialize })
+```
 
 ## Storage Adapters
 
-### Official
+**Keyv** is designed to be easily embedded into other modules to add cache support. 
 
-The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
-
-### Community
-
-You can also use third-party storage adapters or build your own. Keyv will wrap these storage adapters in TTL functionality and handle complex types internally.
+Caching will work in memory by default and users have the option to also install a **Keyv** storage adapter and pass in a connection string, or any other storage that implements the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
 
 ```js
-const Keyv = require('@keyvhq/keyv');
-const myAdapter = require('./my-storage-adapter');
+const got = require('got')
+const keyv = require('@keyvhq/keyv')
+const keyvRedis = require('@keyvhq/redis')
 
-const keyv = new Keyv({ store: myAdapter });
+const cache = new KeyvRedis('redis://user:pass@localhost:6379')
+
+await got('https://keyv.js.org', { cache })
 ```
 
-Any store that follows the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) api will work.
+The recommended pattern is to expose a `cache` option in your modules options which is passed through to **Keyv**.
+
+For example, [quick-lru](https://github.com/sindresorhus/quick-lru) is a completely unrelated module that implements the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
 
 ```js
-new Keyv({ store: new Map() });
+const Keyv = require('@keyvhq/keyv')
+const QuickLRU = require('quick-lru')
+
+const lru = new QuickLRU({ maxSize: 1000 })
+const keyv = new Keyv({ store: lru })
 ```
 
-For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is a completely unrelated module that implements the Map API.
+You should also set a [`namespace`](#optionsnamespace) for your module so you can safely call [`.clear()`](#clear) without clearing unrelated app data.
 
-```js
-const Keyv = require('@keyvhq/keyv');
-const QuickLRU = require('quick-lru');
+### Official storage adapters
 
-const lru = new QuickLRU({ maxSize: 1000 });
-const keyv = new Keyv({ store: lru });
-```
+> The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
-The following are third-party storage adapters compatible with Keyv:
+- [keyv-mongo]() – MongoDB storage adapter for Keyv.
+- [keyv-mysql]() – MySQL/MariaDB storage adapter for Keyv.
+- [keyv-postgres]() – PostgreSQL storage adapter for Keyv.
+- [keyv-redis]() – Redis storage adapter for Keyv.
+- [keyv-sqlite]() – SQLite storage adapter for Keyv.
 
-- [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache
-- [keyv-file](https://github.com/zaaack/keyv-file) - File system storage adapter for Keyv
-- [keyv-dynamodb](https://www.npmjs.com/package/keyv-dynamodb) - DynamoDB storage adapter for Keyv
-- [keyv-firestore ](https://github.com/goto-bus-stop/keyv-firestore) – Firebase Cloud Firestore adapter for Keyv
-- [keyv-mssql](https://github.com/pmorgan3/keyv-mssql) - Microsoft Sql Server adapter for Keyv
-- [keyv-memcache](https://github.com/jaredwray/keyv-memcache) - Memcache storage adapter for Keyv
+### Community storage adapters
 
-## Add Cache Support to your Module
+> You can also use third-party storage adapters or build your own. Keyv will wrap these storage adapters in TTL functionality and handle complex types internally.
 
-Keyv is designed to be easily embedded into other modules to add cache support. The recommended pattern is to expose a `cache` option in your modules options which is passed through to Keyv. Caching will work in memory by default and users have the option to also install a Keyv storage adapter and pass in a connection string, or any other storage that implements the `Map` API.
-
-You should also set a namespace for your module so you can safely call `.clear()` without clearing unrelated app data.
-
-Inside your module:
-
-```js
-class AwesomeModule {
-  constructor (opts) {
-    this.cache = new Keyv({
-      uri: typeof opts.cache === 'string' && opts.cache,
-      store: typeof opts.cache !== 'string' && opts.cache,
-      namespace: 'awesome-module'
-    })
-  }
-}
-```
-
-Now it can be consumed like this:
-
-```js
-const AwesomeModule = require('awesome-module');
-
-// Caches stuff in memory by default
-const awesomeModule = new AwesomeModule();
-
-// After npm install --save keyv-redis
-const awesomeModule = new AwesomeModule({ cache: 'redis://localhost' });
-
-// Some third-party module that implements the Map API
-const awesomeModule = new AwesomeModule({ cache: some3rdPartyStore });
-```
+- [keyv-dynamodb](https://www.npmjs.com/package/keyv-dynamodb) - DynamoDB storage adapter for Keyv.
+- [keyv-file](https://github.com/zaaack/keyv-file) - File system storage adapter for Keyv.
+- [keyv-firestore ](https://github.com/goto-bus-stop/keyv-firestore) – Firebase Cloud Firestore adapter for Keyv.
+- [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache.
+- [keyv-memcache](https://github.com/jaredwray/keyv-memcache) - Memcache storage adapter for Keyv.
+- [keyv-mssql](https://github.com/pmorgan3/keyv-mssql) - Microsoft SQL Server adapter for Keyv.
+- [keyv-s3](https://github.com/microlinkhq/keyv-s3) - Amazon S3 storage adapter for Keyv.
+- [memoized-keyv](https://github.com/moeriki/memoized-keyv) - Memoize using keyv as storage backend.
 
 ## API
 
-### new Keyv([options])
+### constructor([options])
 
 Returns a new Keyv instance.
 
 The Keyv instance is also an `EventEmitter` that will emit an `'error'` event if the storage adapter connection fails.
 
-### options
+#### options
 
 Type: `Object`
 
 The options object is also passed through to the storage adapter. Check your storage adapter docs for any extra options.
 
-#### options.namespace
+##### namespace
 
 Type: `String`<br/>
 Default: `'keyv'`
 
 Namespace for the current instance.
 
-#### options.ttl
+##### ttl
 
 Type: `Number`<br/>
 Default: `undefined`
 
 Default TTL. Can be overridden by specififying a TTL on `.set()`.
 
-#### options.serialize
+##### serialize
 
 Type: `Function`<br/>
 Default: `JSONB.stringify`
 
 A custom serialization function.
 
-#### options.deserialize
+##### deserialize
 
 Type: `Function`<br/>
 Default: `JSONB.parse`
 
 A custom deserialization function.
 
-#### options.store
+##### store
 
 Type: `Storage adapter instance`<br/>
 Default: `new Map()`
 
 The storage adapter instance to be used by Keyv.
 
-#### options.adapter
-
-Type: `String`<br/>
-Default: `undefined`
-
-Specify an adapter to use. e.g `'redis'` or `'mongodb'`.
-
-### Instance
-
-Keys must always be strings. Values can be of any type.
-
-#### .set(key, value, [ttl])
-
-Set a value.
-
-By default keys are persistent. You can set an expiry TTL in milliseconds.
-
-Returns a promise which resolves to `true`.
-
-#### .get(key, [options])
-
-Returns a promise which resolves to the retrieved value.
-
-##### options.raw
+##### raw
 
 Type: `Boolean`<br/>
 Default: `false`
@@ -251,25 +218,35 @@ If set to true the raw DB object Keyv stores internally will be returned instead
 
 This contains the TTL timestamp.
 
-#### .has(key)
+### .set(key, value, [ttl])
+
+Set a value.
+
+By default keys are persistent. You can set an expiry TTL in milliseconds.
+
+Returns a promise which resolves to `true`.
+
+### .get(key, [options])
+
+Returns a promise which resolves to the retrieved value.
+
+### .has(key)
 
 Returns a promise which resolves to a boolean, indicating existence of a key.
 
-#### .delete(key)
+### .delete(key)
 
 Deletes an entry.
 
 Returns a promise which resolves to `true` if the key existed, `false` if not.
 
-#### .clear()
+### .clear()
 
 Delete all entries in the current namespace.
 
 Returns a promise which is resolved when the entries have been cleared.
 
-```
 When calling clear(), on a keyv instance with no namespace, nothing is done.
-```
 
 #### .iterator()
 
