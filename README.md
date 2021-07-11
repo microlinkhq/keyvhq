@@ -151,6 +151,7 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 
 > You can also use third-party storage adapters or build your own. Keyv will wrap these storage adapters in TTL functionality and handle complex types internally.
 
+- [keyv-anyredis](https://github.com/natesilva/keyv-anyredis) - Support for Redis clusters and alternative Redis clients.
 - [keyv-dynamodb](https://www.npmjs.com/package/keyv-dynamodb) - DynamoDB storage adapter for Keyv.
 - [keyv-file](https://github.com/zaaack/keyv-file) - File system storage adapter for Keyv.
 - [keyv-firestore ](https://github.com/goto-bus-stop/keyv-firestore) – Firebase Cloud Firestore adapter for Keyv.
