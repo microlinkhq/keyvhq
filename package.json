@@ -106,18 +106,19 @@
   "devDependencies": {
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
-    "lerna": "latest",
-    "lint-staged": "latest",
-    "simple-git-hooks": "latest",
-    "standard": "latest",
+    "browser-sync": "latest",
+    "concurrently": "latest",
+    "finepack": "latest",
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
     "gulp-concat": "latest",
     "gulp-cssnano": "latest",
     "gulp-strip-css-comments": "latest",
     "gulp-uglify": "latest",
-    "browser-sync": "latest",
-    "concurrently": "latest"
+    "lerna": "latest",
+    "lint-staged": "latest",
+    "simple-git-hooks": "latest",
+    "standard": "latest"
   },
   "engines": {
     "node": ">= 12"
@@ -127,10 +128,10 @@
   ],
   "scripts": {
     "build": "gulp build",
-    "dev": "concurrently \"gulp\" \"npm run dev:server\"",
-    "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "contributors": "(lerna exec finepack --parallel && git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
+    "dev": "concurrently \"gulp\" \"npm run dev:server\"",
+    "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
     "install": "lerna bootstrap --no-ci --force-local",
     "lint": "standard",
     "prerelease": "npm run contributors",
