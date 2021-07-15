@@ -30,7 +30,9 @@ You can specify the collection name, by default `'keyv'` is used.
 e.g:
 
 ```js
-const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname', { collection: 'cache' })
+const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname', {
+  collection: 'cache'
+})
 ```
 
 ## License

@@ -49,24 +49,24 @@ npm install --save @keyv/mysql
 Create a new Keyv instance, passing your connection string if applicable. Keyv will automatically load the correct storage adapter.
 
 ```js
-const Keyv = require('keyv');
+const Keyv = require('keyv')
 
 // One of the following
-const keyv = new Keyv();
-const keyv = new Keyv('redis://user:pass@localhost:6379');
-const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname');
-const keyv = new Keyv('sqlite://path/to/database.sqlite');
-const keyv = new Keyv('postgresql://user:pass@localhost:5432/dbname');
-const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname');
+const keyv = new Keyv()
+const keyv = new Keyv('redis://user:pass@localhost:6379')
+const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname')
+const keyv = new Keyv('sqlite://path/to/database.sqlite')
+const keyv = new Keyv('postgresql://user:pass@localhost:5432/dbname')
+const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname')
 
 // Handle DB connection errors
-keyv.on('error', err => console.log('Connection Error', err));
+keyv.on('error', err => console.log('Connection Error', err))
 
-await keyv.set('foo', 'expires in 1 second', 1000); // true
-await keyv.set('foo', 'never expires'); // true
-await keyv.get('foo'); // 'never expires'
-await keyv.delete('foo'); // true
-await keyv.clear(); // undefined
+await keyv.set('foo', 'expires in 1 second', 1000) // true
+await keyv.set('foo', 'never expires') // true
+await keyv.get('foo') // 'never expires'
+await keyv.delete('foo') // true
+await keyv.clear() // undefined
 ```
 
 ### Namespaces
@@ -74,16 +74,20 @@ await keyv.clear(); // undefined
 You can namespace your Keyv instance to avoid key collisions and allow you to clear only a certain namespace while using the same database.
 
 ```js
-const users = new Keyv('redis://user:pass@localhost:6379', { namespace: 'users' });
-const cache = new Keyv('redis://user:pass@localhost:6379', { namespace: 'cache' });
+const users = new Keyv('redis://user:pass@localhost:6379', {
+  namespace: 'users'
+})
+const cache = new Keyv('redis://user:pass@localhost:6379', {
+  namespace: 'cache'
+})
 
-await users.set('foo', 'users'); // true
-await cache.set('foo', 'cache'); // true
-await users.get('foo'); // 'users'
-await cache.get('foo'); // 'cache'
-await users.clear(); // undefined
-await users.get('foo'); // undefined
-await cache.get('foo'); // 'cache'
+await users.set('foo', 'users') // true
+await cache.set('foo', 'cache') // true
+await users.get('foo') // 'users'
+await cache.get('foo') // 'cache'
+await users.clear() // undefined
+await users.get('foo') // undefined
+await cache.get('foo') // 'cache'
 ```
 
 ### Custom Serializers
@@ -102,13 +106,13 @@ const keyv = new Keyv({ serialize: JSON.stringify, deserialize: JSON.parse })
 
 The official storage adapters are covered by [over 150 integration tests](https://travis-ci.org/lukechilds/keyv/jobs/260418145) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
-Database | Adapter | Native TTL | Status
----|---|---|---
-Redis | [@keyv/redis](https://github.com/lukechilds/keyv-redis) | Yes | [![Build Status](https://travis-ci.org/lukechilds/keyv-redis.svg?branch=master)](https://travis-ci.org/lukechilds/keyv-redis) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-redis/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-redis?branch=master)
-MongoDB | [@keyv/mongo](https://github.com/lukechilds/keyv-mongo) | Yes | [![Build Status](https://travis-ci.org/lukechilds/keyv-mongo.svg?branch=master)](https://travis-ci.org/lukechilds/keyv-mongo) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-mongo/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-mongo?branch=master)
-SQLite | [@keyv/sqlite](https://github.com/lukechilds/keyv-sqlite) | No | [![Build Status](https://travis-ci.org/lukechilds/keyv-sqlite.svg?branch=master)](https://travis-ci.org/lukechilds/keyv-sqlite) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-sqlite/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-sqlite?branch=master)
-PostgreSQL | [@keyv/postgres](https://github.com/lukechilds/keyv-postgres) | No | [![Build Status](https://travis-ci.org/lukechilds/keyv-postgres.svg?branch=master)](https://travis-ci.org/lukechildskeyv-postgreskeyv) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-postgres/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-postgres?branch=master)
-MySQL | [@keyv/mysql](https://github.com/lukechilds/keyv-mysql) | No | [![Build Status](https://travis-ci.org/lukechilds/keyv-mysql.svg?branch=master)](https://travis-ci.org/lukechilds/keyv-mysql) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-mysql/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-mysql?branch=master)
+| Database   | Adapter                                                       | Native TTL | Status                                                                                                                                                                                                                                                                                                              |
+| ---------- | ------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Redis      | [@keyv/redis](https://github.com/lukechilds/keyv-redis)       | Yes        | [![Build Status](https://travis-ci.org/lukechilds/keyv-redis.svg?branch=master)](https://travis-ci.org/lukechilds/keyv-redis) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-redis/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-redis?branch=master)                |
+| MongoDB    | [@keyv/mongo](https://github.com/lukechilds/keyv-mongo)       | Yes        | [![Build Status](https://travis-ci.org/lukechilds/keyv-mongo.svg?branch=master)](https://travis-ci.org/lukechilds/keyv-mongo) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-mongo/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-mongo?branch=master)                |
+| SQLite     | [@keyv/sqlite](https://github.com/lukechilds/keyv-sqlite)     | No         | [![Build Status](https://travis-ci.org/lukechilds/keyv-sqlite.svg?branch=master)](https://travis-ci.org/lukechilds/keyv-sqlite) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-sqlite/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-sqlite?branch=master)            |
+| PostgreSQL | [@keyv/postgres](https://github.com/lukechilds/keyv-postgres) | No         | [![Build Status](https://travis-ci.org/lukechilds/keyv-postgres.svg?branch=master)](https://travis-ci.org/lukechildskeyv-postgreskeyv) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-postgres/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-postgres?branch=master) |
+| MySQL      | [@keyv/mysql](https://github.com/lukechilds/keyv-mysql)       | No         | [![Build Status](https://travis-ci.org/lukechilds/keyv-mysql.svg?branch=master)](https://travis-ci.org/lukechilds/keyv-mysql) [![Coverage Status](https://coveralls.io/repos/github/lukechilds/keyv-mysql/badge.svg?branch=master)](https://coveralls.io/github/lukechilds/keyv-mysql?branch=master)                |
 
 ## Third-party Storage Adapters
 
@@ -169,16 +173,16 @@ class AwesomeModule {
 Now it can be consumed like this:
 
 ```js
-const AwesomeModule = require('awesome-module');
+const AwesomeModule = require('awesome-module')
 
 // Caches stuff in memory by default
-const awesomeModule = new AwesomeModule();
+const awesomeModule = new AwesomeModule()
 
 // After npm install --save keyv-redis
-const awesomeModule = new AwesomeModule({ cache: 'redis://localhost' });
+const awesomeModule = new AwesomeModule({ cache: 'redis://localhost' })
 
 // Some third-party module that implements the Map API
-const awesomeModule = new AwesomeModule({ cache: some3rdPartyStore });
+const awesomeModule = new AwesomeModule({ cache: some3rdPartyStore })
 ```
 
 ## API

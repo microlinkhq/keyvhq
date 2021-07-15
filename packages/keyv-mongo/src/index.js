@@ -29,7 +29,8 @@ class KeyvMongo extends EventEmitter {
     this.options.mongoOptions = Object.assign(
       {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        tls: true
       },
       this.options.mongoOptions
     )
@@ -89,10 +90,9 @@ class KeyvMongo extends EventEmitter {
   get (key) {
     return this.connect.then(store =>
       store.findOne({ key: { $eq: key } }).then(doc => {
-        if (doc === null) {
+        if (doc === undefined) {
           return undefined
         }
-
         return doc.value
       })
     )

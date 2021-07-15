@@ -27,7 +27,7 @@
 ## Installation
 
 ```bash
-npm install @keyvhq/keyv --save 
+npm install @keyvhq/keyv --save
 ```
 
 You can optionally install the storage adapter you want to use:
@@ -48,11 +48,21 @@ Just create a new **Keyv** instance, using an specific storage adapter:
 
 ```js
 const keyv = new Keyv() // in-memory, by default
-const keyvRedis = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379')})
-const keyvMongo = new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')})
-const keyvSQLite = new Keyv({ store: new KeyvSQLite('sqlite://path/to/database.sqlite')})
-const keyvPostgreSQL = new Keyv({ store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')})
-const keyvMySQL = new Keyv({ store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')})
+const keyvRedis = new Keyv({
+  store: new KeyvRedis('redis://user:pass@localhost:6379')
+})
+const keyvMongo = new Keyv({
+  store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')
+})
+const keyvSQLite = new Keyv({
+  store: new KeyvSQLite('sqlite://path/to/database.sqlite')
+})
+const keyvPostgreSQL = new Keyv({
+  store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')
+})
+const keyvMySQL = new Keyv({
+  store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')
+})
 
 // Handle database connection errors
 keyv.on('error', err => console.log('Connection Error', err))
@@ -71,8 +81,14 @@ await keyv.clear() // undefined
 You can namespace your **Keyv** instance to avoid key collisions and allow you to clear only a certain namespace while using the same database.
 
 ```js
-const users = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379'), namespace: 'users' })
-const cache = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379'), namespace: 'cache' })
+const users = new Keyv({
+  store: new KeyvRedis('redis://user:pass@localhost:6379'),
+  namespace: 'users'
+})
+const cache = new Keyv({
+  store: new KeyvRedis('redis://user:pass@localhost:6379'),
+  namespace: 'cache'
+})
 
 await users.set('foo', 'users') // true
 await cache.set('foo', 'cache') // true
@@ -109,7 +125,7 @@ const keyv = new Keyv({  serialize deserialize })
 
 ## Storage Adapters
 
-**Keyv** is designed to be easily embedded into other modules to add cache support. 
+**Keyv** is designed to be easily embedded into other modules to add cache support.
 
 Caching will work in memory by default and users have the option to also install a **Keyv** storage adapter and pass in a connection string, or any other storage that implements the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
 

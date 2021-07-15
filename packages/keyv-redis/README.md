@@ -30,7 +30,9 @@ Any valid [`Redis`](https://github.com/luin/ioredis#connect-to-redis) options wi
 e.g:
 
 ```js
-const keyv = new Keyv('redis://user:pass@localhost:6379', { disable_resubscribing: true })
+const keyv = new Keyv('redis://user:pass@localhost:6379', {
+  disable_resubscribing: true
+})
 ```
 
 Or you can manually create a storage adapter instance and pass it to Keyv:
