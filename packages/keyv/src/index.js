@@ -4,22 +4,22 @@ const EventEmitter = require('events')
 const JSONB = require('json-buffer')
 
 class Keyv extends EventEmitter {
-  constructor (options) {
+  constructor ({ emitErrors = true, ...options }) {
     super()
     this.options = Object.assign(
       {
         namespace: 'keyv',
         serialize: JSONB.stringify,
-        deserialize: JSONB.parse
+        deserialize: JSONB.parse,
+        emitErrors: true
       },
       options
     )
 
     this.store = this.options.store || new Map()
-
     this.store.namespace = this.options.namespace
 
-    if (typeof this.store.on === 'function') {
+    if (emitErrors) {
       this.store.on('error', error => this.emit('error', error))
     }
 
