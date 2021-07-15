@@ -117,6 +117,7 @@
     "gulp-uglify": "latest",
     "lerna": "latest",
     "lint-staged": "latest",
+    "prettier-standard": "latest",
     "simple-git-hooks": "latest",
     "standard": "latest"
   },
