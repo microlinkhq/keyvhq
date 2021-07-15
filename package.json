@@ -108,6 +108,7 @@
     "@commitlint/config-conventional": "latest",
     "browser-sync": "latest",
     "concurrently": "latest",
+    "finepack": "latest",
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
     "gulp-concat": "latest",
