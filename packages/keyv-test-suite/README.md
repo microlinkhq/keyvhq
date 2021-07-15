@@ -37,6 +37,7 @@ keyvTestSuite(test, Keyv, store)
 Where `KeyvStore` is your storage adapter.
 
 Set your test script in `package.json` to `ava`.
+
 ```json
 "scripts": {
   "test": "ava"

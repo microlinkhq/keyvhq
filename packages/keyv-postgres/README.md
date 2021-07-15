@@ -30,7 +30,9 @@ You can specify the `table` option.
 e.g:
 
 ```js
-const keyv = new Keyv('postgresql://user:pass@localhost:5432/dbname', { table: 'cache' })
+const keyv = new Keyv('postgresql://user:pass@localhost:5432/dbname', {
+  table: 'cache'
+})
 ```
 
 ## License
