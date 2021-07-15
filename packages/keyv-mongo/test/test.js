@@ -18,7 +18,8 @@ test('Collection option merges into default options', t => {
       useNewUrlParser: true,
       useUnifiedTopology: true
     },
-    collection: 'foo'
+    collection: 'foo',
+    emitErrors: true
   })
 })
 
@@ -30,6 +31,7 @@ test('Collection option merges into default options if URL is passed', t => {
       useNewUrlParser: true,
       useUnifiedTopology: true
     },
-    collection: 'foo'
+    collection: 'foo',
+    emitErrors: true
   })
 })

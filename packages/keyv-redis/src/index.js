@@ -5,7 +5,7 @@ const pEvent = require('p-event')
 const Redis = require('ioredis')
 
 class KeyvRedis extends EventEmitter {
-  constructor (uri, { emitErrors = true, ...options }) {
+  constructor (uri, options) {
     super()
 
     if (uri instanceof Redis) {
@@ -19,7 +19,7 @@ class KeyvRedis extends EventEmitter {
       this.redis = new Redis(options.uri, options)
     }
 
-    if (emitErrors) {
+    if (options && options.emitErrors !== false) {
       this.redis.on('error', error => this.emit('error', error))
     }
   }

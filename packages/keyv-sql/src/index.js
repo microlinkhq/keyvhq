@@ -10,7 +10,8 @@ class KeyvSql extends EventEmitter {
       {
         table: 'keyv',
         keySize: 255,
-        iterationLimit: 10
+        iterationLimit: 10,
+        emitErrors: true
       },
       options
     )
@@ -24,7 +25,7 @@ class KeyvSql extends EventEmitter {
       .connect()
       .then(query => query(createTable).then(() => query))
       .catch(error => {
-        if (this.options.emitErrors && typeof this.store.on === 'function') {
+        if (this.options.emitErrors) {
           this.emit('error', error)
         }
       })
@@ -56,8 +57,8 @@ class KeyvSql extends EventEmitter {
       this.options.dialect === 'postgres'
         ? `INSERT INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}') ON CONFLICT ("key") DO UPDATE SET "value" = EXCLUDED."value"`
         : this.options.dialect === 'mysql'
-        ? `REPLACE INTO \`${this.options.table}\` (\`key\`, \`value\`) VALUES ('${key}', '${value}')`
-        : `REPLACE INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}')`
+          ? `REPLACE INTO \`${this.options.table}\` (\`key\`, \`value\`) VALUES ('${key}', '${value}')`
+          : `REPLACE INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}')`
 
     return this.query(upsert)
   }
