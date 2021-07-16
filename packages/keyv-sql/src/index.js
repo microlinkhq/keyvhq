@@ -10,7 +10,8 @@ class KeyvSql extends EventEmitter {
       {
         table: 'keyv',
         keySize: 255,
-        iterationLimit: 10
+        iterationLimit: 10,
+        emitErrors: true
       },
       options
     )
@@ -23,7 +24,11 @@ class KeyvSql extends EventEmitter {
     const connected = this.options
       .connect()
       .then(query => query(createTable).then(() => query))
-      .catch(error => this.emit('error', error))
+      .catch(error => {
+        if (this.options.emitErrors) {
+          this.emit('error', error)
+        }
+      })
 
     this.query = sqlString => connected.then(query => query(sqlString))
   }
