@@ -1,6 +1,6 @@
 {
-  "name": "@keyvhq/redis",
-  "description": "Redis storage adapter for Keyv",
+  "name": "@keyvhq/mongo",
+  "description": "MongoDB storage adapter for Keyv",
   "homepage": "https://github.com/microlinkhq/keyv",
   "version": "1.0.1",
   "main": "src/index.js",
@@ -10,7 +10,7 @@
     "url": "https://microlink.io"
   },
   "repository": {
-    "directory": "packages/keyv-redis",
+    "directory": "packages/mongo",
     "type": "git",
     "url": "git+https://github.com/microlinkhq/keyv.git"
   },
@@ -22,15 +22,16 @@
     "cache",
     "key",
     "keyv",
-    "redis",
+    "mongo",
+    "mongodb",
     "storage",
     "store",
     "ttl",
     "value"
   ],
   "dependencies": {
-    "ioredis": "~4.27.6",
-    "p-event": "~4.2.0"
+    "mongodb": "^3.6.5",
+    "pify": "^5.0.0"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
@@ -45,9 +46,7 @@
     "src"
   ],
   "scripts": {
-    "posttest:docker": "docker-compose down --rmi local",
-    "test": "nyc --temp-dir ../../.nyc_output ava",
-    "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
+    "test": "nyc --temp-dir ../../.nyc_output ava"
   },
   "license": "MIT"
 }

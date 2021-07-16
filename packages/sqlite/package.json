@@ -10,7 +10,7 @@
     "url": "https://microlink.io"
   },
   "repository": {
-    "directory": "packages/keyv-sqlite",
+    "directory": "packages/sqlite",
     "type": "git",
     "url": "git+https://github.com/microlinkhq/keyv.git"
   },

@@ -10,7 +10,7 @@
     "url": "https://microlink.io"
   },
   "repository": {
-    "directory": "packages/keyv-sql",
+    "directory": "packages/sql",
     "type": "git",
     "url": "git+https://github.com/microlinkhq/keyv.git"
   },
