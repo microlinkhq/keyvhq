@@ -1,7 +1,7 @@
 'use strict'
 
-const keyvTestSuite = require('@keyvhq/keyv-test-suite')
-const Keyv = require('@keyvhq/keyv')
+const keyvTestSuite = require('@keyvhq/test-suite')
+const Keyv = require('@keyvhq/core')
 const Redis = require('ioredis')
 const test = require('ava')
 

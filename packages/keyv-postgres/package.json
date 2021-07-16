@@ -1,5 +1,5 @@
 {
-  "name": "@keyvhq/keyv-postgres",
+  "name": "@keyvhq/postgres",
   "description": "PostgreSQL storage adapter for Keyv",
   "homepage": "https://github.com/microlinkhq/keyv",
   "version": "1.0.0",
@@ -31,12 +31,12 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/keyv-sql": "^1.0.0",
+    "@keyvhq/sql": "^1.0.0",
     "pg": "8.6.0"
   },
   "devDependencies": {
-    "@keyvhq/keyv": "latest",
-    "@keyvhq/keyv-test-suite": "latest",
+    "@keyvhq/core": "latest",
+    "@keyvhq/test-suite": "latest",
     "ava": "latest",
     "nyc": "latest"
   },

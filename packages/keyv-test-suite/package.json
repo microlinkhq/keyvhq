@@ -1,5 +1,5 @@
 {
-  "name": "@keyvhq/keyv-test-suite",
+  "name": "@keyvhq/test-suite",
   "description": "Test suite for Keyv API compliancy",
   "homepage": "https://github.com/microlinkhq/keyv",
   "version": "1.0.0",

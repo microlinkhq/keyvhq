@@ -1,5 +1,5 @@
 {
-  "name": "@keyvhq/keyv",
+  "name": "@keyvhq/core",
   "description": "Simple key-value storage with support for multiple backends",
   "homepage": "https://github.com/microlinkhq/keyv",
   "version": "1.0.0",
@@ -28,7 +28,7 @@
     "json-buffer": "~3.0.1"
   },
   "devDependencies": {
-    "@keyvhq/keyv-test-suite": "latest",
+    "@keyvhq/test-suite": "latest",
     "ava": "latest",
     "nyc": "latest",
     "timekeeper": "latest"

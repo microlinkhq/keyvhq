@@ -5,4 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.2.4](https://github.com/microlinkhq/keyv/compare/v0.2.0...v0.2.4) (2021-07-01)
 
-**Note:** Version bump only for package @keyvhq/keyv-sql
+**Note:** Version bump only for package @keyvhq/sql

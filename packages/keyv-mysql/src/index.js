@@ -1,6 +1,6 @@
 'use strict'
 
-const KeyvSql = require('@keyvhq/keyv-sql')
+const KeyvSql = require('@keyvhq/sql')
 const mysql = require('mysql2/promise')
 
 class KeyvMysql extends KeyvSql {

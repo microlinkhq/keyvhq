@@ -1,6 +1,6 @@
 'use strict'
 
-const keyvTestSuite = require('@keyvhq/keyv-test-suite')
+const keyvTestSuite = require('@keyvhq/test-suite')
 const tk = require('timekeeper')
 const test = require('ava')
 
