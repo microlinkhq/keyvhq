@@ -158,9 +158,11 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 - [keyv-lru](https://github.com/e0ipso/keyv-lru) – An in-memory LRU back-end for Keyv.
 - [keyv-memcache](https://github.com/jaredwray/keyv-memcache) - Memcache storage adapter for Keyv.
 - [keyv-mssql](https://github.com/pmorgan3/keyv-mssql) - Microsoft SQL Server adapter for Keyv.
+- [keyv-offline](https://github.com/Kikobeats/keyv-offline) – Adding offline capabilities for your keyv instance.
 - [keyv-s3](https://github.com/microlinkhq/keyv-s3) - Amazon S3 storage adapter for Keyv.
 - [memoized-keyv](https://github.com/moeriki/memoized-keyv) - Memoize using keyv as storage backend.
 - [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache.
+
 
 ## API
 
