@@ -1,0 +1,53 @@
+{
+  "name": "@keyvhq/mysql",
+  "description": "MySQL/MariaDB storage adapter for Keyv",
+  "homepage": "https://github.com/microlinkhq/keyv",
+  "version": "1.0.1",
+  "main": "src/index.js",
+  "author": {
+    "email": "hello@microlink.io",
+    "name": "microlink.io",
+    "url": "https://microlink.io"
+  },
+  "repository": {
+    "directory": "packages/keyv-mysql",
+    "type": "git",
+    "url": "git+https://github.com/microlinkhq/keyv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/microlinkhq/keyv/issues"
+  },
+  "keywords": [
+    "adapter",
+    "cache",
+    "key",
+    "keyv",
+    "mariadb",
+    "mysql",
+    "sql",
+    "storage",
+    "store",
+    "ttl",
+    "value"
+  ],
+  "dependencies": {
+    "@keyvhq/sql": "^1.0.1",
+    "mysql2": "2.2.5"
+  },
+  "devDependencies": {
+    "@keyvhq/core": "latest",
+    "@keyvhq/test-suite": "latest",
+    "ava": "latest",
+    "nyc": "latest"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "nyc --temp-dir ../../.nyc_output ava"
+  },
+  "license": "MIT"
+}

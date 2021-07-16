@@ -1,0 +1,44 @@
+{
+  "name": "@keyvhq/test-suite",
+  "description": "Test suite for Keyv API compliancy",
+  "homepage": "https://github.com/microlinkhq/keyv",
+  "version": "1.0.1",
+  "main": "src/index.js",
+  "author": {
+    "email": "hello@microlink.io",
+    "name": "microlink.io",
+    "url": "https://microlink.io"
+  },
+  "repository": {
+    "directory": "packages/keyv-test-suite",
+    "type": "git",
+    "url": "git+https://github.com/microlinkhq/keyv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/microlinkhq/keyv/issues"
+  },
+  "keywords": [
+    "cache",
+    "key",
+    "store",
+    "suite",
+    "test",
+    "tests",
+    "ttl",
+    "value"
+  ],
+  "devDependencies": {
+    "delay": "latest",
+    "timekeeper": "latest"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "exit 0"
+  },
+  "license": "MIT"
+}

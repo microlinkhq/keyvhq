@@ -6,7 +6,7 @@
 
 ![Last version](https://img.shields.io/github/tag/keyvhq/keyv.svg?style=flat-square)
 [![Coverage Status](https://img.shields.io/coveralls/keyvhq/keyv.svg?style=flat-square)](https://coveralls.io/github/keyvhq/keyv)
-[![NPM Status](https://img.shields.io/npm/dm/@keyvhq/keyv.svg?style=flat-square)](https://www.npmjs.org/package/@keyvhq/keyv)
+[![NPM Status](https://img.shields.io/npm/dm/@keyvhq/core.svg?style=flat-square)](https://www.npmjs.org/package/@keyvhq/core)
 
 > **Keyv** is a simple key-value storage with support for multiple backend adapters (MySQL, PostgreSQL, SQLite, Redis, Mongo, DynamoDB, Firestore, Memcached, and more).
 
@@ -27,17 +27,17 @@
 ## Installation
 
 ```bash
-npm install @keyvhq/keyv --save
+npm install @keyvhq/core --save 
 ```
 
 You can optionally install the storage adapter you want to use:
 
 ```bash
-npm install @keyvhq/keyv-redis --save
-npm install @keyvhq/keyv-mongo --save
-npm install @keyvhq/keyv-sqlite --save
-npm install @keyvhq/keyv-postgres --save
-npm install @keyvhq/keyv-mysql --save
+npm install @keyvhq/redis --save
+npm install @keyvhq/mongo --save
+npm install @keyvhq/sqlite --save
+npm install @keyvhq/postgres --save
+npm install @keyvhq/mysql --save
 ```
 
 If you don't provide a specific storage adapter, a in-memory storage adapter is used by default.
@@ -131,7 +131,7 @@ Caching will work in memory by default and users have the option to also install
 
 ```js
 const got = require('got')
-const keyv = require('@keyvhq/keyv')
+const keyv = require('@keyvhq/core')
 const keyvRedis = require('@keyvhq/redis')
 
 const cache = new KeyvRedis('redis://user:pass@localhost:6379')
@@ -144,7 +144,7 @@ The recommended pattern is to expose a `cache` option in your modules options wh
 For example, [quick-lru](https://github.com/sindresorhus/quick-lru) is a completely unrelated module that implements the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
 
 ```js
-const Keyv = require('@keyvhq/keyv')
+const Keyv = require('@keyvhq/core')
 const QuickLRU = require('quick-lru')
 
 const lru = new QuickLRU({ maxSize: 1000 })
@@ -157,11 +157,11 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 
 > The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
-- [keyv-mongo]() – MongoDB storage adapter for Keyv.
-- [keyv-mysql]() – MySQL/MariaDB storage adapter for Keyv.
-- [keyv-postgres]() – PostgreSQL storage adapter for Keyv.
-- [keyv-redis]() – Redis storage adapter for Keyv.
-- [keyv-sqlite]() – SQLite storage adapter for Keyv.
+- [@keyvhq/mongo](/packages/mongo) – MongoDB storage adapter for Keyv.
+- [@keyvhq/mysql](/packages/mysql) – MySQL/MariaDB storage adapter for Keyv.
+- [@keyvhq/postgres](/packages/postgres) – PostgreSQL storage adapter for Keyv.
+- [@keyvhq/redis](/packages/redis) – Redis storage adapter for Keyv.
+- [@keyvhq/sqlite](/packages/sqlite) – SQLite storage adapter for Keyv.
 
 ### Community storage adapters
 

@@ -38,10 +38,6 @@
       "email": "mysidestheyaregone@protonmail.com"
     },
     {
-      "name": "Paul Morgan III",
-      "email": "pmorgan3@gmail.com"
-    },
-    {
       "name": "Romuald Quantin",
       "email": "romu@soundstep.com"
     },
@@ -76,6 +72,10 @@
     {
       "name": "Dušan Simić",
       "email": "dusan.simic1810@gmail.com"
+    },
+    {
+      "name": "Paul Morgan III",
+      "email": "pmorgan3@gmail.com"
     }
   ],
   "repository": {
@@ -117,6 +117,7 @@
     "gulp-uglify": "latest",
     "lerna": "latest",
     "lint-staged": "latest",
+    "prettier-standard": "latest",
     "simple-git-hooks": "latest",
     "standard": "latest"
   },

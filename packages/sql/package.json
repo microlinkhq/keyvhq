@@ -1,0 +1,51 @@
+{
+  "name": "@keyvhq/sql",
+  "description": "Parent class for SQL based Keyv storage adapters",
+  "homepage": "https://github.com/microlinkhq/keyv",
+  "version": "1.0.1",
+  "main": "src/index.js",
+  "author": {
+    "email": "hello@microlink.io",
+    "name": "microlink.io",
+    "url": "https://microlink.io"
+  },
+  "repository": {
+    "directory": "packages/sql",
+    "type": "git",
+    "url": "git+https://github.com/microlinkhq/keyv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/microlinkhq/keyv/issues"
+  },
+  "keywords": [
+    "adapter",
+    "cache",
+    "key",
+    "keyv",
+    "sql",
+    "storage",
+    "store",
+    "ttl",
+    "value"
+  ],
+  "dependencies": {
+    "pify": "^5.0.0",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "@keyvhq/core": "latest",
+    "@keyvhq/test-suite": "latest",
+    "ava": "latest",
+    "nyc": "latest"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "nyc --temp-dir ../../.nyc_output ava"
+  },
+  "license": "MIT"
+}
