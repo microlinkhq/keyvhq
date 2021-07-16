@@ -1,3 +1,16 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.0.1](https://github.com/microlinkhq/keyv/compare/v1.0.0...v1.0.1) (2021-07-16)
+
+**Note:** Version bump only for package @keyvhq/monorepo
+
+
+
+
+
 # [](https://github.com/microlinkhq/keyv/compare/v1.0.0...v) (2021-07-16)
 
 
@@ -104,6 +117,3 @@
 * since exports are now different
 
 Signed-off-by: Jytesh <44925963+Jytesh@users.noreply.github.com>
-
-
-
