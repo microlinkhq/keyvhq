@@ -20,7 +20,8 @@ class KeyvMongo extends EventEmitter {
     this.options = Object.assign(
       {
         url: 'mongodb://127.0.0.1:27017',
-        collection: 'keyv'
+        collection: 'keyv',
+        emitErrors: true
       },
       url,
       options
@@ -40,7 +41,7 @@ class KeyvMongo extends EventEmitter {
         this.options.mongoOptions
       )
     } catch (error) {
-      this.emit('error', error)
+      if (this.options.emitErrors) this.emit('error', error)
     }
 
     this.mongo = {}
@@ -76,13 +77,17 @@ class KeyvMongo extends EventEmitter {
           }
 
           if (!listeningEvents) {
-            this.client.on('error', error => this.emit('error', error))
-            listeningEvents = true
+            if (this.options.emitErrors) {
+              this.client.on('error', error => this.emit('error', error))
+              listeningEvents = true
+            }
           }
 
           resolve(this.store)
         })
-        .catch(error => this.emit('error', error))
+        .catch(error => {
+          if (this.options.emitErrors) this.emit('error', error)
+        })
     })
   }
 

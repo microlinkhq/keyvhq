@@ -19,7 +19,9 @@ class KeyvRedis extends EventEmitter {
       this.redis = new Redis(options.uri, options)
     }
 
-    this.redis.on('error', error => this.emit('error', error))
+    if (options && options.emitErrors !== false) {
+      this.redis.on('error', error => this.emit('error', error))
+    }
   }
 
   async get (key) {
