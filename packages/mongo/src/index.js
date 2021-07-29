@@ -21,7 +21,8 @@ class KeyvMongo extends EventEmitter {
       {
         url: 'mongodb://127.0.0.1:27017',
         collection: 'keyv',
-        emitErrors: true
+        emitErrors: true,
+        tls: true
       },
       url,
       options
@@ -94,7 +95,7 @@ class KeyvMongo extends EventEmitter {
   get (key) {
     return this.connect.then(store =>
       store.findOne({ key: { $eq: key } }).then(doc => {
-        if (doc === null) {
+        if (doc === undefined) {
           return undefined
         }
 
