@@ -30,8 +30,7 @@ class KeyvMongo extends EventEmitter {
     this.options.mongoOptions = Object.assign(
       {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        tls: true
+        useUnifiedTopology: true
       },
       this.options.mongoOptions
     )
