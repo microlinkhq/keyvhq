@@ -73,6 +73,8 @@ class Keyv extends EventEmitter {
 
   async get (key, { raw: asRaw = false } = {}) {
     const raw = await this.store.get(this._getKeyPrefix(key))
+    if (raw === undefined) return undefined
+
     const data = typeof raw === 'string' ? await this.deserialize(raw) : raw
 
     if (typeof data.expires === 'number' && Date.now() > data.expires) {
