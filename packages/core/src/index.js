@@ -107,6 +107,8 @@ class Keyv extends EventEmitter {
   }
 
   set (key, value, ttl) {
+    if (value === undefined) return false
+    
     const keyPrefixed = this._getKeyPrefix(key)
     if (typeof ttl === 'undefined') {
       ttl = this.options.ttl
