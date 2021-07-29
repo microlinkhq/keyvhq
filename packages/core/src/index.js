@@ -76,7 +76,7 @@ class Keyv extends EventEmitter {
     const data = typeof raw === 'string' ? await this.deserialize(raw) : raw
 
     if (typeof data.expires === 'number' && Date.now() > data.expires) {
-      await this.delete(key)
+      this.delete(key)
       return undefined
     }
 
