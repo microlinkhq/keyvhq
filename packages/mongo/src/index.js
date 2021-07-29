@@ -21,8 +21,7 @@ class KeyvMongo extends EventEmitter {
       {
         url: 'mongodb://127.0.0.1:27017',
         collection: 'keyv',
-        emitErrors: true,
-        tls: true
+        emitErrors: true
       },
       url,
       options
@@ -31,7 +30,8 @@ class KeyvMongo extends EventEmitter {
     this.options.mongoOptions = Object.assign(
       {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        tls: true
       },
       this.options.mongoOptions
     )
