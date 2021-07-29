@@ -7,7 +7,7 @@ class Keyv extends EventEmitter {
   constructor ({ emitErrors = true, ...options } = {}) {
     super()
 
-    const normalizeOptions = Object.assign(
+    const normalizedOptions = Object.assign(
       {
         namespace: 'keyv',
         serialize: JSONB.stringify,
@@ -18,9 +18,11 @@ class Keyv extends EventEmitter {
       options
     )
 
-    Object.keys(normalizeOptions).forEach(
-      key => (this[key] = normalizeOptions[key])
+    Object.keys(normalizedOptions).forEach(
+      key => (this[key] = normalizedOptions[key])
     )
+
+    this.store.namespace = this.namespace
 
     if (typeof this.store.on === 'function' && emitErrors) {
       this.store.on('error', error => this.emit('error', error))
