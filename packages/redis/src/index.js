@@ -30,10 +30,6 @@ class KeyvRedis extends EventEmitter {
   }
 
   async set (key, value, ttl) {
-    if (typeof value === 'undefined') {
-      return undefined
-    }
-
     return typeof ttl === 'number'
       ? this.redis.set(key, value, 'PX', ttl)
       : this.redis.set(key, value)
