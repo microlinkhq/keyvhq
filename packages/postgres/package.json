@@ -47,7 +47,7 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc --temp-dir ../../.nyc_output ava --serial"
+    "test": "nyc ava --serial"
   },
   "license": "MIT"
 }

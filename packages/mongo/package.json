@@ -46,7 +46,7 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc --temp-dir ../../.nyc_output ava"
+    "test": "nyc ava"
   },
   "license": "MIT"
 }

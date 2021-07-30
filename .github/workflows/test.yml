@@ -1,10 +1,13 @@
-name: Tests
+name: test
 
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+
+env:
+  CI: true
 
 jobs:
   build:
@@ -13,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [lts/*]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     env:
       MYSQL_DB_DATABASE: keyv_test
@@ -58,12 +61,11 @@ jobs:
         sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
         sudo systemctl restart postgresql.service
         pg_isready
-
     - run: npm install --no-package-lock
     - run: npm test
-    - name: Report
-      run: mkdir -p coverage && npx nyc report --reporter=text-lcov > coverage/lcov.info
-    - name: Coverage
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Report
+    #   run: mkdir -p coverage && npx nyc report --reporter=text-lcov > coverage/lcov.info
+    # - name: Coverage
+    #   uses: coverallsapp/github-action@master
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
