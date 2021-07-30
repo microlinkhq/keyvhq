@@ -6,18 +6,23 @@ const JSONB = require('json-buffer')
 class Keyv extends EventEmitter {
   constructor ({ emitErrors = true, ...options } = {}) {
     super()
-    this.options = Object.assign(
+
+    const normalizedOptions = Object.assign(
       {
         namespace: 'keyv',
         serialize: JSONB.stringify,
         deserialize: JSONB.parse,
-        emitErrors: true
+        emitErrors: true,
+        store: new Map()
       },
       options
     )
 
-    this.store = this.options.store || new Map()
-    this.store.namespace = this.options.namespace
+    Object.keys(normalizedOptions).forEach(
+      key => (this[key] = normalizedOptions[key])
+    )
+
+    this.store.namespace = this.namespace
 
     if (typeof this.store.on === 'function' && emitErrors) {
       this.store.on('error', error => this.emit('error', error))
@@ -28,12 +33,8 @@ class Keyv extends EventEmitter {
         for await (const [key, raw] of typeof iterator === 'function'
           ? iterator()
           : iterator) {
-          const data =
-            typeof raw === 'string' ? this.options.deserialize(raw) : raw
-          if (
-            !key.includes(this.options.namespace) ||
-            typeof data !== 'object'
-          ) {
+          const data = typeof raw === 'string' ? this.deserialize(raw) : raw
+          if (!key.includes(this.namespace) || typeof data !== 'object') {
             continue
           }
 
@@ -60,11 +61,11 @@ class Keyv extends EventEmitter {
   }
 
   _getKeyPrefix (key) {
-    return this.options.namespace ? `${this.options.namespace}:${key}` : key
+    return this.namespace ? `${this.namespace}:${key}` : key
   }
 
   _getKeyUnprefix (key) {
-    return this.options.namespace
+    return this.namespace
       ? key
           .split(':')
           .splice(1)
@@ -72,75 +73,43 @@ class Keyv extends EventEmitter {
       : key
   }
 
-  get (key, options) {
-    const keyPrefixed = this._getKeyPrefix(key)
-    const store = this.store
-    return Promise.resolve()
-      .then(() => store.get(keyPrefixed))
-      .then(data => {
-        return typeof data === 'string' ? this.options.deserialize(data) : data
-      })
-      .then(data => {
-        if (data === undefined) {
-          return undefined
-        }
+  async get (key, { raw: asRaw = false } = {}) {
+    const raw = await this.store.get(this._getKeyPrefix(key))
+    if (raw === undefined) return undefined
 
-        if (typeof data.expires === 'number' && Date.now() > data.expires) {
-          this.delete(key)
-          return undefined
-        }
+    const data = typeof raw === 'string' ? await this.deserialize(raw) : raw
 
-        return options && options.raw ? data : data.value
-      })
-  }
-
-  has (key) {
-    const keyPrefixed = this._getKeyPrefix(key)
-    const store = this.store
-    if (typeof store.has === 'function') {
-      return Promise.resolve().then(() => store.has(keyPrefixed))
+    if (typeof data.expires === 'number' && Date.now() > data.expires) {
+      this.delete(key)
+      return undefined
     }
 
-    return Promise.resolve()
-      .then(() => store.get(keyPrefixed))
-      .then(data => data !== undefined)
+    return asRaw ? data : data.value
   }
 
-  set (key, value, ttl) {
+  async has (key) {
+    return typeof this.store.has === 'function'
+      ? this.store.has(this._getKeyPrefix(key))
+      : (await this.store.get(this._getKeyPrefix(key))) !== undefined
+  }
+
+  async set (key, value, ttl) {
     if (value === undefined) return false
-    const keyPrefixed = this._getKeyPrefix(key)
-    if (typeof ttl === 'undefined') {
-      ttl = this.options.ttl
-    }
-
-    if (ttl === 0) {
-      ttl = undefined
-    }
-
-    const store = this.store
-    return Promise.resolve()
-      .then(() => {
-        const expires = typeof ttl === 'number' ? Date.now() + ttl : null
-        value = { value, expires }
-        return this.options.serialize(value)
-      })
-      .then(value => store.set(keyPrefixed, value, ttl))
-      .then(() => true)
+    if (ttl === undefined) ttl = this.ttl
+    if (ttl === 0) ttl = undefined
+    const expires = typeof ttl === 'number' ? Date.now() + ttl : null
+    const valueSerialized = await this.serialize({ value, expires })
+    await this.store.set(this._getKeyPrefix(key), valueSerialized, ttl)
+    return true
   }
 
-  delete (key) {
-    const keyPrefixed = this._getKeyPrefix(key)
-    const store = this.store
-    return Promise.resolve().then(() => store.delete(keyPrefixed))
+  async delete (key) {
+    return this.store.delete(this._getKeyPrefix(key))
   }
 
-  clear () {
-    if (!this.options.namespace) {
-      return Promise.resolve().then(() => undefined)
-    }
-
-    const store = this.store
-    return Promise.resolve().then(() => store.clear())
+  async clear () {
+    if (!this.namespace) return undefined
+    return this.store.clear()
   }
 }
 module.exports = Keyv

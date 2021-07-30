@@ -1,7 +1,7 @@
 {
   "name": "@keyvhq/core",
   "description": "Simple key-value storage with support for multiple backends",
-  "homepage": "https://github.com/microlinkhq/keyv",
+  "homepage": "https://keyv.js.org",
   "version": "1.0.2",
   "main": "src/index.js",
   "author": {
@@ -40,8 +40,7 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc --temp-dir ../../.nyc_output ava test/keyv.js",
-    "test:full": "nyc --temp-dir ../../.nyc_output ava --serial"
+    "test": "nyc --temp-dir ../../.nyc_output ava test/keyv.js"
   },
   "license": "MIT"
 }

@@ -1,7 +1,7 @@
 {
   "name": "@keyvhq/sql",
   "description": "Parent class for SQL based Keyv storage adapters",
-  "homepage": "https://github.com/microlinkhq/keyv",
+  "homepage": "https://keyv.js.org",
   "version": "1.0.2",
   "main": "src/index.js",
   "author": {

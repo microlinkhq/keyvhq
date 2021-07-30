@@ -1,7 +1,7 @@
 {
   "name": "@keyvhq/mongo",
   "description": "MongoDB storage adapter for Keyv",
-  "homepage": "https://github.com/microlinkhq/keyv",
+  "homepage": "https://keyv.js.org",
   "version": "1.0.2",
   "main": "src/index.js",
   "author": {
