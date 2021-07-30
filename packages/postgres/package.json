@@ -47,7 +47,7 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc --silent --temp-dir ../../.nyc_output"
+    "test": "nyc --silent --temp-dir ../../.nyc_output ava"
   },
   "license": "MIT"
 }
