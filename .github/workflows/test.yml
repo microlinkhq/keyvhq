@@ -65,12 +65,7 @@ jobs:
     - run: npm test
     - name: Coverage
       run: npm run coverage
-    - name: Report
-      id: report
-      shell: bash
-      run: printf '::set-output name=lcov_path::%s\n' "packages/*/coverage/lcov.info"
     - name: Upload
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: ${{ steps.report.outputs.lcov_path }}

@@ -131,7 +131,7 @@
     "build": "gulp build",
     "clean": "lerna clean --yes && rm -rf node_modules",
     "contributors": "(lerna exec finepack --parallel && git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
-    "coverage": "lerna run coverage",
+    "coverage": "lerna run coverage && mkdir -p coverage && npx lcov-result-merger 'packages/**/coverage/lcov.info' coverage/lcov.info",
     "dev": "concurrently \"gulp\" \"npm run dev:server\"",
     "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
     "install": "lerna bootstrap --no-ci --force-local",
