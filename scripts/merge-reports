@@ -9,7 +9,9 @@ const rimraf = require('rimraf')
 const makeDir = require('make-dir')
 const glob = require('glob')
 
-process.chdir(__dirname)
+const rooPath = path.resolve(__dirname, '..')
+
+process.chdir(rooPath)
 rimraf.sync('.nyc_output')
 makeDir.sync('.nyc_output')
 
@@ -21,7 +23,7 @@ glob.sync('packages/*/.nyc_output').forEach(nycOutput => {
     [
       'merge',
       '.nyc_output',
-      path.join(__dirname, '.nyc_output', path.basename(cwd) + '.json')
+      path.join(rooPath, '.nyc_output', path.basename(cwd) + '.json')
     ],
     {
       encoding: 'utf8',
