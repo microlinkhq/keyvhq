@@ -40,7 +40,7 @@
     "src"
   ],
   "scripts": {
-    "coverage": "nyc report --reporter=text-lcov | npx npx codecov --pipe",
+    "coverage": "nyc report --reporter=text-lcov | npx codecov --pipe",
     "test": "nyc ava"
   },
   "license": "MIT"

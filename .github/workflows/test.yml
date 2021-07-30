@@ -8,6 +8,7 @@ on:
 
 env:
   CI: true
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 jobs:
   build:
@@ -63,6 +64,7 @@ jobs:
         pg_isready
 
     - run: npm install --no-package-lock
+      name: Test
     - run: npm test
     - name: Coverage
-      uses: codecov/codecov-action@v2
+      run: npm run coverage
