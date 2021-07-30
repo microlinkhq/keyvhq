@@ -45,7 +45,6 @@
     "src"
   ],
   "scripts": {
-    "coverage": "mkdir -p coverage && nyc report --reporter=text-lcov > coverage/lcov.info",
     "test": "nyc ava"
   },
   "license": "MIT"

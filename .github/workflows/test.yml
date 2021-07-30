@@ -64,7 +64,7 @@ jobs:
     - run: npm install --no-package-lock
     - run: npm test
     - name: Coverage
-      run: sudo apt-get install lcov && npm run coverage
+      run: npm run coverage
     - name: Upload
       uses: coverallsapp/github-action@master
       with:
