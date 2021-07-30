@@ -146,6 +146,7 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 - [@keyvhq/postgres](/packages/postgres) – PostgreSQL storage adapter for Keyv.
 - [@keyvhq/redis](/packages/redis) – Redis storage adapter for Keyv.
 - [@keyvhq/sqlite](/packages/sqlite) – SQLite storage adapter for Keyv.
+- [@keyvhq/memoize](/packages/memoize) – Memoize any function using Keyv as storage backend.
 
 ### Community storage adapters
 
@@ -160,7 +161,6 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 - [keyv-mssql](https://github.com/pmorgan3/keyv-mssql) - Microsoft SQL Server adapter for Keyv.
 - [keyv-offline](https://github.com/Kikobeats/keyv-offline) – Adding offline capabilities for your keyv instance.
 - [keyv-s3](https://github.com/microlinkhq/keyv-s3) - Amazon S3 storage adapter for Keyv.
-- [memoized-keyv](https://github.com/moeriki/memoized-keyv) - Memoize using keyv as storage backend.
 - [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache.
 
 
