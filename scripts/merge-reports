@@ -2,12 +2,11 @@
 
 'use strict'
 
-const path = require('path')
 const { spawnSync } = require('child_process')
-
-const rimraf = require('rimraf')
 const makeDir = require('make-dir')
+const rimraf = require('rimraf')
 const glob = require('glob')
+const path = require('path')
 
 const rooPath = path.resolve(__dirname, '..')
 
