@@ -47,7 +47,8 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc --temp-dir ../../.nyc_output ava --serial"
+    "coverage": "mkdir -p coverage && nyc report --reporter=text-lcov > coverage/lcov.info",
+    "test": "nyc ava --serial"
   },
   "license": "MIT"
 }

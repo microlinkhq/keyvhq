@@ -40,7 +40,8 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc --temp-dir ../../.nyc_output ava test/keyv.js"
+    "coverage": "mkdir -p coverage && nyc report --reporter=text-lcov > coverage/lcov.info",
+    "test": "nyc ava"
   },
   "license": "MIT"
 }
