@@ -161,6 +161,9 @@
       "finepack"
     ]
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "simple-git-hooks": {
     "commit-msg": "npx commitlint --edit",
     "pre-commit": "npx lint-staged"

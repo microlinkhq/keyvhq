@@ -49,5 +49,8 @@
     "test": "nyc ava",
     "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }

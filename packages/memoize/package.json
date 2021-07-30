@@ -47,5 +47,8 @@
   "scripts": {
     "test": "nyc ava"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
