@@ -45,8 +45,9 @@
     "src"
   ],
   "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | npx codecov --pipe",
     "posttest:docker": "docker-compose down --rmi local",
-    "test": "nyc --silent --temp-dir ../../.nyc_output ava",
+    "test": "nyc ava",
     "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
   },
   "license": "MIT"

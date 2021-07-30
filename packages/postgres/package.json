@@ -47,7 +47,8 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc --silent --temp-dir ../../.nyc_output ava --serial"
+    "coverage": "nyc report --reporter=text-lcov | npx codecov --pipe",
+    "test": "nyc ava --serial"
   },
   "license": "MIT"
 }

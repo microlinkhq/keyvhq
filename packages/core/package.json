@@ -40,7 +40,8 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc --silent --temp-dir ../../.nyc_output ava test/keyv.js"
+    "coverage": "nyc report --reporter=text-lcov | npx npx codecov --pipe",
+    "test": "nyc ava"
   },
   "license": "MIT"
 }

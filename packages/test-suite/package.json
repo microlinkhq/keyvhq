@@ -38,7 +38,8 @@
     "src"
   ],
   "scripts": {
-    "test": "exit 0"
+    "test": "exit 0",
+    "coverage": "exit 0"
   },
   "license": "MIT"
 }
