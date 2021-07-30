@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/microlinkhq/keyv/compare/v1.0.2...v1.1.0) (2021-07-30)
+
+
+### Bug Fixes
+
+* exit early if undefined ([2926ab6](https://github.com/microlinkhq/keyv/commit/2926ab697e2f6bf866743e8d31e4a42bc10d2cd2))
+* mongooptions ([10b1f9a](https://github.com/microlinkhq/keyv/commit/10b1f9ac01c7fc2bbc0830c5dcdfe80a320a845d))
+* removed tls ([81aafe1](https://github.com/microlinkhq/keyv/commit/81aafe192e9612bb496f41053bf4520140e6776a))
+* setup namespace at store ([8ccbb75](https://github.com/microlinkhq/keyv/commit/8ccbb7533d011fd11a3ffda96e3fe6854fa3e2b8))
+
+
+### Features
+
+* add memoize package ([25e1c4f](https://github.com/microlinkhq/keyv/commit/25e1c4f94115dc99e72d1dca28c3e31211d45b5a))
+
+
+
+
+
 ## [1.0.2](https://github.com/microlinkhq/keyv/compare/v1.0.1...v1.0.2) (2021-07-16)
 
 **Note:** Version bump only for package @keyvhq/monorepo

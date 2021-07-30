@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/microlinkhq/keyv/compare/v1.0.2...v1.1.0) (2021-07-30)
+
+
+### Bug Fixes
+
+* mongooptions ([10b1f9a](https://github.com/microlinkhq/keyv/commit/10b1f9ac01c7fc2bbc0830c5dcdfe80a320a845d))
+* removed tls ([81aafe1](https://github.com/microlinkhq/keyv/commit/81aafe192e9612bb496f41053bf4520140e6776a))
+
+
+
+
+
 ## [1.0.2](https://github.com/microlinkhq/keyv/compare/v1.0.1...v1.0.2) (2021-07-16)
 
 **Note:** Version bump only for package @keyvhq/mongo
