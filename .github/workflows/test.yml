@@ -63,18 +63,14 @@ jobs:
         pg_isready
     - run: npm install --no-package-lock
     - run: npm test
-    - name: Coveralls Parallel
+    - name: Coverage
+      run: npm run coverage
+    - name: Report
+      id: report
+      shell: bash
+      run: printf '::set-output name=lcov_path::%s\n' "packages/*/coverage/lcov.info"
+    - name: Upload
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        flag-name: run-${{ matrix.node-version }}
-        parallel: true
-  finish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        parallel-finished: true
+        path-to-lcov: ${{ steps.report.outputs.lcov_path }}
