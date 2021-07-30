@@ -63,9 +63,18 @@ jobs:
         pg_isready
     - run: npm install --no-package-lock
     - run: npm test
-    # - name: Report
-    #   run: mkdir -p coverage && npx nyc report --reporter=text-lcov > coverage/lcov.info
-    # - name: Coverage
-    #   uses: coverallsapp/github-action@master
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: run-${{ matrix.node-version }}
+        parallel: true
+  finish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        parallel-finished: true
