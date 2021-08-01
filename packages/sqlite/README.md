@@ -1,11 +1,11 @@
-# @keyv/sqlite [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/sqlite [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 SQLite storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
 ## Install
 
 ```shell
-npm install --save keyv @keyv/sqlite
+npm install --save keyv @keyvhq/sqlite
 ```
 
 ## Usage

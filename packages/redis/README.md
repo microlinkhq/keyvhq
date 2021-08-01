@@ -1,4 +1,4 @@
-# @keyv/redis [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/redis [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > Redis storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -7,7 +7,7 @@ TTL functionality is handled directly by Redis so no timestamps are stored and e
 ## Install
 
 ```shell
-npm install --save keyv @keyv/redis
+npm install --save keyv @keyvhq/redis
 ```
 
 ## Usage
@@ -30,7 +30,7 @@ const keyv = new Keyv('redis://user:pass@localhost:6379', { disable_resubscribin
 Or you can manually create a storage adapter instance and pass it to Keyv:
 
 ```js
-const KeyvRedis = require('@keyv/redis')
+const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('keyv')
 
 const keyvRedis = new KeyvRedis('redis://user:pass@localhost:6379')
@@ -40,7 +40,7 @@ const keyv = new Keyv({ store: keyvRedis })
 Or reuse a previous Redis instance:
 
 ```js
-const KeyvRedis = require('@keyv/redis')
+const KeyvRedis = require('@keyvhq/redis')
 const Redis = require('ioredis')
 const Keyv = require('keyv')
 

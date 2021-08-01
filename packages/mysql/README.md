@@ -1,11 +1,11 @@
-# @keyv/mysql [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/mysql [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > MySQL/MariaDB storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
 ## Install
 
 ```shell
-npm install --save keyv @keyv/mysql
+npm install --save keyv @keyvhq/mysql
 ```
 
 ## Usage

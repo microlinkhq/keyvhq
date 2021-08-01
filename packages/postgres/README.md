@@ -1,4 +1,4 @@
-# @keyv/postgres [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/postgres [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > PostgreSQL storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -7,7 +7,7 @@ Requires Postgres 9.5 or newer for `ON CONFLICT` support to allow performant ups
 ## Install
 
 ```shell
-npm install --save keyv @keyv/postgres
+npm install --save keyv @keyvhq/postgres
 ```
 
 ## Usage

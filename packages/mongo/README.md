@@ -1,4 +1,4 @@
-# @keyv/mongo [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/mongo [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > MongoDB storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -7,7 +7,7 @@ Uses TTL indexes to automatically remove expired documents. However [MongoDB doe
 ## Install
 
 ```shell
-npm install --save keyv @keyv/mongo
+npm install --save keyv @keyvhq/mongo
 ```
 
 ## Usage

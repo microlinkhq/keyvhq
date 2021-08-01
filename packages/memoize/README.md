@@ -1,11 +1,11 @@
-# @keyv/memoize [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/memoize [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > Memoize any function using Keyv as storage backend.
 
 ## Install
 
 ```shell
-npm install --save keyv @keyv/memoize
+npm install --save keyv @keyvhq/memoize
 ```
 
 ## Usage
