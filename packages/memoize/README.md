@@ -107,7 +107,7 @@ Promise-returning or async function to be memoized.
 
 Type: `Object`
 
-The [Keyv]https://github.com/microlinkhq/keyv] instance or [keyv#options](https://github.com/microlinkhq/keyv#options) to be used.
+The [Keyv](https://github.com/microlinkhq/keyv) instance or [keyv#options](https://github.com/microlinkhq/keyv#options) to be used.
 
 #### options
 
