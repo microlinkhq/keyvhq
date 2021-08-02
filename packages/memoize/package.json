@@ -29,7 +29,7 @@
   "dependencies": {
     "@keyvhq/core": "^1.1.1",
     "json-buffer": "^3.0.0",
-    "mimic-fn": "~3.0.0",
+    "mimic-fn": "~4.0.0",
     "p-any": "~2.1.0"
   },
   "devDependencies": {
