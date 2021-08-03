@@ -192,16 +192,38 @@ test('should create new Keyv instance', t => {
   t.deepEqual(memoizedSum.keyv.store, store)
 })
 
-// test.only('should store result with static ttl', async t => {
-//   const memoizedSum = memoize(asyncSum, null, { ttl: 5 })
-//   memoizedSum.keyv.set = jest.fn(memoizedSum.keyv.set.bind(memoizedSum.keyv))
-//   await memoizedSum(1, 2)
-//   expect(memoizedSum.keyv.set).toHaveBeenCalledWith(1, 3, 5)
-// })
+test('should store result with static ttl', async t => {
+  let calls = []
 
-// it('should store result with dynamic ttl', async () => {
-//   const memoizedSum = memoize(asyncSum, null, { ttl: syncSum });
-//   memoizedSum.keyv.set = jest.fn(memoizedSum.keyv.set.bind(memoizedSum.keyv));
-//   await memoizedSum(1, 2, 3);
-//   expect(memoizedSum.keyv.set).toHaveBeenCalledWith(1, 6, 6);
-// });
+  const store = new Map()
+  const set = store.set.bind(store)
+
+  const proxySet = (...args) => {
+    calls = args
+    return set(...args)
+  }
+
+  const memoizedSum = memoize(asyncSum, { ...store, set: proxySet }, { ttl: 5 })
+  await memoizedSum(1, 2)
+  t.deepEqual(calls, [1, 3, 5])
+})
+
+test('should store result with dynamic ttl', async t => {
+  let calls = []
+
+  const store = new Map()
+  const set = store.set.bind(store)
+
+  const proxySet = (...args) => {
+    calls = args
+    return set(...args)
+  }
+
+  const memoizedSum = memoize(
+    asyncSum,
+    { ...store, set: proxySet },
+    { ttl: syncSum }
+  )
+  await memoizedSum(1, 2, 3)
+  t.deepEqual(calls, [1, 6, 6])
+})
