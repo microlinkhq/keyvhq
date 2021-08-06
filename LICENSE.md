@@ -1,6 +1,7 @@
 The MIT License (MIT)
 
-Copyright © 2021 Kiko Beats <hello@kikobeats.com> (httpss://kikobeats.com)
+Copyright © 2017 Luke Childs <lukechilds123@gmail.com> (https://lukechilds.co)
+Copyright © 2021 Microlink <hello@microlink.io> (https://microlink.io)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
