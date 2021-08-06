@@ -28,7 +28,7 @@ const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname', {
 })
 ```
 
-**Note:** Some MySQL/MariaDB installations won't allow a key size longer than 767 bytes. If you get an error on table creation try reducing `keySize` to 191 or lower. [#5](https://github.com/microlinkhq/sql/issues/5)
+**Note:** Some MySQL/MariaDB installations won't allow a key size longer than 767 bytes. If you get an error on table creation try reducing `keySize` to 191 or lower.
 
 ## License
 
