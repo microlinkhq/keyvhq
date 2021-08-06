@@ -104,7 +104,7 @@ const deserialize = async data => {
   return { value: await brotli.decompress(value), expires }
 }
 
-const keyv = new Keyv({  serialize deserialize })
+const keyv = new Keyv({ serialize, deserialize })
 ```
 
 ## Storage Adapters
