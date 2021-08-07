@@ -9,11 +9,17 @@ const identity = value => value
 function memoize (
   fn,
   keyvOptions,
-  { resolver = identity, ttl: rawTtl, stale: rawStale } = {}
+  {
+    key: getKey = identity,
+    objectMode = false,
+    staleTtl: rawStaleTtl,
+    ttl: rawTtl,
+    value: getValue = identity
+  } = {}
 ) {
   const keyv = keyvOptions instanceof Keyv ? keyvOptions : new Keyv(keyvOptions)
   const ttl = typeof rawTtl === 'function' ? rawTtl : () => rawTtl
-  const stale = typeof rawStale === 'number' ? rawStale : undefined
+  const staleTtl = typeof rawStaleTtl === 'number' ? rawStaleTtl : undefined
   const pending = Object.create(null)
 
   /**
@@ -56,7 +62,8 @@ function memoize (
    * @param {*} value
    * @return {Promise} resolves when updated
    */
-  async function updateStoredValue (key, value) {
+  async function updateStoredValue (key, raw) {
+    const value = await getValue(raw)
     await keyv.set(key, value, ttl(value))
     return value
   }
@@ -65,7 +72,7 @@ function memoize (
    * @return {Promise<*>}
    */
   function memoized (...args) {
-    const key = resolver(...args)
+    const key = getKey(...args)
 
     if (pending[key] !== undefined) {
       return pAny([getStoredValue(key), pending[key]])
@@ -75,28 +82,28 @@ function memoize (
       const hasValue = data ? data.value !== undefined : false
       const hasExpires = hasValue && typeof data.expires === 'number'
       const ttlValue = hasExpires ? data.expires - Date.now() : undefined
-      const isExpired = stale === undefined && hasExpires && ttlValue < 0
-      const isStale = stale !== undefined && hasExpires && ttlValue < stale
+      const isExpired = staleTtl === undefined && hasExpires && ttlValue < 0
+      const isStale =
+        staleTtl !== undefined && hasExpires && ttlValue < staleTtl
+      const info = { hasValue, key, isExpired, isStale }
+      const done = value => (objectMode ? [value, info] : value)
 
       if (hasValue && !isExpired && !isStale) {
         pending[key] = undefined
-        return data.value
+        return done(data.value)
       }
 
       if (isExpired) keyv.delete(key)
       const promise = refreshValue(key, args)
 
-      if (isStale) {
-        promise
-          .then(value => keyv.emit('memoize.fresh.value', value))
-          .catch(error => keyv.emit('memoize.fresh.error', error))
-        return data.value
-      }
+      promise.catch(error => (info.staleError = error))
+
+      if (isStale) return done(data.value)
 
       try {
         const value = await promise
         pending[key] = undefined
-        return value
+        return done(value)
       } catch (error) {
         pending[key] = undefined
         throw error
@@ -108,7 +115,7 @@ function memoize (
 
   mimicFn(memoized, fn)
 
-  return Object.assign(memoized, { keyv, resolver, ttl })
+  return Object.assign(memoized, { keyv })
 }
 
 module.exports = memoize

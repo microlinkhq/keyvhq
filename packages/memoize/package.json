@@ -34,9 +34,8 @@
   },
   "devDependencies": {
     "ava": "latest",
-    "delay": "~5.0.0",
-    "nyc": "latest",
-    "p-event": "~4.2.0"
+    "delay": "latest",
+    "nyc": "latest"
   },
   "engines": {
     "node": ">= 12"

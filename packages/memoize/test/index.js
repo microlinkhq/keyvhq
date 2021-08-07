@@ -1,7 +1,6 @@
 'use strict'
 
 const Keyv = require('@keyvhq/core')
-const pEvent = require('p-event')
 const delay = require('delay')
 const test = require('ava')
 
@@ -27,8 +26,8 @@ test('should store result as arg0', async t => {
   t.is(await memoizedSum.keyv.get('1'), 3)
 })
 
-test('should store result as resolver result', async t => {
-  const memoizedSum = memoize(asyncSum, undefined, { resolver: syncSum })
+test('should be possible to specify how key is obtained', async t => {
+  const memoizedSum = memoize(asyncSum, undefined, { key: syncSum })
   await memoizedSum(1, 2, 3)
   t.is(await memoizedSum.keyv.get('6'), 6)
 })
@@ -69,6 +68,14 @@ test('should return cached result', async t => {
   t.is(called, 0)
 })
 
+test('should be able to decorate the value', async t => {
+  const keyv = new Keyv()
+  const memoized = memoize(asyncSum, keyv, {
+    value: value => `Result is ${value}`
+  })
+  t.is(await memoized(5), 'Result is 5')
+})
+
 test('should throw error', async t => {
   const memoized = memoize(() => Promise.reject(new Error('NOPE')))
   await t.throwsAsync(memoized)
@@ -102,7 +109,7 @@ test('should return fresh result', async t => {
     return asyncSum(n)
   }
 
-  const memoizedSum = memoize(fn, keyv, { stale: 100 })
+  const memoizedSum = memoize(fn, keyv, { staleTtl: 100 })
   keyv.set('5', 5, 200)
   await delay(10)
 
@@ -119,25 +126,26 @@ test('should return stale result but refresh', async t => {
     return asyncSum(...args)
   }
 
-  const memoizedSum = memoize(fn, keyv, { stale: 10 })
+  const memoizedSum = memoize(fn, keyv, { staleTtl: 10, objectMode: true })
   await memoizedSum.keyv.set('1', 1, 5)
-  const sum = await memoizedSum(1, 2)
+  const [sum, { isStale }] = await memoizedSum(1, 2)
 
   t.is(sum, 1)
+  t.true(isStale)
   t.deepEqual(lastArgs, [1, 2])
-  t.is(await pEvent(keyv, 'memoize.fresh.value'), 3)
 })
 
 test('should emit on stale refresh error', async t => {
   const fn = () => Promise.reject(new Error('NOPE'))
   const keyv = new Keyv()
-  const memoizedSum = memoize(fn, keyv, { stale: 10 })
+  const memoizedSum = memoize(fn, keyv, { staleTtl: 10, objectMode: true })
 
   await keyv.set('1', 1, 5)
-  memoizedSum(1)
+  const [, info] = await memoizedSum(1)
 
-  const error = await pEvent(keyv, 'memoize.fresh.error')
-  t.is(error.message, 'NOPE')
+  console.log(info)
+
+  t.is(info.staleError.message, 'NOPE')
 })
 
 test('should return cached result if a stale refresh is pending', async t => {
@@ -151,7 +159,7 @@ test('should return cached result if a stale refresh is pending', async t => {
     return defer.promise
   }
 
-  const memoizedSum = memoize(fn, keyv, { stale: 10 })
+  const memoizedSum = memoize(fn, keyv, { staleTtl: 10 })
   await memoizedSum.keyv.set('1', 1, 5)
 
   t.is(await memoizedSum(1), 1)
