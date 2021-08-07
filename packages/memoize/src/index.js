@@ -12,9 +12,9 @@ function memoize (
   { resolver = identity, ttl: rawTtl, stale: rawStale } = {}
 ) {
   const keyv = keyvOptions instanceof Keyv ? keyvOptions : new Keyv(keyvOptions)
-  const pending = {}
   const ttl = typeof rawTtl === 'function' ? rawTtl : () => rawTtl
   const stale = typeof rawStale === 'number' ? rawStale : undefined
+  const pending = Object.create(null)
 
   /**
    * This can be better. Check:
