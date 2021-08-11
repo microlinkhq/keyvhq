@@ -53,6 +53,20 @@ test('should return pending result', async t => {
   t.is(called, 1)
 })
 
+test('should delete store value after expiration', async t => {
+  const keyv = new Keyv()
+  const ttl = 100
+  await keyv.set('5', 5, ttl)
+
+  const memoizedSum = memoize(asyncSum, keyv, { ttl: ttl })
+
+  t.is(await memoizedSum(5), 5)
+
+  await delay(ttl)
+
+  t.is(await keyv.get(5), undefined)
+})
+
 test('should return cached result', async t => {
   let called = 0
 
