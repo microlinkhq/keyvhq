@@ -93,12 +93,14 @@ function memoize (
         return done(data.value)
       }
 
-      if (isExpired) keyv.delete(key)
       const promise = refreshValue(key, args)
 
-      promise.catch(error => (info.staleError = error))
-
-      if (isStale) return done(data.value)
+      if (isStale) {
+        promise
+          .then(() => (pending[key] = undefined))
+          .catch(error => (info.staleError = error))
+        return done(data.value)
+      }
 
       try {
         const value = await promise
