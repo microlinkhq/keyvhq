@@ -50,15 +50,6 @@ function memoize (
 
   /**
    * @param {string} key
-   * @param {*[]} args
-   * @return {Promise<*>} value
-   */
-  async function refreshValue (key, args) {
-    return updateStoredValue(key, await fn(...args))
-  }
-
-  /**
-   * @param {string} key
    * @param {*} value
    * @return {Promise} resolves when updated
    */
@@ -93,7 +84,9 @@ function memoize (
         return done(data.value)
       }
 
-      const promise = refreshValue(key, args)
+      const promise = Promise.resolve(fn(...args)).then(value =>
+        updateStoredValue(key, value)
+      )
 
       if (isStale) {
         promise
