@@ -118,7 +118,6 @@ test('should return fresh result', async t => {
   let called = 0
 
   const fn = n => {
-    console.log(called)
     ++called
     return asyncSum(n)
   }
@@ -156,8 +155,6 @@ test('should emit on stale refresh error', async t => {
 
   await keyv.set('1', 1, 5)
   const [, info] = await memoizedSum(1)
-
-  console.log(info)
 
   t.is(info.staleError.message, 'NOPE')
 })

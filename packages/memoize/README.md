@@ -146,10 +146,12 @@ console.log(info)
 
 ##### staleTtl
 
-Type: `Number`<br/>
+Type: `Number` or `Function`<br/>
 Default: `undefined`
 
 The staleness threshold we will still return the stale value but meanwhile asynchronously refresh the value.
+
+When you provide a function, the value will be passed as first argument.
 
 ##### ttl
 

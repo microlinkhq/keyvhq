@@ -19,7 +19,12 @@ function memoize (
 ) {
   const keyv = keyvOptions instanceof Keyv ? keyvOptions : new Keyv(keyvOptions)
   const ttl = typeof rawTtl === 'function' ? rawTtl : () => rawTtl
-  const staleTtl = typeof rawStaleTtl === 'number' ? rawStaleTtl : undefined
+  const staleTtl =
+    typeof rawStaleTtl === 'function'
+      ? rawStaleTtl
+      : typeof rawStaleTtl === 'number'
+        ? () => rawStaleTtl
+        : undefined
   const pending = Object.create(null)
 
   /**
@@ -75,7 +80,7 @@ function memoize (
       const ttlValue = hasExpires ? data.expires - Date.now() : undefined
       const isExpired = staleTtl === undefined && hasExpires && ttlValue < 0
       const isStale =
-        staleTtl !== undefined && hasExpires && ttlValue < staleTtl
+        staleTtl !== undefined && hasExpires && ttlValue < staleTtl(data.value)
       const info = { hasValue, key, isExpired, isStale }
       const done = value => (objectMode ? [value, info] : value)
 
