@@ -23,8 +23,8 @@ function memoize (
     typeof rawStaleTtl === 'function'
       ? rawStaleTtl
       : typeof rawStaleTtl === 'number'
-        ? () => rawStaleTtl
-        : undefined
+      ? () => rawStaleTtl
+      : undefined
   const pending = Object.create(null)
 
   /**
@@ -115,7 +115,7 @@ function memoize (
 
   mimicFn(memoized, fn)
 
-  return Object.assign(memoized, { keyv })
+  return Object.assign(memoized, { keyv, ttl, staleTtl })
 }
 
 module.exports = memoize
