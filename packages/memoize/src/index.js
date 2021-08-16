@@ -23,8 +23,8 @@ function memoize (
     typeof rawStaleTtl === 'function'
       ? rawStaleTtl
       : typeof rawStaleTtl === 'number'
-      ? () => rawStaleTtl
-      : undefined
+        ? () => rawStaleTtl
+        : undefined
   const pending = Object.create(null)
 
   /**
