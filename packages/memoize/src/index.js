@@ -4,6 +4,10 @@ const Keyv = require('@keyvhq/core')
 const mimicFn = require('mimic-fn')
 const pAny = require('p-any')
 
+const isFunction = input => typeof input === 'function'
+const isNumber = input => typeof input === 'number'
+const isString = input => typeof input === 'string'
+const isUndefined = input => input === undefined
 const identity = value => value
 
 function memoize (
@@ -18,13 +22,13 @@ function memoize (
   } = {}
 ) {
   const keyv = keyvOptions instanceof Keyv ? keyvOptions : new Keyv(keyvOptions)
-  const ttl = typeof rawTtl === 'function' ? rawTtl : () => rawTtl
-  const staleTtl =
-    typeof rawStaleTtl === 'function'
-      ? rawStaleTtl
-      : typeof rawStaleTtl === 'number'
-        ? () => rawStaleTtl
-        : undefined
+  const ttl = isFunction(rawTtl) ? rawTtl : () => rawTtl
+  const staleTtl = isFunction(rawStaleTtl)
+    ? rawStaleTtl
+    : isNumber(rawStaleTtl)
+      ? () => rawStaleTtl
+      : rawStaleTtl
+
   const pending = Object.create(null)
 
   /**
@@ -36,7 +40,7 @@ function memoize (
    */
   async function getRaw (key) {
     const raw = await keyv.store.get(keyv._getKeyPrefix(key))
-    return typeof raw === 'string' ? keyv.deserialize(raw) : raw
+    return isString(raw) ? keyv.deserialize(raw) : raw
   }
 
   /**
@@ -46,9 +50,7 @@ function memoize (
    */
   function getStoredValue (key) {
     return getRaw(key).then(data => {
-      if (!data || data.value === undefined) {
-        throw new Error('Not found')
-      }
+      if (!data || isUndefined(data)) throw new Error('Not found')
       return data.value
     })
   }
@@ -70,17 +72,19 @@ function memoize (
   function memoized (...args) {
     const key = getKey(...args)
 
-    if (pending[key] !== undefined) {
+    if (!isUndefined(pending[key])) {
       return pAny([getStoredValue(key), pending[key]])
     }
 
     pending[key] = getRaw(key).then(async data => {
-      const hasValue = data ? data.value !== undefined : false
+      const hasValue = data ? !isUndefined(data.value) : false
       const hasExpires = hasValue && typeof data.expires === 'number'
       const ttlValue = hasExpires ? data.expires - Date.now() : undefined
-      const isExpired = staleTtl === undefined && hasExpires && ttlValue < 0
-      const isStale =
-        staleTtl !== undefined && hasExpires && ttlValue < staleTtl(data.value)
+      const staleTtlValue =
+        hasExpires && !isUndefined(staleTtl) ? staleTtl(data.value) : false
+
+      const isExpired = staleTtlValue === false && hasExpires && ttlValue < 0
+      const isStale = staleTtlValue && ttlValue < staleTtlValue
       const info = { hasValue, key, isExpired, isStale }
       const done = value => (objectMode ? [value, info] : value)
 

@@ -227,7 +227,7 @@ test('should store result with static ttl', async t => {
   t.deepEqual(calls, [1, 3, 5])
 })
 
-test('should store result with dynamic ttl', async t => {
+test('ttl as function', async t => {
   let calls = []
 
   const store = new Map()
@@ -245,4 +245,20 @@ test('should store result with dynamic ttl', async t => {
   )
   await memoizedSum(1, 2, 3)
   t.deepEqual(calls, [1, 6, 6])
+})
+
+test('staleTtl as function', async t => {
+  const memoizeFn = memoize(() => ({ value: 'foo', stale: 1 }), new Map(), {
+    ttl: 1,
+    staleTtl: ({ stale }) => stale,
+    objectMode: true
+  })
+  const [, infoOne] = await memoizeFn()
+  await delay(10)
+  const [, infoTwo] = await memoizeFn()
+
+  t.false(infoOne.isStale)
+  t.false(infoOne.hasValue)
+  t.true(infoTwo.isStale)
+  t.true(infoTwo.hasValue)
 })
