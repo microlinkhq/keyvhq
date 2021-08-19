@@ -84,7 +84,7 @@ function memoize (
         hasExpires && !isUndefined(staleTtl) ? staleTtl(data.value) : false
 
       const isExpired = staleTtlValue === false && hasExpires && ttlValue < 0
-      const isStale = staleTtlValue && ttlValue < staleTtlValue
+      const isStale = staleTtlValue !== false && ttlValue < staleTtlValue
       const info = { hasValue, key, isExpired, isStale }
       const done = value => (objectMode ? [value, info] : value)
 
