@@ -70,7 +70,8 @@ function memoize (
    * @return {Promise<*>}
    */
   function memoized (...args) {
-    const key = getKey(...args)
+    const rawKey = getKey(...args)
+    const [key, forceExpiration] = Array.isArray(rawKey) ? rawKey : [rawKey]
 
     if (!isUndefined(pending[key])) {
       return pAny([getStoredValue(key), pending[key]])
@@ -82,8 +83,10 @@ function memoize (
       const ttlValue = hasExpires ? data.expires - Date.now() : undefined
       const staleTtlValue =
         hasExpires && !isUndefined(staleTtl) ? staleTtl(data.value) : false
-
-      const isExpired = staleTtlValue === false && hasExpires && ttlValue < 0
+      const isExpired =
+        forceExpiration !== undefined
+          ? forceExpiration
+          : staleTtlValue === false && hasExpires && ttlValue < 0
       const isStale = staleTtlValue !== false && ttlValue < staleTtlValue
       const info = { hasValue, key, isExpired, isStale }
       const done = value => (objectMode ? [value, info] : value)
