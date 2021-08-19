@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/microlinkhq/keyv/compare/v1.2.3...v1.2.4) (2021-08-19)
+
+
+### Bug Fixes
+
+* stale ttl value could be 0 ([694ea16](https://github.com/microlinkhq/keyv/commit/694ea1680eac5245c78af296033fa96c845ca9f4))
+
+
+
+
+
 ## [1.2.3](https://github.com/microlinkhq/keyv/compare/v1.2.2...v1.2.3) (2021-08-17)
 
 
