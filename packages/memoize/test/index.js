@@ -227,7 +227,7 @@ test('should store result with static ttl', async t => {
   t.deepEqual(calls, [1, 3, 5])
 })
 
-test('ttl as function', async t => {
+test('should accept `ttl` as function', async t => {
   let calls = []
 
   const store = new Map()
@@ -247,7 +247,7 @@ test('ttl as function', async t => {
   t.deepEqual(calls, [1, 6, 6])
 })
 
-test('staleTtl as function', async t => {
+test('should accept `staleTtl` as function', async t => {
   const memoizeFn = memoize(() => ({ value: 'foo', stale: 1 }), new Map(), {
     ttl: 1,
     staleTtl: ({ stale }) => stale,
@@ -261,4 +261,34 @@ test('staleTtl as function', async t => {
   t.false(infoOne.hasValue)
   t.true(infoTwo.isStale)
   t.true(infoTwo.hasValue)
+})
+
+test('should be possible force expiration', async t => {
+  let index = 0
+
+  const store = new Map()
+  const fn = () => ++index
+  const key = ({ key, forceExpiration }) => [key, forceExpiration]
+
+  const memoizeFn = memoize(fn, store, { ttl: Infinity, key, objectMode: true })
+
+  const [valueOne] = await memoizeFn({
+    key: 'foo',
+    forceExpiration: false
+  })
+
+  const [valueTwo] = await memoizeFn({
+    key: 'foo',
+    forceExpiration: false
+  })
+
+  t.is(valueOne, 1)
+  t.is(valueOne, valueTwo)
+
+  const [valueThree] = await memoizeFn({
+    key: 'foo',
+    forceExpiration: true
+  })
+
+  t.is(valueThree, 2)
 })

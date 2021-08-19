@@ -120,12 +120,24 @@ Default: `identity`
 
 It defines how the get will be obtained.
 
+The signature of the function should be a `String` to be used as key associated with the cache copy:
+
+```js
+key: ({req}) => req.url
+```
+
+Just in case you need a more granular control, you can return an `Array`, where the second value determines the expiration behavior:
+
+```js
+key: ({req}) => [req.url, req.query.forceExpiration]
+```
+
 ##### objectMode
 
 Type: `Boolean`<br/>
 Default: `false`
 
-When is `true`, the result will be an Array, being the second item in the array some information about the item:
+When is `true`, the result will be an `Array`, being the second item in the `Array` some information about the item:
 
 ```js
 const fn = () => Promise.reject(new Error('NOPE'))
