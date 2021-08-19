@@ -26,7 +26,6 @@ class Keyv extends EventEmitter {
 
     if (typeof this.store.on === 'function' && emitErrors) {
       this.store.on('error', error => {
-        console.log('error', error)
         this.emit('error', error)
       })
     }
