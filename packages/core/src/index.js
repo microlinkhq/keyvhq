@@ -25,7 +25,10 @@ class Keyv extends EventEmitter {
     this.store.namespace = this.namespace
 
     if (typeof this.store.on === 'function' && emitErrors) {
-      this.store.on('error', error => this.emit('error', error))
+      this.store.on('error', error => {
+        console.log('error', error)
+        this.emit('error', error)
+      })
     }
 
     const generateIterator = iterator =>
@@ -55,8 +58,6 @@ class Keyv extends EventEmitter {
       this.iterator = generateIterator(this.store)
     } else if (typeof this.store.iterator === 'function') {
       this.iterator = generateIterator(this.store.iterator.bind(this.store))
-    } else {
-      this.iteratorSupport = false
     }
   }
 
