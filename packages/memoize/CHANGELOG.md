@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/microlinkhq/keyv/compare/v1.2.4...v1.2.5) (2021-08-19)
+
+
+### Features
+
+* **memoize:** add a way to invalidate on demand ([82e713b](https://github.com/microlinkhq/keyv/commit/82e713b3e73686598f2a5a815467aa9ba6e7d532))
+
+
+
+
+
 ## [1.2.4](https://github.com/microlinkhq/keyv/compare/v1.2.3...v1.2.4) (2021-08-19)
 
 
