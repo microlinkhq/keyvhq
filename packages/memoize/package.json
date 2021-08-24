@@ -27,10 +27,9 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/core": "^1.2.6",
-    "json-buffer": "^3.0.0",
-    "mimic-fn": "~3.0.0",
-    "p-any": "~2.1.0"
+    "@keyvhq/core": "~1.2.6",
+    "json-buffer": "~3.0.0",
+    "mimic-fn": "~3.0.0"
   },
   "devDependencies": {
     "ava": "latest",

@@ -2,7 +2,6 @@
 
 const Keyv = require('@keyvhq/core')
 const mimicFn = require('mimic-fn')
-const pAny = require('p-any')
 
 const isFunction = input => typeof input === 'function'
 const isNumber = input => typeof input === 'number'
@@ -45,18 +44,6 @@ function memoize (
 
   /**
    * @param {string} key
-   * @return {Promise<*>} value
-   * @throws if not found
-   */
-  function getStoredValue (key) {
-    return getRaw(key).then(data => {
-      if (!data || isUndefined(data)) throw new Error('Not found')
-      return data.value
-    })
-  }
-
-  /**
-   * @param {string} key
    * @param {*} value
    * @return {Promise} resolves when updated
    */
@@ -73,9 +60,7 @@ function memoize (
     const rawKey = getKey(...args)
     const [key, forceExpiration] = Array.isArray(rawKey) ? rawKey : [rawKey]
 
-    if (!isUndefined(pending[key])) {
-      return pAny([getStoredValue(key), pending[key]])
-    }
+    if (!isUndefined(pending[key])) return pending[key]
 
     pending[key] = getRaw(key).then(async data => {
       const hasValue = data ? !isUndefined(data.value) : false
