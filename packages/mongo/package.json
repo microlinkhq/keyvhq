@@ -30,8 +30,8 @@
     "value"
   ],
   "dependencies": {
-    "mongodb": "^4.0.1",
-    "pify": "^5.0.0"
+    "mongodb": "~4.0.1",
+    "pify": "~5.0.0"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
