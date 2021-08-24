@@ -61,10 +61,18 @@ class Keyv extends EventEmitter {
   }
 
   _getKeyPrefix (key) {
+    if (typeof this.store._getKeyPrefix === 'function') {
+      return this.store._getKeyPrefix(key)
+    }
+
     return this.namespace ? `${this.namespace}:${key}` : key
   }
 
   _getKeyUnprefix (key) {
+    if (typeof this.store._getKeyUnprefix === 'function') {
+      return this.store._getKeyUnprefix(key)
+    }
+
     return this.namespace
       ? key
           .split(':')
