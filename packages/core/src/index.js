@@ -9,7 +9,6 @@ class Keyv extends EventEmitter {
 
     const normalizedOptions = Object.assign(
       {
-        namespace: 'keyv',
         serialize: JSONB.stringify,
         deserialize: JSONB.parse,
         emitErrors: true,
@@ -61,18 +60,10 @@ class Keyv extends EventEmitter {
   }
 
   _getKeyPrefix (key) {
-    if (typeof this.store._getKeyPrefix === 'function') {
-      return this.store._getKeyPrefix(key)
-    }
-
     return this.namespace ? `${this.namespace}:${key}` : key
   }
 
   _getKeyUnprefix (key) {
-    if (typeof this.store._getKeyUnprefix === 'function') {
-      return this.store._getKeyUnprefix(key)
-    }
-
     return this.namespace
       ? key
           .split(':')
@@ -116,7 +107,6 @@ class Keyv extends EventEmitter {
   }
 
   async clear () {
-    if (!this.namespace) return undefined
     return this.store.clear()
   }
 }
