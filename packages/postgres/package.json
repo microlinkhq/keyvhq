@@ -31,8 +31,8 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/sql": "^1.2.0",
-    "pg": "8.7.1"
+    "@keyvhq/sql": "~1.2.0",
+    "pg": "~8.7.1"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",

@@ -29,8 +29,8 @@
     "value"
   ],
   "dependencies": {
-    "pify": "^5.0.0",
-    "sqlite3": "^5.0.2"
+    "pify": "~5.0.0",
+    "sqlite3": "~5.0.2"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",

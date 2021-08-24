@@ -119,6 +119,7 @@
     "lerna": "latest",
     "lint-staged": "latest",
     "make-dir": "latest",
+    "npm-check-updates": "latest",
     "nyc": "latest",
     "prettier-standard": "latest",
     "simple-git-hooks": "latest",
