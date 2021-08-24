@@ -41,7 +41,8 @@ class KeyvRedis extends EventEmitter {
   }
 
   async clear () {
-    const stream = this.redis.scanStream({ match: `${this.namespace}:*` })
+    const match = this.namespace ? `${this.namespace}:*` : '*'
+    const stream = this.redis.scanStream({ match })
 
     const keys = []
     stream.on('data', matchedKeys => keys.push(...matchedKeys))
