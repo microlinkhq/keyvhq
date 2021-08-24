@@ -27,26 +27,28 @@ memoize(request, 'redis://user:pass@localhost:6379');
 memoize(request, new Keyv());
 ```
 
-### Resolver
+### Defining the key
 
 By default the first argument of your function call is used as cache key. 
 
-You can use a resolver if you want to change the key. The resolver is called with the same arguments as the function.
+You can pass a function to define how key will be defined. The key function will be called with the same arguments as the function.
 
 ```js
 const sum = (n1, n2) => n1 + n2;
 
 const memoized = memoize(sum, new Keyv(), {
-  resolver: (n1, n2) => `${n1}+${n2}`
+  key: (n1, n2) => `${n1}+${n2}`
 });
 
 // cached as { '1+2': 3 }
 memoized(1, 2); 
 ```
 
-The library uses flood protection internally based on the result of this resolver. This means you can make as many requests as you want simultaneously while being sure you won't flood your async resource.
+The library uses flood protection internally based on the result of the key. 
 
-### TTL
+This means you can make as many requests as you want simultaneously while being sure you won't flood your async resource.
+
+### Setup your TTL
 
 Set `ttl` to a `number` for a static TTL value.
 
@@ -68,16 +70,16 @@ const memoizedRequest = memoize(request, new Keyv(), {
 memoizedRequest('http://example.com'); 
 ```
 
-### Stale
+### Stale support
 
-Set `stale` to any `number` of milliseconds.
+Set `staleTtl` to any `number` of milliseconds.
 
 If the `ttl` of a requested resource is below this staleness threshold we will still return the stale value but meanwhile asynchronously refresh the value.
 
 ```js
 const memoizedRequest = memoize(request, new Keyv(), { 
   ttl: 60000,
-  stale: 10000
+  staleTtl: 10000
 });
 
 // cached for 60 seconds
@@ -90,7 +92,7 @@ memoizedRequest('http://example.com');
 memoizedRequest('http://example.com'); 
 ```
 
-When the `stale` option is set we won't delete expired items either. The same logic as above applies.
+When the `staleTtl` option is set we won't delete expired items either. The same logic as above applies.
 
 ## API
 
@@ -111,10 +113,57 @@ The [Keyv](https://github.com/microlinkhq/keyv) instance or [keyv#options](https
 
 #### options
 
-##### resolver
+##### key
 
 Type: `Function`<br/>
 Default: `identity`
+
+It defines how the get will be obtained.
+
+The signature of the function should be a `String` to be used as key associated with the cache copy:
+
+```js
+key: ({req}) => req.url
+```
+
+Just in case you need a more granular control, you can return an `Array`, where the second value determines the expiration behavior:
+
+```js
+key: ({req}) => [req.url, req.query.forceExpiration]
+```
+
+##### objectMode
+
+Type: `Boolean`<br/>
+Default: `false`
+
+When is `true`, the result will be an `Array`, being the second item in the `Array` some information about the item:
+
+```js
+const fn = () => Promise.reject(new Error('NOPE'))
+const keyv = new Keyv()
+const memoizedSum = memoize(fn, keyv, { staleTtl: 10, objectMode: true })
+
+const [sum, info] = await memoizedSum(1, 2)
+
+console.log(info)
+// {
+//   hasValue: true,
+//   key: 1,
+//   isExpired: false,
+//   isStale: true,
+//   staleError: Error: NOPE
+// }
+```
+
+##### staleTtl
+
+Type: `Number` or `Function`<br/>
+Default: `undefined`
+
+The staleness threshold we will still return the stale value but meanwhile asynchronously refresh the value.
+
+When you provide a function, the value will be passed as first argument.
 
 ##### ttl
 
@@ -123,16 +172,16 @@ Default: `undefined`
 
 The time-to-live quantity of time the value will considered as fresh.
 
-##### stale
+##### value
 
-Type: `Number`<br/>
-Default: `undefined`
+Type: `Function`<br/>
+Default: `identity`
 
-The staleness threshold we will still return the stale value but meanwhile asynchronously refresh the value.
+A decorate function to be applied before store the value.
 
 ## License
 
-**@keyvhq/memoize** © [Microlink](https://microlink.io), Released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br/>
-Authored and maintained by [Microlink](https://microlink.io) with help from [contributors](https://github.com/microlinkhq/keyv/contributors).
+**@keyvhq/memoize** © [Dieter Luypaert](https://moeriki.com), Released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br/>
+Maintained by [Microlink](https://microlink.io) with help from [contributors](https://github.com/microlinkhq/keyv/contributors).
 
 > [microlink.io](https://microlink.io) · GitHub [@MicrolinkHQ](https://github.com/microlinkhq) · Twitter [@microlinkhq](https://twitter.com/microlinkhq)

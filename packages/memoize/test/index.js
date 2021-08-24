@@ -1,7 +1,6 @@
 'use strict'
 
 const Keyv = require('@keyvhq/core')
-const pEvent = require('p-event')
 const delay = require('delay')
 const test = require('ava')
 
@@ -27,8 +26,8 @@ test('should store result as arg0', async t => {
   t.is(await memoizedSum.keyv.get('1'), 3)
 })
 
-test('should store result as resolver result', async t => {
-  const memoizedSum = memoize(asyncSum, undefined, { resolver: syncSum })
+test('should be possible to specify how key is obtained', async t => {
+  const memoizedSum = memoize(asyncSum, undefined, { key: syncSum })
   await memoizedSum(1, 2, 3)
   t.is(await memoizedSum.keyv.get('6'), 6)
 })
@@ -54,6 +53,20 @@ test('should return pending result', async t => {
   t.is(called, 1)
 })
 
+test('should delete store value after expiration', async t => {
+  const keyv = new Keyv()
+  const ttl = 100
+  await keyv.set('5', 5, ttl)
+
+  const memoizedSum = memoize(asyncSum, keyv, { ttl: ttl })
+
+  t.is(await memoizedSum(5), 5)
+
+  await delay(ttl)
+
+  t.is(await keyv.get(5), undefined)
+})
+
 test('should return cached result', async t => {
   let called = 0
 
@@ -67,6 +80,14 @@ test('should return cached result', async t => {
   await memoized(5)
 
   t.is(called, 0)
+})
+
+test('should be able to decorate the value', async t => {
+  const keyv = new Keyv()
+  const memoized = memoize(asyncSum, keyv, {
+    value: value => `Result is ${value}`
+  })
+  t.is(await memoized(5), 'Result is 5')
 })
 
 test('should throw error', async t => {
@@ -97,12 +118,11 @@ test('should return fresh result', async t => {
   let called = 0
 
   const fn = n => {
-    console.log(called)
     ++called
     return asyncSum(n)
   }
 
-  const memoizedSum = memoize(fn, keyv, { stale: 100 })
+  const memoizedSum = memoize(fn, keyv, { staleTtl: 100 })
   keyv.set('5', 5, 200)
   await delay(10)
 
@@ -119,25 +139,24 @@ test('should return stale result but refresh', async t => {
     return asyncSum(...args)
   }
 
-  const memoizedSum = memoize(fn, keyv, { stale: 10 })
+  const memoizedSum = memoize(fn, keyv, { staleTtl: 10, objectMode: true })
   await memoizedSum.keyv.set('1', 1, 5)
-  const sum = await memoizedSum(1, 2)
+  const [sum, { isStale }] = await memoizedSum(1, 2)
 
   t.is(sum, 1)
+  t.true(isStale)
   t.deepEqual(lastArgs, [1, 2])
-  t.is(await pEvent(keyv, 'memoize.fresh.value'), 3)
 })
 
 test('should emit on stale refresh error', async t => {
   const fn = () => Promise.reject(new Error('NOPE'))
   const keyv = new Keyv()
-  const memoizedSum = memoize(fn, keyv, { stale: 10 })
+  const memoizedSum = memoize(fn, keyv, { staleTtl: 10, objectMode: true })
 
   await keyv.set('1', 1, 5)
-  memoizedSum(1)
+  const [, info] = await memoizedSum(1)
 
-  const error = await pEvent(keyv, 'memoize.fresh.error')
-  t.is(error.message, 'NOPE')
+  t.is(info.staleError.message, 'NOPE')
 })
 
 test('should return cached result if a stale refresh is pending', async t => {
@@ -151,7 +170,7 @@ test('should return cached result if a stale refresh is pending', async t => {
     return defer.promise
   }
 
-  const memoizedSum = memoize(fn, keyv, { stale: 10 })
+  const memoizedSum = memoize(fn, keyv, { staleTtl: 10 })
   await memoizedSum.keyv.set('1', 1, 5)
 
   t.is(await memoizedSum(1), 1)
@@ -208,7 +227,7 @@ test('should store result with static ttl', async t => {
   t.deepEqual(calls, [1, 3, 5])
 })
 
-test('should store result with dynamic ttl', async t => {
+test('should accept `ttl` as function', async t => {
   let calls = []
 
   const store = new Map()
@@ -226,4 +245,50 @@ test('should store result with dynamic ttl', async t => {
   )
   await memoizedSum(1, 2, 3)
   t.deepEqual(calls, [1, 6, 6])
+})
+
+test('should accept `staleTtl` as function', async t => {
+  const memoizeFn = memoize(() => ({ value: 'foo', stale: 1 }), new Map(), {
+    ttl: 1,
+    staleTtl: ({ stale }) => stale,
+    objectMode: true
+  })
+  const [, infoOne] = await memoizeFn()
+  await delay(10)
+  const [, infoTwo] = await memoizeFn()
+
+  t.false(infoOne.isStale)
+  t.false(infoOne.hasValue)
+  t.true(infoTwo.isStale)
+  t.true(infoTwo.hasValue)
+})
+
+test('should be possible force expiration', async t => {
+  let index = 0
+
+  const store = new Map()
+  const fn = () => ++index
+  const key = ({ key, forceExpiration }) => [key, forceExpiration]
+
+  const memoizeFn = memoize(fn, store, { ttl: Infinity, key, objectMode: true })
+
+  const [valueOne] = await memoizeFn({
+    key: 'foo',
+    forceExpiration: false
+  })
+
+  const [valueTwo] = await memoizeFn({
+    key: 'foo',
+    forceExpiration: false
+  })
+
+  t.is(valueOne, 1)
+  t.is(valueOne, valueTwo)
+
+  const [valueThree] = await memoizeFn({
+    key: 'foo',
+    forceExpiration: true
+  })
+
+  t.is(valueThree, 2)
 })
