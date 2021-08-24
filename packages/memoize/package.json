@@ -28,7 +28,6 @@
   ],
   "dependencies": {
     "@keyvhq/core": "~1.2.6",
-    "json-buffer": "~3.0.0",
     "mimic-fn": "~3.0.0"
   },
   "devDependencies": {
