@@ -21,11 +21,8 @@ class Keyv extends EventEmitter {
       key => (this[key] = normalizedOptions[key])
     )
 
-    this.store.namespace = this.namespace
-
     if (typeof this.store.on === 'function' && emitErrors) {
       this.store.on('error', error => {
-        console.log('error', error)
         this.emit('error', error)
       })
     }
