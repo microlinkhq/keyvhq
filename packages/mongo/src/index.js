@@ -127,19 +127,21 @@ class KeyvMongo extends EventEmitter {
     )
   }
 
-  clear () {
+  clear (namespace) {
     return this.connect.then(store =>
       store
-        .deleteMany({ key: new RegExp(`^${this.namespace + ':'}`) })
+        .deleteMany({
+          key: new RegExp(`^${namespace ? namespace + ':' : '.*'}`)
+        })
         .then(() => undefined)
     )
   }
 
-  async * iterator () {
+  async * iterator (namespace) {
     const iterator = await this.connect.then(store =>
       store
         .find({
-          key: new RegExp(`^${this.namespace ? this.namespace + ':' : '.*'}`)
+          key: new RegExp(`^${namespace ? namespace + ':' : '.*'}`)
         })
         .map(x => {
           return [x.key, x.value]

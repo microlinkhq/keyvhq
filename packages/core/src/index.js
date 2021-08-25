@@ -30,7 +30,7 @@ class Keyv extends EventEmitter {
     const generateIterator = iterator =>
       async function * () {
         for await (const [key, raw] of typeof iterator === 'function'
-          ? iterator()
+          ? iterator(this.namespace)
           : iterator) {
           const data = typeof raw === 'string' ? this.deserialize(raw) : raw
           if (this.namespace && !key.includes(this.namespace)) {
@@ -105,7 +105,7 @@ class Keyv extends EventEmitter {
   }
 
   async clear () {
-    return this.store.clear()
+    return this.store.clear(this.namespace)
   }
 }
 module.exports = Keyv

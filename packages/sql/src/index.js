@@ -57,8 +57,8 @@ class KeyvSql extends EventEmitter {
       this.options.dialect === 'postgres'
         ? `INSERT INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}') ON CONFLICT ("key") DO UPDATE SET "value" = EXCLUDED."value"`
         : this.options.dialect === 'mysql'
-          ? `REPLACE INTO \`${this.options.table}\` (\`key\`, \`value\`) VALUES ('${key}', '${value}')`
-          : `REPLACE INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}')`
+        ? `REPLACE INTO \`${this.options.table}\` (\`key\`, \`value\`) VALUES ('${key}', '${value}')`
+        : `REPLACE INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}')`
 
     return this.query(upsert)
   }
@@ -82,31 +82,31 @@ class KeyvSql extends EventEmitter {
     })
   }
 
-  clear () {
+  clear (namespace) {
     const del =
       this.options.dialect === 'mysql'
         ? `DELETE FROM \`${this.options.table}\` WHERE (\`${
             this.options.table
-          }\`.\`key\` LIKE '${this.namespace ? this.namespace + ':' : ''}%')`
+          }\`.\`key\` LIKE '${namespace ? namespace + ':' : ''}%')`
         : `DELETE FROM "${this.options.table}" WHERE ("${
             this.options.table
-          }"."key" LIKE '${this.namespace ? this.namespace + ':' : ''}%')`
+          }"."key" LIKE '${namespace ? namespace + ':' : ''}%')`
     return this.query(del).then(() => undefined)
   }
 
-  async * iterator () {
+  async * iterator (namespace) {
     const limit = Number.parseInt(this.options.iterationLimit, 10)
     const selectChunk =
       this.options.dialect === 'mysql'
         ? `SELECT * FROM \`${this.options.table}\` WHERE (\`${
             this.options.table
           }\`.\`key\` LIKE '${
-            this.namespace ? this.namespace + ':' : ''
+            namespace ? namespace + ':' : ''
           }%') LIMIT ${limit} OFFSET `
         : `SELECT * FROM "${this.options.table}" WHERE ("${
             this.options.table
           }"."key" LIKE '${
-            this.namespace ? this.namespace + ':' : ''
+            namespace ? namespace + ':' : ''
           }%') LIMIT ${limit} OFFSET `
 
     async function * iterate (offset, query) {
