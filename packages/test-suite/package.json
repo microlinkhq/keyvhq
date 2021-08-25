@@ -27,7 +27,7 @@
     "ttl",
     "value"
   ],
-  "devDependencies": {
+  "dependencies": {
     "delay": "latest",
     "timekeeper": "latest"
   },

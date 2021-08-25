@@ -33,7 +33,7 @@ class Keyv extends EventEmitter {
           ? iterator()
           : iterator) {
           const data = typeof raw === 'string' ? this.deserialize(raw) : raw
-          if (!key.includes(this.namespace) || typeof data !== 'object') {
+          if (this.namespace && !key.includes(this.namespace)) {
             continue
           }
 
