@@ -57,8 +57,8 @@ class KeyvSql extends EventEmitter {
       this.options.dialect === 'postgres'
         ? `INSERT INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}') ON CONFLICT ("key") DO UPDATE SET "value" = EXCLUDED."value"`
         : this.options.dialect === 'mysql'
-        ? `REPLACE INTO \`${this.options.table}\` (\`key\`, \`value\`) VALUES ('${key}', '${value}')`
-        : `REPLACE INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}')`
+          ? `REPLACE INTO \`${this.options.table}\` (\`key\`, \`value\`) VALUES ('${key}', '${value}')`
+          : `REPLACE INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}')`
 
     return this.query(upsert)
   }
