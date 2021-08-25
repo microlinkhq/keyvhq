@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
+    "@keyvhq/test-suite": "file:../test-suite",
     "ava": "latest",
     "nyc": "latest"
   },
