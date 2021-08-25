@@ -94,7 +94,7 @@ class KeyvMongo extends EventEmitter {
   get (key) {
     return this.connect.then(store =>
       store.findOne({ key: { $eq: key } }).then(doc => {
-        if (doc === undefined) {
+        if (!doc) {
           return undefined
         }
 
