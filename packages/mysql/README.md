@@ -1,4 +1,4 @@
-# @keyvhq/mysql [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/mysql [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > MySQL/MariaDB storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 

@@ -1,0 +1,54 @@
+{
+  "name": "@keyvhq/offline",
+  "description": "Adding offline capabilities for your keyv instance.",
+  "homepage": "https://keyv.js.org",
+  "version": "1.0.3",
+  "main": "src/index.js",
+  "author": {
+    "email": "hello@microlink.io",
+    "name": "microlink.io",
+    "url": "https://microlink.io"
+  },
+  "repository": {
+    "directory": "packages/offline",
+    "type": "git",
+    "url": "git+https://github.com/microlinkhq/keyv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/microlinkhq/keyv/issues"
+  },
+  "keywords": [
+    "cache",
+    "key",
+    "keyv",
+    "offline",
+    "store",
+    "ttl",
+    "value"
+  ],
+  "dependencies": {
+    "debug-logfmt": "~1.0.4",
+    "serialize-error": "~8.1.0"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-s3": "latest",
+    "@keyvhq/redis": "latest",
+    "ava": "latest",
+    "delay": "latest",
+    "keyv-s3": "latest",
+    "nyc": "latest"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "nyc ava"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
