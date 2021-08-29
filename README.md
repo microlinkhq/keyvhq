@@ -137,18 +137,23 @@ const keyv = new Keyv({ store: lru })
 
 You should also set a [`namespace`](#optionsnamespace) for your module so you can safely call [`.clear()`](#clear) without clearing unrelated app data.
 
-### Official storage adapters
+### Storage Adapters
 
 > The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
-- [@keyvhq/mongo](/packages/mongo) – MongoDB storage adapter for Keyv.
-- [@keyvhq/mysql](/packages/mysql) – MySQL/MariaDB storage adapter for Keyv.
-- [@keyvhq/postgres](/packages/postgres) – PostgreSQL storage adapter for Keyv.
-- [@keyvhq/redis](/packages/redis) – Redis storage adapter for Keyv.
-- [@keyvhq/sqlite](/packages/sqlite) – SQLite storage adapter for Keyv.
-- [@keyvhq/memoize](/packages/memoize) – Memoize any function using Keyv as storage backend.
+- [@keyvhq/mongo](https://github.com/microlinkhq/keyv/tree/master/packages/mongo) – MongoDB storage adapter for Keyv.
+- [@keyvhq/mysql](https://github.com/microlinkhq/keyv/tree/master/packages/mysql) – MySQL/MariaDB storage adapter for Keyv.
+- [@keyvhq/postgres](https://github.com/microlinkhq/keyv/tree/master/packages/postgres) – PostgreSQL storage adapter for Keyv.
+- [@keyvhq/redis](https://github.com/microlinkhq/keyv/tree/master/packages/redis) – Redis storage adapter for Keyv.
+- [@keyvhq/sqlite](https://github.com/microlinkhq/keyv/tree/master/packages/sqlite) – SQLite storage adapter for Keyv.
 
-### Community storage adapters
+### Decorators
+
+- [@keyvhq/offline](https://github.com/microlinkhq/keyv/tree/master/packages/offline) – SQLite storage adapter for Keyv.
+- [@keyvhq/brotli](https://github.com/microlinkhq/keyv/tree/master/packages/brotli) – Memoize any function using Keyv as storage backend.
+- [@keyvhq/memoize](https://github.com/microlinkhq/keyv/tree/master/packages/memoize) – Memoize any function using Keyv as storage backend.
+
+### Community
 
 > You can also use third-party storage adapters or build your own. Keyv will wrap these storage adapters in TTL functionality and handle complex types internally.
 
