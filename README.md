@@ -89,22 +89,15 @@ await cache.get('foo') // 'cache'
 
 You can optionally provide your own serialization functions to support extra data types or to serialize to something other than JSON.
 
-The following example is using [compress-brotli](https://github.com/Kikobeats/compress-brotli) as serializer:
+
+
+The following example is using [@keyvhq/compress](https://github.com/microlinkhq/keyv/tree/master/packages/compress) as serializer:
 
 ```js
-const brotli = require('compress-brotli')()
-const Keyv = require('keyv')
+const KeyvCompress = require('@keyvhq/compress')
+const Keyv = require('@keyvhq/core')
 
-const serialize = async ({ value, expires }) => {
-  return brotli.serialize({ value: await brotli.compress(value), expires })
-}
-
-const deserialize = async data => {
-  const { value, expires } = brotli.deserialize(data)
-  return { value: await brotli.decompress(value), expires }
-}
-
-const keyv = new Keyv({ serialize, deserialize })
+const keyv = KeyvCompress(new Keyv({ serialize, deserialize })
 ```
 
 ## Storage Adapters
@@ -149,8 +142,8 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 
 ### Decorators
 
-- [@keyvhq/offline](https://github.com/microlinkhq/keyv/tree/master/packages/offline) – SQLite storage adapter for Keyv.
-- [@keyvhq/brotli](https://github.com/microlinkhq/keyv/tree/master/packages/brotli) – Memoize any function using Keyv as storage backend.
+- [@keyvhq/offline](https://github.com/microlinkhq/keyv/tree/master/packages/offline) – Adds offline capabilities for your keyv instance.
+- [@keyvhq/compress](https://github.com/microlinkhq/keyv/tree/master/packages/compress) – Adds compression bindings for your Keyv instance.
 - [@keyvhq/memoize](https://github.com/microlinkhq/keyv/tree/master/packages/memoize) – Memoize any function using Keyv as storage backend.
 
 ### Community
@@ -164,7 +157,6 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 - [keyv-lru](https://github.com/e0ipso/keyv-lru) – An in-memory LRU back-end for Keyv.
 - [keyv-memcache](https://github.com/jaredwray/keyv-memcache) - Memcache storage adapter for Keyv.
 - [keyv-mssql](https://github.com/pmorgan3/keyv-mssql) - Microsoft SQL Server adapter for Keyv.
-- [keyv-offline](https://github.com/Kikobeats/keyv-offline) – Adding offline capabilities for your keyv instance.
 - [keyv-s3](https://github.com/microlinkhq/keyv-s3) - Amazon S3 storage adapter for Keyv.
 - [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache.
 
