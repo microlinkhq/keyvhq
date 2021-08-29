@@ -11,7 +11,7 @@ npm install --save keyv @keyvhq/sqlite
 ## Usage
 
 ```js
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv('sqlite://path/to/database.sqlite')
 keyv.on('error', handleConnectionError)

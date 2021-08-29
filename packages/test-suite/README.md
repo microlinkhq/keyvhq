@@ -21,7 +21,7 @@ Then update `keyv` and `@keyvhq/test-suite` versions to `*` in `package.json` to
 ```js
 import test from 'ava'
 import keyvTestSuite from '@keyvhq/test-suite'
-import Keyv from 'keyv'
+import Keyv from '@keyvhq/core'
 import KeyvStore from './'
 
 const store = () => new KeyvStore()

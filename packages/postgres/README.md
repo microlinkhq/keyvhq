@@ -13,7 +13,7 @@ npm install --save keyv @keyvhq/postgres
 ## Usage
 
 ```js
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv('postgresql://user:pass@localhost:5432/dbname')
 keyv.on('error', handleConnectionError)

@@ -13,7 +13,7 @@ npm install --save keyv @keyvhq/mongo
 ## Usage
 
 ```js
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname')
 keyv.on('error', handleConnectionError)
