@@ -11,7 +11,7 @@ npm install --save keyv @keyvhq/mysql
 ## Usage
 
 ```js
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname')
 keyv.on('error', handleConnectionError)
