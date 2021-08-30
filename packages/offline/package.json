@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "latest",
+    "@keyvhq/core": "latest",
     "@keyvhq/redis": "latest",
     "ava": "latest",
     "delay": "latest",
