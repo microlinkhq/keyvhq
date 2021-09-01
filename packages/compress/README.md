@@ -36,7 +36,7 @@ const keyv = KeyvCompress(new KeyvRedis({
 }))
 ```
 
-Additionally, it can accept [compress-brotli#options](https://github.com/Kikobeats/compress-brotli)(https://github.com/Kikobeats/compress-brotli#compressbrotlioptions) as second argument:
+Additionally, it can accept [compress-brotli#options](https://github.com/Kikobeats/compress-brotli#compressbrotlioptions) as second argument:
 
 ```js
 const keyv = KeyvCompress(new KeyvRedis({
