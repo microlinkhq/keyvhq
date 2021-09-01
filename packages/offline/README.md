@@ -1,6 +1,6 @@
 # @keyvhq/offline [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
-> Adding offline capabilities for your keyv instance.
+> Adds offline capabilities for your keyv instance.
 
 ## Install
 
