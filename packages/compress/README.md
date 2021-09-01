@@ -1,6 +1,6 @@
 # @keyvhq/compress [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
-> Adding offline capabilities for your keyv instance.
+> Adds compression bindings for your Keyv instance.
 
 ## Install
 
@@ -26,23 +26,28 @@ const keyv = new KeyvRedis({
 Using `@keyvhq/compress` at the top level:
 
 ```js
+const KeyvCompress = require('@keyvhq/compress')
 const KeyvRedis = require('@keyvhq/redis')
-const keyvOffline = require('@keyvhq/compress')
 
-const keyv = keyvOffline(new KeyvRedis({
+const keyv = KeyvCompress(new KeyvRedis({
   uri: 'redis://user:pass@localhost:6379',
   maxRetriesPerRequest: 1,
   emitErrors: false
 }))
 ```
 
-That's all!
+Additionally, it can accept [compress-brotli#options](https://github.com/Kikobeats/compress-brotli)(https://github.com/Kikobeats/compress-brotli#compressbrotlioptions) as second argument:
 
-In the next database downtime, your keyv set/get petitions will be temporarily bypassed, preventing your application to crash for that, being more resilient than the default keyv behavior.
-
-As soon as the connection is re-established it will be work back as expected.
-
-In case you need, you can see omitted errors enabling debug doing `DEBUG=@keyvhq/compress*`
+```js
+const keyv = KeyvCompress(new KeyvRedis({
+  uri: 'redis://user:pass@localhost:6379',
+  maxRetriesPerRequest: 1,
+  emitErrors: false
+}), {
+  serialize: v8.serialize,
+  deserialize: v8.deserialize
+})
+```
 
 ## License
 
