@@ -91,7 +91,7 @@ const keyvIteratorTests = (test, Keyv, store) => {
       await delay(200)
 
       for await (const entry of keyv.iterator()) {
-        t.throw('Found an expired value', entry)
+        t.fail('Found an expired value', entry)
       }
       t.pass()
     }
