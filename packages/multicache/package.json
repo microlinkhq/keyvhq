@@ -1,0 +1,51 @@
+{
+  "name": "@keyvhq/multicache",
+  "description": "Layered cache with any backend",
+  "homepage": "https://keyv.js.org",
+  "version": "1.2.7",
+  "main": "src/index.js",
+  "author": {
+    "email": "hello@microlink.io",
+    "name": "microlink.io",
+    "url": "https://microlink.io"
+  },
+  "repository": {
+    "directory": "packages/memo",
+    "type": "git",
+    "url": "git+https://github.com/microlinkhq/keyv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/microlinkhq/keyv/issues"
+  },
+  "keywords": [
+    "cache",
+    "key",
+    "multicache",
+    "multilevel",
+    "store",
+    "ttl",
+    "value"
+  ],
+  "dependencies": {
+    "@keyvhq/core": "~1.2.6",
+    "@keyvhq/keyv-sqlite": "^1.0.0"
+  },
+  "devDependencies": {
+    "ava": "latest",
+    "delay": "latest",
+    "nyc": "latest"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "nyc ava"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
