@@ -136,11 +136,11 @@ test.serial('Keyv supports async serializer/deserializer', async t => {
   t.is(await keyv.get('foo'), 'bar')
 })
 
-test.serial('Keyv uses a default namespace', async t => {
+test.serial('Keyv uses an empty namespace by default', async t => {
   const store = new Map()
   const keyv = new Keyv({ store })
   await keyv.set('foo', 'bar')
-  t.is([...store.keys()][0], 'keyv:foo')
+  t.is([...store.keys()][0], 'foo')
 })
 
 test.serial('Default namespace can be overridden', async t => {
@@ -150,11 +150,11 @@ test.serial('Default namespace can be overridden', async t => {
   t.is([...store.keys()][0], 'magic:foo')
 })
 
-test.serial('An empty namespace stores the key as-is', async t => {
+test.serial('An empty namespace stores the key as a string', async t => {
   const store = new Map()
   const keyv = new Keyv({ store, namespace: '' })
   await keyv.set(42, 'foo')
-  t.is([...store.keys()][0], 42)
+  t.is([...store.keys()][0], '42')
 })
 
 test('emit errors by default', async t => {

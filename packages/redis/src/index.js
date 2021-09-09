@@ -40,8 +40,9 @@ class KeyvRedis extends EventEmitter {
     return result > 0
   }
 
-  async clear () {
-    const stream = this.redis.scanStream({ match: `${this.namespace}:*` })
+  async clear (namespace) {
+    const match = namespace ? `${namespace}:*` : '*'
+    const stream = this.redis.scanStream({ match })
 
     const keys = []
     stream.on('data', matchedKeys => keys.push(...matchedKeys))
@@ -51,7 +52,7 @@ class KeyvRedis extends EventEmitter {
     }
   }
 
-  async * iterator () {
+  async * iterator (namespace) {
     const scan = this.redis.scan.bind(this.redis)
     const get = this.redis.mget.bind(this.redis)
     async function * iterate (curs, pattern) {
@@ -71,7 +72,7 @@ class KeyvRedis extends EventEmitter {
       }
     }
 
-    yield * iterate(0, `${this.namespace ? this.namespace + ':' : ''}*`)
+    yield * iterate(0, `${namespace ? namespace + ':' : ''}*`)
   }
 }
 

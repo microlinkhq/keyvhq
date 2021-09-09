@@ -9,7 +9,6 @@ class Keyv extends EventEmitter {
 
     const normalizedOptions = Object.assign(
       {
-        namespace: 'keyv',
         serialize: JSONB.stringify,
         deserialize: JSONB.parse,
         emitErrors: true,
@@ -22,8 +21,6 @@ class Keyv extends EventEmitter {
       key => (this[key] = normalizedOptions[key])
     )
 
-    this.store.namespace = this.namespace
-
     if (typeof this.store.on === 'function' && emitErrors) {
       this.store.on('error', error => {
         this.emit('error', error)
@@ -33,10 +30,10 @@ class Keyv extends EventEmitter {
     const generateIterator = iterator =>
       async function * () {
         for await (const [key, raw] of typeof iterator === 'function'
-          ? iterator()
+          ? iterator(this.namespace)
           : iterator) {
           const data = typeof raw === 'string' ? this.deserialize(raw) : raw
-          if (!key.includes(this.namespace) || typeof data !== 'object') {
+          if (this.namespace && !key.includes(this.namespace)) {
             continue
           }
 
@@ -61,18 +58,12 @@ class Keyv extends EventEmitter {
   }
 
   _getKeyPrefix (key) {
-    if (typeof this.store._getKeyPrefix === 'function') {
-      return this.store._getKeyPrefix(key)
-    }
-
-    return this.namespace ? `${this.namespace}:${key}` : key
+    return this.namespace
+      ? `${this.namespace}:${key}`
+      : (key && key.toString()) || key
   }
 
   _getKeyUnprefix (key) {
-    if (typeof this.store._getKeyUnprefix === 'function') {
-      return this.store._getKeyUnprefix(key)
-    }
-
     return this.namespace
       ? key
           .split(':')
@@ -116,8 +107,7 @@ class Keyv extends EventEmitter {
   }
 
   async clear () {
-    if (!this.namespace) return undefined
-    return this.store.clear()
+    return this.store.clear(this.namespace)
   }
 }
 module.exports = Keyv
