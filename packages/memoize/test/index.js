@@ -23,13 +23,13 @@ const syncSum = (...numbers) => numbers.reduce((sum, n) => sum + n, 0)
 test('should store result as arg0', async t => {
   const memoizedSum = memoize(asyncSum)
   await memoizedSum(1, 2)
-  t.is(await memoizedSum.keyv.get('1'), 3)
+  t.is(await memoizedSum.keyv.get(1), 3)
 })
 
 test('should be possible to specify how key is obtained', async t => {
   const memoizedSum = memoize(asyncSum, undefined, { key: syncSum })
   await memoizedSum(1, 2, 3)
-  t.is(await memoizedSum.keyv.get('6'), 6)
+  t.is(await memoizedSum.keyv.get(6), 6)
 })
 
 test('should return result', async t => {
@@ -56,7 +56,7 @@ test('should return pending result', async t => {
 test('should delete store value after expiration', async t => {
   const keyv = new Keyv()
   const ttl = 100
-  await keyv.set('5', 5, ttl)
+  await keyv.set(5, 5, ttl)
 
   const memoizedSum = memoize(asyncSum, keyv, { ttl: ttl })
 
@@ -69,13 +69,12 @@ test('should delete store value after expiration', async t => {
 
 test('should return cached result', async t => {
   let called = 0
-
   const memoized = memoize(n => {
     ++called
     return asyncSum(n)
   })
 
-  await memoized.keyv.set('5', 5)
+  await memoized.keyv.set(5, 5)
 
   await memoized(5)
 
@@ -123,7 +122,7 @@ test('should return fresh result', async t => {
   }
 
   const memoizedSum = memoize(fn, keyv, { staleTtl: 100 })
-  keyv.set('5', 5, 200)
+  keyv.set(5, 5, 200)
   await delay(10)
 
   t.is(await memoizedSum(5), 5)
@@ -140,7 +139,7 @@ test('should return stale result but refresh', async t => {
   }
 
   const memoizedSum = memoize(fn, keyv, { staleTtl: 10, objectMode: true })
-  await memoizedSum.keyv.set('1', 1, 5)
+  await memoizedSum.keyv.set(1, 1, 5)
   const [sum, { isStale }] = await memoizedSum(1, 2)
 
   t.is(sum, 1)
@@ -153,7 +152,7 @@ test('should emit on stale refresh error', async t => {
   const keyv = new Keyv()
   const memoizedSum = memoize(fn, keyv, { staleTtl: 10, objectMode: true })
 
-  await keyv.set('1', 1, 5)
+  await keyv.set(1, 1, 5)
   const [, info] = await memoizedSum(1)
 
   t.is(info.staleError.message, 'NOPE')
@@ -171,7 +170,7 @@ test('should return cached result if a stale refresh is pending', async t => {
   }
 
   const memoizedSum = memoize(fn, keyv, { staleTtl: 10 })
-  await memoizedSum.keyv.set('1', 1, 5)
+  await memoizedSum.keyv.set(1, 1, 5)
 
   t.is(await memoizedSum(1), 1)
   t.is(await memoizedSum(1), 1)
@@ -182,7 +181,7 @@ test('should delete expired result and return fresh result', async t => {
   const keyv = new Keyv()
   const memoizedSum = memoize(asyncSum, keyv)
 
-  await keyv.set('1', 1, 1)
+  await keyv.set(1, 1, 1)
   await delay(5)
 
   t.is(await memoizedSum(1, 2), 3)
