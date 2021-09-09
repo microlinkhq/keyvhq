@@ -1,4 +1,4 @@
-# @keyvhq/mysql [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/mysql [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > MySQL/MariaDB storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -11,7 +11,7 @@ npm install --save keyv @keyvhq/mysql
 ## Usage
 
 ```js
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname')
 keyv.on('error', handleConnectionError)

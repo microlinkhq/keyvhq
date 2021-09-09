@@ -1,4 +1,4 @@
-# @keyvhq/mongo [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/mongo [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > MongoDB storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -13,7 +13,7 @@ npm install --save keyv @keyvhq/mongo
 ## Usage
 
 ```js
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname')
 keyv.on('error', handleConnectionError)
