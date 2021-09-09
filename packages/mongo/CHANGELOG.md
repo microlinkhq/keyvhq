@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/microlinkhq/keyv/compare/v1.2.7...v1.3.0) (2021-09-01)
+
+
+### Bug Fixes
+
+* **mongo:** updated check for nonexistent key ([2f9a153](https://github.com/microlinkhq/keyv/commit/2f9a153c1998e5ff2b59c1a1c92a32c58ff95368))
+
+
+
+
+
 ## [1.2.7](https://github.com/microlinkhq/keyv/compare/v1.2.6...v1.2.7) (2021-08-24)
 
 **Note:** Version bump only for package @keyvhq/mongo

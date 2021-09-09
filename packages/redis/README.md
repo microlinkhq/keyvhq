@@ -1,4 +1,4 @@
-# @keyvhq/redis [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/redis [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > Redis storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -13,7 +13,7 @@ npm install --save keyv @keyvhq/redis
 ## Usage
 
 ```js
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv('redis://user:pass@localhost:6379')
 keyv.on('error', handleConnectionError)
@@ -31,7 +31,7 @@ Or you can manually create a storage adapter instance and pass it to Keyv:
 
 ```js
 const KeyvRedis = require('@keyvhq/redis')
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyvRedis = new KeyvRedis('redis://user:pass@localhost:6379')
 const keyv = new Keyv({ store: keyvRedis })
@@ -41,8 +41,8 @@ Or reuse a previous Redis instance:
 
 ```js
 const KeyvRedis = require('@keyvhq/redis')
+const Keyv = require('@keyvhq/core')
 const Redis = require('ioredis')
-const Keyv = require('keyv')
 
 const redis = new Redis('redis://user:pass@localhost:6379')
 const keyvRedis = new KeyvRedis(redis)

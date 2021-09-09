@@ -1,4 +1,4 @@
-# @keyvhq/postgres [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/postgres [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 > PostgreSQL storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -13,7 +13,7 @@ npm install --save keyv @keyvhq/postgres
 ## Usage
 
 ```js
-const Keyv = require('keyv')
+const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv('postgresql://user:pass@localhost:5432/dbname')
 keyv.on('error', handleConnectionError)

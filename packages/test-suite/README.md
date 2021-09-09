@@ -1,4 +1,4 @@
-# @keyvhq/test-suite [<img width="100" align="right" src="https://ghcdn.rawgit.org/microlinkhq/keyv/master/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/test-suite [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
 
 Complete [AVA](https://github.com/avajs/ava) test suite to test a [Keyv](https://github.com/microlinkhq/keyv) storage adapter for API compliance.
 
@@ -21,7 +21,7 @@ Then update `keyv` and `@keyvhq/test-suite` versions to `*` in `package.json` to
 ```js
 import test from 'ava'
 import keyvTestSuite from '@keyvhq/test-suite'
-import Keyv from 'keyv'
+import Keyv from '@keyvhq/core'
 import KeyvStore from './'
 
 const store = () => new KeyvStore()

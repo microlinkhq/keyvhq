@@ -1,7 +1,7 @@
 {
-  "name": "@keyvhq/redis",
-  "description": "Redis storage adapter for Keyv",
-  "homepage": "https://github.com/microlinkhq/keyv",
+  "name": "@keyvhq/compress",
+  "description": "Adds compression bindings for your Keyv instance, saving as much space as you can.",
+  "homepage": "https://keyv.js.org",
   "version": "1.3.0",
   "main": "src/index.js",
   "author": {
@@ -10,7 +10,7 @@
     "url": "https://microlink.io"
   },
   "repository": {
-    "directory": "packages/redis",
+    "directory": "packages/offline",
     "type": "git",
     "url": "git+https://github.com/microlinkhq/keyv.git"
   },
@@ -18,24 +18,26 @@
     "url": "https://github.com/microlinkhq/keyv/issues"
   },
   "keywords": [
-    "adapter",
+    "brotli",
     "cache",
+    "compress",
+    "compression",
+    "decompress",
+    "deserialize",
     "key",
     "keyv",
-    "redis",
-    "storage",
+    "serialize",
     "store",
     "ttl",
     "value"
   ],
   "dependencies": {
-    "ioredis": "~4.27.8",
-    "p-event": "~4.2.0"
+    "compress-brotli": "~1.3.2"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
     "ava": "latest",
+    "delay": "latest",
     "nyc": "latest"
   },
   "engines": {
@@ -45,9 +47,7 @@
     "src"
   ],
   "scripts": {
-    "posttest:docker": "docker-compose down --rmi local",
-    "test": "nyc ava",
-    "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
+    "test": "nyc ava"
   },
   "license": "MIT",
   "publishConfig": {
