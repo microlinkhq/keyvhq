@@ -58,7 +58,9 @@ class Keyv extends EventEmitter {
   }
 
   _getKeyPrefix (key) {
-    return this.namespace ? `${this.namespace}:${key}` : key
+    return this.namespace
+      ? `${this.namespace}:${key}`
+      : (key && key.toString()) || key
   }
 
   _getKeyUnprefix (key) {
