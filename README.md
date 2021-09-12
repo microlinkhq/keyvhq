@@ -178,7 +178,7 @@ The options object is also passed through to the storage adapter. Check your sto
 ##### namespace
 
 Type: `String`<br/>
-Default: `'keyv'`
+Default: `undefined`
 
 Namespace for the current instance.
 
