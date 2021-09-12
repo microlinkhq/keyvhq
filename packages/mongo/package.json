@@ -2,7 +2,7 @@
   "name": "@keyvhq/mongo",
   "description": "MongoDB storage adapter for Keyv",
   "homepage": "https://keyv.js.org",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",

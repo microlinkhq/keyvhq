@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/microlinkhq/keyv/compare/v1.3.0...v1.4.0) (2021-09-12)
+
+
+### Bug Fixes
+
+* fixed namespacing bugs ([f14cd4f](https://github.com/microlinkhq/keyv/commit/f14cd4f1651fc866e96785dff0f33f807a1b8493))
+* namespace api ([fd07736](https://github.com/microlinkhq/keyv/commit/fd07736aee52c9bde9a81f075faa85c39d72cc51))
+
+
+
+
+
 # [1.3.0](https://github.com/microlinkhq/keyv/compare/v1.2.7...v1.3.0) (2021-09-01)
 
 
