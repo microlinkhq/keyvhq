@@ -3,7 +3,7 @@
 const test = require('ava')
 const delay = require('delay')
 
-const MultiCache = require('..')
+const KeyvMulti = require('..')
 const Keyv = require('@keyvhq/core')
 const KeyvSqlite = require('@keyvhq/keyv-sqlite')
 
@@ -19,14 +19,14 @@ const localStore = () => new Keyv()
 test.beforeEach(async () => {
   const remote = remoteStore()
   const local = localStore()
-  const store = new MultiCache(remote, local)
+  const store = new KeyvMulti({ remote, local })
   return store.clear()
 })
 
 test.serial('.set() sets to both stores', async t => {
   const remote = remoteStore()
   const local = localStore()
-  const store = new MultiCache(remote, local)
+  const store = new KeyvMulti({ remote, local })
 
   await store.set('foo', 'bar')
 
@@ -42,7 +42,7 @@ test.serial('.set() sets to both stores', async t => {
 test.serial('.has() returns boolean', async t => {
   const remote = remoteStore()
   const local = localStore()
-  const store = new MultiCache(remote, local)
+  const store = new KeyvMulti({ remote, local })
 
   await store.set('foo', 'bar')
 
@@ -51,7 +51,7 @@ test.serial('.has() returns boolean', async t => {
 
 test.serial('.has() checks both stores', async t => {
   const remote = remoteStore()
-  const store = new MultiCache(remote)
+  const store = new KeyvMulti({ remote })
 
   await remote.set('fizz', 'buzz')
 
@@ -61,7 +61,7 @@ test.serial('.has() checks both stores', async t => {
 test.serial('.delete() deletes both stores', async t => {
   const remote = remoteStore()
   const local = localStore()
-  const store = new MultiCache(remote, local)
+  const store = new KeyvMulti({ remote, local })
 
   await store.set('fizz', 'buzz')
   await store.delete('fizz')
@@ -76,7 +76,7 @@ test.serial(
   async t => {
     const remote = remoteStore()
     const local = localStore()
-    const store = new MultiCache(remote, local)
+    const store = new KeyvMulti({ remote, local })
 
     await store.set('fizz', 'buzz')
     await store.delete('fizz', { localOnly: true })
@@ -90,7 +90,7 @@ test.serial(
 test.serial('.clear() clears both stores', async t => {
   const remote = remoteStore()
   const local = localStore()
-  const store = new MultiCache(remote, local)
+  const store = new KeyvMulti({ remote, local })
 
   await store.set('fizz', 'buzz')
   await store.clear()
@@ -101,7 +101,7 @@ test.serial('.clear() clears both stores', async t => {
 test.serial('.clear({ localOnly: true }) clears local store alone', async t => {
   const remote = remoteStore()
   const local = localStore()
-  const store = new MultiCache(remote, local)
+  const store = new KeyvMulti({ remote, local })
 
   await store.set('fizz', 'buzz')
   await store.clear({ localOnly: true })
@@ -114,7 +114,7 @@ test.serial('.clear({ localOnly: true }) clears local store alone', async t => {
 test.serial('ttl is valid', async t => {
   const remote = remoteStore()
   const local = new Keyv({ ttl: 100 }) // set local ttl
-  const store = new MultiCache(remote, local)
+  const store = new KeyvMulti({ remote, local })
 
   await store.set('foo', 'bar')
   await remote.set('foo', 'notbar')
@@ -126,7 +126,9 @@ test.serial('ttl is valid', async t => {
 test.serial('custom validator', async t => {
   const remote = remoteStore()
   const local = new Keyv()
-  const store = new MultiCache(remote, local, {
+  const store = new KeyvMulti({
+    remote,
+    local,
     validator: val => {
       if (val.timeSensitiveData) return false // fetch from remote store only
       return true
