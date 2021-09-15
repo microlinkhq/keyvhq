@@ -2,7 +2,7 @@
   "name": "@keyvhq/multi",
   "description": "Layered cache with any backend",
   "homepage": "https://keyv.js.org",
-  "version": "1.2.7",
+  "version": "1.5.0",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
