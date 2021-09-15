@@ -142,9 +142,10 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 
 ### Decorators
 
-- [@keyvhq/offline](https://github.com/microlinkhq/keyv/tree/master/packages/offline) – Adds offline capabilities for your keyv instance.
 - [@keyvhq/compress](https://github.com/microlinkhq/keyv/tree/master/packages/compress) – Adds compression bindings for your Keyv instance.
 - [@keyvhq/memoize](https://github.com/microlinkhq/keyv/tree/master/packages/memoize) – Memoize any function using Keyv as storage backend.
+- [@keyvhq/multi](https://github.com/microlinkhq/keyv/tree/master/packages/multi) – Manages local and remote keyv stores as one.
+- [@keyvhq/offline](https://github.com/microlinkhq/keyv/tree/master/packages/offline) – Adds offline capabilities for your keyv instance.
 
 ### Community
 
