@@ -81,7 +81,6 @@ test.serial(
     await store.set('fizz', 'buzz')
     await store.delete('fizz', { localOnly: true })
 
-    t.is(await store.get('fizz'), 'buzz')
     t.is(await local.get('fizz'), undefined)
     t.is(await remote.get('fizz'), 'buzz')
   }
@@ -106,7 +105,6 @@ test.serial('.clear({ localOnly: true }) clears local store alone', async t => {
   await store.set('fizz', 'buzz')
   await store.clear({ localOnly: true })
 
-  t.is(await store.get('fizz'), 'buzz')
   t.is(await local.get('fizz'), undefined)
   t.is(await remote.get('fizz'), 'buzz')
 })
@@ -121,6 +119,17 @@ test.serial('ttl is valid', async t => {
 
   await delay(100)
   t.is(await store.get('foo'), 'notbar')
+})
+
+test.serial('copy locally when is possible', async t => {
+  const remote = remoteStore()
+  const local = new Keyv()
+  const store = new KeyvMulti({ remote, local })
+
+  await remote.set('foo', 'bar')
+
+  t.is(await store.get('foo'), 'bar')
+  t.is(await local.get('foo'), 'bar')
 })
 
 test.serial('custom validator', async t => {
