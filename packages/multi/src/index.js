@@ -34,9 +34,9 @@ class MultiCache {
     return res
   }
 
-  async set (key, value, ttl) {
+  async set (...args) {
     await Promise.all(
-      ['local', 'remote'].map(store => this[store].set(key, value, ttl))
+      ['local', 'remote'].map(store => this[store].set(...args))
     )
     return true
   }
