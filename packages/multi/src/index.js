@@ -20,9 +20,29 @@ class MultiCache {
 
   async get (...args) {
     let res = await this.local.get(...args)
+
     if (res === undefined || !this.validator(res, ...args)) {
-      res = await this.remote.get(...args)
+      const key = this.remote._getKeyPrefix(...args)
+
+      const raw = await this.remote.store.get(key)
+      const data = typeof raw === 'string' ? this.remote.deserialize(raw) : raw
+
+      const hasValue = data ? data.value !== undefined : false
+      const isFresh =
+        hasValue && typeof data.expires === 'number'
+          ? Date.now() <= data.expires
+          : true
+
+      if (hasValue && isFresh) {
+        res = data.value
+        await this.local.set(
+          this.remote._getKeyUnprefix(key),
+          data.value,
+          data.expires
+        )
+      }
     }
+
     return res
   }
 
