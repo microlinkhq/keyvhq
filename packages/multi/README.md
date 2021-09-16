@@ -5,7 +5,7 @@
 ## Install
 
 ```shell
-npm install --save keyv @keyvhq/multi
+npm install --save @keyvhq/multi
 ```
 
 ## Usage

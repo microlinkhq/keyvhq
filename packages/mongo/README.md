@@ -7,24 +7,33 @@ Uses TTL indexes to automatically remove expired documents. However [MongoDB doe
 ## Install
 
 ```shell
-npm install --save keyv @keyvhq/mongo
+npm install --save @keyvhq/core @keyvhq/mongo
 ```
 
 ## Usage
 
 ```js
+const KeyvMongo = require('@keyvhq/mongo')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname')
+const keyv = new Keyv({ 
+  store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')
+})
+
 keyv.on('error', handleConnectionError)
 ```
 
-You can specify the collection name, by default `'keyv'` is used.
-
-e.g:
+You can specify the collection name, by default `'keyv'` is used:
 
 ```js
-const keyv = new Keyv('mongodb://user:pass@localhost:27017/dbname', { collection: 'cache' })
+const KeyvMongo = require('@keyvhq/mongo')
+const Keyv = require('@keyvhq/core')
+
+const keyv = new Keyv({ 
+  store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname', {
+    collection: 'cache'
+  })
+})
 ```
 
 ## License

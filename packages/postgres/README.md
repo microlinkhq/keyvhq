@@ -7,24 +7,33 @@ Requires Postgres 9.5 or newer for `ON CONFLICT` support to allow performant ups
 ## Install
 
 ```shell
-npm install --save keyv @keyvhq/postgres
+npm install --save @keyvhq/core @keyvhq/postgres
 ```
 
 ## Usage
 
 ```js
+const KeyvPostgres = require('@keyvhq/postgres')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv('postgresql://user:pass@localhost:5432/dbname')
+const keyv = new Keyv({ 
+  store: new KeyvPostgres('postgresql://user:pass@localhost:5432/dbname')
+})
+
 keyv.on('error', handleConnectionError)
 ```
 
-You can specify the `table` option.
-
-e.g:
+You can specify the `table` option:
 
 ```js
-const keyv = new Keyv('postgresql://user:pass@localhost:5432/dbname', { table: 'cache' })
+const KeyvPostgres = require('@keyvhq/postgres')
+const Keyv = require('@keyvhq/core')
+
+const keyv = new Keyv({ 
+  store: new KeyvPostgres('postgresql://user:pass@localhost:5432/dbname', {
+    table: 'cache'
+  })
+})
 ```
 
 ## License

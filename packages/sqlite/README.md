@@ -5,26 +5,31 @@ SQLite storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 ## Install
 
 ```shell
-npm install --save keyv @keyvhq/sqlite
+npm install --save @keyvhq/core @keyvhq/sqlite
 ```
 
 ## Usage
 
 ```js
+const KeyvSqlite = require('@keyvhq/sqlite')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv('sqlite://path/to/database.sqlite')
-keyv.on('error', handleConnectionError)
+const keyv = new Keyv({ 
+  store: new KeyvSqlite('sqlite://path/to/database.sqlite')
+})
 ```
 
-You can specify the `table` and [`busyTimeout`](https://sqlite.org/c3ref/busy_timeout.html) option.
-
-e.g:
+You can specify the `table` and [`busyTimeout`](https://sqlite.org/c3ref/busy_timeout.html) option:
 
 ```js
-const keyv = new Keyv('sqlite://path/to/database.sqlite', {
-  table: 'cache',
-  busyTimeout: 10000
+const KeyvSqlite = require('@keyvhq/sqlite')
+const Keyv = require('@keyvhq/core')
+
+const keyv = new Keyv({ 
+  store: new KeyvSqlite('sqlite://path/to/database.sqlite', {
+    table: 'cache',
+    busyTimeout: 10000
+  })
 })
 ```
 
