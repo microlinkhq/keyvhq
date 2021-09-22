@@ -35,7 +35,7 @@ class MultiCache {
 
       if (hasValue && isFresh) {
         res = data.value
-        await this.local.set(
+        this.local.set(
           this.remote._getKeyUnprefix(key),
           data.value,
           data.expires
