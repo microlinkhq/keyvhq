@@ -6,7 +6,8 @@ class MultiCache {
   constructor ({ remote = new Keyv(), local = new Keyv(), ...options }) {
     const normalizedOptions = Object.assign(
       {
-        validator: () => true
+        validator: () => true,
+        bootstrap: () => undefined // [keys] or [[key, value]],
       },
       options
     )
@@ -16,6 +17,43 @@ class MultiCache {
     Object.keys(normalizedOptions).forEach(
       key => (this[key] = normalizedOptions[key])
     )
+    this.bootStrapPromise = new Promise((resolve, reject) => {
+      let valuesPromise = this.bootstrap(this)
+      if (!(valuesPromise instanceof Promise)) {
+        valuesPromise = Promise.resolve(valuesPromise)
+      }
+      valuesPromise.then(bootstrapValues => {
+        if (bootstrapValues instanceof Array) {
+          const promises = []
+          if (bootstrapValues[0] instanceof Array) {
+            promises.push(...bootstrapValues)
+          } else {
+            for (const key of bootstrapValues) {
+              // array of keys
+              promises.push([key, this.remote.get(key)])
+            }
+          }
+          Promise.all(promises.map(x => x[1])).then(values => {
+            const localPromises = []
+            values.forEach((value, i) => {
+              if (
+                !value ||
+                !promises[i] ||
+                !(promises[i] instanceof Array) ||
+                !promises[i][0]
+              ) {
+                return
+              }
+              const key = promises[i][0]
+              localPromises.push(this.local.set(key, value))
+            })
+            Promise.all(localPromises).then(resolve)
+          })
+        } else {
+          return resolve()
+        }
+      })
+    })
   }
 
   async get (...args) {

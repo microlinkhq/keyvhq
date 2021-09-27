@@ -156,3 +156,59 @@ test.serial('custom validator', async t => {
   t.deepEqual(await store.get('1'), { timeSensitiveData: 'foo1' })
   t.deepEqual(await store.get('2'), { timeSensitiveData: false })
 })
+
+test.serial('boostrap with keys', async t => {
+  const remote = remoteStore()
+  const local = localStore()
+
+  await remote.set('foo1', 'bar1')
+  await remote.set('foo2', 'bar2')
+  await remote.set('foo3', 'bar3')
+
+  const store = new KeyvMulti({
+    remote,
+    local,
+    bootstrap: () => ['foo1', 'foo2', 'foo3']
+  })
+
+  const values = await store.bootStrapPromise
+  if (!(values.every(Boolean) && values.length === 3)) {
+    t.fail('Some value failed to be set')
+  }
+
+  await remote.set('foo1', 'bar4') // remote has changes
+
+  t.is(await store.get('foo1'), 'bar1')
+  t.is(await store.get('foo2'), 'bar2')
+  t.is(await store.get('foo3'), 'bar3')
+})
+
+test.serial('bootstrap with keys & values', async t => {
+  const remote = remoteStore()
+  const local = localStore()
+
+  await remote.set('foo1', 'bar1')
+  await remote.set('foo2', 'bar2')
+  await remote.set('foo3', 'not')
+
+  const store = new KeyvMulti({
+    remote,
+    local,
+    bootstrap: function () {
+      // run custom queries here, get key value pairs
+      const arr = ['foo1', 'foo2', 'foo3'].map(async key => {
+        const value = await this.remote.get(key)
+        if (value.includes('bar')) return [key, value] // arbitary checking
+        return undefined
+      }) // remove undefined values
+      return Promise.all(arr).then(x => x.filter(Boolean))
+    }
+  })
+  await store.bootStrapPromise
+  await remote.set('foo1', 'bar3') // remote has changes, but local ttl has been bootstrapped
+  await remote.set('foo3', 'bar3') // remote has changes, local has not been bootstrapped with it
+
+  t.is(await store.get('foo1'), 'bar1')
+  t.is(await store.get('foo2'), 'bar2')
+  t.is(await store.get('foo3'), 'bar3')
+})
