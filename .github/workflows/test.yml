@@ -28,17 +28,11 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm'
     - name: Start Redis
       uses: supercharge/redis-github-action@1.2.0
       with:
         redis-version: 6
-#    - name: Start PostgreSQL
-#      uses: harmon758/postgresql-action@v1
-#      with:
-#        postgresql version: '11'
-#        postgresql password: postgres
-#        postgresql user: postgres
-#        postgresql db: keyv_test
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.6.0
       with:
