@@ -1,9 +1,8 @@
-import Keyv = require('keyv');
-import KeyvMysql = require('@keyv/mysql');
+import Keyv = require('@keyvhq/core');
+import KeyvMysql = require('..');
 
-new Keyv('mysql://user:pass@localhost:3306/dbname', { table: 'cache' });
+new Keyv({ store: new KeyvMysql({ uri: 'mysql://user:pass@localhost:3306/dbname', table: 'cache' }) });
 
-new KeyvMysql('mysql://user:pass@localhost:3306/dbname');
 new KeyvMysql({ uri: 'mysql://user:pass@localhost:3306/dbname' });
 new KeyvMysql({ table: 'cache' });
 new KeyvMysql({ keySize: 100 });

@@ -13,13 +13,6 @@ declare class Keyv<TValue = any> extends EventEmitter {
      * @param opts The options object is also passed through to the storage adapter. Check your storage adapter docs for any extra options.
      */
     constructor(opts?: Keyv.Options<TValue>);
-    /**
-     * @param uri The connection string URI.
-     *
-     * Merged into the options object as options.uri.
-     * @param opts The options object is also passed through to the storage adapter. Check your storage adapter docs for any extra options.
-     */
-    constructor(uri?: string, opts?: Keyv.Options<TValue>);
 
     /** Returns the value. */
     get<TRaw extends boolean = false>(key: string, options?: { raw?: TRaw }):
@@ -31,7 +24,7 @@ declare class Keyv<TValue = any> extends EventEmitter {
      *
      * By default keys are persistent. You can set an expiry TTL in milliseconds.
      */
-    set(key: string, value: TValue, ttl?: number): Promise<true>;
+    set(key: string, value: TValue, ttl?: number): Promise<boolean>;
     /**
      * Deletes an entry.
      *
@@ -40,6 +33,10 @@ declare class Keyv<TValue = any> extends EventEmitter {
     delete(key: string): Promise<boolean>;
     /** Delete all entries in the current namespace. */
     clear(): Promise<void>;
+    /**
+     * Yields an iterator with all the key, value entries in the namespace.
+     */
+    iterator(): AsyncIterator<[string, Keyv.DeserializedData<string>]>;
 }
 
 declare namespace Keyv {
@@ -50,16 +47,12 @@ declare namespace Keyv {
         serialize?: ((data: DeserializedData<TValue>) => string) | undefined;
         /** A custom deserialization function. */
         deserialize?: ((data: string) => DeserializedData<TValue> | undefined) | undefined;
-        /** The connection string URI. */
-        uri?: string | undefined;
         /** The storage adapter instance to be used by Keyv. */
-        store?: Store<TValue> | undefined;
+        store?: Store<TValue> | Map<string, string>;
         /** Default TTL. Can be overridden by specififying a TTL on `.set()`. */
         ttl?: number | undefined;
-        /** Specify an adapter to use. e.g `'redis'` or `'mongodb'`. */
-        adapter?: 'redis' | 'mongodb' | 'mongo' | 'sqlite' | 'postgresql' | 'postgres' | 'mysql' | undefined;
-
-        [key: string]: any;
+        /** Emit Errors on the keyv instance, defaults to true. */
+        emitErrors?: boolean | true;
     }
 
     interface DeserializedData<TValue> {
@@ -71,6 +64,7 @@ declare namespace Keyv {
         set(key: string, value: TValue, ttl?: number): any;
         delete(key: string): boolean | Promise<boolean>;
         clear(): void | Promise<void>;
+        iterator(): AsyncGenerator;
     }
 }
 

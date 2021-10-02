@@ -6,8 +6,9 @@
 
 /// <reference types="node" />
 
-import { Store } from 'keyv';
+import { Store } from '@keyvhq/core';
 import { EventEmitter } from 'events';
+import { MongoOptions } from 'mongodb';
 
 export = KeyvMongo;
 
@@ -17,17 +18,19 @@ declare class KeyvMongo<TValue> extends EventEmitter implements Store<TValue> {
 
     constructor(uri?: string);
     constructor(options?: KeyvMongo.Options); // tslint:disable-line:unified-signatures
+    constructor(uri?: string, options?: KeyvMongo.Options);
 
     get(key: string): Promise<TValue | undefined>;
     set(key: string, value: TValue, ttl?: number): Promise<any>;
     delete(key: string): Promise<boolean>;
     clear(): Promise<void>;
+    iterator(): AsyncGenerator
 }
 
 declare namespace KeyvMongo {
     interface Options {
         uri?: string | undefined;
-        url?: string | undefined;
         collection?: string | undefined;
+        mongoOptions?: MongoOptions | undefined;
     }
 }

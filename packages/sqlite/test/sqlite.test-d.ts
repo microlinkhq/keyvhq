@@ -1,7 +1,7 @@
-import Keyv = require('keyv');
-import KeyvSqlite = require('@keyv/sqlite');
+import Keyv = require('@keyvhq/core');
+import KeyvSqlite = require('..');
 
-new Keyv('sqlite://path/to/database.sqlite', { table: 'cache' });
+new Keyv({ store: new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite', table: 'cache' }) });
 
 new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite' });
 new KeyvSqlite({ busyTimeout: 10000 });

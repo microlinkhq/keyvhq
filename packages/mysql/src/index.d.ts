@@ -1,29 +1,31 @@
-// Type definitions for @keyv/postgres 1.0
-// Project: https://github.com/lukechilds/keyv-postgres
+// Type definitions for @keyv/mysql 1.1
+// Project: https://github.com/lukechilds/keyv-mysql
 // Definitions by: BendingBender <https://github.com/BendingBender>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.3
 
 /// <reference types="node" />
 
-import { Store } from 'keyv';
+import { Store } from '@keyvhq/core';
 import { EventEmitter } from 'events';
 
-export = KeyvPostgres;
+export = KeyvMysql;
 
-declare class KeyvPostgres extends EventEmitter implements Store<string | undefined> {
+declare class KeyvMysql extends EventEmitter implements Store<string | undefined> {
     readonly ttlSupport: false;
     namespace?: string | undefined;
 
-    constructor(options?: KeyvPostgres.Options);
+    constructor(uri?: string);
+    constructor(options?: KeyvMysql.Options); // tslint:disable-line:unified-signatures
 
     get(key: string): Promise<string | undefined>;
     set(key: string, value: string | undefined): Promise<any>;
     delete(key: string): Promise<boolean>;
     clear(): Promise<void>;
+    iterator(): AsyncGenerator
 }
 
-declare namespace KeyvPostgres {
+declare namespace KeyvMysql {
     interface Options {
         uri?: string | undefined;
         table?: string | undefined;

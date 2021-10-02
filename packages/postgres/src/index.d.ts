@@ -1,32 +1,32 @@
-// Type definitions for @keyv/sqlite 2.0
-// Project: https://github.com/lukechilds/keyv-sqlite
+// Type definitions for @keyv/postgres 1.0
+// Project: https://github.com/lukechilds/keyv-postgres
 // Definitions by: BendingBender <https://github.com/BendingBender>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.3
 
 /// <reference types="node" />
 
-import { Store } from 'keyv';
+import { Store } from '@keyvhq/core';
 import { EventEmitter } from 'events';
 
-export = KeyvSqlite;
+export = KeyvPostgres;
 
-declare class KeyvSqlite extends EventEmitter implements Store<string | undefined> {
+declare class KeyvPostgres extends EventEmitter implements Store<string | undefined> {
     readonly ttlSupport: false;
     namespace?: string | undefined;
 
-    constructor(options?: KeyvSqlite.Options);
+    constructor(options?: KeyvPostgres.Options);
 
     get(key: string): Promise<string | undefined>;
     set(key: string, value: string | undefined): Promise<any>;
     delete(key: string): Promise<boolean>;
     clear(): Promise<void>;
+    iterator(): AsyncGenerator
 }
 
-declare namespace KeyvSqlite {
+declare namespace KeyvPostgres {
     interface Options {
         uri?: string | undefined;
-        busyTimeout?: number | undefined;
         table?: string | undefined;
         keySize?: number | undefined;
     }

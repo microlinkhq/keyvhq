@@ -31,7 +31,9 @@
     "@keyvhq/test-suite": "latest",
     "ava": "latest",
     "nyc": "latest",
-    "timekeeper": "latest"
+    "timekeeper": "latest",
+    "tsd": "^0.17.0",
+    "typescript": "^4.4.3"
   },
   "engines": {
     "node": ">= 12"
@@ -40,10 +42,14 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc ava"
+    "test": "nyc ava && tsd"
   },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "tsd": {
+    "directory": "test"
+  },
+  "types": "./src/index.d.ts"
 }

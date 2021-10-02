@@ -6,8 +6,8 @@
 
 /// <reference types="node" />
 
-import { Store } from 'keyv';
-import { ClientOpts } from 'redis';
+import { Store } from '@keyvhq/core';
+import ioredis from 'ioredis';
 import { EventEmitter } from 'events';
 
 export = KeyvRedis;
@@ -23,10 +23,13 @@ declare class KeyvRedis extends EventEmitter implements Store<string | undefined
     set(key: string, value: string | undefined, ttl?: number): Promise<number>;
     delete(key: string): Promise<boolean>;
     clear(): Promise<void>;
+    iterator(): AsyncGenerator
 }
 
 declare namespace KeyvRedis {
-    interface Options extends ClientOpts {
+    interface Options {
         uri?: string | undefined;
+        emitErrors?: boolean | true;
+        redisOptions?: ioredis.RedisOptions;
     }
 }
