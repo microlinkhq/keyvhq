@@ -18,7 +18,7 @@ class KeyvRedis extends EventEmitter {
         typeof uri === 'string' ? { uri } : uri,
         options
       )
-      this.redis = new Redis(options.uri, options.redisOptions)
+      this.redis = new Redis(options.uri, options)
     }
 
     if (options && options.emitErrors !== false) {

@@ -27,9 +27,8 @@ declare class KeyvRedis extends EventEmitter implements Store<string | undefined
 }
 
 declare namespace KeyvRedis {
-    interface Options {
+    interface Options extends ioredis.RedisOptions {
         uri?: string | undefined;
         emitErrors?: boolean | true;
-        redisOptions?: ioredis.RedisOptions;
     }
 }
