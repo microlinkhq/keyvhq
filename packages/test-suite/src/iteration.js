@@ -88,9 +88,9 @@ const keyvIteratorTests = (test, Keyv, store) => {
       }
 
       await Promise.all(toResolve)
-      await delay(200)
+      await delay(250)
       for await (const entry of keyv.iterator()) {
-        t.fail('Found an expired value', entry)
+        t.fail('Found an expired value' + entry)
       }
       t.pass()
     }
