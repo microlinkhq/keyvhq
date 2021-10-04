@@ -32,8 +32,8 @@
     "ava": "latest",
     "nyc": "latest",
     "timekeeper": "latest",
-    "tsd": "^0.17.0",
-    "typescript": "^4.4.3"
+    "tsd": "latest",
+    "typescript": "latest"
   },
   "engines": {
     "node": ">= 12"
