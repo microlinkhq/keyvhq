@@ -28,15 +28,13 @@
     "ttl",
     "value"
   ],
-  "dependencies": {
-    "pify": "~5.0.0",
-    "sqlite3": "~5.0.2"
-  },
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
     "ava": "latest",
-    "nyc": "latest"
+    "nyc": "latest",
+    "pify": "^5.0.0",
+    "sqlite3": "^5.0.2"
   },
   "engines": {
     "node": ">= 12"

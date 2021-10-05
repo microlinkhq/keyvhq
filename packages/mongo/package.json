@@ -37,7 +37,9 @@
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
     "ava": "latest",
-    "nyc": "latest"
+    "nyc": "latest",
+    "tsd": "latest",
+    "typescript": "latest"
   },
   "engines": {
     "node": ">= 12"
@@ -45,11 +47,15 @@
   "files": [
     "src"
   ],
+  "types": "./src/index.d.ts",
   "scripts": {
-    "test": "nyc ava"
+    "test": "nyc ava && tsd"
   },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "tsd": {
+    "directory": "test"
   }
 }

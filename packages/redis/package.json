@@ -35,8 +35,11 @@
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
+    "@types/ioredis": "^4.27.5",
     "ava": "latest",
-    "nyc": "latest"
+    "nyc": "latest",
+    "tsd": "latest",
+    "typescript": "latest"
   },
   "engines": {
     "node": ">= 12"
@@ -44,13 +47,17 @@
   "files": [
     "src"
   ],
+  "types": "./src/index.d.ts",
   "scripts": {
     "posttest:docker": "docker-compose down --rmi local",
-    "test": "nyc ava",
+    "test": "nyc ava && tsd",
     "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
   },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "tsd": {
+    "directory": "test"
   }
 }
