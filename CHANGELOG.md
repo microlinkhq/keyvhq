@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/microlinkhq/keyv/compare/v1.5.2...v1.6.0) (2021-10-05)
+
+
+### Bug Fixes
+
+* **test:** increased timeout for iterator resolving ([1a51f3e](https://github.com/microlinkhq/keyv/commit/1a51f3e90a1112f0cdb83c2c23f959517e8b0f82))
+
+
+### Features
+
+* **node:** v13 ([#40927](https://github.com/microlinkhq/keyv/issues/40927)) ([c70b1d8](https://github.com/microlinkhq/keyv/commit/c70b1d8c0a682fe9f45747a556ab8ea489964a09))
+
+
+
+
+
 ## [1.5.2](https://github.com/microlinkhq/keyv/compare/v1.5.1...v1.5.2) (2021-09-22)
 
 **Note:** Version bump only for package @keyvhq/monorepo
