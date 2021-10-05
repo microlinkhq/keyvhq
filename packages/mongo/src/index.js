@@ -4,6 +4,7 @@ const EventEmitter = require('events')
 const mongodb = require('mongodb')
 const pify = require('pify')
 
+const keyvMongoKeys = ['url', 'collection', 'emitErrors']
 class KeyvMongo extends EventEmitter {
   constructor (url, options) {
     super()
@@ -21,25 +22,21 @@ class KeyvMongo extends EventEmitter {
       {
         url: 'mongodb://127.0.0.1:27017',
         collection: 'keyv',
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
         emitErrors: true
       },
       url,
       options
     )
 
-    this.options.mongoOptions = Object.assign(
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      },
-      this.options.mongoOptions
-    )
-
-    try {
-      this.client = new mongodb.MongoClient(
-        this.options.url,
-        this.options.mongoOptions
+    const mongoOptions = Object.fromEntries(
+      Object.entries(this.options).filter(
+        ([k, v]) => !keyvMongoKeys.includes(k)
       )
+    )
+    try {
+      this.client = new mongodb.MongoClient(this.options.url, mongoOptions)
     } catch (error) {
       if (this.options.emitErrors) this.emit('error', error)
     }

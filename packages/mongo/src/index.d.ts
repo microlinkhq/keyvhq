@@ -8,7 +8,7 @@
 
 import { Store } from '@keyvhq/core';
 import { EventEmitter } from 'events';
-import { MongoOptions } from 'mongodb';
+import { MongoClientOptions } from 'mongodb';
 
 export = KeyvMongo;
 
@@ -17,7 +17,7 @@ declare class KeyvMongo<TValue> extends EventEmitter implements Store<TValue> {
     namespace?: string | undefined;
 
     constructor(uri?: string);
-    constructor(options?: KeyvMongo.Options); // tslint:disable-line:unified-signatures
+    constructor(options?: KeyvMongo.Options);
     constructor(uri?: string, options?: KeyvMongo.Options);
 
     get(key: string): Promise<TValue | undefined>;
@@ -28,9 +28,8 @@ declare class KeyvMongo<TValue> extends EventEmitter implements Store<TValue> {
 }
 
 declare namespace KeyvMongo {
-    interface Options {
+    interface Options extends MongoClientOptions {
         uri?: string | undefined;
         collection?: string | undefined;
-        mongoOptions?: MongoOptions | undefined;
     }
 }
