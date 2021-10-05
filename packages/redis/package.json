@@ -47,7 +47,6 @@
   "files": [
     "src"
   ],
-  "types": "./src/index.d.ts",
   "scripts": {
     "posttest:docker": "docker-compose down --rmi local",
     "test": "nyc ava && tsd",
@@ -59,5 +58,6 @@
   },
   "tsd": {
     "directory": "test"
-  }
+  },
+  "types": "./src/index.d.ts"
 }

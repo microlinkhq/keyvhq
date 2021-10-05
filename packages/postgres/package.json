@@ -48,7 +48,6 @@
   "files": [
     "src"
   ],
-  "types": "./src/index.d.ts",
   "scripts": {
     "test": "nyc ava --serial && tsd"
   },
@@ -58,5 +57,6 @@
   },
   "tsd": {
     "directory": "test"
-  }
+  },
+  "types": "./src/index.d.ts"
 }
