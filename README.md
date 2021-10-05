@@ -248,11 +248,13 @@ Delete all entries in the current namespace.
 
 Returns a promise which is resolved when the entries have been cleared.
 
-When calling clear(), on a keyv instance with no namespace, nothing is done.
+When calling clear(), on a keyv instance with no namespace, all keys are cleared.
 
 #### .iterator()
 
-Returns an [Async Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator), which iterates over all the keys in the namespace.
+Returns an [Async Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator), which iterates over all the key-value pairs in the namespace. When called without a namespace, it iterates over *all* entries in the database.
+
+> The iterator shouldn't be used in environments where performance is key, or there are more than 1000 entries in the database, use an ORM or a native driver if you need to iterate over all entries.
 
 ## License
 
