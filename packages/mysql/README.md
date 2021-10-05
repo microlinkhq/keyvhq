@@ -5,26 +5,33 @@
 ## Install
 
 ```shell
-npm install --save keyv @keyvhq/mysql
+npm install --save @keyvhq/core @keyvhq/mysql
 ```
 
 ## Usage
 
 ```js
+const KeyvMysql = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname')
+const keyv = new Keyv({ 
+  store: new KeyvMysql('mysql://user:pass@localhost:3306/dbname')
+})
+
 keyv.on('error', handleConnectionError)
 ```
 
-You can specify a custom table with the `table` option and the primary key size with `keySize`.
-
-e.g:
+You can specify a custom table with the `table` option and the primary key size with `keySize`:
 
 ```js
-const keyv = new Keyv('mysql://user:pass@localhost:3306/dbname', {
-  table: 'cache',
-  keySize: 255
+const KeyvMysql = require('@keyvhq/redis')
+const Keyv = require('@keyvhq/core')
+
+const keyv = new Keyv({ 
+  store: new KeyvMysql('mysql://user:pass@localhost:3306/dbname', {
+    table: 'cache',
+    keySize: 255
+  })
 })
 ```
 

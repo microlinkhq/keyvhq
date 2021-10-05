@@ -5,7 +5,7 @@
 ## Install
 
 ```shell
-npm install --save keyv @keyvhq/memoize
+npm install --save @keyvhq/memoize
 ```
 
 ## Usage

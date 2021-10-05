@@ -1,8 +1,8 @@
 {
-  "name": "@keyvhq/mongo",
-  "description": "MongoDB storage adapter for Keyv",
+  "name": "@keyvhq/multi",
+  "description": "Layered cache with any backend",
   "homepage": "https://keyv.js.org",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -10,7 +10,7 @@
     "url": "https://microlink.io"
   },
   "repository": {
-    "directory": "packages/mongo",
+    "directory": "packages/memo",
     "type": "git",
     "url": "git+https://github.com/microlinkhq/keyv.git"
   },
@@ -18,28 +18,22 @@
     "url": "https://github.com/microlinkhq/keyv/issues"
   },
   "keywords": [
-    "adapter",
     "cache",
     "key",
-    "keyv",
-    "mongo",
-    "mongodb",
-    "storage",
+    "multicache",
+    "multilevel",
     "store",
     "ttl",
     "value"
   ],
   "dependencies": {
-    "mongodb": "~4.1.1",
-    "pify": "~5.0.0"
+    "@keyvhq/core": "~1.2.6"
   },
   "devDependencies": {
-    "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
+    "@keyvhq/keyv-sqlite": "latest",
     "ava": "latest",
-    "nyc": "latest",
-    "tsd": "latest",
-    "typescript": "latest"
+    "delay": "latest",
+    "nyc": "latest"
   },
   "engines": {
     "node": ">= 12"
@@ -47,15 +41,11 @@
   "files": [
     "src"
   ],
-  "types": "./src/index.d.ts",
   "scripts": {
-    "test": "nyc ava && tsd"
+    "test": "nyc ava"
   },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
-  },
-  "tsd": {
-    "directory": "test"
   }
 }

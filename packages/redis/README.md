@@ -7,37 +7,36 @@ TTL functionality is handled directly by Redis so no timestamps are stored and e
 ## Install
 
 ```shell
-npm install --save keyv @keyvhq/redis
+npm install --save @keyvhq/core @keyvhq/redis
 ```
 
 ## Usage
 
 ```js
+const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv('redis://user:pass@localhost:6379')
+const keyv = new Keyv({ 
+  store: new KeyvRedis('redis://user:pass@localhost:6379')
+})
+
 keyv.on('error', handleConnectionError)
 ```
 
-Any valid [`Redis`](https://github.com/luin/ioredis#connect-to-redis) options will be passed directly through.
-
-e.g:
-
-```js
-const keyv = new Keyv('redis://user:pass@localhost:6379', { disable_resubscribing: true })
-```
-
-Or you can manually create a storage adapter instance and pass it to Keyv:
+Any valid [`Redis`](https://github.com/luin/ioredis#connect-to-redis) options will be passed directly through:
 
 ```js
 const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
-const keyvRedis = new KeyvRedis('redis://user:pass@localhost:6379')
-const keyv = new Keyv({ store: keyvRedis })
+const keyv = new Keyv({ 
+  store: new KeyvRedis('redis://user:pass@localhost:6379', {
+    disable_resubscribing: true
+  })
+})
 ```
 
-Or reuse a previous Redis instance:
+Or you can reuse a previously declared Redis instance:
 
 ```js
 const KeyvRedis = require('@keyvhq/redis')
@@ -45,8 +44,7 @@ const Keyv = require('@keyvhq/core')
 const Redis = require('ioredis')
 
 const redis = new Redis('redis://user:pass@localhost:6379')
-const keyvRedis = new KeyvRedis(redis)
-const keyv = new Keyv({ store: keyvRedis })
+const keyv = new Keyv({ store: new KeyvRedis(redis) })
 ```
 
 ## License

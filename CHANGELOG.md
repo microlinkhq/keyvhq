@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](https://github.com/microlinkhq/keyv/compare/v1.5.1...v1.5.2) (2021-09-22)
+
+**Note:** Version bump only for package @keyvhq/monorepo
+
+
+
+
+
+## [1.5.1](https://github.com/microlinkhq/keyv/compare/v1.5.0...v1.5.1) (2021-09-16)
+
+**Note:** Version bump only for package @keyvhq/monorepo
+
+
+
+
+
+# [1.5.0](https://github.com/microlinkhq/keyv/compare/v1.4.0...v1.5.0) (2021-09-15)
+
+
+### Bug Fixes
+
+* **test:** t.fail instead of t.throw ([98b9551](https://github.com/microlinkhq/keyv/commit/98b955140930d25814041ca3237bc005b7824c64))
+
+
+### Features
+
+* multicache ([2defb17](https://github.com/microlinkhq/keyv/commit/2defb17149af82bfdc8f87119c15431e59873e8c))
+
+
+### Performance Improvements
+
+* do parallel when is possible ([fed8ded](https://github.com/microlinkhq/keyv/commit/fed8dedf5d022fd51bbe556bff65e2962141a0c0))
+
+
+
+
+
 # [1.4.0](https://github.com/microlinkhq/keyv/compare/v1.3.0...v1.4.0) (2021-09-12)
 
 

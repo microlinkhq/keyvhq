@@ -12,7 +12,9 @@ class KeyvRedis extends EventEmitter {
       this.redis = uri
     } else {
       options = Object.assign(
-        {},
+        {
+          emitErrors: true
+        },
         typeof uri === 'string' ? { uri } : uri,
         options
       )
