@@ -27,7 +27,7 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/core": "~1.2.6"
+    "@keyvhq/core": "~1.6.0"
   },
   "devDependencies": {
     "@keyvhq/keyv-sqlite": "latest",
