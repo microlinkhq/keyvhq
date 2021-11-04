@@ -30,7 +30,7 @@
   ],
   "dependencies": {
     "ioredis": "~4.28.0",
-    "p-event": "~4.2.0"
+    "p-event": "~5.0.1"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
