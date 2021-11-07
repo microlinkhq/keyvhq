@@ -67,6 +67,7 @@ class KeyvCFKV extends EventEmitter {
   async iterator (namespace) {
     return this.iterate(namespace)
   }
+
   async * iterate (namespace, fetchKeysOnly = false) {
     const limit = this.iteratorSize
     const baseUrl = this.baseUrl
@@ -79,7 +80,7 @@ class KeyvCFKV extends EventEmitter {
         limit
       })
 
-      const { result, result_info } = await fetchJSON(
+      const { result, result_info: resultInfo } = await fetchJSON(
         baseUrl.replace('values/', 'keys'),
         {
           headers,
@@ -87,7 +88,7 @@ class KeyvCFKV extends EventEmitter {
         }
       )
 
-      cursor = result_info.cursor
+      cursor = resultInfo.cursor
       if (!result.length) return
       const keys = result.map(x => x.name)
       if (!fetchKeysOnly) {
