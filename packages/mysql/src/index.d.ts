@@ -19,6 +19,7 @@ declare class KeyvMysql extends EventEmitter implements Store<string | undefined
     constructor(options?: KeyvMysql.Options); // tslint:disable-line:unified-signatures
 
     get(key: string): Promise<string | undefined>;
+    has(key: string): Promise<boolean>;
     set(key: string, value: string | undefined): Promise<any>;
     delete(key: string): Promise<boolean>;
     clear(): Promise<void>;
