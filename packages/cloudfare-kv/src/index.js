@@ -1,9 +1,8 @@
 'use strict'
 
-const fetch = import('node-fetch').then(mod => mod.default)
+const fetch = require('isomorphic-fetch')
 const { EventEmitter } = require('events')
-const fetchJSON = (...args) =>
-  fetch.then(fetch => fetch(...args).then(x => x.json()))
+const fetchJSON = (...args) => fetch(...args).then(x => x.json())
 
 class KeyvCFKV extends EventEmitter {
   constructor (options = {}) {
@@ -57,21 +56,18 @@ class KeyvCFKV extends EventEmitter {
 
   async clear (namespace) {
     const keys = []
-    for await (const key of this.iterate(namespace, true)) {
+    for await (const key of this.iterator(namespace, true)) {
       keys.push(this.delete(key))
     }
     await Promise.all(keys)
     return true
   }
 
-  async iterator (namespace) {
-    return this.iterate(namespace)
-  }
-
-  async * iterate (namespace, fetchKeysOnly = false) {
+  async * iterator (namespace, fetchKeysOnly = false) {
     const limit = this.iteratorSize
     const baseUrl = this.baseUrl
     const headers = this.headers
+    const get = this.get
 
     async function * generator (prefix, cursor) {
       const searchParams = new URLSearchParams({
@@ -80,22 +76,20 @@ class KeyvCFKV extends EventEmitter {
         limit
       })
 
-      const { result, result_info: resultInfo } = await fetchJSON(
-        baseUrl.replace('values/', 'keys'),
-        {
-          headers,
-          searchParams
-        }
-      )
+      const response = await fetchJSON(baseUrl.replace('values/', 'keys'), {
+        headers,
+        searchParams
+      })
+      const result = response.result
+      cursor = response.result_info && response.result_info.cursor
 
-      cursor = resultInfo.cursor
-      if (!result.length) return
+      if (!result || !result.length) return
       const keys = result.map(x => x.name)
       if (!fetchKeysOnly) {
         for (const i in keys) {
           if (Object.prototype.hasOwnProperty.call(keys, i)) {
             const key = keys[i]
-            const value = await this.get(key)
+            const value = await get(key)
             yield [key, value]
           }
         }
@@ -112,7 +106,6 @@ class KeyvCFKV extends EventEmitter {
         yield * generator(prefix, cursor)
       }
     }
-
     yield * generator(`${namespace ? namespace + ':' : ''}`)
   }
 }

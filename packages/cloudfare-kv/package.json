@@ -15,7 +15,6 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
-    "got": "^11.8.2",
-    "node-fetch": "^3.0.0"
+    "isomorphic-fetch": "^3.0.0"
   }
 }
