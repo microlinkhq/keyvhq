@@ -18,6 +18,7 @@ declare class KeyvPostgres extends EventEmitter implements Store<string | undefi
     constructor(options?: KeyvPostgres.Options);
 
     get(key: string): Promise<string | undefined>;
+    has(key: string): Promise<boolean>;
     set(key: string, value: string | undefined): Promise<any>;
     delete(key: string): Promise<boolean>;
     clear(): Promise<void>;

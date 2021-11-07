@@ -20,6 +20,7 @@ declare class KeyvRedis extends EventEmitter implements Store<string | undefined
     constructor(uri: string, options?: KeyvRedis.Options);
 
     get(key: string): Promise<string | undefined>;
+    has(key: string): Promise<boolean>;
     set(key: string, value: string | undefined, ttl?: number): Promise<number>;
     delete(key: string): Promise<boolean>;
     clear(): Promise<void>;

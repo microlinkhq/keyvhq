@@ -18,7 +18,9 @@ declare class Keyv<TValue = any> extends EventEmitter {
     get<TRaw extends boolean = false>(key: string, options?: { raw?: TRaw }):
       Promise<(TRaw extends false
         ? TValue
-        : Keyv.DeserializedData<TValue>)  | undefined>;
+          : Keyv.DeserializedData<TValue>) | undefined>;
+    /** Returns `true` if the key existed, `false` if not. */
+    has(key: string): Promise<boolean>
     /**
      * Set a value.
      *
@@ -61,6 +63,7 @@ declare namespace Keyv {
 
     interface Store<TValue> {
         get(key: string): TValue | Promise<TValue | undefined> | undefined;
+        has(key: string): Promise<boolean>;
         set(key: string, value: TValue, ttl?: number): any;
         delete(key: string): boolean | Promise<boolean>;
         clear(): void | Promise<void>;
