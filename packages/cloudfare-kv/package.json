@@ -1,0 +1,21 @@
+{
+  "name": "@keyvhq/cloudfare-kv",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "nyc ava"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@keyvhq/core": "^1.6.0",
+    "@keyvhq/test-suite": "^1.6.0",
+    "ava": "^3.15.0",
+    "nyc": "^15.1.0"
+  },
+  "dependencies": {
+    "got": "^11.8.2",
+    "node-fetch": "^3.0.0"
+  }
+}
