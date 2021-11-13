@@ -6,7 +6,7 @@ const test = require('ava')
 
 const KeyvCFKV = require('..')
 
-const { 
+const {
   CLOUDFLARE_KEY: key,
   CLOUDFLARE_EMAIL: email,
   CLOUDFLARE_ACCOUNT_ID: accountId,
