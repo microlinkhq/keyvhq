@@ -10,7 +10,7 @@ const {
   CLOUDFLARE_KEY: key,
   CLOUDFLARE_EMAIL: email,
   CLOUDFLARE_ACCOUNT_ID: accountId,
-  CLOUDFLARE_ACCOUNT_ID: namespaceId
+  CLOUDFLARE_NAMESPACE_ID: namespaceId
 } = process.env
 
 const store = () => new KeyvCFKV({ key, email, accountId, namespaceId })
