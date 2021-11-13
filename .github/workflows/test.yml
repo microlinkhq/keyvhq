@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x, 17.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     env:
       MYSQL_DB_DATABASE: keyv_test
@@ -63,6 +63,11 @@ jobs:
         pg_isready
     - run: npm install --no-package-lock
     - run: npm test
+      env:
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
+        CLOUDFLARE_KEY: ${{ secrets.CLOUDFLARE_KEY }}
+        CLOUDFLARE_NAMESPACE_ID: ${{ secrets.CLOUDFLARE_NAMESPACE_ID }}
     - name: Coverage
       run: npm run coverage
     - name: Upload
