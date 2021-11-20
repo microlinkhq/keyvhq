@@ -30,7 +30,7 @@ class KeyvCFKV extends EventEmitter {
   async get (key) {
     return fetchJSON(this.baseUrl + encodeURIComponent(key), {
       headers: this.headers
-    }).then(x => x.result || false)
+    })
   }
 
   async set (key, value, ttl) {
@@ -67,7 +67,7 @@ class KeyvCFKV extends EventEmitter {
     const limit = this.iteratorSize
     const baseUrl = this.baseUrl
     const headers = this.headers
-    const get = this.get
+    const get = this.get.bind(this)
 
     async function * generator (prefix, cursor) {
       const searchParams = new URLSearchParams({
