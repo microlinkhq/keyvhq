@@ -65,7 +65,6 @@ jobs:
     - run: npm test
       env:
         CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
         CLOUDFLARE_KEY: ${{ secrets.CLOUDFLARE_KEY }}
         CLOUDFLARE_NAMESPACE_ID: ${{ secrets.CLOUDFLARE_NAMESPACE_ID }}
     - name: Coverage
