@@ -8,11 +8,10 @@ const KeyvCFKV = require('..')
 
 const {
   CLOUDFLARE_KEY: key,
-  CLOUDFLARE_EMAIL: email,
   CLOUDFLARE_ACCOUNT_ID: accountId,
   CLOUDFLARE_NAMESPACE_ID: namespaceId
 } = process.env
 
-const store = () => new KeyvCFKV({ key, email, accountId, namespaceId })
+const store = () => new KeyvCFKV({ key, accountId, namespaceId })
 
 keyvTestSuite(test, Keyv, store)

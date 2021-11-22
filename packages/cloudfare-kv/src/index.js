@@ -4,17 +4,16 @@ const fetch = require('isomorphic-fetch')
 const { EventEmitter } = require('events')
 const fetchJSON = (...args) => fetch(...args).then(x => x.json())
 
+const authentication = ({ email, key }) =>
+  email
+    ? { 'X-Auth-Email': email, 'X-Auth-Key': key }
+    : { Authorization: `Bearer ${key}` }
+
 class KeyvCFKV extends EventEmitter {
   constructor (options = {}) {
     super()
 
-    options.headers = Object.assign(
-      {
-        'X-Auth-Key': options.key,
-        'X-Auth-Email': options.email
-      },
-      options.headers
-    )
+    options.headers = Object.assign(authentication(options), options.headers)
     options = Object.assign(
       {
         emitErrors: true,
