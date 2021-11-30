@@ -1,6 +1,5 @@
-'use strict'
-
 const EventEmitter = require('events')
+const { Sql } = require('sql-ts')
 class KeyvSql extends EventEmitter {
   constructor (options) {
     super()
@@ -16,10 +15,26 @@ class KeyvSql extends EventEmitter {
       options
     )
 
-    const createTable =
-      this.options.dialect === 'mysql'
-        ? `CREATE TABLE IF NOT EXISTS \`${this.options.table}\` (\`key\` VARCHAR(${this.options.keySize}) PRIMARY KEY, \`value\` TEXT)`
-        : `CREATE TABLE IF NOT EXISTS "${this.options.table}" ("key" VARCHAR(${this.options.keySize}) PRIMARY KEY, "value" TEXT)`
+    const sql = new Sql(options.dialect)
+
+    this.entry = sql.define({
+      name: this.options.table,
+      columns: [
+        {
+          name: 'key',
+          primaryKey: true,
+          dataType: `VARCHAR(${Number(this.options.keySize)})`
+        },
+        {
+          name: 'value',
+          dataType: 'TEXT'
+        }
+      ]
+    })
+    const createTable = this.entry
+      .create()
+      .ifNotExists()
+      .toString()
 
     const connected = this.options
       .connect()
@@ -29,15 +44,14 @@ class KeyvSql extends EventEmitter {
           this.emit('error', error)
         }
       })
-
     this.query = sqlString => connected.then(query => query(sqlString))
   }
 
   get (key) {
-    const select =
-      this.options.dialect === 'mysql'
-        ? `SELECT \`${this.options.table}\`.* FROM \`${this.options.table}\` WHERE (\`${this.options.table}\`.\`key\` = '${key}')`
-        : `SELECT "${this.options.table}".* FROM "${this.options.table}" WHERE ("${this.options.table}"."key" = '${key}')`
+    const select = this.entry
+      .select()
+      .where({ key })
+      .toString()
     return this.query(select).then(rows => {
       const row = rows[0]
       if (row === undefined) {
@@ -55,23 +69,24 @@ class KeyvSql extends EventEmitter {
 
     const upsert =
       this.options.dialect === 'postgres'
-        ? `INSERT INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}') ON CONFLICT ("key") DO UPDATE SET "value" = EXCLUDED."value"`
-        : this.options.dialect === 'mysql'
-          ? `REPLACE INTO \`${this.options.table}\` (\`key\`, \`value\`) VALUES ('${key}', '${value}')`
-          : `REPLACE INTO "${this.options.table}" ("key", "value") VALUES ('${key}', '${value}')`
-
+        ? this.entry
+            .insert({ key, value })
+            .onConflict({ columns: ['key'], update: ['value'] })
+            .toString()
+        : this.entry.replace({ key, value }).toString()
     return this.query(upsert)
   }
 
   delete (key) {
-    const select =
-      this.options.dialect === 'mysql'
-        ? `SELECT \`${this.options.table}\`.* FROM \`${this.options.table}\` WHERE (\`${this.options.table}\`.\`key\` = '${key}')`
-        : `SELECT "${this.options.table}".* FROM "${this.options.table}" WHERE ("${this.options.table}"."key" = '${key}')`
-    const del =
-      this.options.dialect === 'mysql'
-        ? `DELETE FROM \`${this.options.table}\` WHERE (\`${this.options.table}\`.\`key\` = '${key}')`
-        : `DELETE FROM "${this.options.table}" WHERE ("${this.options.table}"."key" = '${key}')`
+    if (!key) return false
+    const select = this.entry
+      .select()
+      .where({ key })
+      .toString()
+    const del = this.entry
+      .delete()
+      .where({ key })
+      .toString()
     return this.query(select).then(rows => {
       const row = rows[0]
       if (row === undefined) {
@@ -83,34 +98,23 @@ class KeyvSql extends EventEmitter {
   }
 
   clear (namespace) {
-    const del =
-      this.options.dialect === 'mysql'
-        ? `DELETE FROM \`${this.options.table}\` WHERE (\`${
-            this.options.table
-          }\`.\`key\` LIKE '${namespace ? namespace + ':' : ''}%')`
-        : `DELETE FROM "${this.options.table}" WHERE ("${
-            this.options.table
-          }"."key" LIKE '${namespace ? namespace + ':' : ''}%')`
+    const del = this.entry
+      .delete(this.entry.key.like(`${namespace ? namespace + ':' : ''}%`))
+      .toString()
     return this.query(del).then(() => undefined)
   }
 
   async * iterator (namespace) {
     const limit = Number.parseInt(this.options.iterationLimit, 10)
-    const selectChunk =
-      this.options.dialect === 'mysql'
-        ? `SELECT * FROM \`${this.options.table}\` WHERE (\`${
-            this.options.table
-          }\`.\`key\` LIKE '${
-            namespace ? namespace + ':' : ''
-          }%') LIMIT ${limit} OFFSET `
-        : `SELECT * FROM "${this.options.table}" WHERE ("${
-            this.options.table
-          }"."key" LIKE '${
-            namespace ? namespace + ':' : ''
-          }%') LIMIT ${limit} OFFSET `
-
+    const entry = this.entry
     async function * iterate (offset, query) {
-      const entries = await query(selectChunk + offset)
+      const selectChunk = entry
+        .select()
+        .where(entry.key.like(`${namespace ? namespace + ':' : ''}%`))
+        .limit(limit)
+        .offset(offset)
+        .toString()
+      const entries = await query(selectChunk)
       if (entries.length === 0) {
         return
       }
@@ -128,4 +132,5 @@ class KeyvSql extends EventEmitter {
     yield * iterate(0, this.query)
   }
 }
+
 module.exports = KeyvSql

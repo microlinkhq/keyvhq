@@ -28,6 +28,10 @@
     "ttl",
     "value"
   ],
+  "dependencies": {
+    "fix-esm": "^1.0.1",
+    "sql-ts": "5"
+  },
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
