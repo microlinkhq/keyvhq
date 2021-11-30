@@ -35,4 +35,5 @@ class TestSqlite extends KeyvSql {
 }
 
 const store = () => new TestSqlite()
+
 keyvTestSuite(test, Keyv, store)
