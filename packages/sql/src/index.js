@@ -1,5 +1,5 @@
 const EventEmitter = require('events')
-const { Sql } = require('fix-esm').require('sql-ts')
+const { Sql } = require('sql-ts')
 class KeyvSql extends EventEmitter {
   constructor (options) {
     super()
