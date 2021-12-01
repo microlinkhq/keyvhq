@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.3](https://github.com/microlinkhq/keyv/compare/v1.6.2...v1.6.3) (2021-12-01)
+
+**Note:** Version bump only for package @keyvhq/sql
+
+
+
+
+
 # [1.6.0](https://github.com/microlinkhq/keyv/compare/v1.5.2...v1.6.0) (2021-10-05)
 
 **Note:** Version bump only for package @keyvhq/sql

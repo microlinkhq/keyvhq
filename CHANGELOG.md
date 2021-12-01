@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.3](https://github.com/microlinkhq/keyv/compare/v1.6.2...v1.6.3) (2021-12-01)
+
+
+### Bug Fixes
+
+* removed dupe titles ([273cd62](https://github.com/microlinkhq/keyv/commit/273cd6218417b9e131ad5393deb884ab1aaec7fa))
+
+
+
+
+
 ## [1.6.2](https://github.com/microlinkhq/keyv/compare/v1.6.1...v1.6.2) (2021-11-08)
 
 **Note:** Version bump only for package @keyvhq/monorepo
