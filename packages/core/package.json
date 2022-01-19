@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@keyvhq/test-suite": "latest",
-    "ava": "latest",
+    "ava": "3",
     "nyc": "latest",
     "timekeeper": "latest",
     "tsd": "latest",
