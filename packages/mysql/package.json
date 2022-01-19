@@ -37,7 +37,7 @@
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
-    "ava": "latest",
+    "ava": "3",
     "nyc": "latest",
     "tsd": "latest",
     "typescript": "latest"
