@@ -219,7 +219,7 @@
     ]
   },
   "nano-staged": {
-    "*.js": [
+    "*.[js,ts]": [
       "prettier-standard"
     ],
     "package.json": [

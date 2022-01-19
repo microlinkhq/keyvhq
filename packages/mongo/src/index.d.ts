@@ -4,33 +4,31 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.3
 
-/// <reference types="node" />
-
-import { Store } from '@keyvhq/core';
-import { EventEmitter } from 'events';
-import { MongoClientOptions } from 'mongodb';
-
-export = KeyvMongo;
+import { Store } from '@keyvhq/core'
+import { EventEmitter } from 'events'
+import { MongoClientOptions } from 'mongodb'
 
 declare class KeyvMongo<TValue> extends EventEmitter implements Store<TValue> {
-    readonly ttlSupport: false;
-    namespace?: string | undefined;
+  readonly ttlSupport: false
+  namespace?: string | undefined
 
-    constructor(uri?: string);
-    constructor(options?: KeyvMongo.Options);
-    constructor(uri?: string, options?: KeyvMongo.Options);
+  constructor (uri?: string);
+  constructor (options?: KeyvMongo.Options);
+  constructor (uri?: string, options?: KeyvMongo.Options);
 
-    get(key: string): Promise<TValue | undefined>;
-    has(key: string): Promise<boolean>;
-    set(key: string, value: TValue, ttl?: number): Promise<any>;
-    delete(key: string): Promise<boolean>;
-    clear(): Promise<void>;
-    iterator(): AsyncGenerator
+  get (key: string): Promise<TValue | undefined>;
+  has (key: string): Promise<boolean>;
+  set (key: string, value: TValue, ttl?: number): Promise<any>;
+  delete (key: string): Promise<boolean>;
+  clear (): Promise<void>;
+  iterator (): AsyncGenerator
 }
 
 declare namespace KeyvMongo {
-    interface Options extends MongoClientOptions {
-        uri?: string | undefined;
-        collection?: string | undefined;
-    }
+  interface Options extends MongoClientOptions {
+    uri?: string | undefined
+    collection?: string | undefined
+  }
 }
+
+export = KeyvMongo

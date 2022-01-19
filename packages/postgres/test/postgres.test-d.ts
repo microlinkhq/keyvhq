@@ -1,11 +1,15 @@
-import Keyv = require('@keyvhq/core');
-import KeyvPostgres = require('..');
+/* eslint-disable no-new */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 
-new Keyv({ store: new KeyvPostgres({ uri: 'postgres://user:pass@localhost:5432/dbname', table: 'cache' }) });
+import Keyv = require('@keyvhq/core')
+import KeyvPostgres = require('..')
 
-new KeyvPostgres({ uri: 'postgres://user:pass@localhost:5432/dbname' });
-new KeyvPostgres({ table: 'cache' });
-new KeyvPostgres({ keySize: 100 });
+new Keyv({ store: new KeyvPostgres({ uri: 'postgres://user:pass@localhost:5432/dbname', table: 'cache' }) })
 
-const postgres = new KeyvPostgres({ uri: 'postgres://user:pass@localhost:5432/dbname' });
-new Keyv({ store: postgres });
+new KeyvPostgres({ uri: 'postgres://user:pass@localhost:5432/dbname' })
+new KeyvPostgres({ table: 'cache' })
+new KeyvPostgres({ keySize: 100 })
+
+const postgres = new KeyvPostgres({ uri: 'postgres://user:pass@localhost:5432/dbname' })
+new Keyv({ store: postgres })

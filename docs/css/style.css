@@ -1,4 +1,4 @@
-@import url("https://rsms.me/inter/inter-ui.css");
+@import url('https://rsms.me/inter/inter-ui.css');
 
 :root {
   /* colors */
@@ -30,9 +30,9 @@
   --sidebar-border-color: #5f6368;
   --bg-color: var(--base);
 
-  --serif-font: "IBM Plex Sans", sans-serif;
-  --sans-serif-font: "IBM Plex Sans", sans-serif;
-  --code-font: Nitti, "Microsoft YaHei", "Roboto Mono", 微软雅黑, monospace;
+  --serif-font: 'IBM Plex Sans', sans-serif;
+  --sans-serif-font: 'IBM Plex Sans', sans-serif;
+  --code-font: Nitti, 'Microsoft YaHei', 'Roboto Mono', 微软雅黑, monospace;
 
   --codebox-border-color: var(--text-color);
   --codebox-color: var(--text-color);
@@ -234,12 +234,12 @@ body.sticky .sidebar-toggle {
   position: relative;
 }
 
-.markdown-section>* {
+.markdown-section > * {
   box-sizing: border-box;
   font-size: inherit;
 }
 
-.markdown-section> :first-child {
+.markdown-section > :first-child {
   margin-top: 0 !important;
 }
 
@@ -257,7 +257,7 @@ body.sticky .sidebar-toggle {
   background-color: var(--accent-color);
   border-radius: 100%;
   color: #fff;
-  content: "!";
+  content: '!';
   font-family: Dosis, Source Sans Pro, Helvetica Neue, Arial, sans-serif;
   font-size: 14px;
   font-weight: 700;
@@ -271,7 +271,6 @@ body.sticky .sidebar-toggle {
 }
 
 @media print {
-
   .github-corner,
   .sidebar,
   .sidebar-toggle {
@@ -280,7 +279,6 @@ body.sticky .sidebar-toggle {
 }
 
 @media screen and (max-width: 768px) {
-
   .github-corner,
   .sidebar,
   .sidebar-toggle {
@@ -324,7 +322,6 @@ body.sticky .sidebar-toggle {
 }
 
 @keyframes a {
-
   0%,
   to {
     transform: rotate(0);
@@ -369,7 +366,7 @@ body {
   text-decoration: underline;
 }
 
-.sidebar ul li.active>a {
+.sidebar ul li.active > a {
   border-right: 2px solid;
   color: var(--sidebar-active-color);
   font-weight: 700;
@@ -501,12 +498,12 @@ body {
 }
 
 .markdown-section pre,
-.markdown-section pre>code {
+.markdown-section pre > code {
   -moz-osx-font-smoothing: initial;
   -webkit-font-smoothing: initial;
 }
 
-.markdown-section pre>code {
+.markdown-section pre > code {
   background-color: var(--codebox-bg);
   border-radius: 2px;
   color: var(--codebox-token-var-color);

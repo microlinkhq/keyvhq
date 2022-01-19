@@ -4,32 +4,30 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.3
 
-/// <reference types="node" />
-
-import { Store } from '@keyvhq/core';
-import { EventEmitter } from 'events';
-
-export = KeyvSqlite;
+import { Store } from '@keyvhq/core'
+import { EventEmitter } from 'events'
 
 declare class KeyvSqlite extends EventEmitter implements Store<string | undefined> {
-    readonly ttlSupport: false;
-    namespace?: string | undefined;
+  readonly ttlSupport: false
+  namespace?: string | undefined
 
-    constructor(options?: KeyvSqlite.Options);
+  constructor (options?: KeyvSqlite.Options);
 
-    get(key: string): Promise<string | undefined>;
-    has(key: string): Promise<boolean>;
-    set(key: string, value: string | undefined): Promise<any>;
-    delete(key: string): Promise<boolean>;
-    clear(): Promise<void>;
-    iterator(): AsyncGenerator
+  get (key: string): Promise<string | undefined>;
+  has (key: string): Promise<boolean>;
+  set (key: string, value: string | undefined): Promise<any>;
+  delete (key: string): Promise<boolean>;
+  clear (): Promise<void>;
+  iterator (): AsyncGenerator
 }
 
 declare namespace KeyvSqlite {
-    interface Options {
-        uri?: string | undefined;
-        busyTimeout?: number | undefined;
-        table?: string | undefined;
-        keySize?: number | undefined;
-    }
+  interface Options {
+    uri?: string | undefined
+    busyTimeout?: number | undefined
+    table?: string | undefined
+    keySize?: number | undefined
+  }
 }
+
+export = KeyvSqlite

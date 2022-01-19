@@ -1,12 +1,16 @@
-import Keyv = require('@keyvhq/core');
-import KeyvMongo = require('..');
+/* eslint-disable no-new */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 
-new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname', { collection: 'cache' }) });
+import Keyv = require('@keyvhq/core')
+import KeyvMongo = require('..')
 
-new KeyvMongo({ uri: 'mongodb://user:pass@localhost:27017/dbname' });
-new KeyvMongo({ uri: 'mongodb://user:pass@localhost:27017/dbname', collection: 'cache' });
-new KeyvMongo({ collection: 'cache' });
-new KeyvMongo('mongodb://user:pass@localhost:27017/dbname');
+new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname', { collection: 'cache' }) })
 
-const mongo = new KeyvMongo('mongodb://user:pass@localhost:27017/dbname');
-new Keyv({ store: mongo });
+new KeyvMongo({ uri: 'mongodb://user:pass@localhost:27017/dbname' })
+new KeyvMongo({ uri: 'mongodb://user:pass@localhost:27017/dbname', collection: 'cache' })
+new KeyvMongo({ collection: 'cache' })
+new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')
+
+const mongo = new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')
+new Keyv({ store: mongo })

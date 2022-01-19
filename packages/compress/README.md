@@ -13,7 +13,6 @@ $ npm install @keyvhq/compress --save
 All you need to do is to wrap your [keyv](https://keyv.js.org) instance:
 
 ```js
-
 const KeyvRedis = require('@keyvhq/redis')
 
 const keyv = new KeyvRedis({
@@ -29,24 +28,29 @@ Using `@keyvhq/compress` at the top level:
 const KeyvCompress = require('@keyvhq/compress')
 const KeyvRedis = require('@keyvhq/redis')
 
-const keyv = KeyvCompress(new KeyvRedis({
-  uri: 'redis://user:pass@localhost:6379',
-  maxRetriesPerRequest: 1,
-  emitErrors: false
-}))
+const keyv = KeyvCompress(
+  new KeyvRedis({
+    uri: 'redis://user:pass@localhost:6379',
+    maxRetriesPerRequest: 1,
+    emitErrors: false
+  })
+)
 ```
 
 Additionally, it can accept [compress-brotli#options](https://github.com/Kikobeats/compress-brotli#compressbrotlioptions) as second argument:
 
 ```js
-const keyv = KeyvCompress(new KeyvRedis({
-  uri: 'redis://user:pass@localhost:6379',
-  maxRetriesPerRequest: 1,
-  emitErrors: false
-}), {
-  serialize: v8.serialize,
-  deserialize: v8.deserialize
-})
+const keyv = KeyvCompress(
+  new KeyvRedis({
+    uri: 'redis://user:pass@localhost:6379',
+    maxRetriesPerRequest: 1,
+    emitErrors: false
+  }),
+  {
+    serialize: v8.serialize,
+    deserialize: v8.deserialize
+  }
+)
 ```
 
 ## License
