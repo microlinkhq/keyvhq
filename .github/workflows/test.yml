@@ -61,10 +61,14 @@ jobs:
         sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
         sudo systemctl restart postgresql.service
         pg_isready
-    - run: npm install --no-package-lock
-    - run: npm test
+    - name: Setup PNPM
+      uses: pnpm/action-setup@v2.0.1
+      with:
+        version: 6.24.4
+        run_install: true
+    - run: pnpm test
     - name: Coverage
-      run: npm run coverage
+      run: pnpm coverage
     - name: Upload
       uses: coverallsapp/github-action@master
       with:

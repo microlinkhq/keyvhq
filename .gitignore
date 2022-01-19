@@ -9,6 +9,12 @@ package-lock.json
 #yarn
 yarn.lock
 
+#pnpm 
+pnpm-lock.yaml
+
+#turbo
+.turbo
+
 # Logs
 logs
 *.log
