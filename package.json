@@ -199,7 +199,7 @@
   ],
   "scripts": {
     "build": "gulp build",
-    "clean": "lerna clean && rm -rf node_modules",
+    "clean": "pnpm exec \"rimraf\" node_modules && rimraf node_modules",
     "contributors": "(pnpm -r exec finepack --parallel && git-authors-cli && finepack && echo \"git add package.json && git commit -m 'build: contributors' --no-verify\") || true",
     "coverage": "node scripts/merge-reports && mkdir -p coverage && nyc report --reporter=text-lcov > coverage/lcov.info",
     "dev": "concurrently \"gulp\" \"npm run dev:server\"",
