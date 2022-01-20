@@ -31,7 +31,7 @@
     "mimic-fn": "~3.0.0"
   },
   "devDependencies": {
-    "ava": "3",
+    "ava": "latest",
     "delay": "latest",
     "nyc": "latest"
   },
