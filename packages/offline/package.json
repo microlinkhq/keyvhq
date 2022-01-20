@@ -34,7 +34,7 @@
     "@aws-sdk/client-s3": "latest",
     "@keyvhq/core": "latest",
     "@keyvhq/redis": "latest",
-    "ava": "3",
+    "ava": "4",
     "delay": "latest",
     "keyv-s3": "latest",
     "nyc": "latest"

@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
-    "ava": "3",
+    "ava": "4",
     "delay": "latest",
     "nyc": "latest"
   },
