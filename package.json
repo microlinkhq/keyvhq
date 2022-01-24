@@ -186,8 +186,10 @@
     "npm-check-updates": "latest",
     "nyc": "latest",
     "prettier-standard": "latest",
+    "rimraf": "latest",
     "simple-git-hooks": "latest",
-    "standard": "latest"
+    "standard": "latest",
+    "turbo": "latest"
   },
   "engines": {
     "node": ">= 12"
@@ -197,21 +199,20 @@
   ],
   "scripts": {
     "build": "gulp build",
-    "clean": "lerna clean --yes && rm -rf node_modules",
-    "contributors": "(lerna exec finepack --parallel && git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
+    "clean": "pnpm exec rm --rf node_modules && rm --rf node_modules",
+    "contributors": "(pnpm -r exec finepack --parallel && git-authors-cli && finepack && echo \"git add package.json && git commit -m 'build: contributors' --no-verify\") || true",
     "coverage": "node scripts/merge-reports && mkdir -p coverage && nyc report --reporter=text-lcov > coverage/lcov.info",
     "dev": "concurrently \"gulp\" \"npm run dev:server\"",
     "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
-    "install": "lerna bootstrap --no-ci --force-local",
     "lint": "standard",
-    "prerelease": "npm run contributors",
-    "pretest": "npm run lint",
+    "prerelease": "contributors",
+    "pretest": "lint",
     "release": "lerna publish --yes --sort --conventional-commits -m \"chore(release): %s\" --create-release github",
-    "test": "lerna run test",
-    "update": "lerna exec ncu -- --upgrade && ncu -- --upgrade",
-    "update:check": "lerna exec ncu -- --errorLevel 2 && ncu -- --errorLevel 2"
+    "test": "turbo run test",
+    "update": "pnpm -r exec ncu -- --upgrade && ncu -- --upgrade",
+    "update:check": "pnpm -r exec ncu -- --errorLevel 2 && ncu -- --errorLevel 2"
   },
-  "private": "true",
+  "private": true,
   "license": "MIT",
   "commitlint": {
     "extends": [
@@ -232,5 +233,15 @@
   "simple-git-hooks": {
     "commit-msg": "npx commitlint --edit",
     "pre-commit": "npx nano-staged"
+  },
+  "turbo": {
+    "pipeline": {
+      "lint": {
+        "outputs": []
+      },
+      "test": {
+        "outputs": []
+      }
+    }
   }
 }

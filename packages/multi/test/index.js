@@ -5,7 +5,7 @@ const delay = require('delay')
 
 const KeyvMulti = require('..')
 const Keyv = require('@keyvhq/core')
-const KeyvSqlite = require('@keyvhq/keyv-sqlite')
+const KeyvSqlite = require('@keyvhq/sqlite')
 
 const remoteStore = () =>
   new Keyv({
