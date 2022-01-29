@@ -111,7 +111,7 @@ test('should not cache error', async t => {
   t.is(called, 2)
 })
 
-test('should return fresh result', async t => {
+test.serial('should return fresh result', async t => {
   const keyv = new Keyv()
 
   let called = 0
