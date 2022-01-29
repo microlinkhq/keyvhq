@@ -188,7 +188,7 @@
     "prettier-standard": "latest",
     "rimraf": "latest",
     "simple-git-hooks": "latest",
-    "standard": "latest",
+    "ts-standard": "latest",
     "turbo": "latest"
   },
   "engines": {

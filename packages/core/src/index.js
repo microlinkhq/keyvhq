@@ -66,9 +66,9 @@ class Keyv extends EventEmitter {
   _getKeyUnprefix (key) {
     return this.namespace
       ? key
-          .split(':')
-          .splice(1)
-          .join(':')
+        .split(':')
+        .splice(1)
+        .join(':')
       : key
   }
 
