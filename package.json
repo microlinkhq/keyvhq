@@ -206,7 +206,7 @@
     "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
     "lint": "standard",
     "prerelease": "contributors",
-    "pretest": "lint",
+    "pretest": "npm run lint",
     "release": "lerna publish --yes --sort --conventional-commits -m \"chore(release): %s\" --create-release github",
     "test": "turbo run test",
     "update": "pnpm -r exec ncu -- --upgrade && ncu -- --upgrade",
@@ -227,21 +227,12 @@
       "finepack"
     ]
   },
+  "packageManager": "pnpm@6.28.0",
   "publishConfig": {
     "access": "public"
   },
   "simple-git-hooks": {
     "commit-msg": "npx commitlint --edit",
     "pre-commit": "npx nano-staged"
-  },
-  "turbo": {
-    "pipeline": {
-      "lint": {
-        "outputs": []
-      },
-      "test": {
-        "outputs": []
-      }
-    }
   }
 }

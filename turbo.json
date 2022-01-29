@@ -1,0 +1,10 @@
+{
+  "pipeline": {
+    "lint": {
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    }
+  }
+}
