@@ -9,7 +9,6 @@ new Keyv({ namespace: 'redis' })
 new Keyv({ ttl: 123 })
 new Keyv({
   serialize: (d) => {
-    expectType<number>(d.value)
     expectType<number | null>(d.expires)
     return JSON.stringify(d)
   }
