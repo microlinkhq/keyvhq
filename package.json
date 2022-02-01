@@ -228,6 +228,11 @@
     ]
   },
   "packageManager": "pnpm@6.28.0",
+  "pnpm": {
+    "overrides": {
+      "prettierx": "~0.19.0"
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
