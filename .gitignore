@@ -12,8 +12,6 @@ yarn.lock
 #pnpm 
 pnpm-lock.yaml
 
-#turbo
-.turbo
 
 # Logs
 logs
