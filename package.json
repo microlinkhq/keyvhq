@@ -185,7 +185,6 @@
     "nano-staged": "latest",
     "npm-check-updates": "latest",
     "nyc": "latest",
-    "prettier-standard": "latest",
     "rimraf": "latest",
     "simple-git-hooks": "latest",
     "ts-standard": "latest",
@@ -221,18 +220,13 @@
   },
   "nano-staged": {
     "*.{js,ts}": [
-      "prettier-standard"
+      "ts-standard"
     ],
     "package.json": [
       "finepack"
     ]
   },
   "packageManager": "pnpm@6.28.0",
-  "pnpm": {
-    "overrides": {
-      "prettierx": "~0.19.0"
-    }
-  },
   "publishConfig": {
     "access": "public"
   },
