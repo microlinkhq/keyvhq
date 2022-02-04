@@ -1,12 +1,16 @@
-import Keyv = require('@keyvhq/core');
-import KeyvSqlite = require('..');
+/* eslint-disable no-new */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 
-new Keyv({ store: new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite', table: 'cache' }) });
+import Keyv = require('@keyvhq/core')
+import KeyvSqlite = require('..')
 
-new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite' });
-new KeyvSqlite({ busyTimeout: 10000 });
-new KeyvSqlite({ table: 'cache' });
-new KeyvSqlite({ keySize: 100 });
+new Keyv({ store: new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite', table: 'cache' }) })
 
-const sqlite = new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite' });
-new Keyv({ store: sqlite });
+new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite' })
+new KeyvSqlite({ busyTimeout: 10000 })
+new KeyvSqlite({ table: 'cache' })
+new KeyvSqlite({ keySize: 100 })
+
+const sqlite = new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite' })
+new Keyv({ store: sqlite })

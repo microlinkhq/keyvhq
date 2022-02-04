@@ -185,10 +185,9 @@
     "nano-staged": "latest",
     "npm-check-updates": "latest",
     "nyc": "latest",
-    "prettier-standard": "latest",
     "rimraf": "latest",
     "simple-git-hooks": "latest",
-    "standard": "latest",
+    "ts-standard": "latest",
     "turbo": "latest"
   },
   "engines": {
@@ -204,8 +203,8 @@
     "coverage": "node scripts/merge-reports && mkdir -p coverage && nyc report --reporter=text-lcov > coverage/lcov.info",
     "dev": "concurrently \"gulp\" \"npm run dev:server\"",
     "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
-    "lint": "standard",
-    "prerelease": "contributors",
+    "lint": "ts-standard --fix",
+    "prerelease": "npm run contributors",
     "pretest": "npm run lint",
     "release": "lerna publish --yes --sort --conventional-commits -m \"chore(release): %s\" --create-release github",
     "test": "turbo run test",
@@ -220,8 +219,8 @@
     ]
   },
   "nano-staged": {
-    "*.js": [
-      "prettier-standard"
+    "*.{js,ts}": [
+      "ts-standard"
     ],
     "package.json": [
       "finepack"
