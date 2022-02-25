@@ -36,8 +36,7 @@
     "@keyvhq/redis": "latest",
     "ava": "latest",
     "delay": "latest",
-    "keyv-s3": "latest",
-    "nyc": "latest"
+    "keyv-s3": "latest"
   },
   "engines": {
     "node": ">= 12"
@@ -46,7 +45,7 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc ava"
+    "test": "ava"
   },
   "license": "MIT",
   "publishConfig": {

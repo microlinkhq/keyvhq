@@ -35,9 +35,8 @@
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
-    "@types/ioredis": "^4.27.7",
+    "@types/ioredis": "latest",
     "ava": "latest",
-    "nyc": "latest",
     "tsd": "latest",
     "typescript": "latest"
   },
@@ -49,7 +48,7 @@
   ],
   "scripts": {
     "posttest:docker": "docker-compose down --rmi local",
-    "test": "nyc ava && tsd",
+    "test": "ava && tsd",
     "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
   },
   "license": "MIT",

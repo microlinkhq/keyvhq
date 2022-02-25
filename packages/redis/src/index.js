@@ -32,9 +32,7 @@ class KeyvRedis extends EventEmitter {
   }
 
   async set (key, value, ttl) {
-    return typeof ttl === 'number'
-      ? this.redis.set(key, value, 'PX', ttl)
-      : this.redis.set(key, value)
+    return typeof ttl === 'number' ? this.redis.set(key, value, 'PX', ttl) : this.redis.set(key, value)
   }
 
   async delete (key) {

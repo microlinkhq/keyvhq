@@ -58,18 +58,11 @@ class Keyv extends EventEmitter {
   }
 
   _getKeyPrefix (key) {
-    return this.namespace
-      ? `${this.namespace}:${key}`
-      : (key && key.toString()) || key
+    return this.namespace ? `${this.namespace}:${key}` : (key && key.toString()) || key
   }
 
   _getKeyUnprefix (key) {
-    return this.namespace
-      ? key
-        .split(':')
-        .splice(1)
-        .join(':')
-      : key
+    return this.namespace ? key.split(':').splice(1).join(':') : key
   }
 
   async get (key, { raw: asRaw = false } = {}) {
@@ -87,9 +80,7 @@ class Keyv extends EventEmitter {
   }
 
   async has (key) {
-    return typeof this.store.has === 'function'
-      ? this.store.has(this._getKeyPrefix(key))
-      : (await this.store.get(this._getKeyPrefix(key))) !== undefined
+    return typeof this.store.has === 'function' ? this.store.has(this._getKeyPrefix(key)) : (await this.store.get(this._getKeyPrefix(key))) !== undefined
   }
 
   async set (key, value, ttl) {

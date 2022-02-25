@@ -37,7 +37,6 @@
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
     "ava": "latest",
-    "nyc": "latest",
     "tsd": "latest",
     "typescript": "latest"
   },
@@ -48,7 +47,7 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc ava && tsd"
+    "test": "ava && tsd"
   },
   "license": "MIT",
   "publishConfig": {
