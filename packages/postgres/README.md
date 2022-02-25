@@ -35,7 +35,8 @@ const KeyvPostgres = require('@keyvhq/postgres')
 const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv({ 
-  store: new KeyvPostgres('postgresql://user:pass@localhost:5432/dbname', {
+  store: new KeyvPostgres({
+    uri: 'postgresql://user:pass@localhost:5432/dbname',
     table: 'cache'
   })
 })

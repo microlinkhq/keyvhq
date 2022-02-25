@@ -50,8 +50,8 @@ Just create a new **Keyv** instance, using an specific storage adapter:
 const keyv = new Keyv() // in-memory, by default
 const keyvRedis = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379')})
 const keyvMongo = new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')})
-const keyvSQLite = new Keyv({ store: new KeyvSQLite('sqlite://path/to/database.sqlite')})
-const keyvPostgreSQL = new Keyv({ store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')})
+const keyvSQLite = new Keyv({ store: new KeyvSQLite({ uri: 'sqlite://path/to/database.sqlite' })})
+const keyvPostgreSQL = new Keyv({ store: new KeyvPostgreSQL({ uri: 'postgresql://user:pass@localhost:5432/dbname' })})
 const keyvMySQL = new Keyv({ store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')})
 
 // Handle database connection errors
