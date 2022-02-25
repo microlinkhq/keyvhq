@@ -35,7 +35,7 @@
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
-    "@types/ioredis": "^4.27.7",
+    "@types/ioredis": "latest",
     "ava": "latest",
     "tsd": "latest",
     "typescript": "latest"

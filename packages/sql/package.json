@@ -29,15 +29,14 @@
     "value"
   ],
   "dependencies": {
-    "fix-esm": "^1.0.1",
     "sql-ts": "5"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
     "ava": "latest",
-    "pify": "^5.0.0",
-    "sqlite3": "^5.0.2"
+    "pify": "latest",
+    "sqlite3": "latest"
   },
   "engines": {
     "node": ">= 12"
