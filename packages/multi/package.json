@@ -32,8 +32,7 @@
   "devDependencies": {
     "@keyvhq/sqlite": "latest",
     "ava": "latest",
-    "delay": "latest",
-    "nyc": "latest"
+    "delay": "latest"
   },
   "engines": {
     "node": ">= 12"
@@ -42,7 +41,7 @@
     "src"
   ],
   "scripts": {
-    "test": "nyc ava"
+    "test": "ava"
   },
   "license": "MIT",
   "publishConfig": {

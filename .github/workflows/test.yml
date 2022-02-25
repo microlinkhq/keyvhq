@@ -2,16 +2,15 @@ name: test
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 env:
   CI: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,53 +22,53 @@ jobs:
       MYSQL_DB_USER: root
       MYSQL_DB_PASSWORD: root
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Start Redis
-      uses: supercharge/redis-github-action@1.4.0
-      with:
-        redis-version: 6
-#    - name: Start PostgreSQL
-#      uses: harmon758/postgresql-action@v1
-#      with:
-#        postgresql version: '11'
-#        postgresql password: postgres
-#        postgresql user: postgres
-#        postgresql db: keyv_test
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.7.0
-      with:
-        mongodb-version: 4.4
-    - name: Start MySQL
-      run: |
-        sudo /etc/init.d/mysql start
-        mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
-        mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.4.0
+        with:
+          redis-version: 6
+      #    - name: Start PostgreSQL
+      #      uses: harmon758/postgresql-action@v1
+      #      with:
+      #        postgresql version: '11'
+      #        postgresql password: postgres
+      #        postgresql user: postgres
+      #        postgresql db: keyv_test
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: 4.4
+      - name: Start MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+          mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
 
-    - name: Start PostgreSQL on Ubuntu
-      run: |
-        sudo systemctl start postgresql.service
-        pg_isready
+      - name: Start PostgreSQL on Ubuntu
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
 
-    - name: Setup PostgreSQL for ava tests
-      run: |
-        sudo -u postgres psql --command="alter system set max_connections = 300;"
-        sudo -u postgres psql --command="CREATE DATABASE keyv_test;"
-        sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
-        sudo systemctl restart postgresql.service
-        pg_isready
-    - name: Setup PNPM
-      uses: pnpm/action-setup@v2
-      with:
-        version: latest
-        run_install: true
-    - run: pnpm test
-    - name: Coverage
-      run: pnpm coverage
-    - name: Upload
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup PostgreSQL for ava tests
+        run: |
+          sudo -u postgres psql --command="alter system set max_connections = 300;"
+          sudo -u postgres psql --command="CREATE DATABASE keyv_test;"
+          sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
+          sudo systemctl restart postgresql.service
+          pg_isready
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+          run_install: true
+      - run: pnpm test
+      - name: Report
+        run: mkdir -p coverage && npx c8 report --reporter=text-lcov > coverage/lcov.info
+      - name: Coverage
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
