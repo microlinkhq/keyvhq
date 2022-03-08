@@ -36,6 +36,11 @@ const keyv = new Keyv({
 })
 ```
 
+```
+NOTE:
+The mongo adapter deviates from the adapter in terms of uri options, you need to specify url instead of uri when passing the DB URL in the options 
+```
+
 ## License
 
 **@keyvhq/mongo** © [Luke Childs](https://lukechilds.co), Released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br/>

@@ -5,12 +5,21 @@ const sqlite3 = require('sqlite3')
 const pify = require('pify')
 
 class KeyvSqlite extends KeyvSql {
-  constructor (options) {
+  constructor (uri, options) {
+    uri = uri || {}
+    if (typeof uri === 'string') {
+      uri = { uri }
+    }
+
+    if (uri.uri) {
+      uri = Object.assign({ uri: uri.uri }, uri)
+    }
     options = Object.assign(
       {
         dialect: 'sqlite',
         uri: 'sqlite://:memory:'
       },
+      uri,
       options
     )
     options.db = options.uri.replace(/^sqlite:\/\//, '')
