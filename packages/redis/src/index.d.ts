@@ -13,6 +13,7 @@ declare class KeyvRedis extends EventEmitter implements Store<string | undefined
   namespace?: string | undefined
 
   constructor (options?: KeyvRedis.Options);
+  constructor (options?: KeyvRedis.Options);
   constructor (uri: string, options?: KeyvRedis.Options);
 
   get (key: string): Promise<string | undefined>;

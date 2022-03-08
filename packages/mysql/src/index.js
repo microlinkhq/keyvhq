@@ -19,6 +19,7 @@ class KeyvMysql extends KeyvSql {
         dialect: 'mysql',
         uri: 'mysql://localhost'
       },
+      uri,
       options
     )
 
