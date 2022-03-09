@@ -12,6 +12,8 @@ npm install --save @keyvhq/core @keyvhq/mongo
 
 ## Usage
 
+> **NOTE**: The mongo uses `url` instead of `uri` to provide the connection string details.
+
 ```js
 const KeyvMongo = require('@keyvhq/mongo')
 const Keyv = require('@keyvhq/core')
@@ -34,11 +36,6 @@ const keyv = new Keyv({
     collection: 'cache'
   })
 })
-```
-
-```
-NOTE:
-The mongo adapter deviates from the adapter in terms of uri options, you need to specify url instead of uri when passing the DB URL in the options 
 ```
 
 ## License
