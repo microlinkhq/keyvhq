@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.5](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.5) (2022-03-09)
+
+
+### Bug Fixes
+
+* changed all adapter apis to support (uri, option) ([f78a5dd](https://github.com/microlinkhq/keyv/commit/f78a5dd26ebcb2661d99c61328fbd92d9c462149))
+
+
+
+
+
 ## [1.6.3](https://github.com/microlinkhq/keyv/compare/v1.6.2...v1.6.3) (2021-12-01)
 
 **Note:** Version bump only for package @keyvhq/mysql

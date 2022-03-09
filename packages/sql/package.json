@@ -2,7 +2,7 @@
   "name": "@keyvhq/sql",
   "description": "Parent class for SQL based Keyv storage adapters",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.3",
+  "version": "1.6.5",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
