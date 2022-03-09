@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "@keyvhq/core": "^1.6.4",
-    "mimic-fn": "~3.0.0"
+    "mimic-fn": "~4.0.0"
   },
   "devDependencies": {
     "ava": "latest",
