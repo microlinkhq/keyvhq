@@ -11,7 +11,9 @@ declare class KeyvPostgres extends EventEmitter implements Store<string | undefi
   readonly ttlSupport: false
   namespace?: string | undefined
 
+  constructor (uri?: string);
   constructor (options?: KeyvPostgres.Options);
+  constructor (uri: string, options?: KeyvPostgres.Options);
 
   get (key: string): Promise<string | undefined>;
   has (key: string): Promise<boolean>;

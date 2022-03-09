@@ -14,7 +14,7 @@ declare class KeyvMongo<TValue> extends EventEmitter implements Store<TValue> {
 
   constructor (uri?: string);
   constructor (options?: KeyvMongo.Options);
-  constructor (uri?: string, options?: KeyvMongo.Options);
+  constructor (uri: string, options?: KeyvMongo.Options);
 
   get (key: string): Promise<TValue | undefined>;
   has (key: string): Promise<boolean>;

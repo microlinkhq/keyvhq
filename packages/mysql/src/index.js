@@ -4,9 +4,14 @@ const KeyvSql = require('@keyvhq/sql')
 const mysql = require('mysql2/promise')
 
 class KeyvMysql extends KeyvSql {
-  constructor (options) {
-    if (typeof options === 'string') {
-      options = { uri: options }
+  constructor (uri, options) {
+    uri = uri || {}
+    if (typeof uri === 'string') {
+      uri = { uri }
+    }
+
+    if (uri.uri) {
+      uri = Object.assign({ uri: uri.uri }, uri)
     }
 
     options = Object.assign(
@@ -14,6 +19,7 @@ class KeyvMysql extends KeyvSql {
         dialect: 'mysql',
         uri: 'mysql://localhost'
       },
+      uri,
       options
     )
 

@@ -12,6 +12,8 @@ npm install --save @keyvhq/core @keyvhq/mongo
 
 ## Usage
 
+> **NOTE**: The mongo uses `url` instead of `uri` to provide the connection string details.
+
 ```js
 const KeyvMongo = require('@keyvhq/mongo')
 const Keyv = require('@keyvhq/core')

@@ -8,9 +8,6 @@
 import { EventEmitter } from 'events'
 
 declare class Keyv<TValue = any> extends EventEmitter {
-  /**
-     * @param opts The options object is also passed through to the storage adapter. Check your storage adapter docs for any extra options.
-     */
   constructor (opts?: Keyv.Options<TValue>);
 
   /** Returns the value. */
@@ -48,7 +45,7 @@ declare namespace Keyv {
     serialize?: ((data: DeserializedData<TValue>) => string) | undefined
     /** A custom deserialization function. */
     deserialize?: ((data: string) => DeserializedData<TValue> | undefined) | undefined
-    /** The storage adapter instance to be used by Keyv. */
+    /** The storage adapter instance to be used by Keyv. Defaults to in-memory map */
     store?: Store<TValue> | Map<string, string>
     /** Default TTL. Can be overridden by specififying a TTL on `.set()`. */
     ttl?: number | undefined
