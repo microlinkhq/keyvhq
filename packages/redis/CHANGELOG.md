@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.5](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.5) (2022-03-09)
+
+
+### Bug Fixes
+
+* linter ([328d51c](https://github.com/microlinkhq/keyv/commit/328d51c1a16f753d9341246184eab79203afdda4))
+
+
+
+
+
 ## [1.6.2](https://github.com/microlinkhq/keyv/compare/v1.6.1...v1.6.2) (2021-11-08)
 
 **Note:** Version bump only for package @keyvhq/redis

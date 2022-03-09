@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.5](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.5) (2022-03-09)
+
+
+### Bug Fixes
+
+* linter ([c36c964](https://github.com/microlinkhq/keyv/commit/c36c964a16e79d8bd0e4fd62a926293e89ea0472))
+
+
+
+
+
 ## [1.6.3](https://github.com/microlinkhq/keyv/compare/v1.6.2...v1.6.3) (2021-12-01)
 
 **Note:** Version bump only for package @keyvhq/sql

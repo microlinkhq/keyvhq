@@ -2,7 +2,7 @@
   "name": "@keyvhq/multi",
   "description": "Layered cache with any backend",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -27,7 +27,7 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/core": "^1.6.4"
+    "@keyvhq/core": "^1.6.5"
   },
   "devDependencies": {
     "@keyvhq/sqlite": "latest",

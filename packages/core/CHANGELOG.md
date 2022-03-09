@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.5](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.5) (2022-03-09)
+
+
+### Bug Fixes
+
+* linter ([328d51c](https://github.com/microlinkhq/keyv/commit/328d51c1a16f753d9341246184eab79203afdda4))
+* linter ([c36c964](https://github.com/microlinkhq/keyv/commit/c36c964a16e79d8bd0e4fd62a926293e89ea0472))
+
+
+
+
+
 ## [1.6.4](https://github.com/microlinkhq/keyv/compare/v1.6.3...v1.6.4) (2022-01-24)
 
 **Note:** Version bump only for package @keyvhq/core

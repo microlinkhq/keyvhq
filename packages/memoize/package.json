@@ -2,7 +2,7 @@
   "name": "@keyvhq/memoize",
   "description": "Memoize any function using Keyv as storage backend.",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -27,7 +27,7 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/core": "^1.6.4",
+    "@keyvhq/core": "^1.6.5",
     "mimic-fn": "~4.0.0"
   },
   "devDependencies": {
