@@ -66,8 +66,16 @@
       "email": "uniqueiniquity@users.noreply.github.com"
     },
     {
+      "name": "chocolateboy",
+      "email": "chocolate@cpan.org"
+    },
+    {
       "name": "pengcao1",
       "email": "40621240+pengcao1@users.noreply.github.com"
+    },
+    {
+      "name": "Andika Dinata",
+      "email": "bukanjodohmu@tutanota.com"
     },
     {
       "name": "Casey Webb",
@@ -136,10 +144,6 @@
     {
       "name": "Simon Schick",
       "email": "demwizzy@gmail.com"
-    },
-    {
-      "name": "chocolateboy",
-      "email": "chocolate@cpan.org"
     }
   ],
   "repository": {
@@ -174,6 +178,7 @@
     "c8": "latest",
     "concurrently": "latest",
     "finepack": "latest",
+    "git-authors-cli": "latest",
     "gulp": "latest",
     "gulp-autoprefixer": "latest",
     "gulp-concat": "latest",
