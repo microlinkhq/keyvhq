@@ -1,8 +1,8 @@
 'use strict'
 
 const keyvTestSuite = require('@keyvhq/test-suite')
+const sqlite3 = require('@vscode/sqlite3')
 const Keyv = require('@keyvhq/core')
-const sqlite3 = require('sqlite3')
 const pify = require('pify')
 const test = require('ava')
 
