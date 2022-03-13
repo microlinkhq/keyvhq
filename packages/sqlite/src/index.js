@@ -1,7 +1,7 @@
 'use strict'
 
+const sqlite3 = require('@vscode/sqlite3')
 const KeyvSql = require('@keyvhq/sql')
-const sqlite3 = require('sqlite3')
 const pify = require('pify')
 
 class KeyvSqlite extends KeyvSql {
