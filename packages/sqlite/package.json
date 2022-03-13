@@ -31,8 +31,8 @@
   ],
   "dependencies": {
     "@keyvhq/sql": "^1.6.6",
-    "pify": "~5.0.0",
-    "@vscode/sqlite3": "~5.0.7"
+    "@vscode/sqlite3": "~5.0.7",
+    "pify": "~5.0.0"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",

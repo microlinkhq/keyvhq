@@ -34,9 +34,9 @@
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
+    "@vscode/sqlite3": "latest",
     "ava": "latest",
-    "pify": "latest",
-    "@vscode/sqlite3": "latest"
+    "pify": "latest"
   },
   "engines": {
     "node": ">= 12"
