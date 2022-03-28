@@ -32,7 +32,7 @@ class Keyv extends EventEmitter {
         for await (const [key, raw] of typeof iterator === 'function'
           ? iterator(this.namespace)
           : iterator) {
-          const data = typeof raw === 'string' ? this.deserialize(raw) : raw
+          const data = typeof raw === 'string' ? await this.deserialize(raw) : raw
           if (this.namespace && !key.includes(this.namespace)) {
             continue
           }
