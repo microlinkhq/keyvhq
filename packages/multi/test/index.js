@@ -3,18 +3,19 @@
 const test = require('ava')
 const delay = require('delay')
 
-const KeyvMulti = require('..')
-const Keyv = require('@keyvhq/core')
+const keyvCompress = require('@keyvhq/compress')
 const KeyvSqlite = require('@keyvhq/sqlite')
+const Keyv = require('@keyvhq/core')
+const KeyvMulti = require('..')
 
-const remoteStore = () =>
-  new Keyv({
-    store: new KeyvSqlite({
-      uri: 'sqlite://test/testdb.sqlite',
-      busyTimeout: 30000
-    })
+const remoteStore = () => keyvCompress(new Keyv({
+  store: new KeyvSqlite({
+    uri: 'sqlite://test/testdb.sqlite',
+    busyTimeout: 30000
   })
-const localStore = () => new Keyv()
+}))
+
+const localStore = () => keyvCompress(new Keyv())
 
 test.beforeEach(async () => {
   const remote = remoteStore()

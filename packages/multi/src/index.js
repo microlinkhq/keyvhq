@@ -25,7 +25,7 @@ class MultiCache {
       const key = this.remote._getKeyPrefix(...args)
 
       const raw = await this.remote.store.get(key)
-      const data = typeof raw === 'string' ? this.remote.deserialize(raw) : raw
+      const data = typeof raw === 'string' ? await this.remote.deserialize(raw) : raw
 
       const hasValue = data ? data.value !== undefined : false
       const isFresh =
