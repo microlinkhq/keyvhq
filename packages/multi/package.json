@@ -30,8 +30,8 @@
     "@keyvhq/core": "^1.6.6"
   },
   "devDependencies": {
-    "@keyvhq/sqlite": "latest",
     "@keyvhq/compress": "latest",
+    "@keyvhq/sqlite": "latest",
     "ava": "latest",
     "delay": "latest"
   },
