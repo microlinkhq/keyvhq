@@ -3,16 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.8](https://github.com/microlinkhq/keyv/compare/v1.6.7...v1.6.8) (2022-03-28)
+
+### Bug Fixes
+
+* **multi:** wait deserialize promise ([898fcbe](https://github.com/microlinkhq/keyv/commit/898fcbe10f63dcf933cc7b713118560515afe2fd))
+
 ## [1.6.7](https://github.com/microlinkhq/keyv/compare/v1.6.6...v1.6.7) (2022-03-13)
 
 **Note:** Version bump only for package @keyvhq/monorepo
 
-
-
-
-
 ## [1.6.6](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.6) (2022-03-09)
-
 
 ### Bug Fixes
 
@@ -20,43 +21,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * correct glob pattern for nano-staged ([85008fd](https://github.com/microlinkhq/keyv/commit/85008fd59709329848e9756a484cd0dceb58b3cd))
 * linter ([328d51c](https://github.com/microlinkhq/keyv/commit/328d51c1a16f753d9341246184eab79203afdda4))
 * linter ([c36c964](https://github.com/microlinkhq/keyv/commit/c36c964a16e79d8bd0e4fd62a926293e89ea0472))
-
-
-
-
 
 ## [1.6.5](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.5) (2022-03-09)
 
-
 ### Bug Fixes
 
 * changed all adapter apis to support (uri, option) ([f78a5dd](https://github.com/microlinkhq/keyv/commit/f78a5dd26ebcb2661d99c61328fbd92d9c462149))
 * correct glob pattern for nano-staged ([85008fd](https://github.com/microlinkhq/keyv/commit/85008fd59709329848e9756a484cd0dceb58b3cd))
 * linter ([328d51c](https://github.com/microlinkhq/keyv/commit/328d51c1a16f753d9341246184eab79203afdda4))
 * linter ([c36c964](https://github.com/microlinkhq/keyv/commit/c36c964a16e79d8bd0e4fd62a926293e89ea0472))
-
-
-
-
 
 ## [1.6.4](https://github.com/microlinkhq/keyv/compare/v1.6.3...v1.6.4) (2022-01-24)
 
 **Note:** Version bump only for package @keyvhq/monorepo
 
-
-
-
-
 ## [1.6.3](https://github.com/microlinkhq/keyv/compare/v1.6.2...v1.6.3) (2021-12-01)
-
 
 ### Bug Fixes
 
 * removed dupe titles ([273cd62](https://github.com/microlinkhq/keyv/commit/273cd6218417b9e131ad5393deb884ab1aaec7fa))
-
-
-
-
 
 ## [1.6.2](https://github.com/microlinkhq/keyv/compare/v1.6.1...v1.6.2) (2021-11-08)
 
