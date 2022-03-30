@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.9](https://github.com/microlinkhq/keyv/compare/v1.6.8...v1.6.9) (2022-03-30)
+
+### Bug Fixes
+
+* **core:** wait deserialize promise ([b5f3f1c](https://github.com/microlinkhq/keyv/commit/b5f3f1c4f93e79185807b3831ba37802ab9e10fc))
+
 ## [1.6.8](https://github.com/microlinkhq/keyv/compare/v1.6.7...v1.6.8) (2022-03-28)
 
 ### Bug Fixes

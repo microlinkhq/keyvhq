@@ -3,48 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.6.6](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.6) (2022-03-09)
+## [1.6.9](https://github.com/microlinkhq/keyv/compare/v1.6.8...v1.6.9) (2022-03-30)
 
+### Bug Fixes
+
+* **core:** wait deserialize promise ([b5f3f1c](https://github.com/microlinkhq/keyv/commit/b5f3f1c4f93e79185807b3831ba37802ab9e10fc))
+
+## [1.6.6](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.6) (2022-03-09)
 
 ### Bug Fixes
 
 * linter ([328d51c](https://github.com/microlinkhq/keyv/commit/328d51c1a16f753d9341246184eab79203afdda4))
 * linter ([c36c964](https://github.com/microlinkhq/keyv/commit/c36c964a16e79d8bd0e4fd62a926293e89ea0472))
-
-
-
-
 
 ## [1.6.5](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.5) (2022-03-09)
 
-
 ### Bug Fixes
 
 * linter ([328d51c](https://github.com/microlinkhq/keyv/commit/328d51c1a16f753d9341246184eab79203afdda4))
 * linter ([c36c964](https://github.com/microlinkhq/keyv/commit/c36c964a16e79d8bd0e4fd62a926293e89ea0472))
-
-
-
-
 
 ## [1.6.4](https://github.com/microlinkhq/keyv/compare/v1.6.3...v1.6.4) (2022-01-24)
 
 **Note:** Version bump only for package @keyvhq/core
 
-
-
-
-
 ## [1.6.3](https://github.com/microlinkhq/keyv/compare/v1.6.2...v1.6.3) (2021-12-01)
-
 
 ### Bug Fixes
 
 * removed dupe titles ([273cd62](https://github.com/microlinkhq/keyv/commit/273cd6218417b9e131ad5393deb884ab1aaec7fa))
-
-
-
-
 
 ## [1.6.2](https://github.com/microlinkhq/keyv/compare/v1.6.1...v1.6.2) (2021-11-08)
 
