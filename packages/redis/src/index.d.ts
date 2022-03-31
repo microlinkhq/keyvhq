@@ -5,7 +5,7 @@
 // TypeScript Version: 2.3
 
 import { Store } from '@keyvhq/core'
-import ioredis from 'ioredis'
+import { RedisOptions } from 'ioredis'
 import { EventEmitter } from 'events'
 
 declare class KeyvRedis extends EventEmitter implements Store<string | undefined> {
@@ -25,7 +25,7 @@ declare class KeyvRedis extends EventEmitter implements Store<string | undefined
 }
 
 declare namespace KeyvRedis {
-  interface Options extends ioredis.RedisOptions {
+  interface Options extends RedisOptions {
     uri?: string | undefined
     emitErrors?: boolean | true
   }
