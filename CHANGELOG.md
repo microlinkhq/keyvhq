@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.10](https://github.com/microlinkhq/keyv/compare/v1.6.9...v1.6.10) (2022-04-01)
+
+### Bug Fixes
+
+* **types:** fixed typings in redis ([9fc462f](https://github.com/microlinkhq/keyv/commit/9fc462fd068eac98a1ec185a5e8ffbea912af72f))
+
 ## [1.6.9](https://github.com/microlinkhq/keyv/compare/v1.6.8...v1.6.9) (2022-03-30)
 
 ### Bug Fixes
