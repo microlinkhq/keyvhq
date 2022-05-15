@@ -46,7 +46,7 @@ In case you need, you can see omitted errors enabling debug doing `DEBUG=@keyvhq
 
 ## License
 
-**@keyvhq/memoize** © [Kiko Beats](https://kikobeats.com), Released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br/>
+**@keyvhq/memoize** © [Kiko Beats](https://kikobeats.com), released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br/>
 Maintained by [Microlink](https://microlink.io) with help from [contributors](https://github.com/microlinkhq/keyv/contributors).
 
-> [microlink.io](https://microlink.io) · GitHub [@MicrolinkHQ](https://github.com/microlinkhq) · Twitter [@microlinkhq](https://twitter.com/microlinkhq)
+> [microlink.io](https://microlink.io) · GitHub [microlinkhq](https://github.com/microlinkhq) · Twitter [@microlinkhq](https://twitter.com/microlinkhq)
