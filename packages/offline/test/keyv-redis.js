@@ -1,14 +1,17 @@
 'use strict'
 
 const KeyvRedis = require('@keyvhq/redis')
+const Keyv = require('@keyvhq/core')
 const test = require('ava')
 
 const keyvOffline = require('../src')
 
-const keyvRedis = new KeyvRedis({
-  uri: 'redis://user:pass@localhost:1337',
-  maxRetriesPerRequest: 0,
-  emitErrors: false
+const keyvRedis = new Keyv({
+  store: new KeyvRedis({
+    uri: 'redis://user:pass@localhost:1337',
+    maxRetriesPerRequest: 0,
+    emitErrors: false
+  })
 })
 
 test('.set return false if store is unreachable', async t => {

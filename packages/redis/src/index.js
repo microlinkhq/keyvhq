@@ -8,21 +8,23 @@ const normalizeOptions = (...args) => Object.assign({ emitErrors: true }, ...arg
 
 const normalizeArguments = (input, options) => {
   if (input instanceof Redis) return [input, normalizeOptions(options)]
-  const { uri, ...normalizedOptions } = normalizeOptions(typeof input === 'string' ? { uri: input } : input, options)
-  return [new Redis(uri, normalizedOptions), normalizedOptions]
+  const { uri, ...opts } = Object.assign(typeof input === 'string' ? { uri: input } : input, options)
+  const normalizedOpts = normalizeOptions(opts)
+  return [new Redis(uri, normalizedOpts), normalizedOpts]
 }
 
 class KeyvRedis extends EventEmitter {
   constructor (uri, options) {
     super()
 
-    const [redis, normalizedOptions] = normalizeArguments(uri, options)
+    const [redis, { emitErrors }] = normalizeArguments(uri, options)
 
     this.redis = redis
-    Object.entries(normalizedOptions).forEach(([key, value]) => (this[key] = value))
 
-    if (this.emitErrors) {
-      this.redis.on('error', error => this.emit('error', error))
+    if (emitErrors) {
+      this.redis.on('error', error => {
+        this.emit('error', error)
+      })
     }
   }
 
