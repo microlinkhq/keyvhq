@@ -7,7 +7,7 @@ class Keyv extends EventEmitter {
   constructor ({ emitErrors = true, ...options } = {}) {
     super()
 
-    const normalizedOptions = Object.assign(
+    Object.entries(Object.assign(
       {
         serialize: JSONB.stringify,
         deserialize: JSONB.parse,
@@ -15,16 +15,10 @@ class Keyv extends EventEmitter {
         store: new Map()
       },
       options
-    )
+    )).forEach(([key, value]) => (this[key] = value))
 
-    Object.keys(normalizedOptions).forEach(
-      key => (this[key] = normalizedOptions[key])
-    )
-
-    if (typeof this.store.on === 'function' && emitErrors) {
-      this.store.on('error', error => {
-        this.emit('error', error)
-      })
+    if (typeof this.store.on === 'function' && this.emitErrors) {
+      this.store.on('error', error => this.emit('error', error))
     }
 
     const generateIterator = iterator =>

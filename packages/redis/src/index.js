@@ -4,24 +4,24 @@ const EventEmitter = require('events')
 const pEvent = require('p-event')
 const Redis = require('ioredis')
 
+const normalizeOptions = (...args) => Object.assign({ emitErrors: true }, ...args)
+
+const normalizeArguments = (input, options) => {
+  if (input instanceof Redis) return [input, normalizeOptions(options)]
+  const { uri, ...normalizedOptions } = normalizeOptions(typeof input === 'string' ? { uri: input } : input, options)
+  return [new Redis(uri, normalizedOptions), normalizedOptions]
+}
+
 class KeyvRedis extends EventEmitter {
   constructor (uri, options) {
     super()
 
-    if (uri instanceof Redis) {
-      this.redis = uri
-    } else {
-      options = Object.assign(
-        {
-          emitErrors: true
-        },
-        typeof uri === 'string' ? { uri } : uri,
-        options
-      )
-      this.redis = new Redis(options.uri, options)
-    }
+    const [redis, normalizedOptions] = normalizeArguments(uri, options)
 
-    if (options && options.emitErrors !== false) {
+    this.redis = redis
+    Object.entries(normalizedOptions).forEach(([key, value]) => (this[key] = value))
+
+    if (this.emitErrors) {
       this.redis.on('error', error => this.emit('error', error))
     }
   }
