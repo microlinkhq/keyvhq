@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.13](https://github.com/microlinkhq/keyv/compare/v1.6.12...v1.6.13) (2022-05-22)
+
+### Bug Fixes
+
+* associate `emitErros` with keyv instance ([3a88e0a](https://github.com/microlinkhq/keyv/commit/3a88e0a4af316769c1845a9f5c82a3b8d25120e2))
+
 ## [1.6.9](https://github.com/microlinkhq/keyv/compare/v1.6.8...v1.6.9) (2022-03-30)
 
 ### Bug Fixes

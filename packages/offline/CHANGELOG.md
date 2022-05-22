@@ -3,32 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.6.6](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.6) (2022-03-09)
+## [1.6.13](https://github.com/microlinkhq/keyv/compare/v1.6.12...v1.6.13) (2022-05-22)
 
 **Note:** Version bump only for package @keyvhq/offline
 
+## [1.6.6](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.6) (2022-03-09)
 
-
-
+**Note:** Version bump only for package @keyvhq/offline
 
 ## [1.6.5](https://github.com/microlinkhq/keyv/compare/v1.6.4...v1.6.5) (2022-03-09)
 
 **Note:** Version bump only for package @keyvhq/offline
 
-
-
-
-
 # [1.3.0](https://github.com/microlinkhq/keyv/compare/v1.2.7...v1.3.0) (2021-09-01)
-
 
 ### Features
 
 * add offline decorator ([86a57c8](https://github.com/microlinkhq/keyv/commit/86a57c86ef463eaf7aebf4d0d0b6fcebdb1925f9))
-
-
-
-
 
 # Changelog
 

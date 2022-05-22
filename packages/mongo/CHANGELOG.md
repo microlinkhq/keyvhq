@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.13](https://github.com/microlinkhq/keyv/compare/v1.6.12...v1.6.13) (2022-05-22)
+
+**Note:** Version bump only for package @keyvhq/mongo
+
 ## [1.6.12](https://github.com/microlinkhq/keyv/compare/v1.6.11...v1.6.12) (2022-05-12)
 
 **Note:** Version bump only for package @keyvhq/mongo
