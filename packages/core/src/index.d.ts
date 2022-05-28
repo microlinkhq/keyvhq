@@ -42,9 +42,9 @@ declare namespace Keyv {
     /** Namespace for the current instance. */
     namespace?: string | undefined
     /** A custom serialization function. */
-    serialize?: ((data: DeserializedData<Value>) => string | Promise<string>) | undefined
+    serialize?: ((data: DeserializedData<TValue>) => string | Promise<string>) | undefined
     /** A custom deserialization function. */
-    deserialize?: ((data: string) => DeserializedData<Value> | undefined | Promise<DeserializedData<Value> | undefined>) | undefined
+    deserialize?: ((data: string) => DeserializedData<TValue> | undefined | Promise<DeserializedData<TValue> | undefined>) | undefined
     /** The storage adapter instance to be used by Keyv. Defaults to in-memory map */
     store?: Store<TValue> | Map<string, string>
     /** Default TTL. Can be overridden by specififying a TTL on `.set()`. */
