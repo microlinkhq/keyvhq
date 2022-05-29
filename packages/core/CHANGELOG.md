@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.14](https://github.com/microlinkhq/keyv/compare/v1.6.13...v1.6.14) (2022-05-29)
+
+### Bug Fixes
+
+* added async deserialize/serialize functions ([703b98b](https://github.com/microlinkhq/keyv/commit/703b98b918d235bac76760e20e907e0bc028bfa0))
+
 ## [1.6.13](https://github.com/microlinkhq/keyv/compare/v1.6.12...v1.6.13) (2022-05-22)
 
 ### Bug Fixes
