@@ -36,7 +36,7 @@
     "@keyvhq/test-suite": "latest",
     "@vscode/sqlite3": "latest",
     "ava": "latest",
-    "pify": "latest"
+    "pify": "5"
   },
   "engines": {
     "node": ">= 12"
