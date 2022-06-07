@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.15](https://github.com/microlinkhq/keyv/compare/v1.6.14...v1.6.15) (2022-06-07)
+
+**Note:** Version bump only for package @keyvhq/monorepo
+
 ## [1.6.14](https://github.com/microlinkhq/keyv/compare/v1.6.13...v1.6.14) (2022-05-29)
 
 ### Bug Fixes
