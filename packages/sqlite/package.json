@@ -32,7 +32,7 @@
   "dependencies": {
     "@keyvhq/sql": "^1.6.13",
     "@vscode/sqlite3": "~5.0.7",
-    "pify": "~5.0.0"
+    "pify": "~6.0.0"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
