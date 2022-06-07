@@ -42,8 +42,20 @@
       "email": "ddascalescu+github@gmail.com"
     },
     {
-      "name": "Benjamin Lichtman",
-      "email": "uniqueiniquity@users.noreply.github.com"
+      "name": "Nathan Shively-Sanders",
+      "email": "293473+sandersn@users.noreply.github.com"
+    },
+    {
+      "name": "arichter83",
+      "email": "36486293+arichter83@users.noreply.github.com"
+    },
+    {
+      "name": "César Fernández",
+      "email": "cfalonso@gmail.com"
+    },
+    {
+      "name": "ficristo",
+      "email": "ficristo.work@gmail.com"
     },
     {
       "name": "Jérôme Desboeufs",
@@ -54,32 +66,52 @@
       "email": "mysidestheyaregone@protonmail.com"
     },
     {
-      "name": "Nathan Shively-Sanders",
-      "email": "293473+sandersn@users.noreply.github.com"
+      "name": "Benjamin Lichtman",
+      "email": "uniqueiniquity@users.noreply.github.com"
     },
     {
-      "name": "arichter83",
-      "email": "36486293+arichter83@users.noreply.github.com"
+      "name": "pengcao1",
+      "email": "40621240+pengcao1@users.noreply.github.com"
     },
     {
-      "name": "ficristo",
-      "email": "ficristo.work@gmail.com"
+      "name": "Andika Dinata",
+      "email": "bukanjodohmu@tutanota.com"
     },
     {
-      "name": "César Fernández",
-      "email": "cfalonso@gmail.com"
-    },
-    {
-      "name": "Casey Webb",
-      "email": "notcaseywebb@gmail.com"
+      "name": "chocolateboy",
+      "email": "chocolate@cpan.org"
     },
     {
       "name": "Daniel Rosenwasser",
       "email": "DanielRosenwasser@users.noreply.github.com"
     },
     {
+      "name": "Simon Schick",
+      "email": "demwizzy@gmail.com"
+    },
+    {
+      "name": "Dušan Simić",
+      "email": "dusan.simic1810@gmail.com"
+    },
+    {
+      "name": "Jack Bates",
+      "email": "jack@nottheoilrig.com"
+    },
+    {
+      "name": "Jared Wray",
+      "email": "jaredwray@gmail.com"
+    },
+    {
+      "name": "Jitendra Adhikari",
+      "email": "jiten.adhikary@gmail.com"
+    },
+    {
       "name": "Mateu Aguiló Bosch",
       "email": "mateu@lullabot.com"
+    },
+    {
+      "name": "Kent C. Dodds",
+      "email": "me+github@kentcdodds.com"
     },
     {
       "name": "Mehdi Lahlou",
@@ -90,16 +122,12 @@
       "email": "moyuanhuang@gmail.com"
     },
     {
-      "name": "pengcao1",
-      "email": "40621240+pengcao1@users.noreply.github.com"
-    },
-    {
       "name": "Nikolaj Kappler",
       "email": "Nikolaj-Kappler@web.de"
     },
     {
-      "name": "Pascal Sthamer",
-      "email": "sthamer.pascal@gmail.com"
+      "name": "Casey Webb",
+      "email": "notcaseywebb@gmail.com"
     },
     {
       "name": "Paul Morgan III",
@@ -118,36 +146,8 @@
       "email": "shkamat@microsoft.com"
     },
     {
-      "name": "Simon Schick",
-      "email": "demwizzy@gmail.com"
-    },
-    {
-      "name": "Andika Dinata",
-      "email": "bukanjodohmu@tutanota.com"
-    },
-    {
-      "name": "chocolateboy",
-      "email": "chocolate@cpan.org"
-    },
-    {
-      "name": "Jack Bates",
-      "email": "jack@nottheoilrig.com"
-    },
-    {
-      "name": "Jared Wray",
-      "email": "jaredwray@gmail.com"
-    },
-    {
-      "name": "Jitendra Adhikari",
-      "email": "jiten.adhikary@gmail.com"
-    },
-    {
-      "name": "Dušan Simić",
-      "email": "dusan.simic1810@gmail.com"
-    },
-    {
-      "name": "Kent C. Dodds",
-      "email": "me+github@kentcdodds.com"
+      "name": "Pascal Sthamer",
+      "email": "sthamer.pascal@gmail.com"
     }
   ],
   "repository": {
