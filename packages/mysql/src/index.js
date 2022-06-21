@@ -22,12 +22,11 @@ class KeyvMysql extends KeyvSql {
       uri,
       options
     )
-
+    const pool = mysql.createPool(options.uri)
     options.connect = () =>
       Promise.resolve()
-        .then(() => mysql.createConnection(options.uri))
-        .then(connection => {
-          return sql => connection.execute(sql).then(data => data[0])
+        .then(() => {
+          return sql => pool.execute(sql).then(data => data[0])
         })
 
     super(options)
