@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     env:
       MYSQL_DB_DATABASE: keyv_test
@@ -45,7 +45,7 @@ jobs:
           mongodb-version: 4.4
       - name: Start MySQL
         run: |
-          sudo /etc/init.d/mysql start
+          sudo systemctl start mysql.service
           mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
           mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
 
