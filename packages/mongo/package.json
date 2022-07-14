@@ -30,7 +30,7 @@
     "value"
   ],
   "dependencies": {
-    "mongodb": "~4.7.0",
+    "mongodb": "~4.8.0",
     "pify": "~5.0.0"
   },
   "devDependencies": {
