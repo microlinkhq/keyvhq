@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "mongodb": "~4.9.0",
-    "pify": "~5.0.0"
+    "pify": "~6.1.0"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
