@@ -41,6 +41,7 @@
     "src"
   ],
   "scripts": {
+    "generate-types": "npx -p typescript tsc ./src/*.js --declaration --allowJs --emitDeclarationOnly",
     "test": "ava"
   },
   "license": "MIT",
