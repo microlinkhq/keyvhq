@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@keyvhq/sql": "^1.6.15",
-    "mysql2": "~3.0.1"
+    "mysql2": "~2.3.3"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
