@@ -32,11 +32,12 @@
   ],
   "dependencies": {
     "@keyvhq/sql": "^1.6.15",
-    "mysql2": "~2.3.3"
+    "mysql2": "~3.0.1"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
+    "@types/node": "latest",
     "ava": "latest",
     "tsd": "latest",
     "typescript": "latest"
@@ -48,7 +49,9 @@
     "src"
   ],
   "scripts": {
-    "test": "ava && tsd"
+    "lint": "tsd",
+    "pretest": "npm run lint",
+    "test": "ava"
   },
   "license": "MIT",
   "publishConfig": {
