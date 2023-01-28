@@ -12,15 +12,15 @@ declare class KeyvMongo<TValue> extends EventEmitter implements Store<TValue> {
   readonly ttlSupport: false
   namespace?: string | undefined
 
-  constructor (uri?: string);
-  constructor (options?: KeyvMongo.Options);
-  constructor (uri: string, options?: KeyvMongo.Options);
+  constructor (uri?: string)
+  constructor (options?: KeyvMongo.Options)
+  constructor (uri: string, options?: KeyvMongo.Options)
 
-  get (key: string): Promise<TValue | undefined>;
-  has (key: string): Promise<boolean>;
-  set (key: string, value: TValue, ttl?: number): Promise<any>;
-  delete (key: string): Promise<boolean>;
-  clear (): Promise<void>;
+  get (key: string): Promise<TValue | undefined>
+  has (key: string): Promise<boolean>
+  set (key: string, value: TValue, ttl?: number): Promise<any>
+  delete (key: string): Promise<boolean>
+  clear (): Promise<void>
   iterator (): AsyncGenerator
 }
 

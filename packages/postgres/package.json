@@ -37,6 +37,7 @@
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
+    "@types/node": "latest",
     "ava": "latest",
     "tsd": "latest",
     "typescript": "latest"
@@ -48,7 +49,9 @@
     "src"
   ],
   "scripts": {
-    "test": "ava --serial && tsd"
+    "lint": "tsd",
+    "pretest": "npm run lint",
+    "test": "ava --serial"
   },
   "license": "MIT",
   "publishConfig": {

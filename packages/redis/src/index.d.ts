@@ -12,15 +12,15 @@ declare class KeyvRedis extends EventEmitter implements Store<string | undefined
   readonly ttlSupport: true
   namespace?: string | undefined
 
-  constructor (options?: KeyvRedis.Options);
-  constructor (redis: Redis);
-  constructor (uri: string, options?: KeyvRedis.Options);
+  constructor (options?: KeyvRedis.Options)
+  constructor (redis: Redis)
+  constructor (uri: string, options?: KeyvRedis.Options)
 
-  get (key: string): Promise<string | undefined>;
-  has (key: string): Promise<boolean>;
-  set (key: string, value: string | undefined, ttl?: number): Promise<number>;
-  delete (key: string): Promise<boolean>;
-  clear (): Promise<void>;
+  get (key: string): Promise<string | undefined>
+  has (key: string): Promise<boolean>
+  set (key: string, value: string | undefined, ttl?: number): Promise<number>
+  delete (key: string): Promise<boolean>
+  clear (): Promise<void>
   iterator (): AsyncGenerator
 }
 

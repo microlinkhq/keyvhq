@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@keyvhq/test-suite": "latest",
+    "@types/node": "latest",
     "ava": "latest",
     "timekeeper": "latest",
     "tsd": "latest",
@@ -41,7 +42,9 @@
     "src"
   ],
   "scripts": {
-    "test": "ava && tsd"
+    "lint": "tsd",
+    "pretest": "npm run lint",
+    "test": "ava"
   },
   "license": "MIT",
   "publishConfig": {

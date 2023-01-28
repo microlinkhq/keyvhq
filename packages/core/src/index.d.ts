@@ -8,13 +8,13 @@
 import { EventEmitter } from 'events'
 
 declare class Keyv<TValue = any> extends EventEmitter {
-  constructor (opts?: Keyv.Options<TValue>);
+  constructor (opts?: Keyv.Options<TValue>)
 
   /** Returns the value. */
   get<TRaw extends boolean = false>(key: string, options?: { raw?: TRaw }):
   Promise<(TRaw extends false
     ? TValue
-    : Keyv.DeserializedData<TValue>) | undefined>;
+    : Keyv.DeserializedData<TValue>) | undefined>
   /** Returns `true` if the key existed, `false` if not. */
   has (key: string): Promise<boolean>
   /**
@@ -22,19 +22,19 @@ declare class Keyv<TValue = any> extends EventEmitter {
      *
      * By default keys are persistent. You can set an expiry TTL in milliseconds.
      */
-  set (key: string, value: TValue, ttl?: number): Promise<boolean>;
+  set (key: string, value: TValue, ttl?: number): Promise<boolean>
   /**
      * Deletes an entry.
      *
      * Returns `true` if the key existed, `false` if not.
      */
-  delete (key: string): Promise<boolean>;
+  delete (key: string): Promise<boolean>
   /** Delete all entries in the current namespace. */
-  clear (): Promise<void>;
+  clear (): Promise<void>
   /**
      * Yields an iterator with all the key, value entries in the namespace.
      */
-  iterator (): AsyncIterator<[string, Keyv.DeserializedData<string>]>;
+  iterator (): AsyncIterator<[string, Keyv.DeserializedData<string>]>
 }
 
 declare namespace Keyv {
