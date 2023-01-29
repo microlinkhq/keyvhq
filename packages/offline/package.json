@@ -39,7 +39,7 @@
     "keyv-s3": "latest"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 14"
   },
   "files": [
     "src"

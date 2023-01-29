@@ -37,18 +37,21 @@
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
+    "@types/node": "latest",
     "ava": "latest",
     "tsd": "latest",
     "typescript": "latest"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 14"
   },
   "files": [
     "src"
   ],
   "scripts": {
-    "test": "ava && tsd"
+    "lint": "tsd",
+    "pretest": "npm run lint",
+    "test": "ava"
   },
   "license": "MIT",
   "publishConfig": {

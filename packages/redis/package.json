@@ -36,19 +36,22 @@
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
     "@types/ioredis": "latest",
+    "@types/node": "latest",
     "ava": "latest",
     "tsd": "latest",
     "typescript": "latest"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 14"
   },
   "files": [
     "src"
   ],
   "scripts": {
+    "lint": "tsd",
     "posttest:docker": "docker-compose down --rmi local",
-    "test": "ava && tsd",
+    "pretest": "npm run lint",
+    "test": "ava",
     "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test"
   },
   "license": "MIT",

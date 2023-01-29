@@ -11,15 +11,15 @@ declare class KeyvSqlite extends EventEmitter implements Store<string | undefine
   readonly ttlSupport: false
   namespace?: string | undefined
 
-  constructor (uri?: string);
-  constructor (options?: KeyvSqlite.Options);
-  constructor (uri: string, options?: KeyvSqlite.Options);
+  constructor (uri?: string)
+  constructor (options?: KeyvSqlite.Options)
+  constructor (uri: string, options?: KeyvSqlite.Options)
 
-  get (key: string): Promise<string | undefined>;
-  has (key: string): Promise<boolean>;
-  set (key: string, value: string | undefined): Promise<any>;
-  delete (key: string): Promise<boolean>;
-  clear (): Promise<void>;
+  get (key: string): Promise<string | undefined>
+  has (key: string): Promise<boolean>
+  set (key: string, value: string | undefined): Promise<any>
+  delete (key: string): Promise<boolean>
+  clear (): Promise<void>
   iterator (): AsyncGenerator
 }
 
