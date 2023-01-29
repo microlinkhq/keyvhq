@@ -2,7 +2,7 @@
   "name": "@keyvhq/core",
   "description": "Simple key-value storage with support for multiple backends",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.14",
+  "version": "1.6.26",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",

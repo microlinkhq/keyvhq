@@ -2,7 +2,7 @@
   "name": "@keyvhq/test-suite",
   "description": "Test suite for Keyv API compliancy",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.13",
+  "version": "1.6.26",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
