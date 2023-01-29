@@ -6,16 +6,13 @@ on:
   pull_request:
     branches: [master]
 
-env:
-  CI: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [14, 16, 18]
+        node-version: [18]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     env:
       MYSQL_DB_DATABASE: keyv_test
@@ -48,12 +45,10 @@ jobs:
           sudo systemctl start mysql.service
           mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
           mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
-
       - name: Start PostgreSQL on Ubuntu
         run: |
           sudo systemctl start postgresql.service
           pg_isready
-
       - name: Setup PostgreSQL for ava tests
         run: |
           sudo -u postgres psql --command="alter system set max_connections = 300;"
