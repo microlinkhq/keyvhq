@@ -29,7 +29,7 @@
     "value"
   ],
   "dependencies": {
-    "sql-ts": "5"
+    "sql-ts": "6"
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
