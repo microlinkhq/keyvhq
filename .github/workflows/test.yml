@@ -38,8 +38,6 @@ jobs:
       #        postgresql db: keyv_test
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.9.0
-        with:
-          mongodb-version: 5.0
       - name: Start MySQL
         run: |
           sudo systemctl start mysql.service
