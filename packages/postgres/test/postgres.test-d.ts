@@ -1,9 +1,7 @@
 /* eslint-disable no-new */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
 
-import Keyv = require('@keyvhq/core')
-import KeyvPostgres = require('..')
+import Keyv from '@keyvhq/core'
+import KeyvPostgres from '..'
 
 new Keyv({ store: new KeyvPostgres({ uri: 'postgres://user:pass@localhost:5432/dbname', table: 'cache' }) })
 

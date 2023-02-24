@@ -1,9 +1,7 @@
 /* eslint-disable no-new */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
 
-import Keyv = require('@keyvhq/core')
-import KeyvRedis = require('..')
+import Keyv from '@keyvhq/core'
+import KeyvRedis from '..'
 
 new Keyv({
   store: new KeyvRedis({
