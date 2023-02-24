@@ -27,8 +27,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Start Redis
         uses: supercharge/redis-github-action@1.5.0
-        with:
-          redis-version: 6
       #    - name: Start PostgreSQL
       #      uses: harmon758/postgresql-action@v1
       #      with:
