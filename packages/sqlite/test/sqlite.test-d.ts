@@ -1,9 +1,7 @@
 /* eslint-disable no-new */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
 
-import Keyv = require('@keyvhq/core')
-import KeyvSqlite = require('..')
+import Keyv from '@keyvhq/core'
+import KeyvSqlite from '..'
 
 new Keyv({ store: new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite', table: 'cache' }) })
 

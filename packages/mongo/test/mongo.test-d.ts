@@ -1,9 +1,7 @@
 /* eslint-disable no-new */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-invalid-void-type */
 
-import Keyv = require('@keyvhq/core')
-import KeyvMongo = require('..')
+import Keyv from '@keyvhq/core'
+import KeyvMongo from '..'
 
 new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname', { collection: 'cache' }) })
 
