@@ -27,8 +27,6 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Start Redis
         uses: supercharge/redis-github-action@1.5.0
-        with:
-          redis-version: 6
       #    - name: Start PostgreSQL
       #      uses: harmon758/postgresql-action@v1
       #      with:
@@ -38,8 +36,6 @@ jobs:
       #        postgresql db: keyv_test
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.9.0
-        with:
-          mongodb-version: 4.4
       - name: Start MySQL
         run: |
           sudo systemctl start mysql.service
