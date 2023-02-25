@@ -55,7 +55,7 @@ jobs:
       - name: Setup PNPM
         uses: pnpm/action-setup@v2
         with:
-          version: 6
+          version: latest
           run_install: true
       - run: pnpm test
       - name: Report
