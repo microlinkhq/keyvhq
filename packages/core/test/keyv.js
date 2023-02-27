@@ -8,8 +8,12 @@ const Keyv = require('..')
 
 test.serial('Keyv is a class', t => {
   t.is(typeof Keyv, 'function')
-  t.throws(() => Keyv()) // eslint-disable-line new-cap
-  t.notThrows(() => new Keyv())
+  t.throws(() => Keyv({ store: new Map() })) // eslint-disable-line new-cap
+  t.notThrows(() => new Keyv({ store: new Map() }))
+})
+
+test.serial('store is required', t => {
+  t.throws(() => new Keyv())
 })
 
 test.serial('Keyv accepts storage adapters', async t => {
@@ -158,14 +162,14 @@ test.serial('An empty namespace stores the key as a string', async t => {
 })
 
 test('emit errors by default', async t => {
-  const store = new Keyv()
+  const store = new Keyv({ store: new Map() })
   const keyv = new Keyv({ store, namespace: '' })
   await keyv.set(42, 'foo')
   t.is(store.listenerCount('error'), 1)
 })
 
 test('disable emit errors', async t => {
-  const store = new Keyv({ emitErrors: false })
+  const store = new Keyv({ store: new Map(), emitErrors: false })
   const keyv = new Keyv({ store, emitErrors: false, namespace: '' })
   await keyv.set(42, 'foo')
   t.is(keyv.listenerCount('error'), 0)

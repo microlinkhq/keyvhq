@@ -5,13 +5,14 @@ const JSONB = require('json-buffer')
 
 class Keyv extends EventEmitter {
   constructor (options = {}) {
+    if (!options.store) throw new TypeError('An `store` should be provided.')
+
     super()
 
     Object.entries(Object.assign(
       {
         serialize: JSONB.stringify,
-        deserialize: JSONB.parse,
-        store: new Map()
+        deserialize: JSONB.parse
       },
       options
     )).forEach(([key, value]) => (this[key] = value))
