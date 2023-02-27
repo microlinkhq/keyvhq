@@ -16,9 +16,7 @@ npm install --save @keyvhq/core @keyvhq/redis
 const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
-  store: new KeyvRedis('redis://user:pass@localhost:6379')
-})
+const keyv = new Keyv({  store: new KeyvRedis('redis://user:pass@localhost:6379') })
 
 keyv.on('error', handleConnectionError)
 ```

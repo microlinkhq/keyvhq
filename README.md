@@ -100,7 +100,7 @@ const Keyv = require('@keyvhq/core')
 const keyv = KeyvCompress(new Keyv({ serialize, deserialize })
 ```
 
-## Storage Adapters
+## Storage adapters
 
 **Keyv** is designed to be easily embedded into other modules to add cache support. 
 
@@ -108,10 +108,10 @@ Caching will work in memory by default and users have the option to also install
 
 ```js
 const got = require('got')
-const keyv = require('@keyvhq/core')
-const keyvRedis = require('@keyvhq/redis')
+const KeyvRedis = require('@keyvhq/redis')
+const Keyv = require('@keyvhq/core')
 
-const cache = new KeyvRedis('redis://user:pass@localhost:6379')
+const cache = new Keyv({  store: new KeyvRedis('redis://user:pass@localhost:6379') })
 
 await got('https://keyv.js.org', { cache })
 ```
@@ -130,7 +130,7 @@ const keyv = new Keyv({ store: lru })
 
 You should also set a [`namespace`](#optionsnamespace) for your module so you can safely call [`.clear()`](#clear) without clearing unrelated app data.
 
-### Storage Adapters
+### All the adapters
 
 > The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
