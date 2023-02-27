@@ -14,38 +14,29 @@ All you need to do is to wrap your [keyv](https://keyv.js.org) instance:
 
 ```js
 const KeyvRedis = require('@keyvhq/redis')
+const Keyv = require('@keyvhq/core')
 
-const keyv = new KeyvRedis({
+const store = new KeyvRedis({
   uri: 'redis://user:pass@localhost:6379',
   maxRetriesPerRequest: 1,
   emitErrors: false
 })
+
+const keyv = new Keyv({ store })
 ```
 
 Using `@keyvhq/compress` at the top level:
 
 ```js
 const KeyvCompress = require('@keyvhq/compress')
-const KeyvRedis = require('@keyvhq/redis')
-
-const keyv = KeyvCompress(
-  new KeyvRedis({
-    uri: 'redis://user:pass@localhost:6379',
-    maxRetriesPerRequest: 1,
-    emitErrors: false
-  })
-)
+const keyv = KeyvCompress(new Keyv({ store }))
 ```
 
 Additionally, it can accept [compress-brotli#options](https://github.com/Kikobeats/compress-brotli#compressbrotlioptions) as second argument:
 
 ```js
 const keyv = KeyvCompress(
-  new KeyvRedis({
-    uri: 'redis://user:pass@localhost:6379',
-    maxRetriesPerRequest: 1,
-    emitErrors: false
-  }),
+  new Keyv({ store }),
   {
     serialize: v8.serialize,
     deserialize: v8.deserialize

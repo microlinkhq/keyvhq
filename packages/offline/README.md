@@ -13,34 +13,28 @@ $ npm install @keyvhq/offline --save
 All you need to do is to wrap your [keyv](https://keyv.js.org) instance:
 
 ```js
-
 const KeyvRedis = require('@keyvhq/redis')
+const Keyv = require('@keyvhq/core')
 
-const keyv = new KeyvRedis({
+const store = new KeyvRedis({
   uri: 'redis://user:pass@localhost:6379',
   maxRetriesPerRequest: 1,
   emitErrors: false
 })
+
+const keyv = new Keyv({ store })
 ```
 
 Using `@keyvhq/offline` at the top level:
 
 ```js
-const KeyvRedis = require('@keyvhq/redis')
-const keyvOffline = require('@keyvhq/offline')
-
-const keyv = keyvOffline(new KeyvRedis({
-  uri: 'redis://user:pass@localhost:6379',
-  maxRetriesPerRequest: 1,
-  emitErrors: false
-}))
+const KeyvOffline = require('@keyvhq/offline')
+const keyv = keyvOffline(new Keyv({ store }))
 ```
 
-That's all!
+Since now, if your store suffers network connectivity issues, your keyv set/get petitions will be temporarily bypassed, preventing your application to crash for that, being more resilient than the default keyv behavior.
 
-In the next database downtime, your keyv set/get petitions will be temporarily bypassed, preventing your application to crash for that, being more resilient than the default keyv behavior.
-
-As soon as the connection is re-established it will be work back as expected.
+As soon as the connection is re-established, it will be work back as expected.
 
 In case you need, you can see omitted errors enabling debug doing `DEBUG=@keyvhq/offline*`
 

@@ -89,15 +89,18 @@ await cache.get('foo') // 'cache'
 
 You can optionally provide your own serialization functions to support extra data types or to serialize to something other than JSON.
 
-
-
 The following example is using [@keyvhq/compress](https://github.com/microlinkhq/keyv/tree/master/packages/compress) as serializer:
 
 ```js
 const KeyvCompress = require('@keyvhq/compress')
 const Keyv = require('@keyvhq/core')
 
-const keyv = KeyvCompress(new Keyv({ serialize, deserialize })
+const keyv = KeyvCompress(
+  new Keyv({
+    serialize: v8.serialize,
+    deserialize: v8.deserialize
+  })
+)
 ```
 
 ## Storage adapters

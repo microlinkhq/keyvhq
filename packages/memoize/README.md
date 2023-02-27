@@ -15,16 +15,17 @@ const memoize = require('@keyvhq/memoize')
 
 const memoizedRequest = memoize(request)
 
-memoizedRequest('http://example.com').then(resp => { /* from request */ })
-memoizedRequest('http://example.com').then(resp => { /* from cache */ })
+memoizedRequest('http://example.com').then(res => { /* from request */ })
+memoizedRequest('http://example.com').then(res => { /* from cache */ })
 ```
 
-You can pass a [keyv](https://github.com/microlinkhq/keyv) instance or options to be used as argument.
+You can pass a [keyv](https://github.com/microlinkhq/keyv) instance or options to be used as argument:
 
 ```js
-memoize(request, { store: new Map() })
-memoize(request, 'redis://user:pass@localhost:6379')
-memoize(request, new Keyv())
+const memoize = require('@keyvhq/memoize')
+const Keyv = require('@keyvhq/core')
+
+memoize(request, { store: new Keyv({ namespace: 'ssr' }) })
 ```
 
 ### Defining the key
