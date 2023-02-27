@@ -14,7 +14,7 @@ npm install --save @keyvhq/core @keyvhq/sqlite
 const KeyvSqlite = require('@keyvhq/sqlite')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
+const keyv = new Keyv({
   store: new KeyvSqlite('sqlite://path/to/database.sqlite')
 })
 ```
@@ -25,7 +25,7 @@ You can specify the `table` and [`busyTimeout`](https://sqlite.org/c3ref/busy_ti
 const KeyvSqlite = require('@keyvhq/sqlite')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
+const keyv = new Keyv({
   store: new KeyvSqlite('sqlite://path/to/database.sqlite', {
     table: 'cache',
     busyTimeout: 10000

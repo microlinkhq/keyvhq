@@ -11,20 +11,20 @@ npm install --save @keyvhq/memoize
 ## Usage
 
 ```js
-const memoize = require('@keyvhq/memoize');
+const memoize = require('@keyvhq/memoize')
 
-const memoizedRequest = memoize(request);
+const memoizedRequest = memoize(request)
 
-memoizedRequest('http://example.com').then(resp => { /* from request */ });
-memoizedRequest('http://example.com').then(resp => { /* from cache */ });
+memoizedRequest('http://example.com').then(resp => { /* from request */ })
+memoizedRequest('http://example.com').then(resp => { /* from cache */ })
 ```
 
 You can pass a [keyv](https://github.com/microlinkhq/keyv) instance or options to be used as argument.
 
 ```js
-memoize(request, { store: new Map() });
-memoize(request, 'redis://user:pass@localhost:6379');
-memoize(request, new Keyv());
+memoize(request, { store: new Map() })
+memoize(request, 'redis://user:pass@localhost:6379')
+memoize(request, new Keyv())
 ```
 
 ### Defining the key
@@ -34,14 +34,14 @@ By default the first argument of your function call is used as cache key.
 You can pass a function to define how key will be defined. The key function will be called with the same arguments as the function.
 
 ```js
-const sum = (n1, n2) => n1 + n2;
+const sum = (n1, n2) => n1 + n2
 
 const memoized = memoize(sum, new Keyv(), {
   key: (n1, n2) => `${n1}+${n2}`
-});
+})
 
 // cached as { '1+2': 3 }
-memoized(1, 2); 
+memoized(1, 2)
 ```
 
 The library uses flood protection internally based on the result of the key. 
@@ -53,10 +53,10 @@ This means you can make as many requests as you want simultaneously while being 
 Set `ttl` to a `number` for a static TTL value.
 
 ```js
-const memoizedRequest = memoize(request, new Keyv(), { ttl: 60000 });
+const memoizedRequest = memoize(request, new Keyv(), { ttl: 60000 })
 
 // cached for 60 seconds
-memoizedRequest('http://example.com');
+memoizedRequest('http://example.com')
 ```
 
 Set `ttl` to a `function` for a dynamic TTL value.
@@ -64,10 +64,10 @@ Set `ttl` to a `function` for a dynamic TTL value.
 ```js
 const memoizedRequest = memoize(request, new Keyv(), {
   ttl: (res) => res.statusCode === 200 ? 60000 : 0
-});
+})
 
 // cached for 60 seconds only if response was 200 OK
-memoizedRequest('http://example.com'); 
+memoizedRequest('http://example.com')
 ```
 
 ### Stale support
@@ -77,19 +77,19 @@ Set `staleTtl` to any `number` of milliseconds.
 If the `ttl` of a requested resource is below this staleness threshold we will still return the stale value but meanwhile asynchronously refresh the value.
 
 ```js
-const memoizedRequest = memoize(request, new Keyv(), { 
+const memoizedRequest = memoize(request, new Keyv(), {
   ttl: 60000,
   staleTtl: 10000
-});
+})
 
 // cached for 60 seconds
-memoizedRequest('http://example.com'); 
+memoizedRequest('http://example.com')
 
 // … 55 seconds later
 // Our cache will expire in 5 seconds.
 // This is below the staleness threshold of 10 seconds.
 // returns cached result + refresh cache on background
-memoizedRequest('http://example.com'); 
+memoizedRequest('http://example.com')
 ```
 
 When the `staleTtl` option is set we won't delete expired items either. The same logic as above applies.
@@ -123,13 +123,13 @@ It defines how the get will be obtained.
 The signature of the function should be a `String` to be used as key associated with the cache copy:
 
 ```js
-key: ({req}) => req.url
+key: ({ req }) => req.url
 ```
 
 Just in case you need a more granular control, you can return an `Array`, where the second value determines the expiration behavior:
 
 ```js
-key: ({req}) => [req.url, req.query.forceExpiration]
+key: ({ req }) => [req.url, req.query.forceExpiration]
 ```
 
 ##### objectMode
