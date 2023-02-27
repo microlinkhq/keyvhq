@@ -2,7 +2,7 @@
   "name": "@keyvhq/postgres",
   "description": "PostgreSQL storage adapter for Keyv",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.26",
+  "version": "1.6.28",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -31,7 +31,7 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/sql": "^1.6.26",
+    "@keyvhq/sql": "^1.6.28",
     "pg": "~8.9.0"
   },
   "devDependencies": {
