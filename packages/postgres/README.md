@@ -16,13 +16,13 @@ npm install --save @keyvhq/core @keyvhq/postgres
 const KeyvPostgres = require('@keyvhq/postgres')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
-    store: new KeyvPostgres({
-        uri: 'postgresql://user:pass@localhost:5432/dbname',
-        ssl: {
-            rejectUnauthorized: false
-        }
-    })
+const keyv = new Keyv({
+  store: new KeyvPostgres({
+    uri: 'postgresql://user:pass@localhost:5432/dbname',
+    ssl: {
+      rejectUnauthorized: false
+    }
+  })
 })
 
 keyv.on('error', handleConnectionError)
@@ -34,7 +34,7 @@ You can specify the `table` option:
 const KeyvPostgres = require('@keyvhq/postgres')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
+const keyv = new Keyv({
   store: new KeyvPostgres('postgresql://user:pass@localhost:5432/dbname', {
     table: 'cache'
   })

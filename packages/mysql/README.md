@@ -14,7 +14,7 @@ npm install --save @keyvhq/core @keyvhq/mysql
 const KeyvMysql = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
+const keyv = new Keyv({
   store: new KeyvMysql('mysql://user:pass@localhost:3306/dbname')
 })
 
@@ -27,7 +27,7 @@ You can specify a custom table with the `table` option and the primary key size 
 const KeyvMysql = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
+const keyv = new Keyv({
   store: new KeyvMysql('mysql://user:pass@localhost:3306/dbname', {
     table: 'cache',
     keySize: 255

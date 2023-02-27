@@ -16,7 +16,7 @@ npm install --save @keyvhq/core @keyvhq/redis
 const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({  store: new KeyvRedis('redis://user:pass@localhost:6379') })
+const keyv = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379') })
 
 keyv.on('error', handleConnectionError)
 ```
@@ -27,7 +27,7 @@ Any valid [`Redis`](https://github.com/luin/ioredis#connect-to-redis) options wi
 const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
+const keyv = new Keyv({
   store: new KeyvRedis('redis://user:pass@localhost:6379', {
     disable_resubscribing: true
   })

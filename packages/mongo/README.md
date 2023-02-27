@@ -18,7 +18,7 @@ npm install --save @keyvhq/core @keyvhq/mongo
 const KeyvMongo = require('@keyvhq/mongo')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
+const keyv = new Keyv({
   store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')
 })
 
@@ -31,7 +31,7 @@ You can specify the collection name, by default `'keyv'` is used:
 const KeyvMongo = require('@keyvhq/mongo')
 const Keyv = require('@keyvhq/core')
 
-const keyv = new Keyv({ 
+const keyv = new Keyv({
   store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname', {
     collection: 'cache'
   })
