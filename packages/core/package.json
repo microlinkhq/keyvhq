@@ -12,10 +12,10 @@
   "repository": {
     "directory": "packages/keyv",
     "type": "git",
-    "url": "git+https://github.com/microlinkhq/keyv.git"
+    "url": "git+https://github.com/microlinkhq/keyvhq.git"
   },
   "bugs": {
-    "url": "https://github.com/microlinkhq/keyv/issues"
+    "url": "https://github.com/microlinkhq/keyvhq/issues"
   },
   "keywords": [
     "cache",

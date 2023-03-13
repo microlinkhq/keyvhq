@@ -1,7 +1,7 @@
 /* global codecopy */
 
 window.$docsify = {
-  repo: 'microlinkhq/keyv',
+  repo: 'microlinkhq/keyvhq',
   maxLevel: 3,
   executeScript: true,
   auto2top: true,

@@ -12,6 +12,8 @@
 
 ## Features
 
+Forked from [keyv](https://github.com/lukechilds/keyv), plus:
+
 - It isn't bloated.
 - It supports namespaces.
 - It supports TTL based expiry.
@@ -89,7 +91,7 @@ await cache.get('foo') // 'cache'
 
 You can optionally provide your own serialization functions to support extra data types or to serialize to something other than JSON.
 
-The following example is using [@keyvhq/compress](https://github.com/microlinkhq/keyv/tree/master/packages/compress) as serializer:
+The following example is using [@keyvhq/compress](https://github.com/microlinkhq/keyvhq/tree/master/packages/compress) as serializer:
 
 ```js
 const KeyvCompress = require('@keyvhq/compress')
@@ -135,20 +137,20 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 
 ### All the adapters
 
-> The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyv/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
+> The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyvhq/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
-- [@keyvhq/mongo](https://github.com/microlinkhq/keyv/tree/master/packages/mongo) – MongoDB storage adapter for Keyv.
-- [@keyvhq/mysql](https://github.com/microlinkhq/keyv/tree/master/packages/mysql) – MySQL/MariaDB storage adapter for Keyv.
-- [@keyvhq/postgres](https://github.com/microlinkhq/keyv/tree/master/packages/postgres) – PostgreSQL storage adapter for Keyv.
-- [@keyvhq/redis](https://github.com/microlinkhq/keyv/tree/master/packages/redis) – Redis storage adapter for Keyv.
-- [@keyvhq/sqlite](https://github.com/microlinkhq/keyv/tree/master/packages/sqlite) – SQLite storage adapter for Keyv.
+- [@keyvhq/mongo](https://github.com/microlinkhq/keyvhq/tree/master/packages/mongo) – MongoDB storage adapter for Keyv.
+- [@keyvhq/mysql](https://github.com/microlinkhq/keyvhq/tree/master/packages/mysql) – MySQL/MariaDB storage adapter for Keyv.
+- [@keyvhq/postgres](https://github.com/microlinkhq/keyvhq/tree/master/packages/postgres) – PostgreSQL storage adapter for Keyv.
+- [@keyvhq/redis](https://github.com/microlinkhq/keyvhq/tree/master/packages/redis) – Redis storage adapter for Keyv.
+- [@keyvhq/sqlite](https://github.com/microlinkhq/keyvhq/tree/master/packages/sqlite) – SQLite storage adapter for Keyv.
 
 ### Decorators
 
-- [@keyvhq/compress](https://github.com/microlinkhq/keyv/tree/master/packages/compress) – Adds compression bindings for your Keyv instance.
-- [@keyvhq/memoize](https://github.com/microlinkhq/keyv/tree/master/packages/memoize) – Memoize any function using Keyv as storage backend.
-- [@keyvhq/multi](https://github.com/microlinkhq/keyv/tree/master/packages/multi) – Manages local and remote keyv stores as one.
-- [@keyvhq/offline](https://github.com/microlinkhq/keyv/tree/master/packages/offline) – Adds offline capabilities for your keyv instance.
+- [@keyvhq/compress](https://github.com/microlinkhq/keyvhq/tree/master/packages/compress) – Adds compression bindings for your Keyv instance.
+- [@keyvhq/memoize](https://github.com/microlinkhq/keyvhq/tree/master/packages/memoize) – Memoize any function using Keyv as storage backend.
+- [@keyvhq/multi](https://github.com/microlinkhq/keyvhq/tree/master/packages/multi) – Manages local and remote keyv stores as one.
+- [@keyvhq/offline](https://github.com/microlinkhq/keyvhq/tree/master/packages/offline) – Adds offline capabilities for your keyv instance.
 
 ### Community
 
@@ -261,7 +263,7 @@ Returns an [Async Iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScr
 
 ## License
 
-**keyv** © [Luke Childs](https://lukechilds.co), released under the [MIT](https://github.com/microlinkhq/keyv/blob/master/LICENSE.md) License.<br/>
-Maintained by [Microlink](https://microlink.io) with help from [contributors](https://github.com/microlinkhq/keyv/contributors).
+**keyv** © [Luke Childs](https://lukechilds.co), released under the [MIT](https://github.com/microlinkhq/keyvhq/blob/master/LICENSE.md) License.<br/>
+Maintained by [Microlink](https://microlink.io) with help from [contributors](https://github.com/microlinkhq/keyvhq/contributors).
 
 > [microlink.io](https://microlink.io) · GitHub [microlinkhq](https://github.com/microlinkhq) · Twitter [@microlinkhq](https://twitter.com/microlinkhq)
