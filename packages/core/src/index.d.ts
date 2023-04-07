@@ -5,9 +5,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 
-import { EventEmitter } from 'events'
-
-declare class Keyv<TValue = any> extends EventEmitter {
+declare class Keyv<TValue = any> {
   constructor (opts?: Keyv.Options<TValue>)
 
   /** Returns the value. */

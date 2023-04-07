@@ -17,8 +17,6 @@ const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379') })
-
-keyv.on('error', handleConnectionError)
 ```
 
 Any valid [`Redis`](https://github.com/luin/ioredis#connect-to-redis) options will be passed directly through:

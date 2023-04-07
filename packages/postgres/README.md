@@ -24,8 +24,6 @@ const keyv = new Keyv({
     }
   })
 })
-
-keyv.on('error', handleConnectionError)
 ```
 
 You can specify the `table` option:

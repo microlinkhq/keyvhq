@@ -17,8 +17,6 @@ const Keyv = require('@keyvhq/core')
 const keyv = new Keyv({
   store: new KeyvMysql('mysql://user:pass@localhost:3306/dbname')
 })
-
-keyv.on('error', handleConnectionError)
 ```
 
 You can specify a custom table with the `table` option and the primary key size with `keySize`:

@@ -1,31 +1,27 @@
 'use strict'
 
-const EventEmitter = require('events')
 const JSONB = require('json-buffer')
 
-class Keyv extends EventEmitter {
+class Keyv {
   constructor (options = {}) {
-    super()
-
-    Object.entries(Object.assign(
-      {
-        serialize: JSONB.stringify,
-        deserialize: JSONB.parse,
-        store: new Map()
-      },
-      options
-    )).forEach(([key, value]) => (this[key] = value))
-
-    if (typeof this.store.on === 'function') {
-      this.store.on('error', error => this.emit('error', error))
-    }
+    Object.entries(
+      Object.assign(
+        {
+          serialize: JSONB.stringify,
+          deserialize: JSONB.parse,
+          store: new Map()
+        },
+        options
+      )
+    ).forEach(([key, value]) => (this[key] = value))
 
     const generateIterator = iterator =>
       async function * () {
         for await (const [key, raw] of typeof iterator === 'function'
           ? iterator(this.namespace)
           : iterator) {
-          const data = typeof raw === 'string' ? await this.deserialize(raw) : raw
+          const data =
+            typeof raw === 'string' ? await this.deserialize(raw) : raw
           if (this.namespace && !key.includes(this.namespace)) {
             continue
           }
@@ -51,7 +47,9 @@ class Keyv extends EventEmitter {
   }
 
   _getKeyPrefix (key) {
-    return this.namespace ? `${this.namespace}:${key}` : (key && key.toString()) || key
+    return this.namespace
+      ? `${this.namespace}:${key}`
+      : (key && key.toString()) || key
   }
 
   _getKeyUnprefix (key) {
@@ -73,7 +71,9 @@ class Keyv extends EventEmitter {
   }
 
   async has (key) {
-    return typeof this.store.has === 'function' ? this.store.has(this._getKeyPrefix(key)) : (await this.store.get(this._getKeyPrefix(key))) !== undefined
+    return typeof this.store.has === 'function'
+      ? this.store.has(this._getKeyPrefix(key))
+      : (await this.store.get(this._getKeyPrefix(key))) !== undefined
   }
 
   async set (key, value, ttl) {

@@ -35,9 +35,6 @@ new Keyv();
 
 (async () => {
   const keyv = new Keyv<string>()
-
-  keyv.on('error', err => console.log('Connection Error', err))
-
   expectType<boolean>(await keyv.set('foo', 'expires in 1 second', 1000))
   expectType<boolean>(await keyv.set('foo', 'never expires'))
   expectType<string | undefined>(await keyv.get('foo'))
