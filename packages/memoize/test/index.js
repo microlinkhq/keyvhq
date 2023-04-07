@@ -58,7 +58,7 @@ test('should delete store value after expiration', async t => {
   const ttl = 100
   await keyv.set(5, 5, ttl)
 
-  const memoizedSum = memoize(asyncSum, keyv, { ttl: ttl })
+  const memoizedSum = memoize(asyncSum, keyv, { ttl })
 
   t.is(await memoizedSum(5), 5)
 

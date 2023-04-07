@@ -56,9 +56,6 @@ const keyvSQLite = new Keyv({ store: new KeyvSQLite('sqlite://path/to/database.s
 const keyvPostgreSQL = new Keyv({ store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')})
 const keyvMySQL = new Keyv({ store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')})
 
-// Handle database connection errors
-keyv.on('error', err => console.log('Connection Error', err))
-
 await keyv.set('foo', 'expires in 1 second', 1000) // true
 await keyv.set('foo', 'never expires') // true
 await keyv.get('foo') // 'never expires'
@@ -172,8 +169,6 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 ### constructor([options])
 
 Returns a new Keyv instance.
-
-The Keyv instance is also an `EventEmitter` that will emit an `'error'` event if the storage adapter connection fails.
 
 #### options
 

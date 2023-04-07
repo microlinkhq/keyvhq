@@ -16,8 +16,7 @@ test('Collection option merges into default options', t => {
     url: 'mongodb://127.0.0.1:27017',
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    collection: 'foo',
-    emitErrors: true
+    collection: 'foo'
   })
 })
 
@@ -27,7 +26,6 @@ test('Collection option merges into default options if URL is passed', t => {
     url: mongoURL,
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    collection: 'foo',
-    emitErrors: true
+    collection: 'foo'
   })
 })

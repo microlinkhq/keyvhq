@@ -5,9 +5,8 @@
 // TypeScript Version: 2.3
 
 import { Store } from '@keyvhq/core'
-import { EventEmitter } from 'events'
 
-declare class KeyvMysql extends EventEmitter implements Store<string | undefined> {
+declare class KeyvMysql implements Store<string | undefined> {
   readonly ttlSupport: false
   namespace?: string | undefined
 
