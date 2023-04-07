@@ -125,32 +125,6 @@ const keyvApiTests = (test, Keyv, store) => {
     t.is(await keyv.has('foo'), false)
   })
 
-  test.serial('errors from stores get bubbled to keyv', async t => {
-    const keyvStore = store()
-
-    // Mock up an event emitter and fire it
-    if (typeof keyvStore.on !== 'function') {
-      keyvStore.eventHandlers = new Map()
-      keyvStore.on = function (event, callback) {
-        const callbacks = keyvStore.eventHandlers.get(event) || []
-        callbacks.push(callback)
-        keyvStore.eventHandlers.set(event, callbacks)
-      }
-      keyvStore.emit = function (event, ...data) {
-        const fns = keyvStore.eventHandlers.get(event) || []
-        for (const fn of fns) {
-          fn(...data)
-        }
-      }
-    }
-
-    const keyv = new Keyv({ store: keyvStore })
-
-    keyv.on('error', () => {
-      t.pass()
-    })
-    keyv.store.emit('error', 'foo')
-  })
   test.after.always(async () => {
     const keyv = new Keyv({ store: store() })
     await keyv.clear()

@@ -6,9 +6,8 @@
 
 import { Store } from '@keyvhq/core'
 import { Redis, RedisOptions } from 'ioredis'
-import { EventEmitter } from 'events'
 
-declare class KeyvRedis extends EventEmitter implements Store<string | undefined> {
+declare class KeyvRedis implements Store<string | undefined> {
   readonly ttlSupport: true
   namespace?: string | undefined
 

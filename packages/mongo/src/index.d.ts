@@ -5,10 +5,9 @@
 // TypeScript Version: 2.3
 
 import { Store } from '@keyvhq/core'
-import { EventEmitter } from 'events'
 import { MongoClientOptions } from 'mongodb'
 
-declare class KeyvMongo<TValue> extends EventEmitter implements Store<TValue> {
+declare class KeyvMongo<TValue> implements Store<TValue> {
   readonly ttlSupport: false
   namespace?: string | undefined
 

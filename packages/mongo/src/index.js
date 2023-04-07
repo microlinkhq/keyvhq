@@ -1,13 +1,11 @@
 'use strict'
 
-const EventEmitter = require('events')
 const mongodb = require('mongodb')
 const pify = require('pify')
 
 const keyvMongoKeys = ['url', 'collection', 'emitErrors']
-class KeyvMongo extends EventEmitter {
+class KeyvMongo {
   constructor (url, options) {
-    super()
     this.ttlSupport = false
     url = url || {}
     if (typeof url === 'string') {
@@ -23,8 +21,7 @@ class KeyvMongo extends EventEmitter {
         url: 'mongodb://127.0.0.1:27017',
         collection: 'keyv',
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        emitErrors: true
+        useUnifiedTopology: true
       },
       url,
       options
@@ -35,11 +32,7 @@ class KeyvMongo extends EventEmitter {
         ([k, v]) => !keyvMongoKeys.includes(k)
       )
     )
-    try {
-      this.client = new mongodb.MongoClient(this.options.url, mongoOptions)
-    } catch (error) {
-      if (this.options.emitErrors) this.emit('error', error)
-    }
+    this.client = new mongodb.MongoClient(this.options.url, mongoOptions)
 
     this.mongo = {}
     let listeningEvents = false

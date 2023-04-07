@@ -173,8 +173,6 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 
 Returns a new Keyv instance.
 
-The Keyv instance is also an `EventEmitter` that will emit an `'error'` event if the storage adapter connection fails.
-
 #### options
 
 Type: `Object`
