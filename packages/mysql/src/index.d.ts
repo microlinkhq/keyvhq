@@ -1,13 +1,13 @@
 import { Store } from '@keyvhq/core'
 
-declare class KeyvMysql implements Store<string | undefined> {
+declare class KeyvMysql<TValue> implements Store<TValue> {
   constructor (uri?: string)
   constructor (options?: KeyvMysql.Options)
   constructor (uri: string, options?: KeyvMysql.Options)
 
-  get (key: string): Promise<string | undefined>
+  get (key: string): Promise<TValue>
   has (key: string): Promise<boolean>
-  set (key: string, value: string | undefined): Promise<any>
+  set (key: string, value: TValue): Promise<boolean>
   delete (key: string): Promise<boolean>
   clear (): Promise<void>
   iterator (): AsyncGenerator

@@ -33,7 +33,9 @@
     "@keyvhq/compress": "latest",
     "@keyvhq/sqlite": "latest",
     "ava": "latest",
-    "delay": "latest"
+    "delay": "latest",
+    "tsd": "latest",
+    "typescript": "latest"
   },
   "engines": {
     "node": ">= 16"
@@ -42,10 +44,16 @@
     "src"
   ],
   "scripts": {
+    "lint": "tsd",
+    "pretest": "npm run lint",
     "test": "ava"
   },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "tsd": {
+    "directory": "test"
+  },
+  "types": "./src/index.d.ts"
 }

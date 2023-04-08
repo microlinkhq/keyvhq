@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 
 import Keyv from '@keyvhq/core'
-import KeyvSqlite from '..'
+import KeyvSqlite from '../src'
 
 new Keyv({ store: new KeyvSqlite({ uri: 'sqlite://path/to/database.sqlite', table: 'cache' }) })
 

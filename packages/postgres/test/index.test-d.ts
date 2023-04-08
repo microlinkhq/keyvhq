@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 
 import Keyv from '@keyvhq/core'
-import KeyvPostgres from '..'
+import KeyvPostgres from '../src'
 
 new Keyv({ store: new KeyvPostgres({ uri: 'postgres://user:pass@localhost:5432/dbname', table: 'cache' }) })
 

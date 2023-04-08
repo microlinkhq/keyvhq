@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-invalid-void-type */
 
 import { expectType } from 'tsd'
-import Keyv, { DeserializedData } from '..'
+import Keyv, { DeserializedData } from '../src'
 
 new Keyv({ namespace: 'redis' })
 new Keyv({ ttl: 123 })

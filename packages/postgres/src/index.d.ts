@@ -1,13 +1,13 @@
 import { Store } from '@keyvhq/core'
 
-declare class KeyvPostgres implements Store<string | undefined> {
+declare class KeyvPostgres<TValue> implements Store<TValue> {
   constructor (uri?: string)
   constructor (options?: KeyvPostgres.Options)
   constructor (uri: string, options?: KeyvPostgres.Options)
 
-  get (key: string): Promise<string | undefined>
+  get (key: string): Promise<TValue>
   has (key: string): Promise<boolean>
-  set (key: string, value: string | undefined): Promise<any>
+  set (key: string, value: TValue): Promise<boolean>
   delete (key: string): Promise<boolean>
   clear (): Promise<void>
   iterator (): AsyncGenerator
