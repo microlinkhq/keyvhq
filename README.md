@@ -109,11 +109,11 @@ const keyv = KeyvCompress(
 Caching will work in memory by default and users have the option to also install a **Keyv** storage adapter and pass in a connection string, or any other storage that implements the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
 
 ```js
-const got = require('got')
 const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
+const got = require('got')
 
-const cache = new Keyv({  store: new KeyvRedis('redis://user:pass@localhost:6379') })
+const cache = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379') })
 
 await got('https://keyv.js.org', { cache })
 ```
