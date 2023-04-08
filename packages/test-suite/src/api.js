@@ -1,7 +1,6 @@
 'use strict'
 
 const tk = require('timekeeper')
-const delay = require('delay')
 
 const keyvApiTests = (test, Keyv, store) => {
   test.beforeEach(async () => {
@@ -30,12 +29,7 @@ const keyvApiTests = (test, Keyv, store) => {
     const keyv = new Keyv({ store: store() })
     await keyv.set('foo', 'bar', ttl)
     t.is(await keyv.get('foo'), 'bar')
-    if (keyv.store.ttlSupport === true) {
-      await delay(ttl + 1)
-    } else {
-      tk.freeze(Date.now() + ttl + 1)
-    }
-
+    tk.freeze(Date.now() + ttl + 1)
     t.is(await keyv.get('foo'), undefined)
     tk.reset()
   })

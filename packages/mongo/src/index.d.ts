@@ -1,16 +1,7 @@
-// Type definitions for @keyv/mongo 1.0
-// Project: https://github.com/lukechilds/keyv-mongo
-// Definitions by: BendingBender <https://github.com/BendingBender>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.3
-
 import { Store } from '@keyvhq/core'
 import { MongoClientOptions } from 'mongodb'
 
 declare class KeyvMongo<TValue> implements Store<TValue> {
-  readonly ttlSupport: false
-  namespace?: string | undefined
-
   constructor (uri?: string)
   constructor (options?: KeyvMongo.Options)
   constructor (uri: string, options?: KeyvMongo.Options)

@@ -1,16 +1,7 @@
-// Type definitions for @keyv/redis 1.3
-// Project: https://github.com/lukechilds/keyv-redis
-// Definitions by: BendingBender <https://github.com/BendingBender>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.3
-
 import { Store } from '@keyvhq/core'
 import { Redis, RedisOptions } from 'ioredis'
 
 declare class KeyvRedis implements Store<string | undefined> {
-  readonly ttlSupport: true
-  namespace?: string | undefined
-
   constructor (options?: KeyvRedis.Options)
   constructor (redis: Redis)
   constructor (uri: string, options?: KeyvRedis.Options)

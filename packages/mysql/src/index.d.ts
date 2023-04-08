@@ -1,15 +1,6 @@
-// Type definitions for @keyv/mysql 1.1
-// Project: https://github.com/lukechilds/keyv-mysql
-// Definitions by: BendingBender <https://github.com/BendingBender>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.3
-
 import { Store } from '@keyvhq/core'
 
 declare class KeyvMysql implements Store<string | undefined> {
-  readonly ttlSupport: false
-  namespace?: string | undefined
-
   constructor (uri?: string)
   constructor (options?: KeyvMysql.Options)
   constructor (uri: string, options?: KeyvMysql.Options)
