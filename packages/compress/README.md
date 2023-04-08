@@ -1,4 +1,4 @@
-# @keyvhq/compress [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyvhq)
+# @keyvhq/compress [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyvhq)
 
 > Adds compression bindings for your Keyv instance.
 

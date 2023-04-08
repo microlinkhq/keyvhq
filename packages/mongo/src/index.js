@@ -6,7 +6,6 @@ const pify = require('pify')
 const keyvMongoKeys = ['url', 'collection', 'emitErrors']
 class KeyvMongo {
   constructor (url, options) {
-    this.ttlSupport = false
     url = url || {}
     if (typeof url === 'string') {
       url = { url }

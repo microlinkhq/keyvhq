@@ -4,8 +4,6 @@ const { Sql } = require('sql-ts')
 
 class KeyvSql {
   constructor (options) {
-    this.ttlSupport = false
-
     this.options = Object.assign(
       {
         table: 'keyv',

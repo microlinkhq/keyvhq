@@ -1,15 +1,6 @@
-// Type definitions for @keyv/postgres 1.0
-// Project: https://github.com/lukechilds/keyv-postgres
-// Definitions by: BendingBender <https://github.com/BendingBender>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.3
-
 import { Store } from '@keyvhq/core'
 
 declare class KeyvPostgres implements Store<string | undefined> {
-  readonly ttlSupport: false
-  namespace?: string | undefined
-
   constructor (uri?: string)
   constructor (options?: KeyvPostgres.Options)
   constructor (uri: string, options?: KeyvPostgres.Options)
