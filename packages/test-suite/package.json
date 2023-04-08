@@ -28,8 +28,7 @@
     "value"
   ],
   "dependencies": {
-    "delay": "latest",
-    "timekeeper": "latest"
+    "delay": "latest"
   },
   "engines": {
     "node": ">= 16"
