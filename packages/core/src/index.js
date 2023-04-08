@@ -90,8 +90,8 @@ class Keyv {
     return this.store.delete(this._getKeyPrefix(key))
   }
 
-  async clear () {
-    return this.store.clear(this.namespace)
+  async clear (options) {
+    return this.store.clear(this.namespace, options)
   }
 }
 module.exports = Keyv

@@ -10,7 +10,7 @@ declare class KeyvMongo<TValue> implements Store<TValue> {
   has (key: string): Promise<boolean>
   set (key: string, value: TValue, ttl?: number): Promise<boolean>
   delete (key: string): Promise<boolean>
-  clear (namespace?: string): Promise<void>
+  clear (): Promise<void>
   iterator (): AsyncGenerator
 }
 

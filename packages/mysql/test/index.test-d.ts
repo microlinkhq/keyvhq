@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 
 import Keyv from '@keyvhq/core'
-import KeyvMysql from '..'
+import KeyvMysql from '../src'
 
 new Keyv({ store: new KeyvMysql({ uri: 'mysql://user:pass@localhost:3306/dbname', table: 'cache' }) })
 

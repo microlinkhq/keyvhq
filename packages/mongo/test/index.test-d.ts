@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 
 import Keyv from '@keyvhq/core'
-import KeyvMongo from '..'
+import KeyvMongo from '../src'
 
 new Keyv({ store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname', { collection: 'cache' }) })
 

@@ -21,7 +21,7 @@ declare class Keyv<TValue = any> {
      */
   delete (key: string): Promise<boolean>
   /** Delete all entries in the current namespace. */
-  clear (namespace?: string): Promise<void>
+  clear (options?: Record<string, any>): Promise<void>
   /**
      * Yields an iterator with all the key, value entries in the namespace.
      */

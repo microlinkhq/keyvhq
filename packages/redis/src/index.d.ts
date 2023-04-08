@@ -1,7 +1,7 @@
 import { Store } from '@keyvhq/core'
 import { Redis, RedisOptions } from 'ioredis'
 
-declare class KeyvRedis implements Store<TValue> {
+declare class KeyvRedis<TValue> implements Store<TValue> {
   constructor (options?: KeyvRedis.Options)
   constructor (redis: Redis)
   constructor (uri: string, options?: KeyvRedis.Options)
@@ -10,7 +10,7 @@ declare class KeyvRedis implements Store<TValue> {
   has (key: string): Promise<boolean>
   set (key: string, value: TValue, ttl?: number): Promise<boolean>
   delete (key: string): Promise<boolean>
-  clear (namespace?: string): Promise<void>
+  clear (): Promise<void>
   iterator (): AsyncGenerator
 }
 
