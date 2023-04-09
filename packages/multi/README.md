@@ -1,4 +1,4 @@
-# @keyvhq/multi [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/multi [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/multi)
 
 > A multi storage adapter to manage local and remote store as one for Keyv.
 

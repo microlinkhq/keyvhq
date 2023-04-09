@@ -1,4 +1,4 @@
-# @keyvhq/test-suite [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/test-suite [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/test-suite)
 
 Complete [AVA](https://github.com/avajs/ava) test suite to test a [Keyv](https://github.com/microlinkhq/keyv) storage adapter for API compliance.
 

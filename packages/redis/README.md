@@ -1,4 +1,4 @@
-# @keyvhq/redis [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/redis [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/redis)
 
 > Redis storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 

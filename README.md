@@ -136,6 +136,7 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 
 > The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyvhq/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
+- [@keyvhq/file](https://github.com/microlinkhq/keyvhq/tree/master/packages/file) – File storage adapter for Keyv.
 - [@keyvhq/mongo](https://github.com/microlinkhq/keyvhq/tree/master/packages/mongo) – MongoDB storage adapter for Keyv.
 - [@keyvhq/mysql](https://github.com/microlinkhq/keyvhq/tree/master/packages/mysql) – MySQL/MariaDB storage adapter for Keyv.
 - [@keyvhq/postgres](https://github.com/microlinkhq/keyvhq/tree/master/packages/postgres) – PostgreSQL storage adapter for Keyv.
