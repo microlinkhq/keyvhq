@@ -1,4 +1,4 @@
-# @keyvhq/sqlite [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/sqlite [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/sqlite)
 
 SQLite storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
