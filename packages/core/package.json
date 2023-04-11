@@ -20,6 +20,7 @@
   "keywords": [
     "cache",
     "key",
+    "keyv",
     "store",
     "ttl",
     "value"

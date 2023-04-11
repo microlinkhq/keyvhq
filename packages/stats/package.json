@@ -1,8 +1,8 @@
 {
-  "name": "@keyvhq/multi",
-  "description": "Layered cache with any backend",
+  "name": "@keyvhq/stats",
+  "description": "Collects metrics for a Keyv instance over time.",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.26",
+  "version": "0.0.0",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -10,29 +10,22 @@
     "url": "https://microlink.io"
   },
   "repository": {
-    "directory": "packages/memo",
+    "directory": "packages/stats",
     "type": "git",
-    "url": "git+https://github.com/microlinkhq/keyv.git"
+    "url": "git+https://github.com/microlinkhq/keyvhq.git"
   },
   "bugs": {
     "url": "https://github.com/microlinkhq/keyvhq/issues"
   },
   "keywords": [
     "cache",
-    "key",
+    "info",
     "keyv",
-    "multicache",
-    "multilevel",
-    "store",
-    "ttl",
-    "value"
+    "stats"
   ],
-  "dependencies": {
-    "@keyvhq/core": "^1.6.26"
-  },
   "devDependencies": {
-    "@keyvhq/compress": "latest",
-    "@keyvhq/sqlite": "latest",
+    "@keyvhq/core": "latest",
+    "@keyvhq/file": "latest",
     "ava": "latest",
     "delay": "latest",
     "tsd": "latest",
