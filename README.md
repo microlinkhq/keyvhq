@@ -149,6 +149,7 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 - [@keyvhq/memoize](https://github.com/microlinkhq/keyvhq/tree/master/packages/memoize) – Memoize any function using Keyv as storage backend.
 - [@keyvhq/multi](https://github.com/microlinkhq/keyvhq/tree/master/packages/multi) – Manages local and remote keyv stores as one.
 - [@keyvhq/offline](https://github.com/microlinkhq/keyvhq/tree/master/packages/offline) – Adds offline capabilities for your keyv instance.
+- [@keyvhq/stats](https://github.com/microlinkhq/keyvhq/tree/master/packages/stats) – Collects metrics for a Keyv instance over time.
 
 ### Community
 
