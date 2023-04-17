@@ -2,7 +2,7 @@
   "name": "@keyvhq/mysql",
   "description": "MySQL/MariaDB storage adapter for Keyv",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.28",
+  "version": "2.0.0-beta.0",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -31,7 +31,7 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/sql": "^1.6.28",
+    "@keyvhq/sql": "^2.0.0-beta.0",
     "mysql2": "~3.2.0"
   },
   "devDependencies": {

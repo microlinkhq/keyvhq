@@ -2,7 +2,7 @@
   "name": "@keyvhq/offline",
   "description": "Adding offline capabilities for your keyv instance.",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.28",
+  "version": "2.0.0-beta.0",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
