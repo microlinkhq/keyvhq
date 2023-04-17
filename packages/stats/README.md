@@ -52,17 +52,22 @@ keyv.stats.reset()
 
 #### options
 
+##### initialData
+
+Type: `object`<br/>
+Default: `{ hit: 0, miss: 0}`
+
+The data to set for first time or when `.stats.reset()` is called.
+
 ##### interval
 
 Type: `number`<br/>
 Default: `1500`
 
-After that interval, a `stats.save()` will be performed.
-
 ##### key
 
 Type: `string`<br/>
-Default: `'__internal_stats__'`
+Default: `'__keyv_stats__'`
 
 The key used for storing the stats inside the store.
 

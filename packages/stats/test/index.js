@@ -11,12 +11,57 @@ const KeyvStats = require('..')
 const fixture = path.join(__dirname, 'fixture.json')
 
 test.beforeEach(() => {
-  const keyv = KeyvStats(
-    new Keyv({
-      store: new KeyvFile(fixture)
-    })
-  )
+  const keyv = new Keyv({ store: new KeyvFile(fixture) })
   keyv.clear()
+})
+
+test('namespace support', async t => {
+  const store = new Map()
+
+  const keyvOne = new KeyvStats(
+    new Keyv({
+      store,
+      namespace: 'one'
+    }),
+    { interval: 0 }
+  )
+
+  const keyvTwo = new KeyvStats(
+    new Keyv({
+      store,
+      namespace: 'two'
+    }),
+    { interval: 0 }
+  )
+
+  t.deepEqual(await keyvOne.stats.info(), {
+    hit: { value: 0, percent: '0%' },
+    miss: { value: 0, percent: '0%' },
+    total: 0
+  })
+
+  t.deepEqual(await keyvTwo.stats.info(), {
+    hit: { value: 0, percent: '0%' },
+    miss: { value: 0, percent: '0%' },
+    total: 0
+  })
+
+  await keyvOne.set('foo', 'bar')
+  await keyvOne.get('foo')
+  await keyvOne.stats.save()
+  await keyvTwo.stats.save()
+
+  t.deepEqual(await keyvOne.stats.info(), {
+    hit: { value: 1, percent: '100%' },
+    miss: { value: 0, percent: '0%' },
+    total: 1
+  })
+
+  t.deepEqual(await keyvTwo.stats.info(), {
+    hit: { value: 0, percent: '0%' },
+    miss: { value: 0, percent: '0%' },
+    total: 0
+  })
 })
 
 test('get hit ratio', async t => {
