@@ -1,51 +1,49 @@
 'use strict'
 
-const INITIAL = { hit: 0, miss: 0 }
-
 const calcPercent = (partial, total) =>
   `${total === 0 ? 0 : Math.round((partial / total) * 100)}%`
 
 function KeyvStats (
   keyv,
-  { interval = 15000, key = '__internal_stats__' } = {}
+  {
+    interval = 15000,
+    key = '__keyv_stats__',
+    initialData = { hit: 0, miss: 0 }
+  } = {}
 ) {
   if (!(this instanceof KeyvStats)) return new KeyvStats(keyv, { interval })
 
   const get = keyv.get.bind(keyv)
 
-  const getStats = () =>
-    get(key).then(stats => (stats === undefined ? INITIAL : stats))
+  const buffer = get(key).then(stats =>
+    stats === undefined ? initialData : stats
+  )
 
-  let buffer = getStats()
-  const getBuffer = () => Promise.resolve(buffer)
-  const setBuffer = newBuffer => (buffer = newBuffer)
-  const save = async () => keyv.set(key, await getBuffer())
+  const save = async () => keyv.set(key, await buffer)
 
   if (interval > 0) setInterval(save).unref()
 
   keyv.get = async (...args) => {
     const result = await get(...args)
-    const buffer = await getBuffer()
-    ++buffer[result === undefined ? 'miss' : 'hit']
-    setBuffer(buffer)
+    ++(await buffer)[result === undefined ? 'miss' : 'hit']
     return result
   }
 
   keyv.stats = {}
 
-  keyv.stats.reset = () => keyv.set(key, INITIAL)
+  keyv.stats.reset = () => keyv.set(key, initialData)
 
   keyv.stats.info = async () => {
-    const buffer = await getBuffer()
-    const total = buffer.hit + buffer.miss
+    const { hit, miss } = await buffer
+    const total = hit + miss
     return {
       hit: {
-        value: buffer.hit,
-        percent: calcPercent(buffer.hit, total)
+        value: hit,
+        percent: calcPercent(hit, total)
       },
       miss: {
-        value: buffer.miss,
-        percent: calcPercent(buffer.miss, total)
+        value: miss,
+        percent: calcPercent(miss, total)
       },
       total
     }

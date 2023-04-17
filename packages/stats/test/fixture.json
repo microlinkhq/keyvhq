@@ -1,1 +1,1 @@
-{"__internal_stats__":"{\"value\":{\"hit\":3,\"miss\":1},\"expires\":null}","foo":"{\"value\":\"bar\",\"expires\":null}"}
+{"__keyv_stats__":"{\"value\":{\"hit\":3,\"miss\":1},\"expires\":null}","foo":"{\"value\":\"bar\",\"expires\":null}"}
