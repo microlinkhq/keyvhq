@@ -3,11 +3,10 @@
 window.$docsify = {
   repo: 'microlinkhq/keyvhq',
   maxLevel: 3,
-  executeScript: true,
   auto2top: true,
-  noEmoji: true,
+  externalLinkRel: 'noopener noreferrer',
   plugins: [
-    function (hook, vm) {
+    function (hook) {
       hook.ready(function () {
         codecopy('pre')
       })
