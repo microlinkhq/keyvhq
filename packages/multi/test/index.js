@@ -1,19 +1,22 @@
 'use strict'
 
-const test = require('ava')
-const delay = require('delay')
-
 const keyvCompress = require('@keyvhq/compress')
 const KeyvSqlite = require('@keyvhq/sqlite')
 const Keyv = require('@keyvhq/core')
+const delay = require('delay')
+const test = require('ava')
+
 const KeyvMulti = require('..')
 
-const remoteStore = () => keyvCompress(new Keyv({
-  store: new KeyvSqlite({
-    uri: 'sqlite://test/testdb.sqlite',
-    busyTimeout: 30000
-  })
-}))
+const remoteStore = () =>
+  keyvCompress(
+    new Keyv({
+      store: new KeyvSqlite({
+        uri: 'sqlite://test/testdb.sqlite',
+        busyTimeout: 30000
+      })
+    })
+  )
 
 const localStore = () => keyvCompress(new Keyv())
 
@@ -21,7 +24,9 @@ test.beforeEach(async () => {
   const remote = remoteStore()
   const local = localStore()
   const store = new KeyvMulti({ remote, local })
-  return store.clear()
+  const keyv = new Keyv({ store })
+
+  return keyv.clear()
 })
 
 test.serial('.set() sets to both stores', async t => {
@@ -91,9 +96,10 @@ test.serial('.clear() clears both stores', async t => {
   const remote = remoteStore()
   const local = localStore()
   const store = new KeyvMulti({ remote, local })
+  const keyv = new Keyv({ store })
 
-  await store.set('fizz', 'buzz')
-  await store.clear()
+  await keyv.set('fizz', 'buzz')
+  await keyv.clear()
 
   t.is(await store.get('fizz'), undefined)
 })
@@ -102,12 +108,13 @@ test.serial('.clear({ localOnly: true }) clears local store alone', async t => {
   const remote = remoteStore()
   const local = localStore()
   const store = new KeyvMulti({ remote, local })
+  const keyv = new Keyv({ store })
 
-  await store.set('fizz', 'buzz')
-  await store.clear({ localOnly: true })
+  await keyv.set('fizz', 'buzz')
+  await keyv.clear({ localOnly: true })
 
   t.is(await local.get('fizz'), undefined)
-  t.is(await remote.get('fizz'), 'buzz')
+  t.is((await keyv.deserialize(await remote.get('fizz'))).value, 'buzz')
 })
 
 test.serial('ttl is valid', async t => {

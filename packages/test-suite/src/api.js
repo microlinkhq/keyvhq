@@ -1,6 +1,5 @@
 'use strict'
 
-const tk = require('timekeeper')
 const delay = require('delay')
 
 const keyvApiTests = (test, Keyv, store) => {
@@ -30,14 +29,8 @@ const keyvApiTests = (test, Keyv, store) => {
     const keyv = new Keyv({ store: store() })
     await keyv.set('foo', 'bar', ttl)
     t.is(await keyv.get('foo'), 'bar')
-    if (keyv.store.ttlSupport === true) {
-      await delay(ttl + 1)
-    } else {
-      tk.freeze(Date.now() + ttl + 1)
-    }
-
+    await delay(ttl + 1)
     t.is(await keyv.get('foo'), undefined)
-    tk.reset()
   })
 
   test.serial('.get(key) returns a Promise', t => {
@@ -125,32 +118,6 @@ const keyvApiTests = (test, Keyv, store) => {
     t.is(await keyv.has('foo'), false)
   })
 
-  test.serial('errors from stores get bubbled to keyv', async t => {
-    const keyvStore = store()
-
-    // Mock up an event emitter and fire it
-    if (typeof keyvStore.on !== 'function') {
-      keyvStore.eventHandlers = new Map()
-      keyvStore.on = function (event, callback) {
-        const callbacks = keyvStore.eventHandlers.get(event) || []
-        callbacks.push(callback)
-        keyvStore.eventHandlers.set(event, callbacks)
-      }
-      keyvStore.emit = function (event, ...data) {
-        const fns = keyvStore.eventHandlers.get(event) || []
-        for (const fn of fns) {
-          fn(...data)
-        }
-      }
-    }
-
-    const keyv = new Keyv({ store: keyvStore })
-
-    keyv.on('error', () => {
-      t.pass()
-    })
-    keyv.store.emit('error', 'foo')
-  })
   test.after.always(async () => {
     const keyv = new Keyv({ store: store() })
     await keyv.clear()

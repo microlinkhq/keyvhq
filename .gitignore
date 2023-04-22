@@ -87,3 +87,7 @@ Temporary Items
 
 .env
 .envrc
+
+# packages/file
+packages/file/test/fixtures2
+packages/file/test/test.json

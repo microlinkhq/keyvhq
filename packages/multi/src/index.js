@@ -25,7 +25,8 @@ class MultiCache {
       const key = this.remote._getKeyPrefix(...args)
 
       const raw = await this.remote.store.get(key)
-      const data = typeof raw === 'string' ? await this.remote.deserialize(raw) : raw
+      const data =
+        typeof raw === 'string' ? await this.remote.deserialize(raw) : raw
 
       const hasValue = data ? data.value !== undefined : false
       const isFresh =
@@ -71,13 +72,12 @@ class MultiCache {
     return true
   }
 
-  async clear ({ localOnly = false } = {}) {
+  async clear (namespace, { localOnly = false } = {}) {
     await Promise.all(
       ['local', !localOnly && 'remote']
         .filter(Boolean)
-        .map(store => this[store].clear())
+        .map(store => this[store].clear(namespace))
     )
-
     return true
   }
 }

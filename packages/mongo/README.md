@@ -1,4 +1,4 @@
-# @keyvhq/mongo [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/mongo [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/mongo)
 
 > MongoDB storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -21,8 +21,6 @@ const Keyv = require('@keyvhq/core')
 const keyv = new Keyv({
   store: new KeyvMongo('mongodb://user:pass@localhost:27017/dbname')
 })
-
-keyv.on('error', handleConnectionError)
 ```
 
 You can specify the collection name, by default `'keyv'` is used:

@@ -1,16 +1,14 @@
-const EventEmitter = require('events')
-const { Sql } = require('sql-ts')
-class KeyvSql extends EventEmitter {
-  constructor (options) {
-    super()
-    this.ttlSupport = false
+'use strict'
 
+const { Sql } = require('sql-ts')
+
+class KeyvSql {
+  constructor (options) {
     this.options = Object.assign(
       {
         table: 'keyv',
         keySize: 255,
-        iterationLimit: 10,
-        emitErrors: true
+        iterationLimit: 10
       },
       options
     )
@@ -31,27 +29,17 @@ class KeyvSql extends EventEmitter {
         }
       ]
     })
-    const createTable = this.entry
-      .create()
-      .ifNotExists()
-      .toString()
+    const createTable = this.entry.create().ifNotExists().toString()
 
     const connected = this.options
       .connect()
       .then(query => query(createTable).then(() => query))
-      .catch(error => {
-        if (this.options.emitErrors) {
-          this.emit('error', error)
-        }
-      })
+
     this.query = sqlString => connected.then(query => query(sqlString))
   }
 
   get (key) {
-    const select = this.entry
-      .select()
-      .where({ key })
-      .toString()
+    const select = this.entry.select().where({ key }).toString()
     return this.query(select).then(rows => {
       const row = rows[0]
       if (row === undefined) {
@@ -70,23 +58,17 @@ class KeyvSql extends EventEmitter {
     const upsert =
       this.options.dialect === 'postgres'
         ? this.entry
-            .insert({ key, value })
-            .onConflict({ columns: ['key'], update: ['value'] })
-            .toString()
+          .insert({ key, value })
+          .onConflict({ columns: ['key'], update: ['value'] })
+          .toString()
         : this.entry.replace({ key, value }).toString()
     return this.query(upsert)
   }
 
   delete (key) {
     if (!key) return false
-    const select = this.entry
-      .select()
-      .where({ key })
-      .toString()
-    const del = this.entry
-      .delete()
-      .where({ key })
-      .toString()
+    const select = this.entry.select().where({ key }).toString()
+    const del = this.entry.delete().where({ key }).toString()
     return this.query(select).then(rows => {
       const row = rows[0]
       if (row === undefined) {

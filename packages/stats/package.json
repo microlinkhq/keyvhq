@@ -1,6 +1,6 @@
 {
-  "name": "@keyvhq/postgres",
-  "description": "PostgreSQL storage adapter for Keyv",
+  "name": "@keyvhq/stats",
+  "description": "Collects metrics for a Keyv instance over time.",
   "homepage": "https://keyv.js.org",
   "version": "2.0.0-beta.0",
   "main": "src/index.js",
@@ -10,35 +10,24 @@
     "url": "https://microlink.io"
   },
   "repository": {
-    "directory": "packages/postgres",
+    "directory": "packages/stats",
     "type": "git",
-    "url": "git+https://github.com/microlinkhq/keyv.git"
+    "url": "git+https://github.com/microlinkhq/keyvhq.git"
   },
   "bugs": {
     "url": "https://github.com/microlinkhq/keyvhq/issues"
   },
   "keywords": [
-    "adapter",
     "cache",
-    "key",
+    "info",
     "keyv",
-    "postgres",
-    "postgresql",
-    "sql",
-    "storage",
-    "store",
-    "ttl",
-    "value"
+    "stats"
   ],
-  "dependencies": {
-    "@keyvhq/sql": "^2.0.0-beta.0",
-    "pg": "~8.10.0"
-  },
   "devDependencies": {
     "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
-    "@types/node": "latest",
+    "@keyvhq/file": "latest",
     "ava": "latest",
+    "delay": "latest",
     "tsd": "latest",
     "typescript": "latest"
   },
@@ -51,7 +40,7 @@
   "scripts": {
     "lint": "tsd",
     "pretest": "npm run lint",
-    "test": "ava --serial"
+    "test": "ava"
   },
   "license": "MIT",
   "publishConfig": {

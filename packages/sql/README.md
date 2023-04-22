@@ -1,4 +1,4 @@
-# @keyvhq/sql [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/sql [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/sql)
 
 Parent class containing the common logic for SQL based Keyv storage adapters:
 

@@ -157,19 +157,5 @@ test.serial('An empty namespace stores the key as a string', async t => {
   t.is([...store.keys()][0], '42')
 })
 
-test('emit errors by default', async t => {
-  const store = new Keyv()
-  const keyv = new Keyv({ store, namespace: '' })
-  await keyv.set(42, 'foo')
-  t.is(store.listenerCount('error'), 1)
-})
-
-test('disable emit errors', async t => {
-  const store = new Keyv({ emitErrors: false })
-  const keyv = new Keyv({ store, emitErrors: false, namespace: '' })
-  await keyv.set(42, 'foo')
-  t.is(keyv.listenerCount('error'), 0)
-})
-
 const store = () => new Map()
 keyvTestSuite(test, Keyv, store)

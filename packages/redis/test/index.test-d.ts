@@ -1,7 +1,7 @@
 /* eslint-disable no-new */
 
 import Keyv from '@keyvhq/core'
-import KeyvRedis from '..'
+import KeyvRedis from '../src'
 
 new Keyv({
   store: new KeyvRedis({

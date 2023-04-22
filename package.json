@@ -51,7 +51,7 @@
     },
     {
       "name": "César Fernández",
-      "email": "cfalonso@gmail.com"
+      "email": "cesar.fernandez@emodoinc.com"
     },
     {
       "name": "ficristo",
@@ -200,7 +200,7 @@
     "ts-standard": "latest"
   },
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   },
   "files": [
     "packages/**"

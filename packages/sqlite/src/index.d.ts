@@ -1,23 +1,13 @@
-// Type definitions for @keyv/sqlite 2.0
-// Project: https://github.com/lukechilds/keyv-sqlite
-// Definitions by: BendingBender <https://github.com/BendingBender>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.3
-
 import { Store } from '@keyvhq/core'
-import { EventEmitter } from 'events'
 
-declare class KeyvSqlite extends EventEmitter implements Store<string | undefined> {
-  readonly ttlSupport: false
-  namespace?: string | undefined
-
+declare class KeyvSqlite<TValue> implements Store<TValue> {
   constructor (uri?: string)
   constructor (options?: KeyvSqlite.Options)
   constructor (uri: string, options?: KeyvSqlite.Options)
 
-  get (key: string): Promise<string | undefined>
+  get (key: string): Promise<TValue>
   has (key: string): Promise<boolean>
-  set (key: string, value: string | undefined): Promise<any>
+  set (key: string, value: TValue): Promise<boolean>
   delete (key: string): Promise<boolean>
   clear (): Promise<void>
   iterator (): AsyncGenerator

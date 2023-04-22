@@ -13,11 +13,6 @@ const redisURI = `redis://${REDIS_HOST}`
 const store = () => new KeyvRedis(redisURI)
 keyvTestSuite(test, Keyv, store)
 
-test.beforeEach(async () => {
-  const keyv = new Keyv({ store: store() })
-  await keyv.clear()
-})
-
 test('reuse a redis instance', async t => {
   const redis = new Redis(redisURI)
   redis.singleton = true

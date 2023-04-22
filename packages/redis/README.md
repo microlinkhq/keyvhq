@@ -1,4 +1,4 @@
-# @keyvhq/redis [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/redis [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/redis)
 
 > Redis storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -17,8 +17,6 @@ const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
 
 const keyv = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379') })
-
-keyv.on('error', handleConnectionError)
 ```
 
 Any valid [`Redis`](https://github.com/luin/ioredis#connect-to-redis) options will be passed directly through:

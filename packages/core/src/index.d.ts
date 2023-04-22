@@ -1,13 +1,4 @@
-// Type definitions for keyv 3.1
-// Project: https://github.com/lukechilds/keyv
-// Definitions by: AryloYeung <https://github.com/Arylo>
-//                 BendingBender <https://github.com/BendingBender>
-// Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.8
-
-import { EventEmitter } from 'events'
-
-declare class Keyv<TValue = any> extends EventEmitter {
+declare class Keyv<TValue = any> {
   constructor (opts?: Keyv.Options<TValue>)
 
   /** Returns the value. */
@@ -30,7 +21,7 @@ declare class Keyv<TValue = any> extends EventEmitter {
      */
   delete (key: string): Promise<boolean>
   /** Delete all entries in the current namespace. */
-  clear (): Promise<void>
+  clear (options?: Record<string, any>): Promise<void>
   /**
      * Yields an iterator with all the key, value entries in the namespace.
      */

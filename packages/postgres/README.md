@@ -1,4 +1,4 @@
-# @keyvhq/postgres [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/postgres [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/postgres)
 
 > PostgreSQL storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -24,8 +24,6 @@ const keyv = new Keyv({
     }
   })
 })
-
-keyv.on('error', handleConnectionError)
 ```
 
 You can specify the `table` option:

@@ -1,4 +1,4 @@
-# @keyvhq/memoize [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/memoize [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/memoize)
 
 > Memoize any function using Keyv as storage backend.
 

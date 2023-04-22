@@ -56,9 +56,6 @@ const keyvSQLite = new Keyv({ store: new KeyvSQLite('sqlite://path/to/database.s
 const keyvPostgreSQL = new Keyv({ store: new KeyvPostgreSQL('postgresql://user:pass@localhost:5432/dbname')})
 const keyvMySQL = new Keyv({ store: new KeyvMySQL('mysql://user:pass@localhost:3306/dbname')})
 
-// Handle database connection errors
-keyv.on('error', err => console.log('Connection Error', err))
-
 await keyv.set('foo', 'expires in 1 second', 1000) // true
 await keyv.set('foo', 'never expires') // true
 await keyv.get('foo') // 'never expires'
@@ -112,11 +109,11 @@ const keyv = KeyvCompress(
 Caching will work in memory by default and users have the option to also install a **Keyv** storage adapter and pass in a connection string, or any other storage that implements the [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API.
 
 ```js
-const got = require('got')
 const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
+const got = require('got')
 
-const cache = new Keyv({  store: new KeyvRedis('redis://user:pass@localhost:6379') })
+const cache = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379') })
 
 await got('https://keyv.js.org', { cache })
 ```
@@ -139,6 +136,7 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 
 > The official storage adapters are covered by [over 150 integration tests](https://github.com/microlinkhq/keyvhq/actions/runs/949262324) to guarantee consistent behaviour. They are lightweight, efficient wrappers over the DB clients making use of indexes and native TTLs where available.
 
+- [@keyvhq/file](https://github.com/microlinkhq/keyvhq/tree/master/packages/file) – File storage adapter for Keyv.
 - [@keyvhq/mongo](https://github.com/microlinkhq/keyvhq/tree/master/packages/mongo) – MongoDB storage adapter for Keyv.
 - [@keyvhq/mysql](https://github.com/microlinkhq/keyvhq/tree/master/packages/mysql) – MySQL/MariaDB storage adapter for Keyv.
 - [@keyvhq/postgres](https://github.com/microlinkhq/keyvhq/tree/master/packages/postgres) – PostgreSQL storage adapter for Keyv.
@@ -151,6 +149,7 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 - [@keyvhq/memoize](https://github.com/microlinkhq/keyvhq/tree/master/packages/memoize) – Memoize any function using Keyv as storage backend.
 - [@keyvhq/multi](https://github.com/microlinkhq/keyvhq/tree/master/packages/multi) – Manages local and remote keyv stores as one.
 - [@keyvhq/offline](https://github.com/microlinkhq/keyvhq/tree/master/packages/offline) – Adds offline capabilities for your keyv instance.
+- [@keyvhq/stats](https://github.com/microlinkhq/keyvhq/tree/master/packages/stats) – Collects metrics for a Keyv instance over time.
 
 ### Community
 
@@ -172,8 +171,6 @@ You should also set a [`namespace`](#optionsnamespace) for your module so you ca
 ### constructor([options])
 
 Returns a new Keyv instance.
-
-The Keyv instance is also an `EventEmitter` that will emit an `'error'` event if the storage adapter connection fails.
 
 #### options
 

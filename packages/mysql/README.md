@@ -1,4 +1,4 @@
-# @keyvhq/mysql [<img width="100" align="right" src="https://keyv.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv)
+# @keyvhq/mysql [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyv/packages/mysql)
 
 > MySQL/MariaDB storage adapter for [Keyv](https://github.com/microlinkhq/keyv).
 
@@ -17,8 +17,6 @@ const Keyv = require('@keyvhq/core')
 const keyv = new Keyv({
   store: new KeyvMysql('mysql://user:pass@localhost:3306/dbname')
 })
-
-keyv.on('error', handleConnectionError)
 ```
 
 You can specify a custom table with the `table` option and the primary key size with `keySize`:

@@ -2,7 +2,7 @@
   "name": "@keyvhq/core",
   "description": "Simple key-value storage with support for multiple backends",
   "homepage": "https://keyv.js.org",
-  "version": "1.6.26",
+  "version": "2.0.0-beta.0",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -20,6 +20,7 @@
   "keywords": [
     "cache",
     "key",
+    "keyv",
     "store",
     "ttl",
     "value"
@@ -36,7 +37,7 @@
     "typescript": "latest"
   },
   "engines": {
-    "node": ">= 14"
+    "node": ">= 16"
   },
   "files": [
     "src"

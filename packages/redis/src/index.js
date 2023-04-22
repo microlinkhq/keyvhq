@@ -1,35 +1,21 @@
 'use strict'
 
-const EventEmitter = require('events')
 const pEvent = require('p-event')
 const Redis = require('ioredis')
 
-const normalizeOptions = (...args) =>
-  Object.assign({ emitErrors: true }, ...args)
-
 const normalizeArguments = (input, options) => {
-  if (input instanceof Redis) return [input, normalizeOptions(options)]
+  if (input instanceof Redis) return input
   const { uri, ...opts } = Object.assign(
     typeof input === 'string' ? { uri: input } : input,
     options
   )
-  const normalizedOpts = normalizeOptions(opts)
-  return [new Redis(uri, normalizedOpts), normalizedOpts]
+  return new Redis(uri, opts)
 }
 
-class KeyvRedis extends EventEmitter {
+class KeyvRedis {
   constructor (uri, options) {
-    super()
-
-    const [redis, { emitErrors }] = normalizeArguments(uri, options)
-
+    const redis = normalizeArguments(uri, options)
     this.redis = redis
-
-    if (emitErrors) {
-      this.redis.on('error', error => {
-        this.emit('error', error)
-      })
-    }
   }
 
   async get (key) {
