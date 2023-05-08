@@ -183,6 +183,7 @@
     "@commitlint/cli": "latest",
     "@commitlint/config-conventional": "latest",
     "@lerna-lite/cli": "latest",
+    "@lerna-lite/publish": "latest",
     "browser-sync": "latest",
     "c8": "latest",
     "concurrently": "latest",
