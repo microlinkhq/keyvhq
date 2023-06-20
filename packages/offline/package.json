@@ -35,7 +35,6 @@
     "@keyvhq/core": "latest",
     "@keyvhq/redis": "latest",
     "ava": "latest",
-    "delay": "latest",
     "keyv-s3": "latest"
   },
   "engines": {

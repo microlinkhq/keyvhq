@@ -1,8 +1,8 @@
 'use strict'
 
+const { setTimeout } = require('timers/promises')
 const KeyvFile = require('@keyvhq/file')
 const Keyv = require('@keyvhq/core')
-const delay = require('delay')
 const path = require('path')
 const test = require('ava')
 
@@ -81,7 +81,7 @@ test('get hit ratio', async t => {
   })
 
   await keyv.get('foo')
-  await delay(50)
+  await setTimeout(50)
 
   t.deepEqual(await keyv.stats.info(), {
     hit: { value: 0, percent: '0%' },
@@ -91,7 +91,7 @@ test('get hit ratio', async t => {
 
   await keyv.set('foo', 'bar')
   await keyv.get('foo')
-  await delay(50)
+  await setTimeout(50)
 
   t.deepEqual(await keyv.stats.info(), {
     hit: { value: 1, percent: '50%' },
@@ -100,7 +100,7 @@ test('get hit ratio', async t => {
   })
 
   await keyv.get('foo')
-  await delay(50)
+  await setTimeout(50)
 
   t.deepEqual(await keyv.stats.info(), {
     hit: { value: 2, percent: '67%' },
@@ -109,7 +109,7 @@ test('get hit ratio', async t => {
   })
 
   await keyv.get('foo')
-  await delay(50)
+  await setTimeout(50)
 
   t.deepEqual(await keyv.stats.info(), {
     hit: { value: 3, percent: '75%' },

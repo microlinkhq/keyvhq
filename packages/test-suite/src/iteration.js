@@ -1,5 +1,6 @@
 'use strict'
-const delay = require('delay')
+
+const { setTimeout } = require('timers/promises')
 
 const keyvIteratorTests = (test, Keyv, store) => {
   test.beforeEach(async () => {
@@ -88,7 +89,7 @@ const keyvIteratorTests = (test, Keyv, store) => {
       }
 
       await Promise.all(toResolve)
-      await delay(250)
+      await setTimeout(250)
       for await (const entry of keyv.iterator()) {
         t.fail('Found an expired value' + entry)
       }

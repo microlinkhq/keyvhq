@@ -27,7 +27,6 @@
     "@keyvhq/core": "latest",
     "@keyvhq/file": "latest",
     "ava": "latest",
-    "delay": "latest",
     "tsd": "latest",
     "typescript": "latest"
   },
