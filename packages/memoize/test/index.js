@@ -1,7 +1,7 @@
 'use strict'
 
+const { setTimeout } = require('timers/promises')
 const Keyv = require('@keyvhq/core')
-const delay = require('delay')
 const test = require('ava')
 
 const memoize = require('../src')
@@ -62,7 +62,7 @@ test('should delete store value after expiration', async t => {
 
   t.is(await memoizedSum(5), 5)
 
-  await delay(ttl)
+  await setTimeout(ttl)
 
   t.is(await keyv.get(5), undefined)
 })
@@ -123,7 +123,7 @@ test.serial('should return fresh result', async t => {
 
   const memoizedSum = memoize(fn, keyv, { staleTtl: 100 })
   keyv.set(5, 5, 200)
-  await delay(10)
+  await setTimeout(10)
 
   t.is(await memoizedSum(5), 5)
   t.is(called, 0)
@@ -182,7 +182,7 @@ test('should delete expired result and return fresh result', async t => {
   const memoizedSum = memoize(asyncSum, keyv)
 
   await keyv.set(1, 1, 1)
-  await delay(5)
+  await setTimeout(5)
 
   t.is(await memoizedSum(1, 2), 3)
 })
@@ -253,7 +253,7 @@ test('should accept `staleTtl` as function', async t => {
     objectMode: true
   })
   const [, infoOne] = await memoizeFn()
-  await delay(10)
+  await setTimeout(10)
   const [, infoTwo] = await memoizeFn()
 
   t.false(infoOne.isStale)

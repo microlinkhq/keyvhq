@@ -36,8 +36,7 @@
   },
   "devDependencies": {
     "@keyvhq/core": "latest",
-    "ava": "latest",
-    "delay": "latest"
+    "ava": "latest"
   },
   "engines": {
     "node": ">= 16"

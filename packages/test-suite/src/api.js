@@ -1,6 +1,6 @@
 'use strict'
 
-const delay = require('delay')
+const { setTimeout } = require('timers/promises')
 
 const keyvApiTests = (test, Keyv, store) => {
   test.beforeEach(async () => {
@@ -29,7 +29,7 @@ const keyvApiTests = (test, Keyv, store) => {
     const keyv = new Keyv({ store: store() })
     await keyv.set('foo', 'bar', ttl)
     t.is(await keyv.get('foo'), 'bar')
-    await delay(ttl + 1)
+    await setTimeout(ttl + 1)
     t.is(await keyv.get('foo'), undefined)
   })
 

@@ -1,9 +1,9 @@
 'use strict'
 
+const { setTimeout } = require('timers/promises')
 const keyvCompress = require('@keyvhq/compress')
 const KeyvSqlite = require('@keyvhq/sqlite')
 const Keyv = require('@keyvhq/core')
-const delay = require('delay')
 const test = require('ava')
 
 const KeyvMulti = require('..')
@@ -125,7 +125,7 @@ test.serial('ttl is valid', async t => {
   await store.set('foo', 'bar')
   await remote.set('foo', 'notbar')
 
-  await delay(100)
+  await setTimeout(100)
   t.is(await store.get('foo'), 'notbar')
 })
 

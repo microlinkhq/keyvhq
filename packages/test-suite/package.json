@@ -28,9 +28,6 @@
     "ttl",
     "value"
   ],
-  "dependencies": {
-    "delay": "latest"
-  },
   "engines": {
     "node": ">= 16"
   },

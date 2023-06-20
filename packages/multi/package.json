@@ -34,7 +34,6 @@
     "@keyvhq/compress": "latest",
     "@keyvhq/sqlite": "latest",
     "ava": "latest",
-    "delay": "latest",
     "tsd": "latest",
     "typescript": "latest"
   },
