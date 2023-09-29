@@ -3,6 +3,7 @@
   "description": "Memoize any function using Keyv as storage backend.",
   "homepage": "https://keyv.js.org",
   "version": "2.0.3",
+  "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -46,6 +47,5 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
-  },
-  "types": "./src/index.d.ts"
+  }
 }

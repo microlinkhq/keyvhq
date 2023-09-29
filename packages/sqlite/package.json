@@ -3,6 +3,7 @@
   "description": "SQLite storage adapter for Keyv",
   "homepage": "https://keyv.js.org",
   "version": "2.0.0",
+  "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -59,6 +60,5 @@
   },
   "tsd": {
     "directory": "test"
-  },
-  "types": "./src/index.d.ts"
+  }
 }

@@ -3,6 +3,7 @@
   "description": "Redis storage adapter for Keyv",
   "homepage": "https://github.com/microlinkhq/keyv",
   "version": "2.0.0",
+  "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -60,6 +61,5 @@
   },
   "tsd": {
     "directory": "test"
-  },
-  "types": "./src/index.d.ts"
+  }
 }

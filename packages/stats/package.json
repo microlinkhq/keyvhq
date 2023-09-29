@@ -3,6 +3,7 @@
   "description": "Collects metrics for a Keyv instance over time.",
   "homepage": "https://keyv.js.org",
   "version": "2.0.3",
+  "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
@@ -47,6 +48,5 @@
   },
   "tsd": {
     "directory": "test"
-  },
-  "types": "./src/index.d.ts"
+  }
 }
