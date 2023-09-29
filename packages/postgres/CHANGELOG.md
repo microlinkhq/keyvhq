@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/microlinkhq/keyv/compare/v2.0.3...v2.1.0) (2023-09-29)
+
+**Note:** Version bump only for package @keyvhq/postgres
+
 ## [2.0.2](https://github.com/microlinkhq/keyv/compare/v2.0.1...v2.0.2) (2023-05-16)
 
 **Note:** Version bump only for package @keyvhq/postgres

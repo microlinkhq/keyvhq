@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/microlinkhq/keyv/compare/v2.0.3...v2.1.0) (2023-09-29)
+
+**Note:** Version bump only for package @keyvhq/sqlite
+
 # [2.0.0](https://github.com/microlinkhq/keyv/compare/v1.6.28...v2.0.0) (2023-04-22)
 
 ### Features

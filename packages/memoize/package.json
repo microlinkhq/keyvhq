@@ -2,7 +2,7 @@
   "name": "@keyvhq/memoize",
   "description": "Memoize any function using Keyv as storage backend.",
   "homepage": "https://keyv.js.org",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
@@ -29,7 +29,7 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/core": "^2.0.0",
+    "@keyvhq/core": "^2.1.0",
     "mimic-fn": "~3.0.0"
   },
   "devDependencies": {
