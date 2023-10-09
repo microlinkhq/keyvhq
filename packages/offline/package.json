@@ -27,7 +27,7 @@
     "value"
   ],
   "dependencies": {
-    "debug-logfmt": "~1.0.4",
+    "debug-logfmt": "~1.2.0",
     "serialize-error": "~8.1.0"
   },
   "devDependencies": {
