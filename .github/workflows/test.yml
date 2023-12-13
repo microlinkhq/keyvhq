@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [18, 20]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     env:
       MYSQL_DB_DATABASE: keyv_test
@@ -59,7 +59,7 @@ jobs:
           run_install: true
       - run: pnpm test
       - name: Report
-        run: mkdir -p coverage && npx c8 report --reporter=text-lcov > coverage/lcov.info
+        run: npx c8 report --reporter=text-lcov > coverage/lcov.info
       - name: Coverage
         uses: coverallsapp/github-action@main
         with:
