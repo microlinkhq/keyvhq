@@ -27,7 +27,7 @@
   "devDependencies": {
     "@keyvhq/core": "latest",
     "@keyvhq/file": "latest",
-    "ava": "latest",
+    "ava": "5",
     "tsd": "latest",
     "typescript": "latest"
   },

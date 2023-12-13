@@ -33,7 +33,7 @@
     "mimic-fn": "~3.0.0"
   },
   "devDependencies": {
-    "ava": "latest"
+    "ava": "5"
   },
   "engines": {
     "node": ">= 16"
