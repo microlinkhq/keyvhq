@@ -34,7 +34,7 @@
     "@aws-sdk/client-s3": "latest",
     "@keyvhq/core": "latest",
     "@keyvhq/redis": "latest",
-    "ava": "latest",
+    "ava": "5",
     "keyv-s3": "latest"
   },
   "engines": {

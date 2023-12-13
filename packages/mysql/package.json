@@ -39,7 +39,7 @@
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
     "@types/node": "latest",
-    "ava": "latest",
+    "ava": "5",
     "tsd": "latest",
     "typescript": "latest"
   },

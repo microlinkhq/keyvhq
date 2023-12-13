@@ -35,7 +35,7 @@
     "@keyvhq/core": "latest",
     "@keyvhq/test-suite": "latest",
     "@vscode/sqlite3": "latest",
-    "ava": "latest",
+    "ava": "5",
     "pify": "5"
   },
   "engines": {
