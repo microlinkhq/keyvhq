@@ -17,30 +17,13 @@
   --red: #ff2159;
   /* theme */
   --primary-color: var(--gray10);
-  --secondary-color: var(--red);
+  --secondary-color: var(--orange);
   --bg-color: var(--base);
   --selection-color: #f9e4ac;
   --serif-font: 'IBM Plex Serif', sans-serif;
   --sans-serif-font: 'IBM Plex Sans', sans-serif;
   --code-font: 'IBM Plex Mono', monospace;
   --border-color: var(--gray3);
-}
-
-@keyframes octocat {
-  0%,
-  to {
-    transform: rotate(0);
-  }
-
-  20%,
-  60% {
-    transform: rotate(-25deg);
-  }
-
-  40%,
-  80% {
-    transform: rotate(10deg);
-  }
 }
 
 ::selection {
@@ -79,7 +62,26 @@ img {
   max-width: 100%;
 }
 
-.github-corner {
+/* github-corner */
+
+@keyframes b {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+.github-corner svg {
   border-bottom: 0;
   position: fixed;
   right: 0;
@@ -88,15 +90,16 @@ img {
   z-index: 1;
 }
 
+.github-corner:hover svg .octo-arm {
+  opacity: 1;
+  animation: b 560ms ease-in-out;
+}
+
 .github-corner svg {
-  color: var(--bg-color);
+  color: #fff;
   fill: var(--secondary-color);
   height: 80px;
   width: 80px;
-}
-
-.github-corner:hover .octo-arm {
-  animation: octocat 0.5s ease-in-out;
 }
 
 main {
