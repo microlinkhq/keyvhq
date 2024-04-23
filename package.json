@@ -241,7 +241,6 @@
       "finepack"
     ]
   },
-  "packageManager": "pnpm@6.28.0",
   "publishConfig": {
     "access": "public"
   },
