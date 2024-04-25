@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/microlinkhq/keyv/compare/v2.1.1...v2.1.2) (2024-04-25)
+
+### Bug Fixes
+
+* **redis:** expose Redis constructor ([b8ead88](https://github.com/microlinkhq/keyv/commit/b8ead883b26cc17e097f81207ec52c7e238b67c7)), closes [#205](https://github.com/microlinkhq/keyv/issues/205)
+
 ## [2.1.1](https://github.com/microlinkhq/keyv/compare/v2.1.0...v2.1.1) (2024-04-23)
 
 **Note:** Version bump only for package @keyvhq/redis
