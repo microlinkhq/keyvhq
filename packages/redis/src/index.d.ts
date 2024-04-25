@@ -1,9 +1,9 @@
 import { Store } from '@keyvhq/core'
-import { Redis, RedisOptions } from 'ioredis'
+import { Redis as IORedis, RedisOptions } from 'ioredis'
 
 declare class KeyvRedis<TValue> implements Store<TValue> {
   constructor (options?: KeyvRedis.Options)
-  constructor (redis: Redis)
+  constructor (redis: IORedis)
   constructor (uri: string, options?: KeyvRedis.Options)
 
   get (key: string): Promise<TValue>
@@ -19,6 +19,7 @@ declare namespace KeyvRedis {
     uri?: string | undefined
     emitErrors?: boolean | true
   }
+  const Redis: typeof IORedis
 }
 
 export = KeyvRedis
