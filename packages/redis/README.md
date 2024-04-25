@@ -32,12 +32,13 @@ const keyv = new Keyv({
 })
 ```
 
-Or you can reuse a previously declared Redis instance:
+Or you can reuse a previously declared `Redis` instance:
 
 ```js
 const KeyvRedis = require('@keyvhq/redis')
 const Keyv = require('@keyvhq/core')
-const Redis = require('ioredis')
+
+const { Redis } = KeyvRedis
 
 const redis = new Redis('redis://user:pass@localhost:6379')
 const keyv = new Keyv({ store: new KeyvRedis(redis) })
