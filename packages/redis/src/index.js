@@ -71,3 +71,5 @@ class KeyvRedis {
 }
 
 module.exports = KeyvRedis
+
+module.exports.Redis = Redis
