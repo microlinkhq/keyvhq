@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/microlinkhq/keyhq/compare/v2.1.2...v2.1.3) (2024-04-28)
+
+### Bug Fixes
+
+* **redis:** add Redis type ([e819f7a](https://github.com/microlinkhq/keyhq/commit/e819f7a1b19d12e25aa63e23379f8b7feab6f3d3)), closes [#205](https://github.com/microlinkhq/keyhq/issues/205)
+
 ## [2.1.2](https://github.com/microlinkhq/keyhq/compare/v2.1.1...v2.1.2) (2024-04-25)
 
 ### Bug Fixes
