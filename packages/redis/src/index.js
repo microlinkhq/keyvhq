@@ -43,16 +43,11 @@ class KeyvRedis {
   async clear (namespace) {
     const match = namespace ? `${namespace}:*` : '*'
     const stream = this.redis.scanStream({ match })
-    const keys = []
-    const collectKeys = new Transform({
+    const unlinkKeys = new Transform({
       objectMode: true,
-      transform (chunk, _, next) {
-        keys.push.apply(keys, chunk)
-        next()
-      }
+      transform: (keys, _, next) => keys.length > 0 ? this.redis.unlink(keys).then(() => next()) : next()
     })
-    await pipeline(stream, collectKeys)
-    if (keys.length > 0) await this.redis.unlink(keys)
+    await promisify(pipeline)(stream, unlinkKeys)
   }
 
   async * iterator (namespace) {
