@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/microlinkhq/keyv/compare/v2.1.3...v2.1.4) (2024-04-28)
+
+### Performance Improvements
+
+* **redis:** clear while scan ([#207](https://github.com/microlinkhq/keyv/issues/207)) ([91c0af7](https://github.com/microlinkhq/keyv/commit/91c0af710927a5da890ffae4f91f1a0731c446e6))
+
 ## [2.1.3](https://github.com/microlinkhq/keyv/compare/v2.1.2...v2.1.3) (2024-04-28)
 
 ### Bug Fixes
