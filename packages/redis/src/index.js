@@ -1,7 +1,13 @@
 'use strict'
 
-const pEvent = require('p-event')
 const Redis = require('ioredis')
+
+const { promisify } = require('util')
+const stream = require('stream')
+
+const { Transform } = stream
+
+const pipeline = promisify(stream.pipeline)
 
 const normalizeArguments = (input, options) => {
   if (input instanceof Redis) return input
@@ -37,13 +43,16 @@ class KeyvRedis {
   async clear (namespace) {
     const match = namespace ? `${namespace}:*` : '*'
     const stream = this.redis.scanStream({ match })
-
     const keys = []
-    stream.on('data', matchedKeys => keys.push(...matchedKeys))
-    await pEvent(stream, 'end')
-    if (keys.length > 0) {
-      await this.redis.unlink(keys)
-    }
+    const collectKeys = new Transform({
+      objectMode: true,
+      transform (chunk, _, next) {
+        keys.push.apply(keys, chunk)
+        next()
+      }
+    })
+    await pipeline(stream, collectKeys)
+    if (keys.length > 0) await this.redis.unlink(keys)
   }
 
   async * iterator (namespace) {
