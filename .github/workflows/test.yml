@@ -35,7 +35,7 @@ jobs:
       #        postgresql user: postgres
       #        postgresql db: keyv_test
       - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@v1.10.0
+        uses: supercharge/mongodb-github-action@1.11.0
       - name: Start MySQL
         run: |
           sudo systemctl start mysql.service
