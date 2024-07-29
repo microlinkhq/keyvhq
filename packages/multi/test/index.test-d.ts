@@ -4,8 +4,8 @@ import Keyv from '@keyvhq/core'
 import KeyvMulti from '../src'
 
 const store = new KeyvMulti({
-  local: new Map(),
-  remote: new Map()
+  local: new Keyv(),
+  remote: new Keyv()
 })
 
 new Keyv({ store }).clear({ localOnly: true })
