@@ -1,7 +1,7 @@
-import { Store } from '@keyvhq/core'
+import Keyv, { Store } from '@keyvhq/core'
 
 declare class KeyvMulti<TValue> implements Store<TValue> {
-  constructor (options: KeyvMulti.Options)
+  constructor (options: KeyvMulti.Options<TValue>)
 
   get (key: string): Promise<TValue>
   has (key: string): Promise<boolean>
@@ -12,9 +12,9 @@ declare class KeyvMulti<TValue> implements Store<TValue> {
 }
 
 declare namespace KeyvMulti {
-  interface Options {
-    local?: Map<string, any>
-    remote?: Map<string, any>
+  interface Options<TValue> {
+    local?: Keyv<TValue>
+    remote?: Keyv<TValue>
     validator?: () => boolean
   }
   interface ClearOptions {
