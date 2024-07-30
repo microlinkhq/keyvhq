@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/microlinkhq/keyvhq/compare/v2.1.4...v2.1.5) (2024-07-30)
+
+**Note:** Version bump only for package @keyvhq/stats
+
 ## [2.1.1](https://github.com/microlinkhq/keyvhq/compare/v2.1.0...v2.1.1) (2024-04-23)
 
 **Note:** Version bump only for package @keyvhq/stats

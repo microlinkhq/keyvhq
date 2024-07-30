@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/microlinkhq/keyhq/compare/v2.1.4...v2.1.5) (2024-07-30)
+
+**Note:** Version bump only for package @keyvhq/monorepo
+
 ## [2.1.4](https://github.com/microlinkhq/keyhq/compare/v2.1.3...v2.1.4) (2024-04-28)
 
 ### Performance Improvements
