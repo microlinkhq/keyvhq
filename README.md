@@ -190,7 +190,7 @@ Namespace for the current instance.
 Type: `Number`<br/>
 Default: `undefined`
 
-Default TTL. Can be overridden by specififying a TTL on `.set()`.
+Default TTL in milliseconds. Can be overridden by specifying a TTL on `.set()`.
 
 ##### serialize
 
