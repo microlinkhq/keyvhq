@@ -1,18 +1,20 @@
-name: test
+name: pull_request
 
 on:
   push:
-    branches: [master, canary]
+    branches:
+      - master
   pull_request:
-    branches: [master, canary]
+    branches:
+      - master
 
 jobs:
-  build:
+  matrix:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        node-version: [20]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     env:
       MYSQL_DB_DATABASE: keyv_test
@@ -52,15 +54,28 @@ jobs:
           sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
           sudo systemctl restart postgresql.service
           pg_isready
+      - id: matrix
+        run: echo "matrix=$(node .github/workflows/get-matrix.mjs)" >> $GITHUB_OUTPUT
+      - run: echo ${{ steps.matrix.outputs.matrix }}
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+
+  test:
+    if: github.ref != 'refs/heads/master'
+    needs: matrix
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
         with:
           version: latest
           run_install: true
-      - run: pnpm test
-      - name: Report
-        run: npx c8 report --reporter=text-lcov > coverage/lcov.info
-      - name: Coverage
-        uses: coverallsapp/github-action@main
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test
+        run: pnpm --filter "${{ matrix.package }}" test
