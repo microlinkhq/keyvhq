@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "latest",
-    "@keyvhq/core": "latest",
-    "@keyvhq/redis": "latest",
+    "@keyvhq/core": "workspace:*",
+    "@keyvhq/redis": "workspace:*",
     "ava": "5",
     "keyv-s3": "latest"
   },

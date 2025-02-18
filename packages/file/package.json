@@ -31,8 +31,8 @@
     "value"
   ],
   "devDependencies": {
-    "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
+    "@keyvhq/core": "workspace:*",
+    "@keyvhq/test-suite": "workspace:*",
     "@types/node": "latest",
     "ava": "5",
     "tsd": "latest",

@@ -32,12 +32,12 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/sql": "^2.1.6",
+    "@keyvhq/sql": "workspace:*",
     "pg": "~8.11.0"
   },
   "devDependencies": {
-    "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
+    "@keyvhq/core": "workspace:*",
+    "@keyvhq/test-suite": "workspace:*",
     "@types/node": "latest",
     "ava": "5",
     "tsd": "latest",
