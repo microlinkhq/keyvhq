@@ -29,7 +29,7 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/core": "^2.1.1"
+    "@keyvhq/core": "workspace:*"
   },
   "devDependencies": {
     "@keyvhq/compress": "latest",

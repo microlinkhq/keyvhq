@@ -30,7 +30,7 @@
     "json-buffer": "~3.0.1"
   },
   "devDependencies": {
-    "@keyvhq/test-suite": "latest",
+    "@keyvhq/test-suite": "workspace:*",
     "@types/node": "latest",
     "ava": "5",
     "timekeeper": "latest",
