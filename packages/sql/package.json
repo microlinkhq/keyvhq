@@ -32,8 +32,8 @@
     "sql-ts": "7"
   },
   "devDependencies": {
-    "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
+    "@keyvhq/core": "workspace:*",
+    "@keyvhq/test-suite": "workspace:*",
     "@vscode/sqlite3": "latest",
     "ava": "5",
     "pify": "5"

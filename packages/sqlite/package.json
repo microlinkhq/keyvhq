@@ -31,13 +31,13 @@
     "value"
   ],
   "dependencies": {
-    "@keyvhq/sql": "^2.1.6",
-    "@vscode/sqlite3": "~5.1.2",
+    "@keyvhq/sql": "workspace:*",
+    "@vscode/sqlite3": "latest",
     "pify": "~5.0.0"
   },
   "devDependencies": {
-    "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
+    "@keyvhq/core": "workspace:*",
+    "@keyvhq/test-suite": "workspace:*",
     "@types/node": "latest",
     "ava": "5",
     "tsd": "latest",

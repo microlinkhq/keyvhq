@@ -25,8 +25,8 @@
     "stats"
   ],
   "devDependencies": {
-    "@keyvhq/core": "latest",
-    "@keyvhq/file": "latest",
+    "@keyvhq/core": "workspace:*",
+    "@keyvhq/file": "workspace:*",
     "ava": "5",
     "tsd": "latest",
     "typescript": "latest"

@@ -30,11 +30,11 @@
     "value"
   ],
   "dependencies": {
-    "ioredis": "~5.4.1"
+    "ioredis": "~5.5.0"
   },
   "devDependencies": {
-    "@keyvhq/core": "latest",
-    "@keyvhq/test-suite": "latest",
+    "@keyvhq/core": "workspace:*",
+    "@keyvhq/test-suite": "workspace:*",
     "@types/ioredis": "latest",
     "@types/node": "latest",
     "ava": "5",
