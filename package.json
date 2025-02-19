@@ -214,7 +214,7 @@
     "ts-standard": "latest"
   },
   "engines": {
-    "node": ">= 16"
+    "node": ">= 18"
   },
   "files": [
     "packages/**"
@@ -222,7 +222,9 @@
   "scripts": {
     "build": "gulp build",
     "clean": "pnpm -r exec -- rm -rf node_modules",
-    "contributors": "(pnpm -r exec finepack --parallel && git-authors-cli && finepack && echo \"git add package.json && git commit -m 'build: contributors' --no-verify\") || true",
+    "contributors": "pnpm run contributors:add && pnpm run contributors:commit",
+    "contributors:add": "pnpm --recursive --parallel exec -- finepack",
+    "contributors:commit": "(git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "dev": "concurrently \"gulp\" \"npm run dev:server\"",
     "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
     "lint": "ts-standard --fix",
