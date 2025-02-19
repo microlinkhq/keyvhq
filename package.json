@@ -253,6 +253,11 @@
       "finepack"
     ]
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@vscode/sqlite3"
+    ]
+  },
   "publishConfig": {
     "access": "public"
   },

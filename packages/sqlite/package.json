@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@keyvhq/sql": "workspace:*",
-    "@vscode/sqlite3": "~5.1.2",
+    "@vscode/sqlite3": "latest",
     "pify": "~5.0.0"
   },
   "devDependencies": {

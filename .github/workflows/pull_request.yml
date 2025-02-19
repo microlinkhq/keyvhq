@@ -8,52 +8,17 @@ on:
     branches:
       - master
 
+env:
+  MYSQL_DB_DATABASE: keyv_test
+  MYSQL_DB_USER: root
+  MYSQL_DB_PASSWORD: root
+
 jobs:
   matrix:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    env:
-      MYSQL_DB_DATABASE: keyv_test
-      MYSQL_DB_USER: root
-      MYSQL_DB_PASSWORD: root
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Start Redis
-        uses: supercharge/redis-github-action@1.8.0
-      #    - name: Start PostgreSQL
-      #      uses: harmon758/postgresql-action@v1
-      #      with:
-      #        postgresql version: '11'
-      #        postgresql password: postgres
-      #        postgresql user: postgres
-      #        postgresql db: keyv_test
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.12.0
-      - name: Start MySQL
-        run: |
-          sudo systemctl start mysql.service
-          mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
-          mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
-      - name: Start PostgreSQL on Ubuntu
-        run: |
-          sudo systemctl start postgresql.service
-          pg_isready
-      - name: Setup PostgreSQL for ava tests
-        run: |
-          sudo -u postgres psql --command="alter system set max_connections = 300;"
-          sudo -u postgres psql --command="CREATE DATABASE keyv_test;"
-          sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
-          sudo systemctl restart postgresql.service
-          pg_isready
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
       - id: matrix
         run: echo "matrix=$(node .github/workflows/get-matrix.mjs)" >> $GITHUB_OUTPUT
       - run: echo ${{ steps.matrix.outputs.matrix }}
@@ -70,12 +35,59 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: lts/*
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
         with:
           version: latest
           run_install: true
+      - name: Start Redis
+        if: contains(matrix.package, 'redis')
+        uses: supercharge/redis-github-action@1.8.0
+      - name: Start MongoDB
+        if: contains(matrix.package, 'mongo')
+        uses: supercharge/mongodb-github-action@1.12.0
+      - name: Start MySQL
+        if: contains(matrix.package, 'mysql')
+        run: |
+          sudo systemctl start mysql.service
+          mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+          mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+      - name: Start PostgreSQL
+        if: contains(matrix.package, 'postgres')
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
+      - name: Setup PostgreSQL for ava tests
+        if: contains(matrix.package, 'postgres')
+        run: |
+          sudo -u postgres psql --command="alter system set max_connections = 300;"
+          sudo -u postgres psql --command="CREATE DATABASE keyv_test;"
+          sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
+          sudo systemctl restart postgresql.service
+          pg_isready
       - name: Test
-        run: pnpm --filter "${{ matrix.package }}" test
+        run: pnpm --filter "${{ matrix.package }}" exec c8 pnpm test
+      - name: Coverage
+        run: pnpm --filter "${{ matrix.package }}" exec c8 report --reporter=lcov --report-dir=coverage
+      - name: Upload
+        uses: coverallsapp/github-action@main
+        with:
+          flag-name: ${{ matrix.package }}
+          parallel: true
+          file: $(pnpm --filter "${{ matrix.package }}" exec pwd)/coverage/lcov.info
+
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@main
+        with:
+          parallel-finished: true
+
+
+
