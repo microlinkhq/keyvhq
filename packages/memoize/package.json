@@ -36,7 +36,7 @@
     "ava": "5"
   },
   "engines": {
-    "node": ">= 16"
+    "node": ">= 18"
   },
   "files": [
     "src"

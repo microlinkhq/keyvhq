@@ -32,7 +32,7 @@
     "typescript": "latest"
   },
   "engines": {
-    "node": ">= 16"
+    "node": ">= 18"
   },
   "files": [
     "src"
