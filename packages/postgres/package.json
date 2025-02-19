@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "@keyvhq/sql": "workspace:*",
-    "pg": "~8.11.0"
+    "pg": "~8.13.3"
   },
   "devDependencies": {
     "@keyvhq/core": "workspace:*",
