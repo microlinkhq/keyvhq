@@ -31,14 +31,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.matrix.outputs.matrix)}}
+      matrix:
+        node-version: [18, 20, 22]
+        package: ${{ fromJson(needs.matrix.outputs.matrix).package }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: ${{ matrix.node-version }}
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
         with:
@@ -88,6 +90,3 @@ jobs:
         uses: coverallsapp/github-action@main
         with:
           parallel-finished: true
-
-
-
