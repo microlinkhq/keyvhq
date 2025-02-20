@@ -6,7 +6,9 @@ on:
       - master
 
 env:
-  PUPPETEER_SKIP_CHROME_HEADLESS_SHELL_DOWNLOAD: true
+  MYSQL_DB_DATABASE: keyv_test
+  MYSQL_DB_USER: root
+  MYSQL_DB_PASSWORD: root
 
 jobs:
   contributors:

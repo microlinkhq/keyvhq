@@ -15,6 +15,7 @@ env:
 
 jobs:
   matrix:
+    if: github.ref != 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +27,6 @@ jobs:
       matrix: ${{ steps.matrix.outputs.matrix }}
 
   test:
-    if: github.ref != 'refs/heads/master'
     needs: matrix
     runs-on: ubuntu-latest
     strategy:
