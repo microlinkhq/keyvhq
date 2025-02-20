@@ -2,7 +2,7 @@
   "name": "@keyvhq/postgres",
   "description": "PostgreSQL storage adapter for Keyv",
   "homepage": "https://keyv.js.org",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
