@@ -1,5 +1,6 @@
 'use strict'
 
+const NullProtoObj = require('null-prototype-object')
 const Keyv = require('@keyvhq/core')
 const mimicFn = require('mimic-fn')
 
@@ -28,7 +29,7 @@ function memoize (
       ? () => rawStaleTtl
       : rawStaleTtl
 
-  const pending = Object.create(null)
+  const pending = new NullProtoObj()
 
   /**
    * This can be better. Check:
