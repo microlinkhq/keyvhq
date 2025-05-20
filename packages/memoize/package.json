@@ -30,7 +30,8 @@
   ],
   "dependencies": {
     "@keyvhq/core": "workspace:*",
-    "mimic-fn": "~3.0.0"
+    "mimic-fn": "~3.0.0",
+    "null-prototype-object": "~1.0.0"
   },
   "devDependencies": {
     "ava": "5"
