@@ -2,7 +2,7 @@
   "name": "@keyvhq/redis",
   "description": "Redis storage adapter for Keyv",
   "homepage": "https://github.com/microlinkhq/keyv",
-  "version": "2.1.8",
+  "version": "2.1.10",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
