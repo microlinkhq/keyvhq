@@ -1,7 +1,7 @@
 {
   "name": "@keyvhq/stats",
   "description": "Collects metrics for a Keyv instance over time.",
-  "homepage": "https://keyv.js.org",
+  "homepage": "https://keyvhq.js.org",
   "version": "2.1.7",
   "types": "./src/index.d.ts",
   "main": "src/index.js",

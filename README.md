@@ -115,7 +115,7 @@ const got = require('got')
 
 const cache = new Keyv({ store: new KeyvRedis('redis://user:pass@localhost:6379') })
 
-await got('https://keyv.js.org', { cache })
+await got('https://keyvhq.js.org', { cache })
 ```
 
 The recommended pattern is to expose a `cache` option in your modules options which is passed through to **Keyv**.
