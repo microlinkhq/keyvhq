@@ -1,7 +1,7 @@
 {
   "name": "@keyvhq/memoize",
   "description": "Memoize any function using Keyv as storage backend.",
-  "homepage": "https://keyv.js.org",
+  "homepage": "https://keyvhq.js.org",
   "version": "2.1.9",
   "types": "./src/index.d.ts",
   "main": "src/index.js",

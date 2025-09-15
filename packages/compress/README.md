@@ -10,7 +10,7 @@ $ npm install @keyvhq/compress --save
 
 ## Usage
 
-All you need to do is to wrap your [keyv](https://keyv.js.org) instance:
+All you need to do is to wrap your [keyv](https://keyvhq.js.org) instance:
 
 ```js
 const KeyvRedis = require('@keyvhq/redis')

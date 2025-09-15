@@ -1,7 +1,7 @@
 {
   "name": "@keyvhq/test-suite",
   "description": "Test suite for Keyv API compliancy",
-  "homepage": "https://keyv.js.org",
+  "homepage": "https://keyvhq.js.org",
   "version": "2.1.7",
   "main": "src/index.js",
   "author": {

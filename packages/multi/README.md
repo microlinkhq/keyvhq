@@ -10,7 +10,7 @@ npm install --save @keyvhq/multi
 
 ## Usage
 
-First, you need to provide your `local` and `remote` stores to be used, being possible to use any [Keyv storage adapter](https://keyv.js.org/#/?id=storage-adapters-1#/?id=storage-adapters-1#/?id=storage-adapters-1):
+First, you need to provide your `local` and `remote` stores to be used, being possible to use any [Keyv storage adapter](https://keyvhq.js.org/#/?id=storage-adapters-1#/?id=storage-adapters-1#/?id=storage-adapters-1):
 
 ```js
 const KeyvMulti = require('@keyvhq/multi')
@@ -25,7 +25,7 @@ const keyv = new Keyv({
 })
 ```
 
-After that, just interact with the store as a single [keyv](https://keyv.js.org/#/?id=usage#/?id=usage#/?id=usage) instance.
+After that, just interact with the store as a single [keyv](https://keyvhq.js.org/#/?id=usage#/?id=usage#/?id=usage) instance.
 
 The actions will be performed in parallel when is possible, and the stores will fallback between them to keep them in synchronized.
 

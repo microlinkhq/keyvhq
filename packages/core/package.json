@@ -1,7 +1,7 @@
 {
   "name": "@keyvhq/core",
   "description": "Simple key-value storage with support for multiple backends",
-  "homepage": "https://keyv.js.org",
+  "homepage": "https://keyvhq.js.org",
   "version": "2.1.7",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
