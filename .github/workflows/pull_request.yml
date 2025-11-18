@@ -48,7 +48,7 @@ jobs:
           run_install: true
       - name: Start Redis
         if: contains(matrix.package, 'redis')
-        uses: supercharge/redis-github-action@1.8.1
+        uses: supercharge/redis-github-action@v2
       - name: Start MongoDB
         if: contains(matrix.package, 'mongo')
         uses: supercharge/mongodb-github-action@1.12.1
