@@ -53,7 +53,9 @@ class Keyv {
   }
 
   _getKeyUnprefix (key) {
-    return this.namespace ? key.split(':').splice(1).join(':') : key
+    if (!this.namespace) return key
+    const index = key.indexOf(':')
+    return index === -1 ? key : key.substring(index + 1)
   }
 
   async get (key, { raw: asRaw = false } = {}) {
