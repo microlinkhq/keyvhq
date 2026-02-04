@@ -4,16 +4,13 @@ const JSONB = require('json-buffer')
 
 class Keyv {
   constructor (options = {}) {
-    Object.entries(
-      Object.assign(
-        {
-          serialize: JSONB.stringify,
-          deserialize: JSONB.parse,
-          store: new Map()
-        },
-        options
-      )
-    ).forEach(([key, value]) => (this[key] = value))
+    const defaults = {
+      serialize: JSONB.stringify,
+      deserialize: JSONB.parse,
+      store: new Map()
+    }
+    const config = { ...defaults, ...options }
+    Object.assign(this, config)
 
     const generateIterator = iterator =>
       async function * () {
