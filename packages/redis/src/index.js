@@ -57,12 +57,8 @@ class KeyvRedis {
       const [cursor, keys] = await scan(curs, 'MATCH', pattern)
       if (!keys.length) return
       const values = await get(keys)
-      for (const i in keys) {
-        if (Object.prototype.hasOwnProperty.call(keys, i)) {
-          const key = keys[i]
-          const value = values[i]
-          yield [key, value]
-        }
+      for (let i = 0; i < keys.length; i++) {
+        yield [keys[i], values[i]]
       }
 
       if (cursor !== '0') {

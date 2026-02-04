@@ -4,10 +4,6 @@ const NullProtoObj = require('null-prototype-object')
 const Keyv = require('@keyvhq/core')
 const mimicFn = require('mimic-fn')
 
-const isFunction = input => typeof input === 'function'
-const isNumber = input => typeof input === 'number'
-const isString = input => typeof input === 'string'
-const isUndefined = input => input === undefined
 const identity = value => value
 
 function memoize (
@@ -22,10 +18,10 @@ function memoize (
   } = {}
 ) {
   const keyv = keyvOptions instanceof Keyv ? keyvOptions : new Keyv(keyvOptions)
-  const ttl = isFunction(rawTtl) ? rawTtl : () => rawTtl
-  const staleTtl = isFunction(rawStaleTtl)
+  const ttl = typeof rawTtl === 'function' ? rawTtl : () => rawTtl
+  const staleTtl = typeof rawStaleTtl === 'function'
     ? rawStaleTtl
-    : isNumber(rawStaleTtl)
+    : typeof rawStaleTtl === 'number'
       ? () => rawStaleTtl
       : rawStaleTtl
 
@@ -40,7 +36,7 @@ function memoize (
    */
   async function getRaw (key) {
     const raw = await keyv.store.get(keyv._getKeyPrefix(key))
-    return isString(raw) ? keyv.deserialize(raw) : raw
+    return typeof raw === 'string' ? keyv.deserialize(raw) : raw
   }
 
   /**
@@ -61,14 +57,14 @@ function memoize (
     const rawKey = getKey(...args)
     const [key, forceExpiration] = Array.isArray(rawKey) ? rawKey : [rawKey]
 
-    if (!isUndefined(pending[key])) return pending[key]
+    if (pending[key] !== undefined) return pending[key]
 
     pending[key] = getRaw(key).then(async data => {
-      const hasValue = data ? !isUndefined(data.value) : false
+      const hasValue = data ? data.value !== undefined : false
       const hasExpires = hasValue && typeof data.expires === 'number'
       const ttlValue = hasExpires ? data.expires - Date.now() : undefined
       const staleTtlValue =
-        hasExpires && !isUndefined(staleTtl) ? staleTtl(data.value) : false
+        hasExpires && staleTtl !== undefined ? staleTtl(data.value) : false
       const isExpired =
         forceExpiration === true
           ? forceExpiration

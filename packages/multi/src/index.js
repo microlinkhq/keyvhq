@@ -4,18 +4,9 @@ const Keyv = require('@keyvhq/core')
 
 class MultiCache {
   constructor ({ remote = new Keyv(), local = new Keyv(), ...options }) {
-    const normalizedOptions = Object.assign(
-      {
-        validator: () => true
-      },
-      options
-    )
     this.remote = remote
     this.local = local
-
-    Object.keys(normalizedOptions).forEach(
-      key => (this[key] = normalizedOptions[key])
-    )
+    Object.assign(this, { validator: () => true, ...options })
   }
 
   async get (...args) {
