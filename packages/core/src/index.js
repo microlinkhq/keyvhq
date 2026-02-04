@@ -14,16 +14,18 @@ class Keyv {
 
     const generateIterator = iterator =>
       async function * () {
+        const now = Date.now()
+        const nsPrefix = this.namespace ? `${this.namespace}:` : null
         for await (const [key, raw] of typeof iterator === 'function'
           ? iterator(this.namespace)
           : iterator) {
           const data =
             typeof raw === 'string' ? await this.deserialize(raw) : raw
-          if (this.namespace && !key.includes(this.namespace)) {
+          if (nsPrefix && !key.startsWith(nsPrefix)) {
             continue
           }
 
-          if (typeof data.expires === 'number' && Date.now() > data.expires) {
+          if (typeof data.expires === 'number' && now > data.expires) {
             this.delete(key)
             continue
           }
