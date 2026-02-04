@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.15](https://github.com/microlinkhq/keyvhq/compare/v2.1.14...v2.1.15) (2026-02-04)
+
+### Performance Improvements
+
+* **core:** optimization improvements ([#237](https://github.com/microlinkhq/keyvhq/issues/237)) ([7d88b5d](https://github.com/microlinkhq/keyvhq/commit/7d88b5d40de3b8f7ca095c2e646305c236b1ac0d))
+
 ## [2.1.13](https://github.com/microlinkhq/keyvhq/compare/v2.1.12...v2.1.13) (2026-02-04)
 
 **Note:** Version bump only for package @keyvhq/core

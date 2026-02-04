@@ -2,7 +2,7 @@
   "name": "@keyvhq/compress",
   "description": "Adds compression bindings for your Keyv instance, saving as much space as you can.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.1.14",
+  "version": "2.1.15",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",

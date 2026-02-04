@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.15](https://github.com/microlinkhq/keyhq/compare/v2.1.14...v2.1.15) (2026-02-04)
+
+### Performance Improvements
+
+* **core:** optimization improvements ([#237](https://github.com/microlinkhq/keyhq/issues/237)) ([7d88b5d](https://github.com/microlinkhq/keyhq/commit/7d88b5d40de3b8f7ca095c2e646305c236b1ac0d))
+* general improvements ([#238](https://github.com/microlinkhq/keyhq/issues/238)) ([fc4c297](https://github.com/microlinkhq/keyhq/commit/fc4c2979bf4bc479f4cf91b8b4e6231e2e4c0ad6))
+
 ## [2.1.14](https://github.com/microlinkhq/keyhq/compare/v2.1.13...v2.1.14) (2026-02-04)
 
 **Note:** Version bump only for package @keyvhq/monorepo
