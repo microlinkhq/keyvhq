@@ -17,7 +17,6 @@ declare class KeyvRedis<TValue> implements Store<TValue> {
 declare namespace KeyvRedis {
   interface Options extends RedisOptions {
     uri?: string | undefined
-    emitErrors?: boolean | true
   }
   const Redis: typeof IORedis
 }
