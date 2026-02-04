@@ -40,8 +40,6 @@ declare namespace Keyv {
     store?: Store<TValue> | Map<string, string>
     /** Default TTL. Can be overridden by specififying a TTL on `.set()`. */
     ttl?: number | undefined
-    /** Emit Errors on the keyv instance, defaults to true. */
-    emitErrors?: boolean | true
   }
 
   interface DeserializedData<TValue> {

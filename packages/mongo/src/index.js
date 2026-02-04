@@ -3,7 +3,8 @@
 const mongodb = require('mongodb')
 const pify = require('pify')
 
-const keyvMongoKeys = ['url', 'collection', 'emitErrors']
+const keyvMongoKeys = ['url', 'collection']
+
 class KeyvMongo {
   constructor (url, options) {
     url = url || {}
@@ -66,16 +67,14 @@ class KeyvMongo {
           }
 
           if (!listeningEvents) {
-            if (this.options.emitErrors) {
-              this.client.on('error', error => this.emit('error', error))
-              listeningEvents = true
-            }
+            this.client.on('error', error => this.emit('error', error))
+            listeningEvents = true
           }
 
           resolve(this.store)
         })
         .catch(error => {
-          if (this.options.emitErrors) this.emit('error', error)
+          this.emit('error', error)
         })
     })
   }

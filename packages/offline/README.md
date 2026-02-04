@@ -18,8 +18,7 @@ const Keyv = require('@keyvhq/core')
 
 const store = new KeyvRedis({
   uri: 'redis://user:pass@localhost:6379',
-  maxRetriesPerRequest: 1,
-  emitErrors: false
+  maxRetriesPerRequest: 1
 })
 
 const keyv = new Keyv({ store })

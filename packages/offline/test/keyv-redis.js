@@ -9,8 +9,7 @@ const keyvOffline = require('../src')
 const keyvRedis = new Keyv({
   store: new KeyvRedis({
     uri: 'redis://user:pass@localhost:1337',
-    maxRetriesPerRequest: 0,
-    emitErrors: false
+    maxRetriesPerRequest: 0
   })
 })
 
