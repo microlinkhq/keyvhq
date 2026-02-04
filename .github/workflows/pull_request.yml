@@ -48,24 +48,24 @@ jobs:
           version: latest
           run_install: true
       - name: Start Redis
-        if: contains(matrix.package, 'redis')
+        if: contains(matrix.package.name, 'redis')
         uses: supercharge/redis-github-action@v2
       - name: Start MongoDB
-        if: contains(matrix.package, 'mongo')
+        if: contains(matrix.package.name, 'mongo')
         uses: supercharge/mongodb-github-action@1.12.1
       - name: Start MySQL
-        if: contains(matrix.package, 'mysql')
+        if: contains(matrix.package.name, 'mysql')
         run: |
           sudo systemctl start mysql.service
           mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
           mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
       - name: Start PostgreSQL
-        if: contains(matrix.package, 'postgres')
+        if: contains(matrix.package.name, 'postgres')
         run: |
           sudo systemctl start postgresql.service
           pg_isready
       - name: Setup PostgreSQL for ava tests
-        if: contains(matrix.package, 'postgres')
+        if: contains(matrix.package.name, 'postgres')
         run: |
           sudo -u postgres psql --command="alter system set max_connections = 300;"
           sudo -u postgres psql --command="CREATE DATABASE keyv_test;"
