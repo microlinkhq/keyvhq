@@ -2,31 +2,33 @@
 
 const JSONB = require('json-buffer')
 
+const DEFAULTS = {
+  serialize: JSONB.stringify,
+  deserialize: JSONB.parse
+}
+
 class Keyv {
   constructor (options = {}) {
-    Object.entries(
-      Object.assign(
-        {
-          serialize: JSONB.stringify,
-          deserialize: JSONB.parse,
-          store: new Map()
-        },
-        options
-      )
-    ).forEach(([key, value]) => (this[key] = value))
+    Object.assign(this, {
+      ...DEFAULTS,
+      store: new Map(),
+      ...options
+    })
 
     const generateIterator = iterator =>
       async function * () {
+        const now = Date.now()
+        const nsPrefix = this.namespace ? `${this.namespace}:` : null
         for await (const [key, raw] of typeof iterator === 'function'
           ? iterator(this.namespace)
           : iterator) {
           const data =
             typeof raw === 'string' ? await this.deserialize(raw) : raw
-          if (this.namespace && !key.includes(this.namespace)) {
+          if (nsPrefix && !key.startsWith(nsPrefix)) {
             continue
           }
 
-          if (typeof data.expires === 'number' && Date.now() > data.expires) {
+          if (typeof data.expires === 'number' && now > data.expires) {
             this.delete(key)
             continue
           }
@@ -53,7 +55,9 @@ class Keyv {
   }
 
   _getKeyUnprefix (key) {
-    return this.namespace ? key.split(':').splice(1).join(':') : key
+    if (!this.namespace) return key
+    const index = key.indexOf(':')
+    return index === -1 ? key : key.substring(index + 1)
   }
 
   async get (key, { raw: asRaw = false } = {}) {
