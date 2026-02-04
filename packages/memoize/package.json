@@ -2,7 +2,7 @@
   "name": "@keyvhq/memoize",
   "description": "Memoize any function using Keyv as storage backend.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.1.13",
+  "version": "2.1.14",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
