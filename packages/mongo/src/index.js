@@ -35,47 +35,34 @@ class KeyvMongo {
     this.client = new mongodb.MongoClient(this.options.url, mongoOptions)
 
     this.mongo = {}
-    let listeningEvents = false
     // Implementation from sql by lukechilds,
-    this.connect = new Promise(resolve => {
-      this.client
-        .connect()
-        .then(client => {
-          this.db = client.db(this.options.db)
-          this.store = this.db.collection(this.options.collection)
-          this.store.createIndex(
-            { key: 1 },
-            {
-              unique: true,
-              background: true
-            }
-          )
-          this.store.createIndex(
-            { expiresAt: 1 },
-            {
-              expireAfterSeconds: 0,
-              background: true
-            }
-          )
-          for (const method of [
-            'updateOne',
-            'findOne',
-            'deleteOne',
-            'deleteMany'
-          ]) {
-            this.store[method] = pify(this.store[method].bind(this.store))
-          }
+    this.connect = this.client.connect().then(client => {
+      this.db = client.db(this.options.db)
+      this.store = this.db.collection(this.options.collection)
+      this.store.createIndex(
+        { key: 1 },
+        {
+          unique: true,
+          background: true
+        }
+      )
+      this.store.createIndex(
+        { expiresAt: 1 },
+        {
+          expireAfterSeconds: 0,
+          background: true
+        }
+      )
+      for (const method of [
+        'updateOne',
+        'findOne',
+        'deleteOne',
+        'deleteMany'
+      ]) {
+        this.store[method] = pify(this.store[method].bind(this.store))
+      }
 
-          if (!listeningEvents) {
-            this.client.on('error', error => this.emit('error', error))
-            listeningEvents = true
-          }
-
-          resolve(this.store)
-        })
-        .catch(error => {
-          this.emit('error', error)
-        })
+      return this.store
     })
   }
 
