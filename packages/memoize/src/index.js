@@ -97,6 +97,9 @@ function memoize (
         pending[key] = undefined
         throw error
       }
+    }).catch(error => {
+      pending[key] = undefined
+      throw error
     })
 
     return pending[key]
