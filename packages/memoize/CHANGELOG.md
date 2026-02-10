@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.16](https://github.com/microlinkhq/keyv/compare/v2.1.15...v2.1.16) (2026-02-10)
+
+### Bug Fixes
+
+* **memoize:** clear cache under error ([#240](https://github.com/microlinkhq/keyv/issues/240)) ([97ce9d0](https://github.com/microlinkhq/keyv/commit/97ce9d0e708b2961e4adfa514cbc0fc42e92733a)), closes [#239](https://github.com/microlinkhq/keyv/issues/239)
+
 ## [2.1.15](https://github.com/microlinkhq/keyv/compare/v2.1.14...v2.1.15) (2026-02-04)
 
 ### Performance Improvements
