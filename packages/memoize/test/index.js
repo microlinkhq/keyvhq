@@ -111,6 +111,33 @@ test('should not cache error', async t => {
   t.is(called, 2)
 })
 
+test('should clear pending if getRaw rejects', async t => {
+  let called = 0
+  const memoized = memoize(async value => {
+    ++called
+    return value
+  })
+
+  const store = memoized.keyv.store
+  const storeGet = store.get.bind(store)
+  let getCalls = 0
+
+  store.get = key => {
+    ++getCalls
+    if (getCalls === 1) {
+      return Promise.reject(new Error('STORE_DOWN'))
+    }
+    return storeGet(key)
+  }
+
+  const firstError = await t.throwsAsync(memoized('value'))
+  t.is(firstError.message, 'STORE_DOWN')
+  t.is(called, 0)
+
+  t.is(await memoized('value'), 'value')
+  t.is(called, 1)
+})
+
 test.serial('should return fresh result', async t => {
   const keyv = new Keyv()
 
