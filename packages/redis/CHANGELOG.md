@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.17](https://github.com/microlinkhq/keyv/compare/v2.1.16...v2.1.17) (2026-03-01)
+
+**Note:** Version bump only for package @keyvhq/redis
+
 ## [2.1.15](https://github.com/microlinkhq/keyv/compare/v2.1.14...v2.1.15) (2026-02-04)
 
 ### Performance Improvements
