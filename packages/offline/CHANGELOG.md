@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/microlinkhq/keyv/compare/v2.1.17...v2.2.0) (2026-03-03)
+
+### Features
+
+* **types:** add TypeScript type definitions to compress, offline, and sql packages ([#242](https://github.com/microlinkhq/keyv/issues/242)) ([c98a996](https://github.com/microlinkhq/keyv/commit/c98a996b015c8ff82ad28016b2ad6ba6178f8983))
+
 ## [2.1.17](https://github.com/microlinkhq/keyv/compare/v2.1.16...v2.1.17) (2026-03-01)
 
 **Note:** Version bump only for package @keyvhq/offline
