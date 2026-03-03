@@ -3,6 +3,7 @@
   "description": "Adding offline capabilities for your keyv instance.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.1.17",
+  "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",
