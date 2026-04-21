@@ -27,7 +27,7 @@
   "devDependencies": {
     "@keyvhq/core": "workspace:*",
     "@keyvhq/file": "workspace:*",
-    "ava": "5",
+    "ava": "7",
     "tsd": "latest",
     "typescript": "latest"
   },

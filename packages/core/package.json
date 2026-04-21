@@ -32,7 +32,7 @@
   "devDependencies": {
     "@keyvhq/test-suite": "workspace:*",
     "@types/node": "latest",
-    "ava": "5",
+    "ava": "7",
     "timekeeper": "latest",
     "tsd": "latest",
     "typescript": "latest"
