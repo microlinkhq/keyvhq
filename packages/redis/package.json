@@ -37,7 +37,7 @@
     "@keyvhq/test-suite": "workspace:*",
     "@types/ioredis": "latest",
     "@types/node": "latest",
-    "ava": "5",
+    "ava": "6",
     "tsd": "latest",
     "typescript": "latest"
   },
