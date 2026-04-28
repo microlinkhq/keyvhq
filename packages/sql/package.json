@@ -36,7 +36,7 @@
     "@keyvhq/core": "workspace:*",
     "@keyvhq/test-suite": "workspace:*",
     "@vscode/sqlite3": "latest",
-    "ava": "5",
+    "ava": "8",
     "pify": "5"
   },
   "engines": {

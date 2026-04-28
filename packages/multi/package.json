@@ -34,7 +34,7 @@
   "devDependencies": {
     "@keyvhq/compress": "latest",
     "@keyvhq/sqlite": "latest",
-    "ava": "5",
+    "ava": "8",
     "tsd": "latest",
     "typescript": "latest"
   },

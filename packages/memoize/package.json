@@ -34,7 +34,7 @@
     "null-prototype-object": "~1.2.5"
   },
   "devDependencies": {
-    "ava": "5"
+    "ava": "8"
   },
   "engines": {
     "node": ">= 18"

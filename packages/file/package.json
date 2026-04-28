@@ -34,7 +34,7 @@
     "@keyvhq/core": "workspace:*",
     "@keyvhq/test-suite": "workspace:*",
     "@types/node": "latest",
-    "ava": "5",
+    "ava": "8",
     "tsd": "latest",
     "typescript": "latest"
   },

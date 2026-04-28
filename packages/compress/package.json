@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@keyvhq/core": "workspace:*",
-    "ava": "5"
+    "ava": "8"
   },
   "engines": {
     "node": ">= 18"
