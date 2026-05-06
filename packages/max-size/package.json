@@ -1,0 +1,53 @@
+{
+  "name": "@keyvhq/max-size",
+  "description": "Prevents storing entries larger than a configured size in your Keyv instance.",
+  "homepage": "https://keyvhq.js.org",
+  "version": "2.2.0",
+  "types": "./src/index.d.ts",
+  "main": "src/index.js",
+  "author": {
+    "email": "hello@microlink.io",
+    "name": "microlink.io",
+    "url": "https://microlink.io"
+  },
+  "repository": {
+    "directory": "packages/max-size",
+    "type": "git",
+    "url": "git+https://github.com/microlinkhq/keyvhq.git"
+  },
+  "bugs": {
+    "url": "https://github.com/microlinkhq/keyvhq/issues"
+  },
+  "keywords": [
+    "cache",
+    "key",
+    "keyv",
+    "max",
+    "size",
+    "store",
+    "ttl",
+    "value"
+  ],
+  "dependencies": {
+    "debug-logfmt": "~1.4.7"
+  },
+  "devDependencies": {
+    "@keyvhq/compress": "workspace:*",
+    "@keyvhq/core": "workspace:*",
+    "ava": "5",
+    "bytes": "latest"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "ava"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
