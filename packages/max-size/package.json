@@ -2,7 +2,7 @@
   "name": "@keyvhq/max-size",
   "description": "Prevents storing entries larger than a configured size in your Keyv instance.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {

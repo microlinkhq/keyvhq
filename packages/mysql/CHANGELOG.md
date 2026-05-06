@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/microlinkhq/keyv/compare/v2.2.0...v2.2.1) (2026-05-06)
+
+**Note:** Version bump only for package @keyvhq/mysql
+
 # [2.2.0](https://github.com/microlinkhq/keyv/compare/v2.1.17...v2.2.0) (2026-03-03)
 
 **Note:** Version bump only for package @keyvhq/mysql
