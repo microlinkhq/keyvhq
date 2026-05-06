@@ -3,10 +3,14 @@
 const debug = require('debug-logfmt')('keyv-max-size')
 
 const byteLength = value => {
-  if (typeof value === 'string') return Buffer.byteLength(value)
-  if (Buffer.isBuffer(value)) return value.byteLength
-  if (value instanceof ArrayBuffer) return value.byteLength
-  if (ArrayBuffer.isView(value)) return value.byteLength
+  if (
+    typeof value === 'string' ||
+    value instanceof ArrayBuffer ||
+    ArrayBuffer.isView(value)
+  ) {
+    return Buffer.byteLength(value)
+  }
+
   const payload = JSON.stringify(value)
   return payload === undefined ? 0 : Buffer.byteLength(payload)
 }
