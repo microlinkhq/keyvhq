@@ -15,22 +15,22 @@ const byteLength = value => {
   return payload === undefined ? 0 : Buffer.byteLength(payload)
 }
 
-function KeyvMaxSize (keyv, { maxSize, size = byteLength, onSkip } = {}) {
+function KeyvMaxSize (store, { maxSize, size = byteLength, onSkip } = {}) {
   if (!(this instanceof KeyvMaxSize)) {
-    return new KeyvMaxSize(keyv, { maxSize, size, onSkip })
+    return new KeyvMaxSize(store, { maxSize, size, onSkip })
   }
 
-  if (!keyv || !keyv.store || typeof keyv.store.set !== 'function') {
-    throw new TypeError('A keyv instance with a writable store is required.')
+  if (!store || typeof store.set !== 'function') {
+    throw new TypeError('A store with a `set` method is required.')
   }
 
   if (!Number.isFinite(maxSize) || maxSize <= 0) {
     throw new TypeError('`maxSize` must be provided as a positive number.')
   }
 
-  const set = keyv.store.set.bind(keyv.store)
+  const set = store.set.bind(store)
 
-  keyv.store.set = async (key, value, ttl) => {
+  store.set = async (key, value, ttl) => {
     const valueSize = await size(value, key)
 
     if (!Number.isFinite(valueSize) || valueSize < 0) {
@@ -38,32 +38,15 @@ function KeyvMaxSize (keyv, { maxSize, size = byteLength, onSkip } = {}) {
     }
 
     if (valueSize > maxSize) {
-      const context = {
-        key,
-        ttl,
-        value,
-        maxSize,
-        valueSize,
-        namespace: keyv.namespace
-      }
-
-      debug('skipped', {
-        key,
-        ttl,
-        maxSize,
-        valueSize,
-        namespace: keyv.namespace
-      })
-
-      if (typeof onSkip === 'function') await onSkip(context)
-
+      debug('skipped', { key, ttl, maxSize, valueSize })
+      if (typeof onSkip === 'function') await onSkip({ key, ttl, value, maxSize, valueSize })
       return true
     }
 
     return set(key, value, ttl)
   }
 
-  return keyv
+  return store
 }
 
 module.exports = KeyvMaxSize
