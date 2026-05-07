@@ -6,7 +6,6 @@ interface KeyvMaxSizeSkipContext {
   value: unknown
   maxSize: number
   valueSize: number
-  namespace?: string
 }
 
 interface KeyvMaxSizeOptions {

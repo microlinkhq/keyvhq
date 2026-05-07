@@ -15,12 +15,12 @@ const byteLength = value => {
   return payload === undefined ? 0 : Buffer.byteLength(payload)
 }
 
-function KeyvMaxSize (store, { maxSize, size = byteLength, onSkip } = {}) {
+function KeyvMaxSize (keyv, { maxSize, size = byteLength, onSkip } = {}) {
   if (!(this instanceof KeyvMaxSize)) {
-    return new KeyvMaxSize(store, { maxSize, size, onSkip })
+    return new KeyvMaxSize(keyv, { maxSize, size, onSkip })
   }
 
-  if (!store || typeof store.set !== 'function') {
+  if (!keyv || typeof keyv.set !== 'function') {
     throw new TypeError('A store with a `set` method is required.')
   }
 
@@ -28,9 +28,9 @@ function KeyvMaxSize (store, { maxSize, size = byteLength, onSkip } = {}) {
     throw new TypeError('`maxSize` must be provided as a positive number.')
   }
 
-  const set = store.set.bind(store)
+  const set = keyv.set.bind(keyv)
 
-  store.set = async (key, value, ttl) => {
+  keyv.set = async (key, value, ttl) => {
     const valueSize = await size(value, key)
 
     if (!Number.isFinite(valueSize) || valueSize < 0) {
@@ -46,7 +46,7 @@ function KeyvMaxSize (store, { maxSize, size = byteLength, onSkip } = {}) {
     return set(key, value, ttl)
   }
 
-  return store
+  return keyv
 }
 
 module.exports = KeyvMaxSize
