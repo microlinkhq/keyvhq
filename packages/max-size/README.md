@@ -1,6 +1,6 @@
 # @keyvhq/max-size [<img width="100" align="right" src="https://keyvhq.js.org/media/logo-sunset.svg" alt="keyv">](https://github.com/microlinkhq/keyvhq/tree/master/packages/max-size)
 
-> Prevents storing entries larger than a configured size in your Keyv instance.
+> Prevents storing entries larger than a configured size.
 
 ## Install
 
@@ -10,17 +10,14 @@ $ npm install @keyvhq/max-size --save
 
 ## Usage
 
-Wrap your [keyv](https://keyvhq.js.org) instance:
+Wrap your store:
 
 ```js
-const Keyv = require('@keyvhq/core')
 const KeyvRedis = require('@keyvhq/redis')
 const KeyvMaxSize = require('@keyvhq/max-size')
 
-const keyv = KeyvMaxSize(
-  new Keyv({
-    store: new KeyvRedis('redis://user:pass@localhost:6379')
-  }),
+const store = new KeyvMaxSize(
+  new KeyvRedis('redis://user:pass@localhost:6379'),
   { maxSize: 1024 * 1024 } // required
 )
 ```
@@ -32,14 +29,21 @@ You can use it with [`bytes`](https://www.npmjs.com/package/bytes):
 ```js
 const bytes = require('bytes')
 
-const keyv = KeyvMaxSize(new Keyv({ store }), {
+const store = new KeyvMaxSize(redisStore, {
   maxSize: bytes('1KB')
 })
 ```
 
 ## API
 
-### KeyvMaxSize(keyv, [options])
+### KeyvMaxSize(store, [options])
+
+#### store
+
+Type: `object`  
+Required: `true`
+
+A store instance with a `set` method (e.g., `KeyvRedis`, `Map`).
 
 #### options.maxSize
 

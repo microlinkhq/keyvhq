@@ -33,9 +33,7 @@ test('byteLength returns 0 for undefined', t => {
 
 test('.set stores values smaller than maxSize', async t => {
   const store = new Map()
-  const keyv = KeyvMaxSize(new Keyv({ store, namespace: null }), {
-    maxSize: 128
-  })
+  const keyv = new Keyv({ store: new KeyvMaxSize(store, { maxSize: 128 }), namespace: null })
 
   t.true(await keyv.set('foo', 'bar'))
   t.true(store.has('foo'))
@@ -44,17 +42,18 @@ test('.set stores values smaller than maxSize', async t => {
 
 test('throws when maxSize is not provided', t => {
   const store = new Map()
-  const keyv = new Keyv({ store, namespace: null })
-
-  const error = t.throws(() => KeyvMaxSize(keyv), { instanceOf: TypeError })
+  const error = t.throws(() => new KeyvMaxSize(store), { instanceOf: TypeError })
   t.is(error.message, '`maxSize` must be provided as a positive number.')
+})
+
+test('throws when store is invalid', t => {
+  const error = t.throws(() => new KeyvMaxSize(null, { maxSize: 128 }), { instanceOf: TypeError })
+  t.is(error.message, 'A store with a `set` method is required.')
 })
 
 test('.set skips values larger than maxSize', async t => {
   const store = new Map()
-  const keyv = KeyvMaxSize(new Keyv({ store, namespace: null }), {
-    maxSize: 32
-  })
+  const keyv = new Keyv({ store: new KeyvMaxSize(store, { maxSize: 32 }), namespace: null })
 
   t.true(await keyv.set('foo', 'this-is-bigger-than-8-bytes'))
   t.false(store.has('foo'))
@@ -65,11 +64,12 @@ test('onSkip receives skip context', async t => {
   const store = new Map()
   const skipped = []
 
-  const keyv = KeyvMaxSize(new Keyv({ store, namespace: null }), {
-    maxSize: 32,
-    onSkip: context => {
-      skipped.push(context)
-    }
+  const keyv = new Keyv({
+    store: new KeyvMaxSize(store, {
+      maxSize: 32,
+      onSkip: context => skipped.push(context)
+    }),
+    namespace: null
   })
 
   await keyv.set('foo', 'this-is-bigger-than-8-bytes')
@@ -82,21 +82,20 @@ test('onSkip receives skip context', async t => {
 
 test('custom size calculator can be used', async t => {
   const store = new Map()
-
-  const keyv = KeyvMaxSize(new Keyv({ store, namespace: null }), {
-    maxSize: 1,
-    size: () => 1
+  const keyv = new Keyv({
+    store: new KeyvMaxSize(store, { maxSize: 1, size: () => 1 }),
+    namespace: null
   })
 
   await keyv.set('foo', 'this-is-bigger-than-1-byte')
-
   t.true(store.has('foo'))
 })
 
 test('accepts maxSize from bytes helper', async t => {
   const store = new Map()
-  const keyv = KeyvMaxSize(new Keyv({ store, namespace: null }), {
-    maxSize: bytes('1KB')
+  const keyv = new Keyv({
+    store: new KeyvMaxSize(store, { maxSize: bytes('1KB') }),
+    namespace: null
   })
 
   await keyv.set('small', 'a'.repeat(64))
@@ -110,10 +109,10 @@ test('works with compressed serialization', async t => {
   const store = new Map()
   const payload = 'a'.repeat(10000)
 
-  const keyv = KeyvMaxSize(
-    keyvCompress(new Keyv({ store, namespace: null })),
-    { maxSize: 128 }
-  )
+  const keyv = keyvCompress(new Keyv({
+    store: new KeyvMaxSize(store, { maxSize: 128 }),
+    namespace: null
+  }))
 
   await keyv.set('foo', payload)
 

@@ -20,17 +20,17 @@ function KeyvMaxSize (keyv, { maxSize, size = byteLength, onSkip } = {}) {
     return new KeyvMaxSize(keyv, { maxSize, size, onSkip })
   }
 
-  if (!keyv || !keyv.store || typeof keyv.store.set !== 'function') {
-    throw new TypeError('A keyv instance with a writable store is required.')
+  if (!keyv || typeof keyv.set !== 'function') {
+    throw new TypeError('A store with a `set` method is required.')
   }
 
   if (!Number.isFinite(maxSize) || maxSize <= 0) {
     throw new TypeError('`maxSize` must be provided as a positive number.')
   }
 
-  const set = keyv.store.set.bind(keyv.store)
+  const set = keyv.set.bind(keyv)
 
-  keyv.store.set = async (key, value, ttl) => {
+  keyv.set = async (key, value, ttl) => {
     const valueSize = await size(value, key)
 
     if (!Number.isFinite(valueSize) || valueSize < 0) {
@@ -38,25 +38,8 @@ function KeyvMaxSize (keyv, { maxSize, size = byteLength, onSkip } = {}) {
     }
 
     if (valueSize > maxSize) {
-      const context = {
-        key,
-        ttl,
-        value,
-        maxSize,
-        valueSize,
-        namespace: keyv.namespace
-      }
-
-      debug('skipped', {
-        key,
-        ttl,
-        maxSize,
-        valueSize,
-        namespace: keyv.namespace
-      })
-
-      if (typeof onSkip === 'function') await onSkip(context)
-
+      debug('skipped', { key, ttl, maxSize, valueSize })
+      if (typeof onSkip === 'function') await onSkip({ key, ttl, value, maxSize, valueSize })
       return true
     }
 
