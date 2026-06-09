@@ -289,6 +289,37 @@ test('should accept `staleTtl` as function', async t => {
   t.true(infoTwo.hasValue)
 })
 
+test('should return fresh result when force expiration during stale window', async t => {
+  let index = 0
+
+  const store = new Map()
+  const fn = () => ++index
+  const key = ({ key, forceExpiration }) => [key, forceExpiration]
+
+  const memoizeFn = memoize(fn, store, {
+    ttl: 100,
+    staleTtl: 80,
+    key,
+    objectMode: true
+  })
+
+  const [valueOne] = await memoizeFn({ key: 'foo', forceExpiration: false })
+  t.is(valueOne, 1)
+
+  await setTimeout(25)
+
+  const [valueTwo, infoTwo] = await memoizeFn({ key: 'foo', forceExpiration: false })
+  t.is(valueTwo, 1)
+  t.true(infoTwo.isStale)
+
+  await setTimeout(5)
+
+  const [valueThree, infoThree] = await memoizeFn({ key: 'foo', forceExpiration: true })
+  t.true(infoThree.isExpired)
+  t.not(valueThree, 1)
+  t.is(valueThree, index)
+})
+
 test('should be possible force expiration', async t => {
   let index = 0
 
