@@ -82,7 +82,7 @@ function memoize (
         updateStoredValue(key, value)
       )
 
-      if (isStale) {
+      if (isStale && !isExpired) {
         promise
           .then(() => (pending[key] = undefined))
           .catch(error => (info.staleError = error))
