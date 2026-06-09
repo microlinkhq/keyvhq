@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.4](https://github.com/microlinkhq/keyv/compare/v2.2.3...v2.2.4) (2026-06-09)
+
+### Bug Fixes
+
+* **memoize:** skip stale fast-path on forced expiration ([#266](https://github.com/microlinkhq/keyv/issues/266)) ([dd850f0](https://github.com/microlinkhq/keyv/commit/dd850f0e555b8d74e2a6d6c2306d8c8e4e3f3665))
+
 ## [2.2.1](https://github.com/microlinkhq/keyv/compare/v2.2.0...v2.2.1) (2026-05-06)
 
 **Note:** Version bump only for package @keyvhq/memoize

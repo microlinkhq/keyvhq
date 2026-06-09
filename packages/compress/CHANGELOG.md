@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.4](https://github.com/microlinkhq/keyvhq/compare/v2.2.3...v2.2.4) (2026-06-09)
+
+### Bug Fixes
+
+* **compress:** correct type definitions to match implementation ([#267](https://github.com/microlinkhq/keyvhq/issues/267)) ([b3a2e6c](https://github.com/microlinkhq/keyvhq/commit/b3a2e6c1bb464b0eea3834b0e77f51b459ba995a))
+
 # [2.2.0](https://github.com/microlinkhq/keyvhq/compare/v2.1.17...v2.2.0) (2026-03-03)
 
 ### Features

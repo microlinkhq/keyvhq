@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.4](https://github.com/microlinkhq/keyhq/compare/v2.2.3...v2.2.4) (2026-06-09)
+
+### Bug Fixes
+
+* **compress:** correct type definitions to match implementation ([#267](https://github.com/microlinkhq/keyhq/issues/267)) ([b3a2e6c](https://github.com/microlinkhq/keyhq/commit/b3a2e6c1bb464b0eea3834b0e77f51b459ba995a))
+* **memoize:** skip stale fast-path on forced expiration ([#266](https://github.com/microlinkhq/keyhq/issues/266)) ([dd850f0](https://github.com/microlinkhq/keyhq/commit/dd850f0e555b8d74e2a6d6c2306d8c8e4e3f3665))
+
 ## [2.2.3](https://github.com/microlinkhq/keyhq/compare/v2.2.2...v2.2.3) (2026-05-26)
 
 **Note:** Version bump only for package @keyvhq/monorepo
