@@ -182,6 +182,7 @@ test('should emit on stale refresh error', async t => {
   await keyv.set(1, 1, 5)
   const [, info] = await memoizedSum(1)
 
+  await setTimeout(10)
   t.is(info.staleError.message, 'NOPE')
 })
 
@@ -348,4 +349,105 @@ test('should be possible force expiration', async t => {
   })
 
   t.is(valueThree, 2)
+})
+
+test('should return fresh result when force expiration concurrently during stale window', async t => {
+  let index = 0
+
+  const store = new Map()
+  const fn = () => ++index
+  const key = ({ key, forceExpiration }) => [key, forceExpiration]
+
+  const memoizeFn = memoize(fn, store, {
+    ttl: 100,
+    staleTtl: 80,
+    key,
+    objectMode: true
+  })
+
+  const [valueOne] = await memoizeFn({ key: 'foo', forceExpiration: false })
+  t.is(valueOne, 1)
+
+  await setTimeout(25)
+
+  const [[valueNormal, infoNormal], [valueForce, infoForce]] = await Promise.all([
+    memoizeFn({ key: 'foo', forceExpiration: false }),
+    memoizeFn({ key: 'foo', forceExpiration: true })
+  ])
+
+  t.is(valueNormal, 1)
+  t.true(infoNormal.isStale)
+
+  t.true(infoForce.isExpired)
+  t.not(valueForce, 1)
+})
+
+test('should retry origin after a stale refresh failure', async t => {
+  let index = 0
+  let healthy = true
+
+  const store = new Map()
+  const fn = () => {
+    index++
+    if (!healthy) throw new Error('origin down')
+    return index
+  }
+  const key = ({ key }) => [key]
+
+  const memoizeFn = memoize(fn, store, {
+    ttl: 200,
+    staleTtl: 150,
+    key,
+    objectMode: true
+  })
+
+  const [first] = await memoizeFn({ key: 'foo' })
+  t.is(first, 1)
+
+  await setTimeout(60)
+
+  healthy = false
+  const [stale, info] = await memoizeFn({ key: 'foo' })
+  t.is(stale, 1)
+  t.true(info.isStale)
+  await setTimeout(20)
+  t.is(info.staleError.message, 'origin down')
+
+  healthy = true
+  const [stillStale, infoTwo] = await memoizeFn({ key: 'foo' })
+  t.is(stillStale, 1)
+  t.true(infoTwo.isStale)
+  await setTimeout(20)
+
+  const [fresh] = await memoizeFn({ key: 'foo' })
+  t.is(fresh, 3)
+})
+
+test('should serve stale result when refresh throws synchronously', async t => {
+  let calls = 0
+
+  const store = new Map()
+  const fn = () => {
+    if (++calls > 1) throw new Error('NOPE')
+    return calls
+  }
+  const key = ({ key }) => [key]
+
+  const memoizeFn = memoize(fn, store, {
+    ttl: 200,
+    staleTtl: 150,
+    key,
+    objectMode: true
+  })
+
+  const [first] = await memoizeFn({ key: 'foo' })
+  t.is(first, 1)
+
+  await setTimeout(60)
+
+  const [stale, info] = await memoizeFn({ key: 'foo' })
+  t.is(stale, 1)
+  t.true(info.isStale)
+  await setTimeout(20)
+  t.is(info.staleError.message, 'NOPE')
 })

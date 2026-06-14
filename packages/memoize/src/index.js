@@ -56,10 +56,11 @@ function memoize (
   function memoized (...args) {
     const rawKey = getKey(...args)
     const [key, forceExpiration] = Array.isArray(rawKey) ? rawKey : [rawKey]
+    const pendingKey = `${key}:${forceExpiration === true}`
 
-    if (pending[key] !== undefined) return pending[key]
+    if (pending[pendingKey] !== undefined) return pending[pendingKey]
 
-    pending[key] = getRaw(key).then(async data => {
+    pending[pendingKey] = getRaw(key).then(async data => {
       const hasValue = data ? data.value !== undefined : false
       const hasExpires = hasValue && typeof data.expires === 'number'
       const ttlValue = hasExpires ? data.expires - Date.now() : undefined
@@ -74,35 +75,38 @@ function memoize (
       const done = value => (objectMode ? [value, info] : value)
 
       if (hasValue && !isExpired && !isStale) {
-        pending[key] = undefined
+        pending[pendingKey] = undefined
         return done(data.value)
       }
 
-      const promise = Promise.resolve(fn(...args)).then(value =>
-        updateStoredValue(key, value)
-      )
+      const promise = Promise.resolve()
+        .then(() => fn(...args))
+        .then(value => updateStoredValue(key, value))
 
       if (isStale && !isExpired) {
         promise
-          .then(() => (pending[key] = undefined))
-          .catch(error => (info.staleError = error))
+          .then(() => (pending[pendingKey] = undefined))
+          .catch(error => {
+            pending[pendingKey] = undefined
+            info.staleError = error
+          })
         return done(data.value)
       }
 
       try {
         const value = await promise
-        pending[key] = undefined
+        pending[pendingKey] = undefined
         return done(value)
       } catch (error) {
-        pending[key] = undefined
+        pending[pendingKey] = undefined
         throw error
       }
     }).catch(error => {
-      pending[key] = undefined
+      pending[pendingKey] = undefined
       throw error
     })
 
-    return pending[key]
+    return pending[pendingKey]
   }
 
   mimicFn(memoized, fn)
