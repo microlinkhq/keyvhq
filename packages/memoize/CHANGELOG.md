@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/microlinkhq/keyv/compare/v2.2.4...v2.2.5) (2026-06-14)
+
+### Bug Fixes
+
+* **memoize:** isolate force bypass and recover stuck pending during stale window ([#268](https://github.com/microlinkhq/keyv/issues/268)) ([454ee6b](https://github.com/microlinkhq/keyv/commit/454ee6bb2ce0601a0664ab97b2b8c16582c50e2d))
+
 ## [2.2.4](https://github.com/microlinkhq/keyv/compare/v2.2.3...v2.2.4) (2026-06-09)
 
 ### Bug Fixes
