@@ -51,12 +51,32 @@ function memoize (
   }
 
   /**
+   * Persist a refresh result unless a newer writer already replaced the entry
+   * we read (identified by `expires`). Force refreshes always persist.
+   *
+   * @param {string} key
+   * @param {*} raw
+   * @param {{ force: boolean, observedExpires: number|undefined }} meta
+   * @return {Promise<*>}
+   */
+  async function commitStoredValue (key, raw, { force, observedExpires }) {
+    if (!force) {
+      const current = await getRaw(key)
+      const currentExpires =
+        current && typeof current.expires === 'number' ? current.expires : undefined
+      if (currentExpires !== observedExpires) return getValue(raw)
+    }
+    return updateStoredValue(key, raw)
+  }
+
+  /**
    * @return {Promise<*>}
    */
   function memoized (...args) {
     const rawKey = getKey(...args)
     const [key, forceExpiration] = Array.isArray(rawKey) ? rawKey : [rawKey]
     const pendingKey = `${key}:${forceExpiration === true}`
+    const forcePendingKey = `${key}:true`
 
     if (pending[pendingKey] !== undefined) return pending[pendingKey]
 
@@ -73,15 +93,28 @@ function memoize (
       const isStale = staleTtlValue !== false && ttlValue < staleTtlValue
       const info = { hasValue, key, isExpired, isStale, forceExpiration }
       const done = value => (objectMode ? [value, info] : value)
+      const observedExpires = hasExpires ? data.expires : undefined
 
       if (hasValue && !isExpired && !isStale) {
         pending[pendingKey] = undefined
         return done(data.value)
       }
 
+      // A force refresh already in flight is the authoritative refresh for this
+      // key — do not start a competing stale background write that can land later.
+      if (isStale && !isExpired && pending[forcePendingKey] !== undefined) {
+        pending[pendingKey] = undefined
+        return done(data.value)
+      }
+
       const promise = Promise.resolve()
         .then(() => fn(...args))
-        .then(value => updateStoredValue(key, value))
+        .then(value =>
+          commitStoredValue(key, value, {
+            force: forceExpiration === true,
+            observedExpires
+          })
+        )
 
       if (isStale && !isExpired) {
         promise

@@ -382,6 +382,45 @@ test('should return fresh result when force expiration concurrently during stale
   t.not(valueForce, 1)
 })
 
+test('should not let a slower stale refresh overwrite a forced value', async t => {
+  const store = new Map()
+  const gates = {}
+  let phase = 'seed'
+  const key = ({ key, forceExpiration }) => [key, forceExpiration]
+
+  const fn = async ({ forceExpiration }) => {
+    if (phase === 'seed') return 'seed'
+    const label = forceExpiration === true ? 'force' : 'normal'
+    gates[label] = deferred()
+    await gates[label].promise
+    return label === 'force' ? 'force-fresh' : 'normal-refresh'
+  }
+
+  const memoizeFn = memoize(fn, store, {
+    ttl: 1000,
+    staleTtl: 800,
+    key
+  })
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'seed')
+  phase = 'race'
+  await setTimeout(250)
+
+  const normalP = memoizeFn({ key: 'foo', forceExpiration: false })
+  await setTimeout(10)
+  const forceP = memoizeFn({ key: 'foo', forceExpiration: true })
+  await setTimeout(10)
+
+  gates.force.resolve()
+  t.is(await forceP, 'force-fresh')
+
+  gates.normal.resolve()
+  t.is(await normalP, 'seed')
+  await setTimeout(10)
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'force-fresh')
+})
+
 test('should retry origin after a stale refresh failure', async t => {
   let index = 0
   let healthy = true
