@@ -27,11 +27,13 @@ class MultiCache {
 
       if (hasValue && isFresh) {
         res = data.value
-        this.local.set(
-          this.remote._getKeyUnprefix(key),
-          data.value,
-          data.expires
-        )
+        const localKey = this.remote._getKeyUnprefix(key)
+        if (typeof data.expires === 'number') {
+          const ttl = data.expires - Date.now()
+          if (ttl > 0) this.local.set(localKey, data.value, ttl)
+        } else {
+          this.local.set(localKey, data.value)
+        }
       }
     }
 

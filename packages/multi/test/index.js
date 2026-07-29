@@ -140,6 +140,22 @@ test.serial('copy locally when is possible', async t => {
   t.is(await local.get('foo'), 'bar')
 })
 
+test.serial('remote expiry is preserved when backfilling local', async t => {
+  const remote = new Keyv()
+  const local = new Keyv()
+  const store = new KeyvMulti({ remote, local })
+
+  await remote.set('foo', 'bar', 50)
+  t.is(await store.get('foo'), 'bar')
+  t.is(await local.get('foo'), 'bar')
+
+  await setTimeout(80)
+
+  t.is(await remote.get('foo'), undefined)
+  t.is(await local.get('foo'), undefined)
+  t.is(await store.get('foo'), undefined)
+})
+
 test.serial('custom validator', async t => {
   const remote = remoteStore()
   const local = new Keyv()
