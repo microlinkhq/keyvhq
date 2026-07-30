@@ -30,7 +30,7 @@
     "value"
   ],
   "dependencies": {
-    "sql-ts": "7"
+    "sql-ts": "8"
   },
   "devDependencies": {
     "@keyvhq/core": "workspace:*",
