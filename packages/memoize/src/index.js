@@ -1,6 +1,5 @@
 'use strict'
 
-const NullProtoObj = require('null-prototype-object')
 const Keyv = require('@keyvhq/core')
 const mimicFn = require('mimic-fn')
 
@@ -25,8 +24,7 @@ function memoize (
       ? () => rawStaleTtl
       : rawStaleTtl
 
-  const pending = new NullProtoObj()
-  const refreshes = new Map()
+  const inflight = new Map()
 
   /**
    * This can be better. Check:
@@ -52,61 +50,55 @@ function memoize (
   }
 
   /**
-   * Register an in-flight refresh so a force refresh landing meanwhile can
-   * supersede it. The entry disappears once no refresh is left for the key.
+   * A key runs at most one forced and one regular request at a time, so both
+   * live in the same slot: a request coalesces with its own lane, waits on the
+   * other one, and is superseded by it.
    *
    * @param {string} key
-   * @return {{ superseded: boolean, release: function }}
+   * @param {boolean} force
+   * @return {object} the request occupying the lane
    */
-  function trackRefresh (key) {
-    if (!refreshes.has(key)) refreshes.set(key, new Set())
-    const siblings = refreshes.get(key)
-    const refresh = {
+  function acquire (key, force) {
+    let slot = inflight.get(key)
+    if (slot === undefined) inflight.set(key, (slot = { forced: undefined, regular: undefined }))
+    const lane = force ? 'forced' : 'regular'
+    const request = {
+      slot,
+      promise: undefined,
       superseded: false,
+      value: undefined,
       release () {
-        siblings.delete(refresh)
-        if (siblings.size === 0) refreshes.delete(key)
+        if (slot[lane] !== request) return
+        slot[lane] = undefined
+        if (slot.forced === undefined && slot.regular === undefined) inflight.delete(key)
       }
     }
-    siblings.add(refresh)
-    return refresh
+    slot[lane] = request
+    return request
   }
 
   /**
-   * @param {string} key
-   * @param {object} refresh the force refresh that just wrote
-   * @return {void}
-   */
-  function supersedeRefreshes (key, refresh) {
-    for (const sibling of refreshes.get(key) ?? []) {
-      if (sibling !== refresh) sibling.superseded = true
-    }
-  }
-
-  /**
-   * Persist a refresh result. A force refresh always writes and then supersedes
-   * every refresh already in flight. A non-force refresh waits for any force
-   * refresh still running, then writes only if it was not superseded — the
-   * forced value stays the one in storage and the one returned.
+   * Persist a refresh result. A forced refresh writes and then supersedes the
+   * regular refresh in flight, handing it the value it just stored. A regular
+   * refresh waits for a forced one to finish before deciding, so the forced
+   * value is what stays in storage and what both callers get back.
    *
    * @param {string} key
    * @param {*} raw
-   * @param {{ force: boolean, forcePendingKey: string, refresh: object }} meta
+   * @param {object} request
+   * @param {boolean} force
    * @return {Promise<*>}
    */
-  async function commitStoredValue (key, raw, { force, forcePendingKey, refresh }) {
+  async function commitStoredValue (key, raw, request, force) {
     if (force) {
       const value = await updateStoredValue(key, raw)
-      supersedeRefreshes(key, refresh)
+      const regular = request.slot.regular
+      if (regular !== undefined) Object.assign(regular, { superseded: true, value })
       return value
     }
-    const forcePending = pending[forcePendingKey]
-    if (forcePending !== undefined) await forcePending.catch(() => {})
-    if (!refresh.superseded) return updateStoredValue(key, raw)
-    const current = await getRaw(key)
-    return current && current.value !== undefined
-      ? current.value
-      : getValue(raw)
+    const forced = request.slot.forced
+    if (forced !== undefined) await forced.promise.catch(() => {})
+    return request.superseded ? request.value : updateStoredValue(key, raw)
   }
 
   /**
@@ -115,54 +107,46 @@ function memoize (
   function memoized (...args) {
     const rawKey = getKey(...args)
     const [key, forceExpiration] = Array.isArray(rawKey) ? rawKey : [rawKey]
-    const pendingKey = `${key}:${forceExpiration === true}`
-    const forcePendingKey = `${key}:true`
+    const force = forceExpiration === true
 
-    if (pending[pendingKey] !== undefined) return pending[pendingKey]
+    const running = inflight.get(key)?.[force ? 'forced' : 'regular']
+    if (running !== undefined) return running.promise
 
-    pending[pendingKey] = getRaw(key).then(async data => {
+    const request = acquire(key, force)
+
+    request.promise = getRaw(key).then(async data => {
       const hasValue = data ? data.value !== undefined : false
       const hasExpires = hasValue && typeof data.expires === 'number'
       const ttlValue = hasExpires ? data.expires - Date.now() : undefined
       const staleTtlValue =
         hasExpires && staleTtl !== undefined ? staleTtl(data.value) : false
       const isExpired =
-        forceExpiration === true
-          ? forceExpiration
-          : staleTtlValue === false && hasExpires && ttlValue < 0
+        force || (staleTtlValue === false && hasExpires && ttlValue < 0)
       const isStale = staleTtlValue !== false && ttlValue < staleTtlValue
       const info = { hasValue, key, isExpired, isStale, forceExpiration }
       const done = value => (objectMode ? [value, info] : value)
 
       if (hasValue && !isExpired && !isStale) {
-        pending[pendingKey] = undefined
+        request.release()
         return done(data.value)
       }
 
-      // A force refresh already in flight is the authoritative refresh for this
-      // key — do not start a competing stale background write that can land later.
-      if (isStale && !isExpired && pending[forcePendingKey] !== undefined) {
-        pending[pendingKey] = undefined
+      // A forced refresh in flight is the authoritative refresh for this key —
+      // do not start a competing stale write that can land later.
+      if (isStale && !isExpired && request.slot.forced !== undefined) {
+        request.release()
         return done(data.value)
       }
 
-      const refresh = trackRefresh(key)
       const promise = Promise.resolve()
         .then(() => fn(...args))
-        .then(value =>
-          commitStoredValue(key, value, {
-            force: forceExpiration === true,
-            forcePendingKey,
-            refresh
-          })
-        )
-        .finally(() => refresh.release())
+        .then(value => commitStoredValue(key, value, request, force))
 
       if (isStale && !isExpired) {
         promise
-          .then(() => (pending[pendingKey] = undefined))
+          .then(() => request.release())
           .catch(error => {
-            pending[pendingKey] = undefined
+            request.release()
             info.staleError = error
           })
         return done(data.value)
@@ -170,18 +154,18 @@ function memoize (
 
       try {
         const value = await promise
-        pending[pendingKey] = undefined
+        request.release()
         return done(value)
       } catch (error) {
-        pending[pendingKey] = undefined
+        request.release()
         throw error
       }
     }).catch(error => {
-      pending[pendingKey] = undefined
+      request.release()
       throw error
     })
 
-    return pending[pendingKey]
+    return request.promise
   }
 
   mimicFn(memoized, fn)
