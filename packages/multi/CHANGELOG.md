@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.6](https://github.com/microlinkhq/keyv/compare/v2.2.5...v2.2.6) (2026-08-02)
+
+### Bug Fixes
+
+* **multi:** convert absolute expires to TTL when backfilling local ([#273](https://github.com/microlinkhq/keyv/issues/273)) ([685fe70](https://github.com/microlinkhq/keyv/commit/685fe70ed49e24e0c319adc532627048e50be2f2)), closes [MultiCache#get](https://github.com/MultiCache/issues/get)
+
 ## [2.1.15](https://github.com/microlinkhq/keyv/compare/v2.1.14...v2.1.15) (2026-02-04)
 
 ### Performance Improvements
