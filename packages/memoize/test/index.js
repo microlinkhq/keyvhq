@@ -15,6 +15,31 @@ const deferred = () => {
   return defer
 }
 
+/**
+ * Every real adapter (redis, memcached, sql) resolves asynchronously, so a
+ * read-then-write guard is not atomic there. A plain `Map` hides that.
+ */
+const slowStore = (delay = 20) => {
+  const map = new Map()
+  return {
+    async get (key) {
+      await setTimeout(delay)
+      return map.get(key)
+    },
+    async set (key, value) {
+      await setTimeout(delay)
+      map.set(key, value)
+    },
+    async delete (key) {
+      await setTimeout(delay)
+      return map.delete(key)
+    },
+    async clear () {
+      map.clear()
+    }
+  }
+}
+
 const asyncSum = (...numbers) =>
   numbers.reduce((wait, n) => wait.then(sum => sum + n), Promise.resolve(0))
 
@@ -380,6 +405,122 @@ test('should return fresh result when force expiration concurrently during stale
 
   t.true(infoForce.isExpired)
   t.not(valueForce, 1)
+})
+
+test('should not let a slower stale refresh overwrite a forced value', async t => {
+  const gates = { force: deferred(), normal: deferred() }
+  const started = { force: deferred(), normal: deferred() }
+  let phase = 'seed'
+  const key = ({ key, forceExpiration }) => [key, forceExpiration]
+
+  const fn = async ({ forceExpiration }) => {
+    if (phase === 'seed') return 'seed'
+    const label = forceExpiration === true ? 'force' : 'normal'
+    started[label].resolve()
+    await gates[label].promise
+    return label === 'force' ? 'force-fresh' : 'normal-refresh'
+  }
+
+  const memoizeFn = memoize(fn, { store: slowStore() }, {
+    ttl: 1000,
+    staleTtl: 800,
+    key
+  })
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'seed')
+  phase = 'race'
+  await setTimeout(250)
+
+  const normalP = memoizeFn({ key: 'foo', forceExpiration: false })
+  await started.normal.promise
+  const forceP = memoizeFn({ key: 'foo', forceExpiration: true })
+  await started.force.promise
+
+  gates.normal.resolve()
+  t.is(await normalP, 'seed')
+
+  gates.force.resolve()
+  t.is(await forceP, 'force-fresh')
+  await setTimeout(100)
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'force-fresh')
+})
+
+test('should not let a stale refresh overwrite a value forced meanwhile', async t => {
+  const gates = { force: deferred(), normal: deferred() }
+  const started = { force: deferred(), normal: deferred() }
+  let phase = 'seed'
+  const key = ({ key, forceExpiration }) => [key, forceExpiration]
+
+  const fn = async ({ forceExpiration }) => {
+    if (phase === 'seed') return 'seed'
+    const label = forceExpiration === true ? 'force' : 'normal'
+    started[label].resolve()
+    await gates[label].promise
+    return label === 'force' ? 'force-fresh' : 'normal-refresh'
+  }
+
+  const memoizeFn = memoize(fn, { store: slowStore() }, {
+    ttl: 1000,
+    staleTtl: 800,
+    key
+  })
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'seed')
+  phase = 'race'
+  await setTimeout(250)
+
+  const normalP = memoizeFn({ key: 'foo', forceExpiration: false })
+  await started.normal.promise
+  const forceP = memoizeFn({ key: 'foo', forceExpiration: true })
+  await started.force.promise
+
+  gates.force.resolve()
+  t.is(await forceP, 'force-fresh')
+
+  gates.normal.resolve()
+  t.is(await normalP, 'seed')
+  await setTimeout(100)
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'force-fresh')
+})
+
+test('should skip a stale refresh while a force refresh is in flight', async t => {
+  const calls = []
+  const gate = deferred()
+  const started = deferred()
+  let phase = 'seed'
+  const key = ({ key, forceExpiration }) => [key, forceExpiration]
+
+  const fn = async ({ forceExpiration }) => {
+    calls.push(forceExpiration === true ? 'force' : 'normal')
+    if (phase === 'seed') return 'seed'
+    started.resolve()
+    await gate.promise
+    return 'force-fresh'
+  }
+
+  const memoizeFn = memoize(fn, { store: slowStore() }, {
+    ttl: 1000,
+    staleTtl: 800,
+    key
+  })
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'seed')
+  phase = 'race'
+  await setTimeout(250)
+
+  const forceP = memoizeFn({ key: 'foo', forceExpiration: true })
+  await started.promise
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'seed')
+  t.deepEqual(calls, ['normal', 'force'])
+
+  gate.resolve()
+  t.is(await forceP, 'force-fresh')
+  await setTimeout(100)
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'force-fresh')
 })
 
 test('should retry origin after a stale refresh failure', async t => {
