@@ -133,6 +133,10 @@ Just in case you need a more granular control, you can return an `Array`, where 
 key: ({ req }) => [req.url, req.query.forceExpiration]
 ```
 
+When refreshes for the same key overlap, the key keeps the value of whoever asked last, and every caller gets back the value the key kept — forcing expiration decides that the entry is stale, not who wins the write.
+
+That ordering holds inside one process. Two processes refreshing the same key cannot see each other, and no store here offers a conditional write, so the last write to arrive is the one that stays.
+
 ##### objectMode
 
 Type: `Boolean`<br/>

@@ -509,6 +509,44 @@ test('should skip a stale refresh while a force refresh is in flight', async t =
   t.is(await read(), 'forced-refresh')
 })
 
+test('should keep the value of whoever asked last, forced or not', async t => {
+  const gates = { forced: deferred(), regular: deferred() }
+  const started = { forced: deferred(), regular: deferred() }
+  let phase = 'seed'
+
+  const fn = async ({ forceExpiration }) => {
+    if (phase === 'seed') return 'seed'
+    const lane = forceExpiration === true ? 'forced' : 'regular'
+    started[lane].resolve()
+    await gates[lane].promise
+    return `${lane}-refresh`
+  }
+
+  const memoizeFn = memoize(fn, { store: slowStore() }, {
+    ttl: 100,
+    key: ({ key, forceExpiration }) => [key, forceExpiration]
+  })
+
+  t.is(await memoizeFn({ key: 'foo', forceExpiration: false }), 'seed')
+  phase = 'race'
+  await setTimeout(120)
+
+  const forced = memoizeFn({ key: 'foo', forceExpiration: true })
+  await started.forced.promise
+  const regular = memoizeFn({ key: 'foo', forceExpiration: false })
+  await started.regular.promise
+
+  // the forced refresh answers first, but it was asked for first too
+  gates.forced.resolve()
+  await setTimeout(40)
+  gates.regular.resolve()
+
+  t.is(await regular, 'regular-refresh')
+  t.is(await forced, 'regular-refresh')
+
+  t.is(await memoizeFn.keyv.get('foo'), 'regular-refresh')
+})
+
 test('should retry origin after a stale refresh failure', async t => {
   let index = 0
   let healthy = true

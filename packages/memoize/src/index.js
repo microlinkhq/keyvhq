@@ -25,6 +25,7 @@ function memoize (
       : rawStaleTtl
 
   const inflight = new Map()
+  let requests = 0
 
   /**
    * This can be better. Check:
@@ -51,8 +52,9 @@ function memoize (
 
   /**
    * A key runs at most one forced and one regular request at a time, so both
-   * live in the same slot: a request coalesces with its own lane, waits on the
-   * other one, and is superseded by it.
+   * live in the same slot: a request coalesces with its own lane and can see
+   * the request occupying the other one. `order` is when the caller asked,
+   * which is what decides whose value the key keeps.
    *
    * @param {string} key
    * @param {boolean} force
@@ -63,7 +65,8 @@ function memoize (
     if (slot === undefined) inflight.set(key, (slot = { forced: undefined, regular: undefined }))
     const lane = force ? 'forced' : 'regular'
     const request = {
-      slot,
+      order: ++requests,
+      rival: () => slot[force ? 'regular' : 'forced'],
       promise: undefined,
       superseded: false,
       value: undefined,
@@ -78,27 +81,28 @@ function memoize (
   }
 
   /**
-   * Persist a refresh result. A forced refresh writes and then supersedes the
-   * regular refresh in flight, handing it the value it just stored. A regular
-   * refresh waits for a forced one to finish before deciding, so the forced
-   * value is what stays in storage and what both callers get back.
+   * Persist a refresh result, keeping the value of whoever asked last — being
+   * forced does not win a race, it only expires the entry. The older request
+   * waits for the newer one and takes the value it stored, so nothing older
+   * than what the key already holds can replace it.
    *
    * @param {string} key
    * @param {*} raw
    * @param {object} request
-   * @param {boolean} force
    * @return {Promise<*>}
    */
-  async function commitStoredValue (key, raw, request, force) {
-    if (force) {
-      const value = await updateStoredValue(key, raw)
-      const regular = request.slot.regular
-      if (regular !== undefined) Object.assign(regular, { superseded: true, value })
-      return value
+  async function commitStoredValue (key, raw, request) {
+    const rival = request.rival()
+    if (rival !== undefined && rival.order > request.order) {
+      await rival.promise.catch(() => {})
     }
-    const forced = request.slot.forced
-    if (forced !== undefined) await forced.promise.catch(() => {})
-    return request.superseded ? request.value : updateStoredValue(key, raw)
+    if (request.superseded) return request.value
+    const value = await updateStoredValue(key, raw)
+    const loser = request.rival()
+    if (loser !== undefined && loser.order < request.order) {
+      Object.assign(loser, { superseded: true, value })
+    }
+    return value
   }
 
   /**
@@ -131,16 +135,16 @@ function memoize (
         return done(data.value)
       }
 
-      // A forced refresh in flight is the authoritative refresh for this key —
-      // do not start a competing stale write that can land later.
-      if (isStale && !isExpired && request.slot.forced !== undefined) {
+      // Somebody is already refreshing this key, so its value is about to be
+      // as fresh as a second origin call would make it.
+      if (isStale && !isExpired && request.rival() !== undefined) {
         request.release()
         return done(data.value)
       }
 
       const promise = Promise.resolve()
         .then(() => fn(...args))
-        .then(value => commitStoredValue(key, value, request, force))
+        .then(value => commitStoredValue(key, value, request))
 
       if (isStale && !isExpired) {
         promise
