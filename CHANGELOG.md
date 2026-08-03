@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.7](https://github.com/microlinkhq/keyhq/compare/v2.2.6...v2.2.7) (2026-08-03)
+
+### Bug Fixes
+
+* **ci:** pin TypeScript so ts-standard can load ([#278](https://github.com/microlinkhq/keyhq/issues/278)) ([782449c](https://github.com/microlinkhq/keyhq/commit/782449c779583d06aa98558173129ebb2aa9b06f))
+
 ## [2.2.6](https://github.com/microlinkhq/keyhq/compare/v2.2.5...v2.2.6) (2026-08-02)
 
 ### Bug Fixes
