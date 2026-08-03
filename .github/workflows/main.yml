@@ -5,7 +5,12 @@ on:
     branches:
       - master
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
+  SKIP_INSTALL_SIMPLE_GIT_HOOKS: true
   MYSQL_DB_DATABASE: keyv_test
   MYSQL_DB_USER: root
   MYSQL_DB_PASSWORD: root
@@ -19,6 +24,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
@@ -37,6 +43,7 @@ jobs:
       - name: Push changes
         run: |
           git push origin ${{ github.head_ref }}
+
   matrix:
     runs-on: ubuntu-latest
     steps:
@@ -47,6 +54,25 @@ jobs:
       - run: echo ${{ steps.matrix.outputs.matrix }}
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v6
+        with:
+          version: latest
+      - name: Install
+        run: pnpm install --dangerously-allow-all-builds
+      - name: Lint
+        run: pnpm lint
+
   test:
     name: Test ${{ matrix.package.name }}
     if: |
@@ -71,6 +97,31 @@ jobs:
           version: latest
       - name: Install
         run: pnpm install --dangerously-allow-all-builds
+      - name: Start Redis
+        if: contains(matrix.package.name, 'redis')
+        uses: supercharge/redis-github-action@v2
+      - name: Start MongoDB
+        if: contains(matrix.package.name, 'mongo')
+        uses: supercharge/mongodb-github-action@1.12.1
+      - name: Start MySQL
+        if: contains(matrix.package.name, 'mysql')
+        run: |
+          sudo systemctl start mysql.service
+          mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+          mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+      - name: Start PostgreSQL
+        if: contains(matrix.package.name, 'postgres')
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
+      - name: Setup PostgreSQL for ava tests
+        if: contains(matrix.package.name, 'postgres')
+        run: |
+          sudo -u postgres psql --command="alter system set max_connections = 300;"
+          sudo -u postgres psql --command="CREATE DATABASE keyv_test;"
+          sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
+          sudo systemctl restart postgresql.service
+          pg_isready
       - name: Test
         run: pnpm --filter "${{ matrix.package.filter }}" exec c8 pnpm test
       - name: Coverage
@@ -81,6 +132,7 @@ jobs:
           flag-name: ${{ matrix.package.name }}
           parallel: true
           file: $(pnpm --filter "${{ matrix.package.filter }}" exec pwd)/coverage/lcov.info
+          fail-on-error: false
 
   finish:
     needs: test
@@ -90,3 +142,59 @@ jobs:
         uses: coverallsapp/github-action@main
         with:
           parallel-finished: true
+          fail-on-error: false
+
+  release:
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: master
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v6
+        with:
+          version: latest
+      - name: Install
+        run: pnpm install --dangerously-allow-all-builds
+      - name: Sync master
+        run: |
+          git config --global user.email ${{ secrets.GIT_EMAIL }}
+          git config --global user.name ${{ secrets.GIT_USERNAME }}
+          git pull origin master
+      - name: Start Redis
+        uses: supercharge/redis-github-action@v2
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.12.1
+      - name: Start MySQL
+        run: |
+          sudo systemctl start mysql.service
+          mysql -e 'CREATE DATABASE ${{ env.MYSQL_DB_DATABASE }}' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+          mysql -e 'SET GLOBAL max_connections = 300;' -u${{ env.MYSQL_DB_USER }} -p${{ env.MYSQL_DB_PASSWORD }}
+      - name: Start PostgreSQL
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
+      - name: Setup PostgreSQL for ava tests
+        run: |
+          sudo -u postgres psql --command="alter system set max_connections = 300;"
+          sudo -u postgres psql --command="CREATE DATABASE keyv_test;"
+          sudo -u postgres psql --command="ALTER ROLE postgres WITH PASSWORD 'postgres';" --command="\du"
+          sudo systemctl restart postgresql.service
+          pg_isready
+      - name: Test
+        run: pnpm --recursive --sequential test
+      - name: Release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          pnpm config set "//registry.npmjs.org/:_authToken" "$NPM_TOKEN"
+          pnpm run release
