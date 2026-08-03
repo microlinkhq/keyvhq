@@ -30,7 +30,7 @@
     "value"
   ],
   "dependencies": {
-    "ioredis": "~5.11.0"
+    "ioredis": "~6.0.0"
   },
   "devDependencies": {
     "@keyvhq/core": "workspace:*",
