@@ -41,7 +41,7 @@
     "@types/node": "latest",
     "ava": "5",
     "tsd": "latest",
-    "typescript": "latest"
+    "typescript": "5"
   },
   "engines": {
     "node": ">= 18"
