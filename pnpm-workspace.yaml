@@ -2,4 +2,4 @@ packages:
   - 'packages/*'
 
 overrides:
-  typescript: 5.9.3
+  typescript: '5'
