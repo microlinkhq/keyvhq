@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/test-suite",
-  "description": "Test suite for Keyv API compliancy",
+  "description": "Shared test suite for Keyv API compliance across storage adapter implementations.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.1.11",
   "main": "src/index.js",
@@ -18,15 +18,16 @@
     "url": "https://github.com/microlinkhq/keyvhq/issues"
   },
   "keywords": [
+    "adapter",
+    "api",
+    "ava",
     "cache",
-    "key",
+    "compliance",
     "keyv",
-    "store",
+    "storage",
     "suite",
     "test",
-    "tests",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "engines": {
     "node": ">= 18"

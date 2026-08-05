@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/file",
-  "description": "A file storage adapter for Keyv",
+  "description": "File-based storage adapter for Keyv — persist cache entries as JSON on disk.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "src/index.d.ts",
@@ -21,14 +21,14 @@
   "keywords": [
     "adapter",
     "cache",
+    "disk",
     "file",
+    "fs",
     "json",
-    "key",
     "keyv",
     "storage",
     "store",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "devDependencies": {
     "@keyvhq/core": "workspace:*",

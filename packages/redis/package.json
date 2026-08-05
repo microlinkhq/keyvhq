@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/redis",
-  "description": "Redis storage adapter for Keyv",
+  "description": "Redis storage adapter for Keyv — fast TTL cache backed by Redis or Valkey.",
   "homepage": "https://github.com/microlinkhq/keyv",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -21,13 +21,14 @@
   "keywords": [
     "adapter",
     "cache",
-    "key",
+    "ioredis",
     "keyv",
+    "memory",
     "redis",
     "storage",
     "store",
     "ttl",
-    "value"
+    "valkey"
   ],
   "dependencies": {
     "ioredis": "~6.0.0"

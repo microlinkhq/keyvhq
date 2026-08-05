@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/mysql",
-  "description": "MySQL/MariaDB storage adapter for Keyv",
+  "description": "MySQL and MariaDB storage adapter for Keyv with TTL-aware key-value persistence.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -21,15 +21,14 @@
   "keywords": [
     "adapter",
     "cache",
-    "key",
+    "database",
     "keyv",
     "mariadb",
     "mysql",
     "sql",
     "storage",
     "store",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "dependencies": {
     "@keyvhq/sql": "workspace:*",

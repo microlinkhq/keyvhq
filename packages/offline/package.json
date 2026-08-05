@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/offline",
-  "description": "Adding offline capabilities for your keyv instance.",
+  "description": "Offline and stale-while-revalidate capabilities for Keyv cache instances.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -20,12 +20,15 @@
   },
   "keywords": [
     "cache",
-    "key",
+    "fallback",
     "keyv",
     "offline",
+    "resilience",
+    "stale",
+    "storage",
     "store",
-    "ttl",
-    "value"
+    "swr",
+    "ttl"
   ],
   "dependencies": {
     "debug-logfmt": "~1.4.7",

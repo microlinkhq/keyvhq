@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/sql",
-  "description": "Parent class for SQL based Keyv storage adapters",
+  "description": "Shared SQL parent class for Keyv storage adapters — schema helpers and TTL cleanup.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -20,14 +20,15 @@
   },
   "keywords": [
     "adapter",
+    "base",
     "cache",
-    "key",
+    "database",
     "keyv",
+    "schema",
     "sql",
     "storage",
     "store",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "dependencies": {
     "sql-ts": "8"

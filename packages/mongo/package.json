@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/mongo",
-  "description": "MongoDB storage adapter for Keyv",
+  "description": "MongoDB storage adapter for Keyv — cache keys and values in a Mongo collection.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -21,14 +21,14 @@
   "keywords": [
     "adapter",
     "cache",
-    "key",
+    "database",
     "keyv",
     "mongo",
     "mongodb",
+    "nosql",
     "storage",
     "store",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "dependencies": {
     "mongodb": "~4.17.2",

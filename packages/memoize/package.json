@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/memoize",
-  "description": "Memoize any function using Keyv as storage backend.",
+  "description": "Memoize any async or sync function using Keyv as a TTL-aware storage backend.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -19,14 +19,16 @@
     "url": "https://github.com/microlinkhq/keyvhq/issues"
   },
   "keywords": [
+    "async",
     "cache",
-    "key",
+    "decorator",
+    "function",
     "keyv",
     "memo",
     "memoize",
+    "performance",
     "store",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "dependencies": {
     "@keyvhq/core": "workspace:*",

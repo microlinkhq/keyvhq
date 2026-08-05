@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/postgres",
-  "description": "PostgreSQL storage adapter for Keyv",
+  "description": "PostgreSQL storage adapter for Keyv — durable key-value cache with TTL support.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -21,15 +21,14 @@
   "keywords": [
     "adapter",
     "cache",
-    "key",
+    "database",
     "keyv",
     "postgres",
     "postgresql",
     "sql",
     "storage",
     "store",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "dependencies": {
     "@keyvhq/sql": "workspace:*",

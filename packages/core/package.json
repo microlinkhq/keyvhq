@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/core",
-  "description": "Simple key-value storage with support for multiple backends",
+  "description": "Simple key-value storage for Node.js with TTL and pluggable backends via Keyv adapters.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -19,12 +19,16 @@
     "url": "https://github.com/microlinkhq/keyvhq/issues"
   },
   "keywords": [
+    "adapter",
     "cache",
-    "key",
+    "key-value",
     "keyv",
+    "memory",
+    "nodejs",
+    "redis",
+    "storage",
     "store",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "dependencies": {
     "json-buffer": "~3.0.1"

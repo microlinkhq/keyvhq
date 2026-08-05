@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/multi",
-  "description": "Layered cache with any backend",
+  "description": "Layered multi-level cache for Keyv — combine L1/L2 backends with a single API.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -19,14 +19,16 @@
     "url": "https://github.com/microlinkhq/keyvhq/issues"
   },
   "keywords": [
+    "adapter",
     "cache",
-    "key",
     "keyv",
-    "multicache",
+    "l1",
+    "l2",
+    "layered",
+    "multi",
     "multilevel",
     "store",
-    "ttl",
-    "value"
+    "ttl"
   ],
   "dependencies": {
     "@keyvhq/core": "workspace:*"

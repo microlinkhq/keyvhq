@@ -1,6 +1,6 @@
 {
   "name": "@keyvhq/stats",
-  "description": "Collects metrics for a Keyv instance over time.",
+  "description": "Collect hit, miss, and latency metrics for a Keyv cache instance over time.",
   "homepage": "https://keyvhq.js.org",
   "version": "2.2.7",
   "types": "./src/index.d.ts",
@@ -20,9 +20,15 @@
   },
   "keywords": [
     "cache",
-    "info",
+    "hits",
     "keyv",
-    "stats"
+    "metrics",
+    "misses",
+    "monitoring",
+    "observability",
+    "stats",
+    "telemetry",
+    "ttl"
   ],
   "devDependencies": {
     "@keyvhq/core": "workspace:*",
