@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "@keyvhq/sql": "workspace:*",
-    "mysql2": "~3.23.0"
+    "mysql2": "~3.24.0"
   },
   "devDependencies": {
     "@keyvhq/core": "workspace:*",
