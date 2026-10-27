@@ -84,7 +84,7 @@ await cache.get('foo') // 'cache'
 
 ### Serialization
 
-**Keyv** uses [json-buffer](https://github.com/dominictarr/json-buffer) for data serialization to ensure consistency across different backends.
+**Keyv** serializes data as JSON, encoding Buffers the same way [json-buffer](https://github.com/dominictarr/json-buffer) does, to ensure consistency across different backends.
 
 You can optionally provide your own serialization functions to support extra data types or to serialize to something other than JSON.
 
@@ -196,16 +196,18 @@ Default TTL in milliseconds. Can be overridden by specifying a TTL on `.set()`.
 ##### serialize
 
 Type: `Function`<br/>
-Default: `JSONB.stringify`
+Default: `JSON.stringify` with Buffers stored as `:base64:` strings
 
 A custom serialization function.
 
 ##### deserialize
 
 Type: `Function`<br/>
-Default: `JSONB.parse`
+Default: `JSON.parse`, restoring `:base64:` strings as Buffers
 
 A custom deserialization function.
+
+The default pair escapes strings that start with `:` by adding one more `:`, and the default deserializer removes it again. Set `serialize` and `deserialize` together, so stored values are read with the format they were written in.
 
 ##### store
 

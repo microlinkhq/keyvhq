@@ -1,10 +1,93 @@
 'use strict'
 
-const JSONB = require('json-buffer')
+const BASE64_PREFIX = ':base64:'
+
+class Base64 {
+  constructor (buffer) {
+    this.text = BASE64_PREFIX + buffer.toString('base64')
+  }
+
+  toJSON () {
+    return this.text
+  }
+}
+
+// Copies are invisible to JSON.stringify's cycle check: a nested reference
+// still points at the original object, so a cycle would be copied until the
+// stack overflows. `seen` returns the copy already built for that object.
+let seen = null
+
+const withBase64Children = value => {
+  if (seen !== null) {
+    const cached = seen.get(value)
+    if (cached !== undefined) return cached
+  }
+  let copy
+  if (Array.isArray(value)) {
+    for (let index = 0; index < value.length; index++) {
+      if (!Buffer.isBuffer(value[index])) continue
+      copy ??= value.slice()
+      copy[index] = new Base64(value[index])
+    }
+  } else {
+    for (const key in value) {
+      if (!Object.hasOwn(value, key) || !Buffer.isBuffer(value[key])) continue
+      copy ??= { ...value }
+      copy[key] = new Base64(value[key])
+    }
+  }
+  if (copy !== undefined) {
+    seen ??= new WeakMap()
+    seen.set(value, copy)
+  }
+  return copy ?? value
+}
+
+function replacer (key, value) {
+  if (value instanceof String) value = value.valueOf()
+  if (typeof value === 'string') {
+    if (value[0] !== ':' || this[key] instanceof Base64) return value
+    return ':' + value
+  }
+  if (value !== null && typeof value === 'object') return withBase64Children(value)
+  return value
+}
+
+const serialize = value => {
+  const previous = seen
+  seen = null
+  try {
+    return JSON.stringify(
+      Buffer.isBuffer(value) ? new Base64(value) : value,
+      replacer
+    )
+  } finally {
+    seen = previous
+  }
+}
+
+const reviveString = value => {
+  if (value[0] !== ':') return value
+  return value.startsWith(BASE64_PREFIX)
+    ? Buffer.from(value.substring(BASE64_PREFIX.length), 'base64')
+    : value.substring(1)
+}
+
+const revive = value => {
+  if (typeof value === 'string') return reviveString(value)
+  if (value === null || typeof value !== 'object') return value
+  const keys = Array.isArray(value) ? null : Object.keys(value)
+  const length = keys ? keys.length : value.length
+  for (let index = 0; index < length; index++) {
+    const key = keys ? keys[index] : index
+    value[key] = revive(value[key])
+  }
+  return value
+}
 
 const DEFAULTS = {
-  serialize: JSONB.stringify,
-  deserialize: JSONB.parse
+  serialize,
+  deserialize: text => revive(JSON.parse(text))
 }
 
 class Keyv {
