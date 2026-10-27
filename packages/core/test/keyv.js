@@ -12,6 +12,23 @@ test.serial('Keyv is a class', t => {
   t.notThrows(() => new Keyv())
 })
 
+test.serial('Keyv stores values in the json-buffer format', async t => {
+  const store = new Map()
+  const keyv = new Keyv({ store })
+  const value = {
+    buffer: Buffer.from('hi'),
+    list: [Buffer.from('a'), ':x', '::y'],
+    text: ':base64:not-a-buffer',
+    plain: 'plain'
+  }
+  await keyv.set('foo', value)
+  t.is(
+    store.get('foo'),
+    '{"value":{"buffer":":base64:aGk=","list":[":base64:YQ==","::x",":::y"],"text":"::base64:not-a-buffer","plain":"plain"},"expires":null}'
+  )
+  t.deepEqual(await keyv.get('foo'), value)
+})
+
 test.serial('Keyv accepts storage adapters', async t => {
   const store = new Map()
   const keyv = new Keyv({ store })

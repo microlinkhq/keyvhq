@@ -9,16 +9,30 @@ function replacer (key, value) {
   return value
 }
 
-const reviver = (key, value) => {
-  if (typeof value !== 'string' || value[0] !== ':') return value
+const reviveString = value => {
+  if (value[0] !== ':') return value
   return value.startsWith(BASE64_PREFIX)
     ? Buffer.from(value.substring(BASE64_PREFIX.length), 'base64')
     : value.substring(1)
 }
 
+const revive = value => {
+  if (typeof value === 'string') return reviveString(value)
+  if (value === null || typeof value !== 'object') return value
+  const keys = Array.isArray(value) ? null : Object.keys(value)
+  const length = keys ? keys.length : value.length
+  for (let index = 0; index < length; index++) {
+    const key = keys ? keys[index] : index
+    const item = value[key]
+    const revived = revive(item)
+    if (revived !== item) value[key] = revived
+  }
+  return value
+}
+
 const DEFAULTS = {
   serialize: value => JSON.stringify(value, replacer),
-  deserialize: text => JSON.parse(text, reviver)
+  deserialize: text => revive(JSON.parse(text))
 }
 
 class Keyv {
