@@ -2,12 +2,45 @@
 
 const BASE64_PREFIX = ':base64:'
 
+class Base64 {
+  constructor (buffer) {
+    this.text = BASE64_PREFIX + buffer.toString('base64')
+  }
+
+  toJSON () {
+    return this.text
+  }
+}
+
+const withBase64Children = value => {
+  let copy
+  if (Array.isArray(value)) {
+    for (let index = 0; index < value.length; index++) {
+      if (!Buffer.isBuffer(value[index])) continue
+      copy ??= value.slice()
+      copy[index] = new Base64(value[index])
+    }
+    return copy ?? value
+  }
+  for (const key in value) {
+    if (!Object.hasOwn(value, key) || !Buffer.isBuffer(value[key])) continue
+    copy ??= { ...value }
+    copy[key] = new Base64(value[key])
+  }
+  return copy ?? value
+}
+
 function replacer (key, value) {
-  const raw = this[key]
-  if (Buffer.isBuffer(raw)) return BASE64_PREFIX + raw.toString('base64')
-  if (typeof value === 'string' && value[0] === ':') return ':' + value
+  if (typeof value === 'string') {
+    if (value[0] !== ':' || this[key] instanceof Base64) return value
+    return ':' + value
+  }
+  if (value !== null && typeof value === 'object') return withBase64Children(value)
   return value
 }
+
+const serialize = value =>
+  JSON.stringify(Buffer.isBuffer(value) ? new Base64(value) : value, replacer)
 
 const reviveString = value => {
   if (value[0] !== ':') return value
@@ -31,7 +64,7 @@ const revive = value => {
 }
 
 const DEFAULTS = {
-  serialize: value => JSON.stringify(value, replacer),
+  serialize,
   deserialize: text => revive(JSON.parse(text))
 }
 

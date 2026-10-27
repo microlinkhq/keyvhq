@@ -174,5 +174,30 @@ test.serial('An empty namespace stores the key as a string', async t => {
   t.is([...store.keys()][0], '42')
 })
 
+test.serial('Buffers are stored as base64 without Buffer#toJSON', async t => {
+  const { toJSON } = Buffer.prototype
+  let calls = 0
+  Buffer.prototype.toJSON = function () {
+    calls++
+    return toJSON.call(this)
+  }
+  try {
+    const store = new Map()
+    const keyv = new Keyv({ store })
+    const buffer = Buffer.from('hello')
+    await keyv.set('top', buffer)
+    await keyv.set('nested', { a: buffer, list: [buffer, ':text'] })
+    t.is(calls, 0)
+    t.is(store.get('top'), '{"value":":base64:aGVsbG8=","expires":null}')
+    t.is(
+      store.get('nested'),
+      '{"value":{"a":":base64:aGVsbG8=","list":[":base64:aGVsbG8=","::text"]},"expires":null}'
+    )
+    t.deepEqual(await keyv.get('nested'), { a: buffer, list: [buffer, ':text'] })
+  } finally {
+    Buffer.prototype.toJSON = toJSON
+  }
+})
+
 const store = () => new Map()
 keyvTestSuite(test, Keyv, store)

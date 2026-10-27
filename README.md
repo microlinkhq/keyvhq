@@ -196,14 +196,14 @@ Default TTL in milliseconds. Can be overridden by specifying a TTL on `.set()`.
 ##### serialize
 
 Type: `Function`<br/>
-Default: `JSONB.stringify`
+Default: `JSON.stringify` with Buffers stored as `:base64:` strings
 
 A custom serialization function.
 
 ##### deserialize
 
 Type: `Function`<br/>
-Default: `JSONB.parse`
+Default: `JSON.parse`, restoring `:base64:` strings as Buffers
 
 A custom deserialization function.
 
