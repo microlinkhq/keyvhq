@@ -1,0 +1,59 @@
+name: benchmark
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v6
+        with:
+          version: latest
+      - name: Install
+        run: pnpm install --dangerously-allow-all-builds
+      - name: Restore previous benchmark
+        uses: actions/cache/restore@v6
+        with:
+          path: cache/benchmark-data.json
+          key: benchmark-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: benchmark-
+      - name: Run benchmark
+        run: node benchmark/index.js
+      - name: Continuous Benchmark
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        uses: benchmark-action/github-action-benchmark@v1.22.2
+        with:
+          name: keyvhq
+          tool: customSmallerIsBetter
+          output-file-path: benchmark-output.json
+          external-data-json-path: cache/benchmark-data.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: false
+          comment-always: true
+          comment-on-alert: false
+          fail-on-alert: false
+          summary-always: false
+      - name: Save benchmark
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: actions/cache/save@v6
+        with:
+          path: cache/benchmark-data.json
+          key: benchmark-${{ github.run_id }}-${{ github.run_attempt }}

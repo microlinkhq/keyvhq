@@ -91,3 +91,6 @@ Temporary Items
 # packages/file
 packages/file/test/fixtures2
 packages/file/test/test.json
+
+benchmark-output.json
+cache/
