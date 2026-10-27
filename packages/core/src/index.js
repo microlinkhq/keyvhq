@@ -1,10 +1,24 @@
 'use strict'
 
-const JSONB = require('json-buffer')
+const BASE64_PREFIX = ':base64:'
+
+function replacer (key, value) {
+  const raw = this[key]
+  if (Buffer.isBuffer(raw)) return BASE64_PREFIX + raw.toString('base64')
+  if (typeof value === 'string' && value[0] === ':') return ':' + value
+  return value
+}
+
+const reviver = (key, value) => {
+  if (typeof value !== 'string' || value[0] !== ':') return value
+  return value.startsWith(BASE64_PREFIX)
+    ? Buffer.from(value.substring(BASE64_PREFIX.length), 'base64')
+    : value.substring(1)
+}
 
 const DEFAULTS = {
-  serialize: JSONB.stringify,
-  deserialize: JSONB.parse
+  serialize: value => JSON.stringify(value, replacer),
+  deserialize: text => JSON.parse(text, reviver)
 }
 
 class Keyv {

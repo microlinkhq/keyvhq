@@ -84,7 +84,7 @@ await cache.get('foo') // 'cache'
 
 ### Serialization
 
-**Keyv** uses [json-buffer](https://github.com/dominictarr/json-buffer) for data serialization to ensure consistency across different backends.
+**Keyv** serializes data as JSON, encoding Buffers the same way [json-buffer](https://github.com/dominictarr/json-buffer) does, to ensure consistency across different backends.
 
 You can optionally provide your own serialization functions to support extra data types or to serialize to something other than JSON.
 

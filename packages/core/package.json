@@ -30,9 +30,6 @@
     "store",
     "ttl"
   ],
-  "dependencies": {
-    "json-buffer": "~3.0.1"
-  },
   "devDependencies": {
     "@keyvhq/test-suite": "workspace:*",
     "@types/node": "latest",
