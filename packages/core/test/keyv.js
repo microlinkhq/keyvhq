@@ -199,5 +199,11 @@ test.serial('Buffers are stored as base64 without Buffer#toJSON', async t => {
   }
 })
 
+test.serial('Boxed strings are escaped like strings', async t => {
+  const keyv = new Keyv({ store: new Map() })
+  await keyv.set('boxed', new String(':base64:aGk=')) // eslint-disable-line no-new-wrappers
+  t.is(await keyv.get('boxed'), ':base64:aGk=')
+})
+
 const store = () => new Map()
 keyvTestSuite(test, Keyv, store)

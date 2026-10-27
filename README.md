@@ -207,6 +207,8 @@ Default: `JSON.parse`, restoring `:base64:` strings as Buffers
 
 A custom deserialization function.
 
+The default pair escapes strings that start with `:` by adding one more `:`, and the default deserializer removes it again. Set `serialize` and `deserialize` together, so stored values are read with the format they were written in.
+
 ##### store
 
 Type: `Storage adapter instance`<br/>

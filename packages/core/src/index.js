@@ -31,6 +31,7 @@ const withBase64Children = value => {
 }
 
 function replacer (key, value) {
+  if (value instanceof String) value = value.valueOf()
   if (typeof value === 'string') {
     if (value[0] !== ':' || this[key] instanceof Base64) return value
     return ':' + value
