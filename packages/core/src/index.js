@@ -12,7 +12,16 @@ class Base64 {
   }
 }
 
+// Copies are invisible to JSON.stringify's cycle check: a nested reference
+// still points at the original object, so a cycle would be copied until the
+// stack overflows. `seen` returns the copy already built for that object.
+let seen = null
+
 const withBase64Children = value => {
+  if (seen !== null) {
+    const cached = seen.get(value)
+    if (cached !== undefined) return cached
+  }
   let copy
   if (Array.isArray(value)) {
     for (let index = 0; index < value.length; index++) {
@@ -20,12 +29,16 @@ const withBase64Children = value => {
       copy ??= value.slice()
       copy[index] = new Base64(value[index])
     }
-    return copy ?? value
+  } else {
+    for (const key in value) {
+      if (!Object.hasOwn(value, key) || !Buffer.isBuffer(value[key])) continue
+      copy ??= { ...value }
+      copy[key] = new Base64(value[key])
+    }
   }
-  for (const key in value) {
-    if (!Object.hasOwn(value, key) || !Buffer.isBuffer(value[key])) continue
-    copy ??= { ...value }
-    copy[key] = new Base64(value[key])
+  if (copy !== undefined) {
+    seen ??= new WeakMap()
+    seen.set(value, copy)
   }
   return copy ?? value
 }
@@ -40,8 +53,18 @@ function replacer (key, value) {
   return value
 }
 
-const serialize = value =>
-  JSON.stringify(Buffer.isBuffer(value) ? new Base64(value) : value, replacer)
+const serialize = value => {
+  const previous = seen
+  seen = null
+  try {
+    return JSON.stringify(
+      Buffer.isBuffer(value) ? new Base64(value) : value,
+      replacer
+    )
+  } finally {
+    seen = previous
+  }
+}
 
 const reviveString = value => {
   if (value[0] !== ':') return value
@@ -57,9 +80,7 @@ const revive = value => {
   const length = keys ? keys.length : value.length
   for (let index = 0; index < length; index++) {
     const key = keys ? keys[index] : index
-    const item = value[key]
-    const revived = revive(item)
-    if (revived !== item) value[key] = revived
+    value[key] = revive(value[key])
   }
   return value
 }

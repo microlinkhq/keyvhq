@@ -114,7 +114,7 @@ test.serial(
 )
 
 test.serial(
-  'Keyv uses custom serializer when provided instead of json-buffer',
+  'Keyv uses a custom serializer when one is provided',
   async t => {
     t.plan(3)
     const store = new Map()
@@ -203,6 +203,97 @@ test.serial('Boxed strings are escaped like strings', async t => {
   const keyv = new Keyv({ store: new Map() })
   await keyv.set('boxed', new String(':base64:aGk=')) // eslint-disable-line no-new-wrappers
   t.is(await keyv.get('boxed'), ':base64:aGk=')
+  await keyv.set('nested', { list: [new String(':x')] }) // eslint-disable-line no-new-wrappers
+  t.deepEqual(await keyv.get('nested'), { list: [':x'] })
+})
+
+test.serial('A nested serialize does not reuse the outer copy', async t => {
+  const keyv = new Keyv()
+  const buf = Buffer.from('a')
+  const shared = { buffer: buf }
+  let nestedBytes
+  const value = {
+    shared,
+    nested: {
+      toJSON () {
+        buf[0] = 'b'.charCodeAt(0)
+        nestedBytes = keyv.serialize({ value: shared, expires: null })
+        return { ok: true }
+      }
+    }
+  }
+  await keyv.set('k', value)
+  t.is(nestedBytes, '{"value":{"buffer":":base64:Yg=="},"expires":null}')
+})
+
+test.serial('Serialize can reenter while a cycle is being copied', async t => {
+  const keyv = new Keyv()
+  const value = {
+    buffer: Buffer.from('c'),
+    nested: {
+      toJSON () {
+        keyv.serialize({ value: { buffer: Buffer.from('in') }, expires: null })
+        return { text: ':n' }
+      }
+    }
+  }
+  value.self = value
+  t.is((await t.throwsAsync(keyv.set('k', value))).name, 'TypeError')
+})
+
+test.serial('A cycle that contains a Buffer throws', async t => {
+  const keyv = new Keyv()
+  const value = { buffer: Buffer.from('x') }
+  value.self = value
+  t.is((await t.throwsAsync(keyv.set('object', value))).name, 'TypeError')
+
+  const list = [Buffer.from('x')]
+  list.push(list)
+  t.is((await t.throwsAsync(keyv.set('list', list))).name, 'TypeError')
+})
+
+test.serial('A shared object that contains a Buffer is stored twice', async t => {
+  const store = new Map()
+  const keyv = new Keyv({ store })
+  const shared = { buffer: Buffer.from('ab'), text: ':z' }
+  await keyv.set('root', { x: shared, y: shared })
+  t.is(
+    store.get('root'),
+    '{"value":{"x":{"buffer":":base64:YWI=","text":"::z"},"y":{"buffer":":base64:YWI=","text":"::z"}},"expires":null}'
+  )
+  t.deepEqual(await keyv.get('root'), {
+    x: { buffer: Buffer.from('ab'), text: ':z' },
+    y: { buffer: Buffer.from('ab'), text: ':z' }
+  })
+})
+
+test.serial('A function property is omitted', async t => {
+  const store = new Map()
+  const keyv = new Keyv({ store })
+  const fn = () => {}
+  fn.buffer = Buffer.from('x')
+  await keyv.set('k', { fn, list: [fn, 1], keep: 1 })
+  t.is(store.get('k'), '{"value":{"list":[null,1],"keep":1},"expires":null}')
+  t.deepEqual(await keyv.get('k'), { list: [null, 1], keep: 1 })
+})
+
+test.serial('Storing a value does not mutate it', async t => {
+  const keyv = new Keyv()
+  const buffer = Buffer.from('hi')
+  const value = { buffer, list: [buffer, ':x'], text: 'plain' }
+  await keyv.set('k', value)
+  t.is(value.buffer, buffer)
+  t.deepEqual(value, { buffer, list: [buffer, ':x'], text: 'plain' })
+})
+
+test.serial('Inherited enumerable buffers are not stored', async t => {
+  const store = new Map()
+  const keyv = new Keyv({ store })
+  const proto = { buffer: Buffer.from('secret'), text: ':hidden' }
+  const value = Object.assign(Object.create(proto), { own: 'yes' })
+  await keyv.set('k', value)
+  t.is(store.get('k'), '{"value":{"own":"yes"},"expires":null}')
+  t.deepEqual(await keyv.get('k'), { own: 'yes' })
 })
 
 const store = () => new Map()
