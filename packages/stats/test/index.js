@@ -66,7 +66,7 @@ test('namespace support', async t => {
   })
 })
 
-test('get hit ratio', async t => {
+test.serial('get hit ratio', async t => {
   const keyv = new KeyvStats(
     new Keyv({
       store: new KeyvFile(fixture)
@@ -129,26 +129,39 @@ const countSaves = async (interval, duration) => {
     return set(key, value)
   }
 
-  const keyv = new KeyvStats(new Keyv({ store }), { interval })
-  await keyv.get('foo')
-  await setTimeout(duration)
-  return saves
+  const timers = []
+  const originalSetInterval = global.setInterval
+  global.setInterval = (callback, delay, ...args) => {
+    const timer = originalSetInterval(callback, delay, ...args)
+    timers.push(timer)
+    return timer
+  }
+
+  try {
+    const keyv = new KeyvStats(new Keyv({ store }), { interval })
+    await keyv.get('foo')
+    await setTimeout(duration)
+    return saves
+  } finally {
+    global.setInterval = originalSetInterval
+    for (const timer of timers) clearInterval(timer)
+  }
 }
 
-test('saves once per interval', async t => {
+test.serial('saves once per interval', async t => {
   const saves = await countSaves(100, 350)
   t.true(saves >= 2 && saves <= 4, `expected 2 to 4 saves in 350ms, got ${saves}`)
 })
 
-test('an interval beyond the timer limit does not save in a loop', async t => {
+test.serial('an interval beyond the timer limit does not save in a loop', async t => {
   t.is(await countSaves(Infinity, 100), 0)
 })
 
-test('an interval below one millisecond does not save in a loop', async t => {
+test.serial('an interval below one millisecond does not save in a loop', async t => {
   t.is(await countSaves(0.5, 100), 0)
 })
 
-test('an interval of one millisecond saves that often', async t => {
+test.serial('an interval of one millisecond saves that often', async t => {
   const saves = await countSaves(1, 80)
   t.true(saves >= 10 && saves <= 120, `expected 10 to 120 saves in 80ms, got ${saves}`)
 })
