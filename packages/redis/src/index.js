@@ -51,22 +51,18 @@ class KeyvRedis {
   }
 
   async * iterator (namespace) {
-    const scan = this.redis.scan.bind(this.redis)
-    const get = this.redis.mget.bind(this.redis)
-    async function * iterate (curs, pattern) {
-      const [cursor, keys] = await scan(curs, 'MATCH', pattern)
-      if (!keys.length) return
-      const values = await get(keys)
-      for (let i = 0; i < keys.length; i++) {
-        yield [keys[i], values[i]]
+    const pattern = `${namespace ? namespace + ':' : ''}*`
+    let cursor = '0'
+    do {
+      const [nextCursor, keys] = await this.redis.scan(cursor, 'MATCH', pattern)
+      cursor = nextCursor
+      if (keys.length > 0) {
+        const values = await this.redis.mget(keys)
+        for (let i = 0; i < keys.length; i++) {
+          yield [keys[i], values[i]]
+        }
       }
-
-      if (cursor !== '0') {
-        yield * iterate(cursor, pattern)
-      }
-    }
-
-    yield * iterate(0, `${namespace ? namespace + ':' : ''}*`)
+    } while (cursor !== '0')
   }
 }
 
