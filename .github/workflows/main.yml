@@ -190,7 +190,7 @@ jobs:
           sudo systemctl restart postgresql.service
           pg_isready
       - name: Test
-        run: pnpm --recursive --sequential test
+        run: pnpm --recursive run --sequential test
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
