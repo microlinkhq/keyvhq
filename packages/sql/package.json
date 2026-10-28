@@ -2,7 +2,7 @@
   "name": "@keyvhq/sql",
   "description": "Shared SQL parent class for Keyv storage adapters — schema helpers and TTL cleanup.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.2.11",
+  "version": "2.2.12",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.12](https://github.com/microlinkhq/keyv/compare/v2.2.11...v2.2.12) (2026-10-28)
+
+### Bug Fixes
+
+* declare the real minimum Node.js version ([#292](https://github.com/microlinkhq/keyv/issues/292)) ([8a2844b](https://github.com/microlinkhq/keyv/commit/8a2844b31c88b9049d7bc48bdd82988492b2cd38))
+
 ## [2.2.11](https://github.com/microlinkhq/keyv/compare/v2.2.10...v2.2.11) (2026-10-28)
 
 **Note:** Version bump only for package @keyvhq/sqlite

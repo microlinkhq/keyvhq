@@ -2,7 +2,7 @@
   "name": "@keyvhq/sqlite",
   "description": "SQLite storage adapter for Keyv — zero-ops local cache with TTL support.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.2.11",
+  "version": "2.2.12",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
