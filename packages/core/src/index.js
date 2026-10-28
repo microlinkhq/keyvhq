@@ -112,6 +112,7 @@ class Keyv {
           }
 
           if (typeof data.expires === 'number' && now > data.expires) {
+            // `key` is already stored with its prefix, and delete() adds one.
             await this.delete(this._getKeyUnprefix(key))
             continue
           }
