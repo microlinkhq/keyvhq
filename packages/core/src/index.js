@@ -112,7 +112,8 @@ class Keyv {
           }
 
           if (typeof data.expires === 'number' && now > data.expires) {
-            this.delete(key)
+            // `key` is already stored with its prefix, and delete() adds one.
+            await this.delete(this._getKeyUnprefix(key))
             continue
           }
 
@@ -139,8 +140,8 @@ class Keyv {
 
   _getKeyUnprefix (key) {
     if (!this.namespace) return key
-    const index = key.indexOf(':')
-    return index === -1 ? key : key.substring(index + 1)
+    const prefix = `${this.namespace}:`
+    return key.startsWith(prefix) ? key.slice(prefix.length) : key
   }
 
   async get (key, { raw: asRaw = false } = {}) {
@@ -150,7 +151,7 @@ class Keyv {
     const data = typeof raw === 'string' ? await this.deserialize(raw) : raw
 
     if (typeof data.expires === 'number' && Date.now() > data.expires) {
-      this.delete(key)
+      await this.delete(key)
       return undefined
     }
 
