@@ -82,3 +82,19 @@ test.serial('clear and iterator match the namespace literally', async t => {
   t.is(await keyvs.uX.get('k'), 'uX')
   await db.clear()
 })
+
+test.serial(
+  'iterator keeps later keys after an expired key is deleted',
+  async t => {
+    const store = new TestSqlite({ iterationLimit: 1, table: 'keyv_pages' })
+    const keyv = new Keyv({ store })
+    await keyv.clear()
+    await keyv.set('a', 'expired', 1)
+    await keyv.set('b', 'live')
+    await keyv.set('c', 'live')
+    await new Promise(resolve => setTimeout(resolve, 20))
+    const keys = []
+    for await (const [key] of keyv.iterator()) keys.push(key)
+    t.deepEqual(keys, ['b', 'c'])
+  }
+)

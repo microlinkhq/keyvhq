@@ -190,3 +190,18 @@ test.serial('a namespace object matches its text literally', async t => {
   t.is(await slashLookalike.get('k'), 'ab')
   await store.clear()
 })
+
+test.serial('iterator pages through keys that contain backslashes', async t => {
+  const store = new KeyvMysql(dbUrl, { table: 'keyv_pages', iterationLimit: 1 })
+  const keyv = new Keyv({ store })
+  await keyv.clear()
+  await keyv.set('a\\b', 'one')
+  await keyv.set('b', 'two')
+  const keys = []
+  for await (const [key] of keyv.iterator()) {
+    keys.push(key)
+    if (keys.length > 4) break
+  }
+  t.deepEqual(keys, ['a\\b', 'b'])
+  await keyv.clear()
+})

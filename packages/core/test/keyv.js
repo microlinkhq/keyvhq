@@ -296,5 +296,96 @@ test.serial('Inherited enumerable buffers are not stored', async t => {
   t.deepEqual(await keyv.get('k'), { own: 'yes' })
 })
 
+test.serial('get finishes deleting an expired key before it resolves', async t => {
+  const start = Date.now()
+  tk.freeze(start)
+  let release
+  const gate = new Promise(resolve => {
+    release = resolve
+  })
+  const backing = new Map()
+  const store = {
+    get: key => backing.get(key),
+    set: (key, value) => backing.set(key, value),
+    delete: key => gate.then(() => backing.delete(key))
+  }
+  const keyv = new Keyv({ store })
+  try {
+    await keyv.set('foo', 'bar', 50)
+    tk.freeze(start + 51)
+    let settled = false
+    const pending = keyv.get('foo').finally(() => {
+      settled = true
+    })
+    await new Promise(resolve => setImmediate(resolve))
+    t.false(settled)
+    t.true(backing.has('foo'))
+    release()
+    t.is(await pending, undefined)
+    t.false(backing.has('foo'))
+  } finally {
+    tk.reset()
+  }
+})
+
+test.serial('iterator removes a namespace that contains a colon', async t => {
+  const start = Date.now()
+  tk.freeze(start)
+  const store = new Map()
+  const keyv = new Keyv({ store, namespace: 'a:b' })
+  try {
+    await keyv.set('foo', 'live')
+    await keyv.set('bar', 'old', 50)
+    tk.freeze(start + 51)
+    const entries = []
+    for await (const entry of keyv.iterator()) entries.push(entry)
+    t.deepEqual(entries, [['foo', 'live']])
+    t.true(store.has('a:b:foo'))
+    t.false(store.has('a:b:bar'))
+    t.false(store.has('a:b:b:bar'))
+    t.is(keyv._getKeyUnprefix('a:b:foo'), 'foo')
+    t.is(keyv._getKeyUnprefix('other'), 'other')
+    t.is(new Keyv()._getKeyUnprefix('a:b:foo'), 'a:b:foo')
+  } finally {
+    tk.reset()
+  }
+})
+
+test.serial(
+  'iterator deletes the stored namespaced key before continuing',
+  async t => {
+    let release
+    const gate = new Promise(resolve => {
+      release = resolve
+    })
+    const deleted = []
+    const store = {
+      iterator () {
+        return (async function * () {
+          yield ['ns:foo', JSON.stringify({ value: 'old', expires: 1 })]
+          yield ['ns:baz', JSON.stringify({ value: 'qux', expires: null })]
+        })()
+      },
+      delete (key) {
+        return gate.then(() => {
+          deleted.push(key)
+          return true
+        })
+      }
+    }
+    const keyv = new Keyv({ store, namespace: 'ns' })
+    const pending = keyv.iterator().next()
+    let settled = false
+    const done = pending.finally(() => {
+      settled = true
+    })
+    await new Promise(resolve => setImmediate(resolve))
+    t.false(settled)
+    release()
+    t.deepEqual(await done, { done: false, value: ['baz', 'qux'] })
+    t.deepEqual(deleted, ['ns:foo'])
+  }
+)
+
 const store = () => new Map()
 keyvTestSuite(test, Keyv, store)

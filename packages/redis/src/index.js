@@ -18,6 +18,12 @@ const normalizeArguments = (input, options) => {
   return new Redis(uri, opts)
 }
 
+// SCAN MATCH is a glob. Escape so the namespace is a literal prefix.
+const matchPattern = namespace => {
+  if (!namespace) return '*'
+  return `${namespace.replace(/[\\*?[]/g, '\\$&')}:*`
+}
+
 class KeyvRedis {
   constructor (uri, options) {
     const redis = normalizeArguments(uri, options)
@@ -41,8 +47,7 @@ class KeyvRedis {
   }
 
   async clear (namespace) {
-    const match = namespace ? `${namespace}:*` : '*'
-    const stream = this.redis.scanStream({ match })
+    const stream = this.redis.scanStream({ match: matchPattern(namespace) })
     const unlinkKeys = new Transform({
       objectMode: true,
       transform: (keys, _, next) => keys.length > 0 ? this.redis.unlink(keys).then(() => next()) : next()
@@ -51,22 +56,18 @@ class KeyvRedis {
   }
 
   async * iterator (namespace) {
-    const scan = this.redis.scan.bind(this.redis)
-    const get = this.redis.mget.bind(this.redis)
-    async function * iterate (curs, pattern) {
-      const [cursor, keys] = await scan(curs, 'MATCH', pattern)
-      if (!keys.length) return
-      const values = await get(keys)
+    const pattern = matchPattern(namespace)
+    let cursor = '0'
+    do {
+      const [nextCursor, keys] = await this.redis.scan(cursor, 'MATCH', pattern)
+      cursor = nextCursor
+      if (keys.length === 0) continue
+      const values = await this.redis.mget(keys)
       for (let i = 0; i < keys.length; i++) {
-        yield [keys[i], values[i]]
+        // A key deleted between SCAN and MGET comes back as null.
+        if (values[i] !== null) yield [keys[i], values[i]]
       }
-
-      if (cursor !== '0') {
-        yield * iterate(cursor, pattern)
-      }
-    }
-
-    yield * iterate(0, `${namespace ? namespace + ':' : ''}*`)
+    } while (cursor !== '0')
   }
 }
 

@@ -137,31 +137,24 @@ class KeyvSql {
   async * iterator (namespace) {
     const limit = Number.parseInt(this.options.iterationLimit, 10)
     const entry = this.entry
-    const pattern = this.namespacePattern(namespace)
-    const like = this.whereLike(pattern)
-    async function * iterate (offset, query) {
-      const selectChunk = entry
+    const like = this.whereLike(this.namespacePattern(namespace))
+    let after
+
+    for (;;) {
+      let select = entry
         .select()
         .where(like)
+        .order(entry.key.asc())
         .limit(limit)
-        .offset(offset)
-        .toString()
-      const entries = await query(selectChunk)
-      if (entries.length === 0) {
-        return
-      }
+      if (after !== undefined) select = select.where(entry.key.gt(this.escape(after)))
+      const entries = await this.query(select.toString())
+      if (entries.length === 0) return
 
-      for (const entry of entries) {
-        offset += 1
-        yield [entry.key, entry.value]
-      }
-
-      if (offset !== '0') {
-        yield * iterate(offset, query)
+      for (const row of entries) {
+        after = row.key
+        yield [row.key, row.value]
       }
     }
-
-    yield * iterate(0, this.query)
   }
 }
 
