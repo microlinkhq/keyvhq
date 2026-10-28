@@ -1,6 +1,6 @@
 'use strict'
 
-const { setTimeout } = require('timers/promises')
+const waitUntilAfter = require('./wait-until-after')
 
 const keyvApiTests = (test, Keyv, store) => {
   test.beforeEach(async () => {
@@ -28,8 +28,9 @@ const keyvApiTests = (test, Keyv, store) => {
     const ttl = 1000
     const keyv = new Keyv({ store: store() })
     await keyv.set('foo', 'bar', ttl)
+    const expiredAfter = Date.now() + ttl
     t.is(await keyv.get('foo'), 'bar')
-    await setTimeout(ttl + 1)
+    await waitUntilAfter(expiredAfter)
     t.is(await keyv.get('foo'), undefined)
   })
 

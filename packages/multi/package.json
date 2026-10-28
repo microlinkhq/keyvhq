@@ -36,6 +36,7 @@
   "devDependencies": {
     "@keyvhq/compress": "latest",
     "@keyvhq/sqlite": "latest",
+    "@keyvhq/test-suite": "workspace:*",
     "ava": "5",
     "tsd": "latest",
     "typescript": "5"
