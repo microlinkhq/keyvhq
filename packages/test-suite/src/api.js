@@ -8,9 +8,11 @@ const keyvApiTests = (test, Keyv, store) => {
     await keyv.clear()
   })
 
-  test.serial('.set(key, value) returns a Promise', t => {
+  test.serial('.set(key, value) returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    t.true(keyv.set('foo', 'bar') instanceof Promise)
+    const returnValue = keyv.set('foo', 'bar')
+    t.true(returnValue instanceof Promise)
+    await returnValue
   })
 
   test.serial('.set(key, value) resolves to true', async t => {
@@ -34,9 +36,11 @@ const keyvApiTests = (test, Keyv, store) => {
     t.is(await keyv.get('foo'), undefined)
   })
 
-  test.serial('.get(key) returns a Promise', t => {
+  test.serial('.get(key) returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    t.true(keyv.get('foo') instanceof Promise)
+    const returnValue = keyv.get('foo')
+    t.true(returnValue instanceof Promise)
+    await returnValue
   })
 
   test.serial('.get(key) resolves to value', async t => {
@@ -53,9 +57,11 @@ const keyvApiTests = (test, Keyv, store) => {
     }
   )
 
-  test.serial('.delete(key) returns a Promise', t => {
+  test.serial('.delete(key) returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    t.true(keyv.delete('foo') instanceof Promise)
+    const returnValue = keyv.delete('foo')
+    t.true(returnValue instanceof Promise)
+    await returnValue
   })
 
   test.serial('.delete(key) resolves to true', async t => {
@@ -103,9 +109,11 @@ const keyvApiTests = (test, Keyv, store) => {
     t.is(await keyv.get('fizz'), undefined)
   })
 
-  test.serial('.has(key) returns a Promise', t => {
+  test.serial('.has(key) returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    t.true(keyv.has('foo') instanceof Promise)
+    const returnValue = keyv.has('foo')
+    t.true(returnValue instanceof Promise)
+    await returnValue
   })
 
   test.serial('.has(key) resolves to true', async t => {
