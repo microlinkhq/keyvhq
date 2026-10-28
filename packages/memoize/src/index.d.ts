@@ -1,18 +1,49 @@
-import { Options, Store } from '@keyvhq/core'
+import Keyv = require('@keyvhq/core')
 
-declare function memoize<RawResult, Result, Args extends any[]> (
-  fn: (...args: Args) => Promise<RawResult>,
-  keyvOptions: Options | Store,
-  options: {
-    key?: (value: RawResult) => any
-    objectMode?: boolean
-    staleTtl?: number | boolean | ((value: any) => number | boolean)
-    ttl?: number | ((value: any) => number)
-    // Difficult to type this one, so we'll just leave it as any
-    // When options.value is not provided, the return type of the memoized function is Result
-    // I can't figure out how to type this, so I'm just going to leave it as any
-    value?: (value: RawResult) => Result
+declare namespace memoize {
+  interface Options<
+    RawResult,
+    Result = RawResult,
+    Args extends any[] = any[],
+    ObjectMode extends boolean = false
+  > {
+    key?: (...args: Args & {}) => any
+    objectMode?: ObjectMode
+    staleTtl?: number | ((value: Result) => number | boolean)
+    ttl?: number | ((value: Result) => number | undefined)
+    value?: (value: RawResult) => Result | Promise<Result>
   }
-): (...args: Args) => Promise<RawResult>
 
-export default memoize
+  interface Info {
+    hasValue: boolean
+    key: any
+    isExpired: boolean
+    isStale: boolean
+    forceExpiration?: unknown
+    staleError?: unknown
+  }
+
+  interface Memoized<Result, Args extends any[], Output> {
+    (...args: Args): Promise<Output>
+    keyv: Keyv<Result>
+    ttl: (value: Result) => number | undefined
+    staleTtl: ((value: Result) => number | boolean) | undefined
+  }
+}
+
+declare function memoize<
+  RawResult,
+  Result = RawResult,
+  Args extends any[] = any[],
+  ObjectMode extends boolean = false
+> (
+  fn: (...args: Args) => RawResult | Promise<RawResult>,
+  keyvOptions?: Keyv | Keyv.Options<any>,
+  options?: memoize.Options<RawResult, Result, Args, ObjectMode>
+): memoize.Memoized<
+Result,
+Args,
+ObjectMode extends true ? [Result, memoize.Info] : Result
+>
+
+export = memoize
