@@ -7,6 +7,10 @@ permissions:
   contents: read
   pull-requests: write
 
+env:
+  pnpm_config_dangerously_allow_all_builds: true
+  SKIP_INSTALL_SIMPLE_GIT_HOOKS: true
+
 jobs:
   benchmark:
     name: Benchmark
@@ -33,12 +37,12 @@ jobs:
           version: latest
       - name: Install head
         working-directory: head
-        run: pnpm install --dangerously-allow-all-builds
+        run: pnpm install
       - name: Install base
         working-directory: base
         run: |
           [ -f benchmark/index.js ] || exit 0
-          pnpm install --dangerously-allow-all-builds || {
+          pnpm install || {
             echo "::warning::base install failed, comparing without it"
             rm benchmark/index.js
           }
