@@ -2,9 +2,14 @@
 
 const { Sql } = require('sql-ts')
 
+// sql-ts inlines String objects via toString(). A primitive-only check would
+// leave those literals unescaped, and value.replace used to accept them.
+const isString = input => typeof input === 'string' || input instanceof String
+
 const escapeBackslashes = input =>
-  typeof input === 'string' ? input.replace(/\\/g, '\\\\') : input
-const escapeLikeWildcards = input => input.replace(/[\\%_]/g, '\\$&')
+  isString(input) ? input.replace(/\\/g, '\\\\') : input
+const escapeLikeWildcards = input =>
+  isString(input) ? input.replace(/[\\%_]/g, '\\$&') : input
 const identity = input => input
 
 class KeyvSql {

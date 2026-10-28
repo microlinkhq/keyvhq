@@ -47,6 +47,40 @@ test.serial('a store accepts keys that are not strings', async t => {
   t.true(await store.delete(5))
 })
 
+test.serial('string objects are escaped like strings', async t => {
+  const store = new KeyvMysql(dbUrl, { table: 'keyv_string_objects' })
+  await store.clear()
+  await store.set('secret', 'value')
+
+  const injection = Object("nope\\') OR 1=1 -- ")
+  t.is(await store.get(injection), undefined)
+  t.false(await store.delete(injection))
+  t.is(await store.get('secret'), 'value')
+
+  await store.set('safe', injection)
+  t.is(await store.get('safe'), String(injection))
+  t.is(await store.get('secret'), 'value')
+
+  const key = Object('a\\b')
+  await store.set(key, key)
+  t.is(await store.get(key), 'a\\b')
+  t.true(await store.delete(key))
+  await store.clear()
+})
+
+test.serial('a numeric namespace is cleared literally', async t => {
+  const store = new KeyvMysql(dbUrl, { table: 'keyv_numeric_namespace' })
+  const numeric = new Keyv({ store, namespace: 1 })
+  const lookalike = new Keyv({ store, namespace: '1x' })
+  await store.clear()
+  await numeric.set('k', 'one')
+  await lookalike.set('k', 'other')
+  await numeric.clear()
+  t.is(await numeric.get('k'), undefined)
+  t.is(await lookalike.get('k'), 'other')
+  await store.clear()
+})
+
 test.serial('clear and iterator match the namespace literally', async t => {
   const store = new KeyvMysql(dbUrl, { table: 'keyv_special_namespaces' })
   const namespaces = ['a\\b', 'ab', 'x\\', 'x', 'n%', 'nX', 'u_', 'uX']
@@ -59,6 +93,10 @@ test.serial('clear and iterator match the namespace literally', async t => {
     const entries = []
     for await (const entry of keyvs[namespace].iterator()) entries.push(entry)
     t.deepEqual(entries, [['k', namespace]], `iterator(${namespace})`)
+
+    const storedKeys = []
+    for await (const [key] of store.iterator(namespace)) storedKeys.push(key)
+    t.deepEqual(storedKeys, [`${namespace}:k`], `store.iterator(${namespace})`)
   }
 
   for (const namespace of ['a\\b', 'x\\', 'n%', 'u_']) await keyvs[namespace].clear()
