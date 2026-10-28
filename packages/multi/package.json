@@ -2,7 +2,7 @@
   "name": "@keyvhq/multi",
   "description": "Layered multi-level cache for Keyv — combine L1/L2 backends with a single API.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {

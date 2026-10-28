@@ -2,7 +2,7 @@
   "name": "@keyvhq/test-suite",
   "description": "Shared test suite for Keyv API compliance across storage adapter implementations.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.1.11",
+  "version": "2.2.8",
   "main": "src/index.js",
   "author": {
     "email": "hello@microlink.io",

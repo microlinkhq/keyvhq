@@ -2,7 +2,7 @@
   "name": "@keyvhq/postgres",
   "description": "PostgreSQL storage adapter for Keyv — durable key-value cache with TTL support.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {

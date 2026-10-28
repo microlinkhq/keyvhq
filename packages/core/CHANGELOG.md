@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.8](https://github.com/microlinkhq/keyvhq/compare/v2.2.7...v2.2.8) (2026-10-28)
+
+### Performance Improvements
+
+* **core:** drop json-buffer, serialize with native JSON ([#283](https://github.com/microlinkhq/keyvhq/issues/283)) ([e13cd2c](https://github.com/microlinkhq/keyvhq/commit/e13cd2c0e88dbd4b99558a5b9690e0d3af2c8845)), references [Buffer#toJSON](https://github.com/Buffer/issues/toJSON) [Buffer#toJSON](https://github.com/Buffer/issues/toJSON)
+
 ## [2.2.7](https://github.com/microlinkhq/keyvhq/compare/v2.2.6...v2.2.7) (2026-08-03)
 
 ### Bug Fixes

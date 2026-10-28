@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.8](https://github.com/microlinkhq/keyv/compare/v2.2.7...v2.2.8) (2026-10-28)
+
+**Note:** Version bump only for package @keyvhq/test-suite
+
 ## [2.1.11](https://github.com/microlinkhq/keyv/compare/v2.1.10...v2.1.11) (2025-09-24)
 
 **Note:** Version bump only for package @keyvhq/test-suite
