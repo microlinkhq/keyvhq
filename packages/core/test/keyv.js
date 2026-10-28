@@ -328,6 +328,29 @@ test.serial('get finishes deleting an expired key before it resolves', async t =
   }
 })
 
+test.serial('iterator removes a namespace that contains a colon', async t => {
+  const start = Date.now()
+  tk.freeze(start)
+  const store = new Map()
+  const keyv = new Keyv({ store, namespace: 'a:b' })
+  try {
+    await keyv.set('foo', 'live')
+    await keyv.set('bar', 'old', 50)
+    tk.freeze(start + 51)
+    const entries = []
+    for await (const entry of keyv.iterator()) entries.push(entry)
+    t.deepEqual(entries, [['foo', 'live']])
+    t.true(store.has('a:b:foo'))
+    t.false(store.has('a:b:bar'))
+    t.false(store.has('a:b:b:bar'))
+    t.is(keyv._getKeyUnprefix('a:b:foo'), 'foo')
+    t.is(keyv._getKeyUnprefix('other'), 'other')
+    t.is(new Keyv()._getKeyUnprefix('a:b:foo'), 'a:b:foo')
+  } finally {
+    tk.reset()
+  }
+})
+
 test.serial(
   'iterator deletes the stored namespaced key before continuing',
   async t => {

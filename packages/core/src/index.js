@@ -140,8 +140,8 @@ class Keyv {
 
   _getKeyUnprefix (key) {
     if (!this.namespace) return key
-    const index = key.indexOf(':')
-    return index === -1 ? key : key.substring(index + 1)
+    const prefix = `${this.namespace}:`
+    return key.startsWith(prefix) ? key.slice(prefix.length) : key
   }
 
   async get (key, { raw: asRaw = false } = {}) {
