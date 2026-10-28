@@ -62,7 +62,7 @@ The data to set for first time or when `.stats.reset()` is called.
 ##### interval
 
 Type: `number`<br/>
-Default: `1500`
+Default: `15000`
 
 ##### key
 

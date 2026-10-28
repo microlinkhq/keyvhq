@@ -1,5 +1,7 @@
 'use strict'
 
+const MAX_TIMER_DELAY = 2 ** 31 - 1
+
 const calcPercent = (partial, total) =>
   `${total === 0 ? 0 : Math.round((partial / total) * 100)}%`
 
@@ -21,7 +23,7 @@ function KeyvStats (
 
   const save = async () => keyv.set(key, await buffer)
 
-  if (interval > 0) setInterval(save).unref()
+  if (interval > 0) setInterval(save, Math.min(interval, MAX_TIMER_DELAY)).unref()
 
   keyv.get = async (...args) => {
     const result = await get(...args)
