@@ -1,6 +1,8 @@
 'use strict'
 
 const { setTimeout } = require('timers/promises')
+const { execFile } = require('child_process')
+const { promisify } = require('util')
 const KeyvFile = require('@keyvhq/file')
 const Keyv = require('@keyvhq/core')
 const path = require('path')
@@ -116,4 +118,42 @@ test('get hit ratio', async t => {
     miss: { value: 1, percent: '25%' },
     total: 4
   })
+})
+
+const countSaves = async (interval, duration) => {
+  let saves = 0
+  const store = new Map()
+  const set = store.set.bind(store)
+  store.set = (key, value) => {
+    if (key === '__keyv_stats__') ++saves
+    return set(key, value)
+  }
+
+  const keyv = new KeyvStats(new Keyv({ store }), { interval })
+  await keyv.get('foo')
+  await setTimeout(duration)
+  return saves
+}
+
+test('saves once per interval', async t => {
+  const saves = await countSaves(100, 350)
+  t.true(saves >= 2 && saves <= 4, `expected 2 to 4 saves in 350ms, got ${saves}`)
+})
+
+test('an interval beyond the timer limit does not save in a loop', async t => {
+  t.is(await countSaves(Infinity, 100), 0)
+})
+
+test('the save interval does not keep the process alive', async t => {
+  const script = `
+    const Keyv = require('@keyvhq/core')
+    const KeyvStats = require(${JSON.stringify(path.join(__dirname, '..'))})
+    KeyvStats(new Keyv())
+  `
+  await t.notThrowsAsync(
+    promisify(execFile)(process.execPath, ['-e', script], {
+      cwd: __dirname,
+      timeout: 5000
+    })
+  )
 })
