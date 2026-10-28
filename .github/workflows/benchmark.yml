@@ -1,13 +1,10 @@
 name: benchmark
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 jobs:
@@ -15,9 +12,16 @@ jobs:
     name: Benchmark
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout head
         uses: actions/checkout@v7
         with:
+          path: head
+          persist-credentials: false
+      - name: Checkout base
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
           persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -27,23 +31,94 @@ jobs:
         uses: pnpm/action-setup@v6
         with:
           version: latest
-      - name: Install
+      - name: Install head
+        working-directory: head
         run: pnpm install --dangerously-allow-all-builds
-      - name: Restore previous benchmark
-        uses: actions/cache/restore@v6
-        with:
-          path: cache/benchmark-data.json
-          key: benchmark-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: benchmark-
-      - name: Run benchmark
-        run: node benchmark/index.js
-      - name: Continuous Benchmark
-        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+      - name: Install base
+        working-directory: base
+        run: |
+          [ -f benchmark/index.js ] || exit 0
+          pnpm install --dangerously-allow-all-builds || {
+            echo "::warning::base install failed, comparing without it"
+            rm benchmark/index.js
+          }
+      - name: Run base and head alternately
+        env:
+          ROUNDS: 5
+        run: |
+          set -euo pipefail
+          mkdir -p results
+          run_side () {
+            if [ "$1" = base ] && [ ! -f base/benchmark/index.js ]; then return 0; fi
+            if (cd "$1" && node benchmark/index.js) && [ -f "$1/benchmark-output.json" ]; then
+              mv "$1/benchmark-output.json" "results/$1-$2.json"
+            elif [ "$1" = base ]; then
+              echo "::warning::base benchmark failed in round $2, comparing without it"
+            else
+              exit 1
+            fi
+          }
+          for round in $(seq "$ROUNDS"); do
+            if [ $((round % 2)) -eq 1 ]; then run_side base "$round"; run_side head "$round"
+            else run_side head "$round"; run_side base "$round"; fi
+          done
+      - name: Compare
+        env:
+          NAME: keyvhq
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          node - <<'EOF'
+          const { readdirSync, readFileSync, writeFileSync, mkdirSync, appendFileSync } = require('fs')
+          const median = values => {
+            const sorted = [...values].sort((a, b) => a - b)
+            const middle = sorted.length >> 1
+            return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2
+          }
+          const round = value => Number(value.toFixed(2))
+          const readSide = side =>
+            readdirSync('results')
+              .filter(file => file.startsWith(`${side}-`))
+              .map(file => JSON.parse(readFileSync(`results/${file}`, 'utf8')))
+          const merge = runs => {
+            const names = [...new Set(runs.flatMap(run => run.map(result => result.name)))]
+            return names.map(name => {
+              const matches = runs.flatMap(run => run.filter(result => result.name === name))
+              const values = matches.map(result => result.value)
+              return {
+                name,
+                unit: matches[0].unit,
+                value: round(median(values)),
+                range: `${round(Math.min(...values))}-${round(Math.max(...values))}`,
+                extra: `median of ${values.length} rounds: ${values.join(', ')}`
+              }
+            })
+          }
+          const head = merge(readSide('head'))
+          const baseRuns = readSide('base')
+          const base = baseRuns.length ? merge(baseRuns) : []
+          writeFileSync('head-output.json', JSON.stringify(head, null, 2))
+          mkdirSync('cache', { recursive: true })
+          const seed = base.length
+            ? { [process.env.NAME]: [{ commit: { id: process.env.BASE_SHA }, date: Date.now(), tool: 'customSmallerIsBetter', benches: base }] }
+            : {}
+          writeFileSync('cache/benchmark-data.json', JSON.stringify({ lastUpdate: Date.now(), repoUrl: '', entries: seed }))
+          const rows = head.map(current => {
+            const previous = base.find(result => result.name === current.name)
+            const ratio = previous ? (current.value / previous.value).toFixed(2) : ''
+            const format = result => (result ? `${result.value} ${result.unit}` : '')
+            return `| \`${current.name}\` | ${format(previous)} | ${format(current)} | ${ratio} |`
+          })
+          const summary = ['| case | base | head | head/base |', '|-|-|-|-|', ...rows].join('\n')
+          console.log(summary)
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + '\n')
+          EOF
+      - name: Comment
+        if: github.event.pull_request.head.repo.full_name == github.repository
         uses: benchmark-action/github-action-benchmark@v1.22.2
         with:
           name: keyvhq
           tool: customSmallerIsBetter
-          output-file-path: benchmark-output.json
+          output-file-path: head-output.json
           external-data-json-path: cache/benchmark-data.json
           github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: false
@@ -51,9 +126,3 @@ jobs:
           comment-on-alert: false
           fail-on-alert: false
           summary-always: false
-      - name: Save benchmark
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        uses: actions/cache/save@v6
-        with:
-          path: cache/benchmark-data.json
-          key: benchmark-${{ github.run_id }}-${{ github.run_attempt }}
