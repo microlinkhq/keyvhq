@@ -2,6 +2,11 @@
 
 const { Sql } = require('sql-ts')
 
+const escapeBackslashes = input =>
+  typeof input === 'string' ? input.replace(/\\/g, '\\\\') : input
+const escapeLikeWildcards = input => input.replace(/[\\%_]/g, '\\$&')
+const identity = input => input
+
 class KeyvSql {
   constructor (options) {
     this.options = Object.assign(
@@ -14,6 +19,9 @@ class KeyvSql {
     )
 
     const sql = new Sql(options.dialect)
+    const isMysql = options.dialect === 'mysql'
+    this.escape = isMysql ? escapeBackslashes : identity
+    this.escapeLike = isMysql ? escapeLikeWildcards : identity
 
     this.entry = sql.define({
       name: this.options.table,
@@ -39,7 +47,10 @@ class KeyvSql {
   }
 
   get (key) {
-    const select = this.entry.select().where({ key }).toString()
+    const select = this.entry
+      .select()
+      .where({ key: this.escape(key) })
+      .toString()
     return this.query(select).then(rows => {
       const row = rows[0]
       if (row === undefined) {
@@ -51,10 +62,8 @@ class KeyvSql {
   }
 
   set (key, value) {
-    if (this.options.dialect === 'mysql') {
-      value = value.replace(/\\/g, '\\\\')
-    }
-
+    key = this.escape(key)
+    value = this.escape(value)
     const upsert =
       this.options.dialect === 'postgres'
         ? this.entry
@@ -67,6 +76,7 @@ class KeyvSql {
 
   delete (key) {
     if (!key) return false
+    key = this.escape(key)
     const select = this.entry.select().where({ key }).toString()
     const del = this.entry.delete().where({ key }).toString()
     return this.query(select).then(rows => {
@@ -79,9 +89,15 @@ class KeyvSql {
     })
   }
 
+  namespacePattern (namespace) {
+    const prefix = namespace ? this.escapeLike(namespace) + ':' : ''
+    return this.escape(`${prefix}%`)
+  }
+
   clear (namespace) {
+    const pattern = this.namespacePattern(namespace)
     const del = this.entry
-      .delete(this.entry.key.like(`${namespace ? namespace + ':' : ''}%`))
+      .delete(this.entry.key.like(pattern))
       .toString()
     return this.query(del).then(() => undefined)
   }
@@ -89,10 +105,11 @@ class KeyvSql {
   async * iterator (namespace) {
     const limit = Number.parseInt(this.options.iterationLimit, 10)
     const entry = this.entry
+    const pattern = this.namespacePattern(namespace)
     async function * iterate (offset, query) {
       const selectChunk = entry
         .select()
-        .where(entry.key.like(`${namespace ? namespace + ':' : ''}%`))
+        .where(entry.key.like(pattern))
         .limit(limit)
         .offset(offset)
         .toString()
