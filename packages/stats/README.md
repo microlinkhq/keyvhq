@@ -64,6 +64,8 @@ The data to set for first time or when `.stats.reset()` is called.
 Type: `number`<br/>
 Default: `15000`
 
+How often, in milliseconds, the buffered stats are saved into the store. The timer does not keep the process alive, so call [`.stats.save()`](#statssave) before shutdown to persist the stats gathered since the last save.
+
 ##### key
 
 Type: `string`<br/>
