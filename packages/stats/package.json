@@ -2,7 +2,7 @@
   "name": "@keyvhq/stats",
   "description": "Collect hit, miss, and latency metrics for a Keyv cache instance over time.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.2.9",
+  "version": "2.2.10",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {

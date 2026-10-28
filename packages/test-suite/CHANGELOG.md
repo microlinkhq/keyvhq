@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.10](https://github.com/microlinkhq/keyv/compare/v2.2.9...v2.2.10) (2026-10-28)
+
+### Bug Fixes
+
+* delete expired keys before get and iteration continue ([#291](https://github.com/microlinkhq/keyv/issues/291)) ([d7fd802](https://github.com/microlinkhq/keyv/commit/d7fd80230d1e22c158f321a4e3483481bfc7c054)), references [#287](https://github.com/microlinkhq/keyv/issues/287) [#290](https://github.com/microlinkhq/keyv/issues/290)
+
 ## [2.2.8](https://github.com/microlinkhq/keyv/compare/v2.2.7...v2.2.8) (2026-10-28)
 
 **Note:** Version bump only for package @keyvhq/test-suite

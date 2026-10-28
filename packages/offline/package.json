@@ -2,7 +2,7 @@
   "name": "@keyvhq/offline",
   "description": "Offline and stale-while-revalidate capabilities for Keyv cache instances.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.2.9",
+  "version": "2.2.10",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
