@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.9](https://github.com/microlinkhq/keyv/compare/v2.2.8...v2.2.9) (2026-10-28)
+
+### Bug Fixes
+
+* **redis:** keep scanning until the cursor returns to 0 ([#288](https://github.com/microlinkhq/keyv/issues/288)) ([bfb2cbd](https://github.com/microlinkhq/keyv/commit/bfb2cbdcc3e7e6a0c40c6780cf1072d2dce526bb))
+
 ## [2.2.8](https://github.com/microlinkhq/keyv/compare/v2.2.7...v2.2.8) (2026-10-28)
 
 **Note:** Version bump only for package @keyvhq/redis

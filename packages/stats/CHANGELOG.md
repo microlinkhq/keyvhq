@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.9](https://github.com/microlinkhq/keyvhq/compare/v2.2.8...v2.2.9) (2026-10-28)
+
+### Bug Fixes
+
+* **stats:** save on the configured interval ([#289](https://github.com/microlinkhq/keyvhq/issues/289)) ([0a2f2ab](https://github.com/microlinkhq/keyvhq/commit/0a2f2ab20cd2d107671a011d29dae25fd96fe03b))
+
 ## [2.2.8](https://github.com/microlinkhq/keyvhq/compare/v2.2.7...v2.2.8) (2026-10-28)
 
 **Note:** Version bump only for package @keyvhq/stats
