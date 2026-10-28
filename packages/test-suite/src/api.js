@@ -2,6 +2,18 @@
 
 const waitUntilAfter = require('./wait-until-after')
 
+// `settled` fails the test when the await is removed. A floating call can
+// finish during a later test and overwrite a key that should expire.
+const assertSettledPromise = async (t, operation) => {
+  let settled = false
+  const returnValue = operation()
+  t.true(returnValue instanceof Promise)
+  await returnValue.finally(() => {
+    settled = true
+  })
+  t.true(settled)
+}
+
 const keyvApiTests = (test, Keyv, store) => {
   test.beforeEach(async () => {
     const keyv = new Keyv({ store: store() })
@@ -10,9 +22,7 @@ const keyvApiTests = (test, Keyv, store) => {
 
   test.serial('.set(key, value) returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    const returnValue = keyv.set('foo', 'bar')
-    t.true(returnValue instanceof Promise)
-    await returnValue
+    await assertSettledPromise(t, () => keyv.set('foo', 'bar'))
   })
 
   test.serial('.set(key, value) resolves to true', async t => {
@@ -38,9 +48,7 @@ const keyvApiTests = (test, Keyv, store) => {
 
   test.serial('.get(key) returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    const returnValue = keyv.get('foo')
-    t.true(returnValue instanceof Promise)
-    await returnValue
+    await assertSettledPromise(t, () => keyv.get('foo'))
   })
 
   test.serial('.get(key) resolves to value', async t => {
@@ -59,9 +67,7 @@ const keyvApiTests = (test, Keyv, store) => {
 
   test.serial('.delete(key) returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    const returnValue = keyv.delete('foo')
-    t.true(returnValue instanceof Promise)
-    await returnValue
+    await assertSettledPromise(t, () => keyv.delete('foo'))
   })
 
   test.serial('.delete(key) resolves to true', async t => {
@@ -88,9 +94,7 @@ const keyvApiTests = (test, Keyv, store) => {
 
   test.serial('.clear() returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    const returnValue = keyv.clear()
-    t.true(returnValue instanceof Promise)
-    await returnValue
+    await assertSettledPromise(t, () => keyv.clear())
   })
 
   test.serial('.clear() resolves to undefined', async t => {
@@ -111,9 +115,7 @@ const keyvApiTests = (test, Keyv, store) => {
 
   test.serial('.has(key) returns a Promise', async t => {
     const keyv = new Keyv({ store: store() })
-    const returnValue = keyv.has('foo')
-    t.true(returnValue instanceof Promise)
-    await returnValue
+    await assertSettledPromise(t, () => keyv.has('foo'))
   })
 
   test.serial('.has(key) resolves to true', async t => {
