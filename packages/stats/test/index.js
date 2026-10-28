@@ -144,6 +144,15 @@ test('an interval beyond the timer limit does not save in a loop', async t => {
   t.is(await countSaves(Infinity, 100), 0)
 })
 
+test('an interval below one millisecond does not save in a loop', async t => {
+  t.is(await countSaves(0.5, 100), 0)
+})
+
+test('an interval of one millisecond saves that often', async t => {
+  const saves = await countSaves(1, 80)
+  t.true(saves >= 10 && saves <= 120, `expected 10 to 120 saves in 80ms, got ${saves}`)
+})
+
 test('the save interval does not keep the process alive', async t => {
   const script = `
     const Keyv = require('@keyvhq/core')

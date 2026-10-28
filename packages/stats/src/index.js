@@ -23,7 +23,8 @@ function KeyvStats (
 
   const save = async () => keyv.set(key, await buffer)
 
-  if (interval > 0) setInterval(save, Math.min(interval, MAX_TIMER_DELAY)).unref()
+  // Node rewrites a delay below 1ms, or above 2**31-1 ms, to 1ms.
+  if (interval >= 1) setInterval(save, Math.min(interval, MAX_TIMER_DELAY)).unref()
 
   keyv.get = async (...args) => {
     const result = await get(...args)
