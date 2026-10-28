@@ -9,6 +9,8 @@ on:
       - master
 
 env:
+  pnpm_config_dangerously_allow_all_builds: true
+  SKIP_INSTALL_SIMPLE_GIT_HOOKS: true
   MYSQL_DB_DATABASE: keyv_test
   MYSQL_DB_USER: root
   MYSQL_DB_PASSWORD: root
@@ -47,7 +49,7 @@ jobs:
         with:
           version: latest
       - name: Install
-        run: pnpm install --dangerously-allow-all-builds
+        run: pnpm install
       - name: Start Redis
         if: contains(matrix.package.name, 'redis')
         uses: supercharge/redis-github-action@v2

@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  pnpm_config_dangerously_allow_all_builds: true
   SKIP_INSTALL_SIMPLE_GIT_HOOKS: true
   MYSQL_DB_DATABASE: keyv_test
   MYSQL_DB_USER: root
@@ -34,7 +35,7 @@ jobs:
         with:
           version: latest
       - name: Install
-        run: pnpm install --dangerously-allow-all-builds
+        run: pnpm install
       - name: Contributors
         run: |
           git config --global user.email ${{ secrets.GIT_EMAIL }}
@@ -69,7 +70,7 @@ jobs:
         with:
           version: latest
       - name: Install
-        run: pnpm install --dangerously-allow-all-builds
+        run: pnpm install
       - name: Lint
         run: pnpm lint
 
@@ -96,7 +97,7 @@ jobs:
         with:
           version: latest
       - name: Install
-        run: pnpm install --dangerously-allow-all-builds
+        run: pnpm install
       - name: Start Redis
         if: contains(matrix.package.name, 'redis')
         uses: supercharge/redis-github-action@v2
@@ -163,7 +164,7 @@ jobs:
         with:
           version: latest
       - name: Install
-        run: pnpm install --dangerously-allow-all-builds
+        run: pnpm install
       - name: Sync master
         run: |
           git config --global user.email ${{ secrets.GIT_EMAIL }}
