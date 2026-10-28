@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.11](https://github.com/microlinkhq/keyv/compare/v2.2.10...v2.2.11) (2026-10-28)
+
+### Bug Fixes
+
+* **sql:** escape backslashes in MySQL keys and patterns ([#290](https://github.com/microlinkhq/keyv/issues/290)) ([921e588](https://github.com/microlinkhq/keyv/commit/921e588686146250299437fa1d58d0b3dc956756))
+
 ## [2.2.10](https://github.com/microlinkhq/keyv/compare/v2.2.9...v2.2.10) (2026-10-28)
 
 ### Bug Fixes

@@ -2,7 +2,7 @@
   "name": "@keyvhq/mysql",
   "description": "MySQL and MariaDB storage adapter for Keyv with TTL-aware key-value persistence.",
   "homepage": "https://keyvhq.js.org",
-  "version": "2.2.10",
+  "version": "2.2.11",
   "types": "./src/index.d.ts",
   "main": "src/index.js",
   "author": {
