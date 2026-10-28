@@ -2,14 +2,24 @@
 
 const { Sql } = require('sql-ts')
 
-// sql-ts inlines String objects via toString(). A primitive-only check would
-// leave those literals unescaped, and value.replace used to accept them.
-const isString = input => typeof input === 'string' || input instanceof String
+// sql-ts quotes strings, String objects, array elements, and other objects
+// (toString(), or JSON.stringify when toString is the default). MySQL then
+// reads \ as an escape inside that literal. value.replace used to accept
+// String objects and throw on everything else.
+const doubleBackslashes = text => String(text).replace(/\\/g, '\\\\')
 
-const escapeBackslashes = input =>
-  isString(input) ? input.replace(/\\/g, '\\\\') : input
-const escapeLikeWildcards = input =>
-  isString(input) ? input.replace(/[\\%_]/g, '\\$&') : input
+const escapeBackslashes = input => {
+  if (typeof input === 'string') return doubleBackslashes(input)
+  if (input == null || typeof input !== 'object') return input
+  if (Buffer.isBuffer(input) || input instanceof Date) return input
+  if (Array.isArray(input)) return input.map(escapeBackslashes)
+  const strValue = input.toString()
+  const literal = strValue === '[object Object]' ? JSON.stringify(input) : strValue
+  return doubleBackslashes(literal)
+}
+
+// String() matches the text `${namespace}` stored, including numbers and objects.
+const escapeLikeWildcards = input => String(input).replace(/[\\%_]/g, '\\$&')
 const identity = input => input
 
 class KeyvSql {
@@ -24,9 +34,17 @@ class KeyvSql {
     )
 
     const sql = new Sql(options.dialect)
-    const isMysql = options.dialect === 'mysql'
-    this.escape = isMysql ? escapeBackslashes : identity
-    this.escapeLike = isMysql ? escapeLikeWildcards : identity
+    const dialect = options.dialect
+    // MySQL string literals treat \ as an escape, so keys and values are
+    // escaped twice for LIKE: once for the pattern, then again for the
+    // literal. Postgres LIKE uses \ as its default escape and does not
+    // treat \ specially inside a standard string. SQLite needs an explicit
+    // ESCAPE clause; its string literals leave \ alone.
+    this.escape = dialect === 'mysql' ? escapeBackslashes : identity
+    this.escapeLike = ['mysql', 'postgres', 'sqlite'].includes(dialect)
+      ? escapeLikeWildcards
+      : identity
+    this.likeEscape = dialect === 'sqlite' ? '\\' : ''
 
     this.entry = sql.define({
       name: this.options.table,
@@ -95,14 +113,23 @@ class KeyvSql {
   }
 
   namespacePattern (namespace) {
-    const prefix = namespace ? this.escapeLike(namespace) + ':' : ''
+    if (!namespace) return this.escape('%')
+    const prefix = this.escapeLike(namespace) + ':'
     return this.escape(`${prefix}%`)
+  }
+
+  whereLike (pattern) {
+    const like = this.entry.key.like(pattern)
+    if (!this.likeEscape) return like
+    // sql-ts cannot emit an ESCAPE clause. The comparison is parenthesized.
+    const comparison = like.toString()
+    return `${comparison.slice(0, -1)} ESCAPE '${this.likeEscape}')`
   }
 
   clear (namespace) {
     const pattern = this.namespacePattern(namespace)
     const del = this.entry
-      .delete(this.entry.key.like(pattern))
+      .delete(this.whereLike(pattern))
       .toString()
     return this.query(del).then(() => undefined)
   }
@@ -111,10 +138,11 @@ class KeyvSql {
     const limit = Number.parseInt(this.options.iterationLimit, 10)
     const entry = this.entry
     const pattern = this.namespacePattern(namespace)
+    const like = this.whereLike(pattern)
     async function * iterate (offset, query) {
       const selectChunk = entry
         .select()
-        .where(entry.key.like(pattern))
+        .where(like)
         .limit(limit)
         .offset(offset)
         .toString()

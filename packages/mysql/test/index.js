@@ -10,7 +10,21 @@ const dbUrl = process.env.MYSQL_URL || 'mysql://root:root@127.0.0.1/keyv_test'
 const store = () => new KeyvMysql(dbUrl)
 keyvTestSuite(test, Keyv, store)
 
-const specialKeys = ["'", '\\', "\\'", '%', '_', 'a\\nb', "x\\') OR 1=1 -- "]
+const specialKeys = [
+  "'",
+  '\\',
+  "\\'",
+  '%',
+  '_',
+  'a\\nb',
+  "x\\') OR 1=1 -- ",
+  '?',
+  'a\nb',
+  'a\0b',
+  'a\\0b',
+  'a\\Zb',
+  'a\tb'
+]
 
 test.serial('keys with quotes, backslashes and wildcards are stored verbatim', async t => {
   const keyv = new Keyv({ store: new KeyvMysql(dbUrl, { table: 'keyv_special_keys' }) })
@@ -105,5 +119,74 @@ test.serial('clear and iterator match the namespace literally', async t => {
     const expected = ['ab', 'x', 'nX', 'uX'].includes(namespace) ? namespace : undefined
     t.is(await keyvs[namespace].get('k'), expected, `get after clear (${namespace})`)
   }
+  await store.clear()
+})
+
+test.serial('values sql-ts quotes cannot inject', async t => {
+  const store = new KeyvMysql(dbUrl, { table: 'keyv_quoted_values' })
+  await store.clear()
+  await store.set('secret', 'value')
+
+  const injection = "nope\\') OR 1=1 -- "
+  const evil = { toString () { return injection } }
+  const plain = { a: injection }
+  const list = [injection]
+  const nested = [{ toString () { return injection } }]
+
+  t.is(await store.get(evil), undefined)
+  t.false(await store.delete(evil))
+  t.is(await store.get(plain), undefined)
+  t.false(await store.delete(plain))
+  t.is(await store.get(list), undefined)
+  t.false(await store.delete(list))
+  t.is(await store.get(nested), undefined)
+  t.false(await store.delete(nested))
+  t.is(await store.get('secret'), 'value')
+
+  await store.set('boxed-value', evil)
+  t.is(await store.get('boxed-value'), injection)
+  await store.set('plain-value', plain)
+  t.is(await store.get('plain-value'), JSON.stringify(plain))
+
+  const date = new Date('2020-01-02T03:04:05.000Z')
+  await store.set('when', date)
+  t.is(await store.get('when'), date.toISOString())
+  await store.set('bytes', Buffer.from(injection))
+  t.is(await store.get('bytes'), injection)
+  await store.set('n', 1)
+  t.is(await store.get('n'), '1')
+  await store.set('flag', false)
+  t.is(await store.get('flag'), '0')
+  await store.set('empty', null)
+  t.is(await store.get('empty'), null)
+  t.is(await store.get('secret'), 'value')
+  await store.clear()
+})
+
+test.serial('a namespace object matches its text literally', async t => {
+  const store = new KeyvMysql(dbUrl, { table: 'keyv_namespace_objects' })
+  const wildcard = { toString () { return 'n%' } }
+  const backslash = { toString () { return 'a\\b' } }
+  const named = namespace => new Keyv({ store, namespace })
+  const wild = named(wildcard)
+  const lookalike = named('nX')
+  const slash = named(backslash)
+  const slashLookalike = named('ab')
+  await store.clear()
+  await wild.set('k', 'wild')
+  await lookalike.set('k', 'other')
+  await slash.set('k', 'slash')
+  await slashLookalike.set('k', 'ab')
+
+  const entries = []
+  for await (const entry of wild.iterator()) entries.push(entry)
+  t.deepEqual(entries, [['k', 'wild']])
+
+  await wild.clear()
+  await slash.clear()
+  t.is(await wild.get('k'), undefined)
+  t.is(await lookalike.get('k'), 'other')
+  t.is(await slash.get('k'), undefined)
+  t.is(await slashLookalike.get('k'), 'ab')
   await store.clear()
 })
