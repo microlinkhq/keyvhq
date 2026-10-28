@@ -61,12 +61,11 @@ class KeyvRedis {
     do {
       const [nextCursor, keys] = await this.redis.scan(cursor, 'MATCH', pattern)
       cursor = nextCursor
-      if (keys.length > 0) {
-        const values = await this.redis.mget(keys)
-        for (let i = 0; i < keys.length; i++) {
-          // A key deleted between SCAN and MGET comes back as null.
-          if (values[i] !== null) yield [keys[i], values[i]]
-        }
+      if (keys.length === 0) continue
+      const values = await this.redis.mget(keys)
+      for (let i = 0; i < keys.length; i++) {
+        // A key deleted between SCAN and MGET comes back as null.
+        if (values[i] !== null) yield [keys[i], values[i]]
       }
     } while (cursor !== '0')
   }

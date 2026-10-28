@@ -69,9 +69,9 @@ test.serial('iterator and clear treat glob characters in a namespace as literals
   const slash = new Keyv({ store, namespace: 'a\\b' })
 
   const entries = async keyv => {
-    const result = []
-    for await (const entry of keyv.iterator()) result.push(entry)
-    return result
+    const yielded = []
+    for await (const entry of keyv.iterator()) yielded.push(entry)
+    return yielded
   }
 
   try {
