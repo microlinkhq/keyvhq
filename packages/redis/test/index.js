@@ -37,6 +37,27 @@ test('reuse a redis instance', async t => {
   t.true(keyvTwo.store.redis.singleton)
 })
 
+test.serial('iterator yields every key when SCAN returns empty pages', async t => {
+  const redis = new Redis(redisURI)
+  const store = new KeyvRedis(redis)
+  const noise = new Keyv({ store, namespace: 'noise' })
+  const sparse = new Keyv({ store, namespace: 'sparse' })
+
+  const noiseKeys = Array.from({ length: 1000 }, (_, index) => `noise:${index}`)
+  const keys = ['a', 'b', 'c', 'd', 'e']
+
+  try {
+    await redis.mset(noiseKeys.flatMap(key => [key, 'x']))
+    await Promise.all(keys.map(key => sparse.set(key, key)))
+    const entries = []
+    for await (const entry of sparse.iterator()) entries.push(entry)
+    t.deepEqual(entries.sort(), keys.map(key => [key, key]))
+  } finally {
+    await Promise.all([noise.clear(), sparse.clear()])
+    redis.disconnect()
+  }
+})
+
 test.after.always(async () => {
   const keyv = new Keyv({ store: store() })
   await keyv.clear()
