@@ -125,7 +125,7 @@ const countSaves = async (interval, duration) => {
   const store = new Map()
   const set = store.set.bind(store)
   store.set = (key, value) => {
-    if (key === '__keyv_stats__') ++saves
+    ++saves
     return set(key, value)
   }
 
