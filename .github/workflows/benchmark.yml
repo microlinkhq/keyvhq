@@ -36,7 +36,12 @@ jobs:
         run: pnpm install --dangerously-allow-all-builds
       - name: Install base
         working-directory: base
-        run: pnpm install --dangerously-allow-all-builds
+        run: |
+          [ -f benchmark/index.js ] || exit 0
+          pnpm install --dangerously-allow-all-builds || {
+            echo "::warning::base install failed, comparing without it"
+            rm benchmark/index.js
+          }
       - name: Run base and head alternately
         env:
           ROUNDS: 5
@@ -45,7 +50,7 @@ jobs:
           mkdir -p results
           run_side () {
             if [ "$1" = base ] && [ ! -f base/benchmark/index.js ]; then return 0; fi
-            if (cd "$1" && node benchmark/index.js); then
+            if (cd "$1" && node benchmark/index.js) && [ -f "$1/benchmark-output.json" ]; then
               mv "$1/benchmark-output.json" "results/$1-$2.json"
             elif [ "$1" = base ]; then
               echo "::warning::base benchmark failed in round $2, comparing without it"
@@ -100,9 +105,10 @@ jobs:
           const rows = head.map(current => {
             const previous = base.find(result => result.name === current.name)
             const ratio = previous ? (current.value / previous.value).toFixed(2) : ''
-            return `| \`${current.name}\` | ${previous ? previous.value : ''} | ${current.value} | ${ratio} |`
+            const format = result => (result ? `${result.value} ${result.unit}` : '')
+            return `| \`${current.name}\` | ${format(previous)} | ${format(current)} | ${ratio} |`
           })
-          const summary = ['| case | base (ms) | head (ms) | head/base |', '|-|-|-|-|', ...rows].join('\n')
+          const summary = ['| case | base | head | head/base |', '|-|-|-|-|', ...rows].join('\n')
           console.log(summary)
           appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + '\n')
           EOF
