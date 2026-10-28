@@ -36,6 +36,7 @@
     "null-prototype-object": "~1.2.5"
   },
   "devDependencies": {
+    "@keyvhq/test-suite": "workspace:*",
     "ava": "5"
   },
   "engines": {

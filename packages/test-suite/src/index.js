@@ -4,6 +4,7 @@ const keyvNamespaceTests = require('./namespace')
 const keyvIteratorTests = require('./iteration')
 const keyvValueTests = require('./values')
 const keyvApiTests = require('./api')
+const waitUntilAfter = require('./wait-until-after')
 
 const keyvTestSuite = (test, Keyv, store) => {
   keyvIteratorTests(test, Keyv, store)
@@ -16,7 +17,8 @@ Object.assign(keyvTestSuite, {
   keyvApiTests,
   keyvValueTests,
   keyvNamespaceTests,
-  keyvIteratorTests
+  keyvIteratorTests,
+  waitUntilAfter
 })
 
 module.exports = keyvTestSuite

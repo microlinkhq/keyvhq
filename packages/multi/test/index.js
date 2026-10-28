@@ -1,6 +1,7 @@
 'use strict'
 
 const { setTimeout } = require('timers/promises')
+const { waitUntilAfter } = require('@keyvhq/test-suite')
 const keyvCompress = require('@keyvhq/compress')
 const KeyvSqlite = require('@keyvhq/sqlite')
 const Keyv = require('@keyvhq/core')
@@ -123,9 +124,10 @@ test.serial('ttl is valid', async t => {
   const store = new KeyvMulti({ remote, local })
 
   await store.set('foo', 'bar')
+  const expiredAfter = Date.now() + 100
   await remote.set('foo', 'notbar')
 
-  await setTimeout(100)
+  await waitUntilAfter(expiredAfter)
   t.is(await store.get('foo'), 'notbar')
 })
 

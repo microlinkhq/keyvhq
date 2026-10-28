@@ -1,6 +1,7 @@
 'use strict'
 
 const { setTimeout } = require('timers/promises')
+const { waitUntilAfter } = require('@keyvhq/test-suite')
 const Keyv = require('@keyvhq/core')
 const test = require('ava')
 
@@ -61,8 +62,9 @@ test('should delete store value after expiration', async t => {
   const memoizedSum = memoize(asyncSum, keyv, { ttl })
 
   t.is(await memoizedSum(5), 5)
+  const expiredAfter = Date.now() + ttl
 
-  await setTimeout(ttl)
+  await waitUntilAfter(expiredAfter)
 
   t.is(await keyv.get(5), undefined)
 })
