@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.13](https://github.com/microlinkhq/keyv/compare/v2.2.12...v2.2.13) (2026-10-29)
+
+### Bug Fixes
+
+* **types:** describe the CommonJS export with export = ([#293](https://github.com/microlinkhq/keyv/issues/293)) ([ff6d2c4](https://github.com/microlinkhq/keyv/commit/ff6d2c4e43cb92db9d96fa8faac77ea1127803c4))
+
 ## [2.2.12](https://github.com/microlinkhq/keyv/compare/v2.2.11...v2.2.12) (2026-10-28)
 
 ### Bug Fixes
