@@ -1,0 +1,256 @@
+name: engines
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+env:
+  pnpm_config_dangerously_allow_all_builds: true
+  SKIP_INSTALL_SIMPLE_GIT_HOOKS: true
+
+jobs:
+  pack:
+    name: Pack
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.pack.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v6
+        with:
+          version: latest
+      - name: Install
+        run: pnpm install
+      - name: Pack
+        id: pack
+        run: |
+          node --input-type=module - <<'EOF'
+          import { execFileSync } from 'node:child_process'
+          import { appendFileSync, mkdirSync, readdirSync, readFileSync } from 'node:fs'
+          import path from 'node:path'
+
+          const OUT = path.resolve('tarballs')
+          const FLOOR = /^>=\s*(\d+(?:\.\d+){0,2})$/
+          const WORKSPACE_DEPENDENCY_FIELDS = ['dependencies', 'optionalDependencies']
+          const WORKSPACE_ALIAS = /^workspace:((?:@[^/@]+\/)?[^@]+)@/
+
+          const pnpmOutput = (args, cwd) =>
+            execFileSync('pnpm', args, {
+              cwd,
+              encoding: 'utf8',
+              stdio: ['ignore', 'pipe', 'inherit']
+            })
+          const pnpm = (args, cwd) =>
+            execFileSync('pnpm', args, { cwd, stdio: ['ignore', 'inherit', 'inherit'] })
+
+          const floorOf = manifest => {
+            const range = manifest.engines?.node
+            const match = range?.trim().match(FLOOR)
+            if (!match)
+              throw new Error(
+                `${manifest.name}: engines.node ${JSON.stringify(
+                  range
+                )} is not a ">= x" floor`
+              )
+            return match[1]
+          }
+
+          const packages = JSON.parse(
+            pnpmOutput(['ls', '--recursive', '--depth', '-1', '--json'])
+          )
+            .filter(({ private: isPrivate }) => !isPrivate)
+            .map(({ path: dir }) => {
+              const manifest = JSON.parse(
+                readFileSync(path.join(dir, 'package.json'), 'utf8')
+              )
+              return { dir, manifest, floor: floorOf(manifest) }
+            })
+
+          for (const { dir, manifest } of packages) {
+            if (manifest.scripts?.prepublishOnly) pnpm(['run', 'prepublishOnly'], dir)
+          }
+
+          mkdirSync(OUT, { recursive: true })
+          const tarballOf = new Map()
+          for (const { dir, manifest } of packages) {
+            const before = new Set(readdirSync(OUT))
+            pnpm(['pack', '--pack-destination', OUT], dir)
+            const [tarball] = readdirSync(OUT).filter(file => !before.has(file))
+            tarballOf.set(manifest.name, tarball)
+          }
+
+          const workspaceDependencies = manifest =>
+            WORKSPACE_DEPENDENCY_FIELDS.flatMap(field =>
+              Object.entries(manifest[field] ?? {})
+                .filter(([, spec]) => spec.startsWith('workspace:'))
+                .map(([name, spec]) => spec.match(WORKSPACE_ALIAS)?.[1] ?? name)
+            )
+
+          const manifestOf = new Map(
+            packages.map(({ manifest }) => [manifest.name, manifest])
+          )
+          const closure = name => {
+            const seen = new Set()
+            const visit = current => {
+              if (seen.has(current)) return
+              const manifest = manifestOf.get(current)
+              if (!manifest)
+                throw new Error(
+                  `${name} depends on ${current}, a private workspace package that is never published`
+                )
+              seen.add(current)
+              workspaceDependencies(manifest).forEach(visit)
+            }
+            visit(name)
+            return [...seen]
+          }
+
+          const include = packages.map(({ manifest, floor }) => ({
+            name: manifest.name,
+            floor,
+            tarballs: closure(manifest.name)
+              .map(name => tarballOf.get(name))
+              .join(' ')
+          }))
+
+          console.table(include)
+          appendFileSync(
+            process.env.GITHUB_OUTPUT,
+            `matrix=${JSON.stringify({ include })}\n`
+          )
+          EOF
+      - name: Upload
+        uses: actions/upload-artifact@v7
+        with:
+          name: tarballs
+          path: tarballs
+
+  floor:
+    name: Node ${{ matrix.floor }} ${{ matrix.name }}
+    needs: pack
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.pack.outputs.matrix) }}
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.floor }}
+      - name: Download
+        uses: actions/download-artifact@v8
+        with:
+          name: tarballs
+          path: tarballs
+      - name: Install with engine-strict
+        env:
+          TARBALLS: ${{ matrix.tarballs }}
+        run: |
+          mkdir consumer
+          cd consumer
+          echo '{"private":true}' > package.json
+          read -ra tarballs <<< "$TARBALLS"
+          npm install --engine-strict --no-audit --no-fund "${tarballs[@]/#/../tarballs/}"
+      - name: Load every entry point
+        working-directory: consumer
+        env:
+          PACKAGE: ${{ matrix.name }}
+        run: |
+          echo 'module.exports = specifier => import(specifier)' > import.js
+          cat > smoke.js <<'EOF'
+          'use strict'
+
+          const fs = require('fs')
+          const path = require('path')
+
+          const name = process.argv[2]
+          const manifest = JSON.parse(
+            fs.readFileSync(path.join('node_modules', name, 'package.json'), 'utf8')
+          )
+          const TYPE_DECLARATION = /\.d\.[cm]?ts$/
+          const IMPORT_ONLY = [
+            'ERR_REQUIRE_ESM',
+            'ERR_REQUIRE_ASYNC_MODULE',
+            'ERR_PACKAGE_PATH_NOT_EXPORTED'
+          ]
+
+          const targets = (value, condition) => {
+            if (typeof value === 'string') return condition === 'types' ? [] : [value]
+            if (!value || typeof value !== 'object') return []
+            return Object.keys(value).reduce(
+              (all, key) => all.concat(targets(value[key], key)),
+              []
+            )
+          }
+
+          const isSubpathMap = value =>
+            value &&
+            typeof value === 'object' &&
+            !Array.isArray(value) &&
+            Object.keys(value).some(key => key[0] === '.')
+
+          const entryPoints = exportsField => {
+            if (exportsField == null) return ['.']
+            const subpaths = isSubpathMap(exportsField)
+              ? exportsField
+              : { '.': exportsField }
+            return Object.keys(subpaths).filter(
+              subpath =>
+                subpath.indexOf('*') === -1 &&
+                targets(subpaths[subpath]).some(target => !TYPE_DECLARATION.test(target))
+            )
+          }
+
+          const load = specifier => {
+            try {
+              return Promise.resolve({ value: require(specifier) })
+            } catch (error) {
+              if (IMPORT_ONLY.indexOf(error.code) === -1) return Promise.reject(error)
+              return require('./import.js')(specifier).then(value => ({ value }))
+            }
+          }
+
+          process.exitCode = 1
+
+          const specifiers = entryPoints(manifest.exports).map(
+            subpath => name + subpath.slice(1)
+          )
+
+          specifiers
+            .reduce(
+              (previous, specifier) =>
+                previous.then(failures =>
+                  load(specifier)
+                    .then(loaded => {
+                      if (loaded.value === undefined) throw new Error('exports undefined')
+                    })
+                    .then(
+                      () => {
+                        console.log('ok   ' + specifier)
+                        return failures
+                      },
+                      error => {
+                        console.log('FAIL ' + specifier + '\n' + (error && error.stack))
+                        return failures + 1
+                      }
+                    )
+                ),
+              Promise.resolve(0)
+            )
+            .then(failures => process.exit(failures ? 1 : 0))
+          EOF
+          node smoke.js "$PACKAGE"
