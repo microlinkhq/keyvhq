@@ -37,7 +37,9 @@
   },
   "devDependencies": {
     "@keyvhq/test-suite": "workspace:*",
-    "ava": "5"
+    "ava": "5",
+    "tsd": "latest",
+    "typescript": "5"
   },
   "engines": {
     "node": ">= 20"
@@ -46,10 +48,15 @@
     "src"
   ],
   "scripts": {
+    "lint": "tsd",
+    "pretest": "npm run lint",
     "test": "ava"
   },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "tsd": {
+    "directory": "test"
   }
 }
