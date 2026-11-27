@@ -31,7 +31,7 @@
     "valkey"
   ],
   "dependencies": {
-    "ioredis": "~6.0.0"
+    "ioredis": "~6.1.0"
   },
   "devDependencies": {
     "@keyvhq/core": "workspace:*",
